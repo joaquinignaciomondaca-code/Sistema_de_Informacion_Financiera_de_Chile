@@ -158,6 +158,24 @@ class MetadatosWeb(unittest.TestCase):
         for indice, (_key, columna) in enumerate(spec["columnas"], start=1):
             self.assertEqual(tabla[columna].tolist(), [100.0 + indice, 101.0 + indice])
 
+    def test_tasas_corto_plazo_conserva_huecos_de_cada_serie(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_tasas_corto_plazo")
+        series = pd.DataFrame([
+            {"fecha": "2026-08-03", "periodo": "2026-08", "clave": "tpm",
+             "serie_id": "source-tpm", "valor": 4.75},
+            {"fecha": "2026-08-04", "periodo": "2026-08", "clave": "tpm",
+             "serie_id": "source-tpm", "valor": 4.75},
+            {"fecha": "2026-08-03", "periodo": "2026-08", "clave": "tib",
+             "serie_id": "source-tib", "valor": 4.61},
+        ])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-08-03", "2026-08-04"])
+        self.assertEqual(tabla["tpm_pct"].tolist(), [4.75, 4.75])
+        self.assertEqual(tabla.loc[0, "tib_promedio_pct"], 4.61)
+        self.assertTrue(pd.isna(tabla.loc[1, "tib_promedio_pct"]))
+
     def test_mercado_laboral_alinea_las_cuatro_metricas_mensuales(self):
         spec = next(t for t in builder.TABLAS if t["id"] == "macro_mercado_laboral")
         keys = [key for key, _ in spec["columnas"]]
