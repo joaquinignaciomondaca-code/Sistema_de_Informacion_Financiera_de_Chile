@@ -1,4 +1,4 @@
-name: Contrato derivado (esquemas, catálogo y resultados)
+name: Contrato derivado (web, esquemas, catálogo y resultados)
 
 # Cuando un flujo de datos publica filas nuevas, los artefactos que se derivan de
 # ellas se quedan atrás y `web_audit` falla en el siguiente push con «esquemas.json
@@ -20,6 +20,8 @@ on:
       - 'docs/outputs/**'
       - 'data_manifest.json'
       - 'scripts/build_metricas_publicadas.py'
+      - 'scripts/build_macro_web.py'
+      - 'macro/scripts/build_tablas_tematicas.py'
       - 'scripts/build_ficha_piloto.py'
       - 'scripts/construir_reproducibilidad.py'
   workflow_dispatch:
@@ -52,7 +54,7 @@ jobs:
           python-version: '3.11'
 
       - name: Instalar dependencias
-        run: python -m pip install --disable-pip-version-check duckdb pyarrow
+        run: python -m pip install --disable-pip-version-check duckdb pyarrow pandas==2.2.3
 
       # El guardián que gobierna a los publicadores se prueba antes de publicar:
       # si este flujo deja de cumplir el contrato de la rama, se sabe aquí.
@@ -66,9 +68,10 @@ jobs:
           # El orden importa y es el mismo de docs/api/README.md: la
           # reconciliación nombra, las claves miden, los esquemas describen el
           # catálogo, el catálogo alimenta el Data Package y los resultados se
-          # calculan sobre las vistas. Al final, lo que la web muestra derivado
-          # de esas cifras: estado de claves, metadatos sociales y reconciliación
-          # de métricas ETL/API/Descargas.
+          # calculan sobre las vistas. La macro web se deriva también de sus
+          # Parquet y del manifiesto ETL, antes de que API/Descargas publiquen
+          # las mismas filas; al final se actualizan estado de claves, metadatos
+          # sociales y reconciliación de métricas ETL/API/Descargas.
           #
           # El 2026-10-23 este flujo dejó fuera `claves.csv` y `esquemas.json`
           # respecto del corte macro y `audit` falló en main. La cadena se corre
@@ -79,6 +82,7 @@ jobs:
             python scripts/build_reconciliacion.py
             python scripts/verificar_claves.py
             python scripts/build_esquemas.py
+            python scripts/build_macro_web.py
             python scripts/build_api.py
             python scripts/build_contrato.py
             python scripts/build_ficha_piloto.py
@@ -90,7 +94,8 @@ jobs:
             python scripts/construir_reproducibilidad.py
             python scripts/generar_indice_busqueda.py
             git add docs/api docs/js/download_catalog.js docs/js/estado_claves.js \
-                    docs/metricas_publicadas.json docs/datos \
+                    docs/js/sidebar.js docs/js/data_dictionary.js docs/js/erd_graph.js \
+                    docs/vocabulario.json docs/metricas_publicadas.json docs/datos \
                     docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml \
                     docs/reproducibilidad docs/outputs/indice_busqueda.json
             if git diff --cached --quiet; then
@@ -101,6 +106,7 @@ jobs:
             # Si la cadena quedó a medias, no se publica: se prefiere un push
             # fallido y visible a dejar main con las compuertas en rojo.
             python scripts/build_esquemas.py --check
+            python scripts/build_macro_web.py --check
             python scripts/build_reconciliacion.py --check
             python scripts/build_api.py --check
             python scripts/build_contrato.py --check

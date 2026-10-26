@@ -22,7 +22,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[3]
 WORKFLOWS = sorted((RAIZ / ".github" / "workflows").glob("*.yml"))
 COMPARTIDOS = ("data_manifest.json", "docs/index.html", "docs/js/", "docs/metricas_publicadas.json")
-REGENERADORES = ("--solo-", "build_download_catalog.py", "build_metricas_publicadas.py")
+REGENERADORES = ("--solo-", "build_download_catalog.py", "build_metricas_publicadas.py", "build_macro_web.py")
 
 
 def logicas(texto: str) -> list[tuple[int, str]]:
@@ -100,15 +100,36 @@ class ContratoDePublicadoresTest(unittest.TestCase):
         self.assertIn("python scripts/build_metricas_publicadas.py", flujo)
         self.assertIn("python scripts/build_metricas_publicadas.py --check", flujo)
         self.assertIn("docs/metricas_publicadas.json", flujo)
+        self.assertIn("python scripts/build_macro_web.py", flujo)
+        self.assertIn("python scripts/build_macro_web.py --check", flujo)
+        self.assertIn("docs/js/sidebar.js", flujo)
+        self.assertIn("docs/js/data_dictionary.js", flujo)
+        self.assertIn("docs/js/erd_graph.js", flujo)
+        self.assertIn("docs/vocabulario.json", flujo)
+        self.assertLess(flujo.index("python scripts/build_macro_web.py\n"),
+                        flujo.index("python scripts/build_api.py\n"))
+        self.assertIn("      - 'scripts/build_macro_web.py'", flujo)
+        self.assertIn("      - 'macro/scripts/build_tablas_tematicas.py'", flujo)
+        self.assertIn("pandas==2.2.3", flujo)
         self.assertIn("python scripts/build_ficha_piloto.py", flujo)
         self.assertIn("python scripts/build_ficha_piloto.py --check", flujo)
         self.assertIn("      - 'scripts/build_ficha_piloto.py'", flujo)
         self.assertIn("docs/datos", flujo)
 
+    def test_generador_macro_usa_fecha_de_actualizacion_del_manifiesto(self):
+        generador = (RAIZ / "scripts" / "build_macro_web.py").read_text(encoding="utf-8")
+        self.assertIn('data_manifest.json', generador)
+        self.assertIn('tabla.get("ultima_actualizacion")', generador)
+        self.assertIn('datos["ultima_actualizacion"] = actualizado', generador)
+        self.assertNotIn('date.today()', generador)
+
     def test_web_audit_reconcilia_las_metricas_publicadas(self):
         flujo = (RAIZ / ".github" / "workflows" / "web_audit.yml").read_text(encoding="utf-8")
         self.assertIn("python scripts/build_metricas_publicadas.py --check", flujo)
         self.assertIn("scripts/build_metricas_publicadas.py", flujo)
+        self.assertIn("python scripts/build_macro_web.py --check", flujo)
+        self.assertIn("scripts/build_macro_web.py", flujo)
+        self.assertIn("macro/scripts/build_tablas_tematicas.py", flujo)
         self.assertIn("scripts/build_ficha_piloto.py", flujo)
         self.assertIn("python scripts/build_ficha_piloto.py --check", flujo)
         self.assertIn("scripts/test_ficha_piloto_http.py", flujo)
