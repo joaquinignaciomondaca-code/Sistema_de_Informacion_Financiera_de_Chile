@@ -230,6 +230,7 @@ class DownloadsPanelController {
               <select id="dl-year-to" aria-label="Año final" disabled>${opcionesHtml}</select>
             </div>
             <span class="dl-counter" id="dl-counter"></span>
+            <p id="dl-range-error" class="dl-range-error" role="status" hidden></p>
           </div>
 
           <div class="dl-groups" id="dl-groups"></div>
@@ -419,6 +420,7 @@ class DownloadsPanelController {
             ${this.escapar(item.descripcion || "")}${item.descripcion ? " · " : ""}${filas} · ${archivos} · ${periodo}
           </div>
           ${fuente}
+          <p class="dl-export-scope" data-scope="${item.id}">${this.escapar(this.resumenExportacion(item))}</p>
           ${this.fichaContexto(item)}
         </div>
         <div class="dl-item-actions">
@@ -499,7 +501,7 @@ class DownloadsPanelController {
           <button type="button" class="dl-btn dl-btn-primary" data-action="pantalla" data-fmt="csv">Descargar pantalla · CSV</button>
           <button type="button" class="dl-btn" data-action="pantalla" data-fmt="xlsx">Excel</button>
           ${parquet}
-          ${item ? `<button type="button" class="dl-btn dl-btn-ghost" data-action="csv" data-id="${item.id}">Serie completa · CSV</button>` : ""}
+          ${item ? `<button type="button" class="dl-btn dl-btn-ghost" data-action="csv" data-id="${item.id}">CSV de la serie · según controles</button>` : ""}
         </div>
       </div>
     `;
@@ -558,6 +560,7 @@ class DownloadsPanelController {
       if (!sel) return;
       if (!this.frecuencias) this.frecuencias = new Map();
       this.frecuencias.set(sel.dataset.freq, sel.value);
+      this.actualizarAlcances();
     });
     this.container.addEventListener("click", (e) => {
       const boton = e.target.closest("[data-action]");
@@ -615,6 +618,48 @@ class DownloadsPanelController {
     this.controles.sector.value = this.sector;
   }
 
+  errorRecorte(item, recorte = this.recorte) {
+    if (!recorte.activo || (item && !item.periodo)) return "";
+    if (!Number.isInteger(recorte.desde) || !Number.isInteger(recorte.hasta) ||
+        recorte.desde < 1900 || recorte.hasta > 9999 || recorte.desde > recorte.hasta) {
+      return "Revisa el rango: el año inicial debe ser menor o igual al año final.";
+    }
+    return "";
+  }
+
+  resumenExportacion(item) {
+    const error = this.errorRecorte(item);
+    if (error) return `CSV/Excel: ${error} El Parquet original sigue disponible sin recorte.`;
+    const rango = this.recorte.activo && item.periodo
+      ? `años ${this.recorte.desde}–${this.recorte.hasta}` : "serie completa";
+    const frecuencia = this.esDiaria(item)
+      ? (this.frecuenciaDe(item.id) === "mensual" ? " · cierre mensual, no suma mensual" : " · frecuencia diaria") : "";
+    const sinRecorte = this.recorte.activo && !item.periodo ? " Esta tabla no admite recorte por años." : "";
+    return `CSV/Excel: ${rango}${frecuencia}. Parquet: archivos originales, sin aplicar estos controles.${sinRecorte}`;
+  }
+
+  actualizarAlcances() {
+    if (!this.container) return;
+    this.container.querySelectorAll("[data-scope]").forEach(el => {
+      const item = this.item(el.dataset.scope);
+      if (item) el.textContent = this.resumenExportacion(item);
+    });
+    const error = this.errorRecorte();
+    const aviso = this.container.querySelector("#dl-range-error");
+    if (aviso) {
+      aviso.hidden = !error;
+      aviso.textContent = error;
+    }
+    if (this.controles) {
+      for (const control of [this.controles.yearFrom, this.controles.yearTo]) {
+        control.setAttribute("aria-invalid", error ? "true" : "false");
+        if (error) control.setAttribute("aria-describedby", "dl-range-error");
+        else control.removeAttribute("aria-describedby");
+      }
+    }
+    this.refrescarEstadoMotor();
+  }
+
   aplicarFiltros() {
     if (!this.controles) return;
     const q = this.busqueda;
@@ -659,10 +704,10 @@ class DownloadsPanelController {
       const total = this.listables().length;
       const partes = [`${window.MFCDownload.numero(visibles)} de ${window.MFCDownload.numero(total)} conjuntos`];
       if (archivo && !filtroActivo && !this.archivoAbierto) partes.push("archivo plegado");
-      if (this.recorte.activo) partes.push(`recorte ${this.recorte.desde}–${this.recorte.hasta}`);
+      if (this.recorte.activo) partes.push(this.errorRecorte() ? "rango de años inválido" : `recorte CSV/Excel ${this.recorte.desde}–${this.recorte.hasta}`);
       this.controles.counter.textContent = partes.join(" · ");
     }
-    this.refrescarEstadoMotor();
+    this.actualizarAlcances();
   }
 
   // Filtra por sector desde fuera (botones de la portada). Acepta claves con alias.
@@ -700,12 +745,13 @@ class DownloadsPanelController {
       const item = this.item(boton.dataset.id);
       const bloqueado = !disponible || (item && sinPublicar.includes(item.id));
       boton.classList.toggle("dl-btn-off", bloqueado);
-      boton.disabled = Boolean(item && sinPublicar.includes(item.id));
-      boton.title = bloqueado
+      const rangoInvalido = this.errorRecorte(item);
+      boton.disabled = Boolean(rangoInvalido || (item && sinPublicar.includes(item.id)));
+      boton.title = rangoInvalido || (bloqueado
         ? (disponible
           ? "Esta vista no se pudo publicar en el motor de consulta. Baja el Parquet original."
           : "El motor de consulta no está disponible aquí. Puedes bajar el Parquet original o exportar lo que ves en pantalla.")
-        : `Descargar ${boton.textContent.trim()} de la serie completa (motor DuckDB en tu navegador)`;
+        : `Descargar ${boton.textContent.trim()}: ${item ? this.resumenExportacion(item) : "datos publicados"}`);
     });
     this.container.querySelectorAll(".dl-item").forEach((fila) => {
       const noPublicada = sinPublicar.includes(fila.dataset.id);
@@ -773,28 +819,35 @@ class DownloadsPanelController {
       .filter((c) => c !== "fecha" && c !== "periodo");
   }
 
-  filtroRecorte(item) {
-    if (this.recorte.activo && item.periodo) {
-      return ` WHERE periodo >= '${this.recorte.desde}-01' AND periodo <= '${this.recorte.hasta}-12'`;
+  filtroRecorte(item, recorte = this.recorte) {
+    const error = this.errorRecorte(item, recorte);
+    if (error) throw new Error(error);
+    if (recorte.activo && item.periodo) {
+      return ` WHERE periodo >= '${recorte.desde}-01' AND periodo <= '${recorte.hasta}-12'`;
     }
     return "";
   }
 
-  sqlSerie(item) {
-    return `SELECT * FROM ${item.id}` + this.filtroRecorte(item);
+  sqlSerie(item, recorte = this.recorte) {
+    return `SELECT * FROM ${item.id}` + this.filtroRecorte(item, recorte);
   }
 
-  sqlSerieMensual(item, columnas) {
+  sqlSerieMensual(item, columnas, recorte = this.recorte) {
     const partes = columnas.flatMap((c) => [
       `arg_max(${c}, fecha) FILTER (WHERE ${c} IS NOT NULL) AS ${c}`,
       `max(fecha) FILTER (WHERE ${c} IS NOT NULL) AS ${c}_fecha_dato`
     ]);
-    return `SELECT periodo, ${partes.join(", ")} FROM ${item.id}${this.filtroRecorte(item)} GROUP BY periodo ORDER BY periodo`;
+    return `SELECT periodo, ${partes.join(", ")} FROM ${item.id}${this.filtroRecorte(item, recorte)} GROUP BY periodo ORDER BY periodo`;
   }
 
   async exportarSerie(id, formato, boton) {
     const item = this.item(id);
     if (!item) return;
+    // Congelar el alcance al hacer clic, antes de cualquier espera del motor.
+    const recorte = { ...this.recorte };
+    const mensual = this.esDiaria(item) && this.frecuenciaDe(item.id) === "mensual";
+    const errorRango = this.errorRecorte(item, recorte);
+    if (errorRango) { this.avisar(errorRango); return; }
     const motor = window.DuckDBClient;
     if (!motor || typeof motor.query !== "function") {
       this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
@@ -809,17 +862,17 @@ class DownloadsPanelController {
       this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
       return;
     }
-    const mensual = this.esDiaria(item) && this.frecuenciaDe(item.id) === "mensual";
-    let sql = this.sqlSerie(item);
+    let sql = this.sqlSerie(item, recorte);
     if (mensual) {
       try {
-        sql = this.sqlSerieMensual(item, await this.columnasIndicador(item));
+        sql = this.sqlSerieMensual(item, await this.columnasIndicador(item), recorte);
       } catch (err) {
         this.avisar("No se pudo preparar la versión mensual: " + (err && err.message ? err.message : err));
         return;
       }
     }
-    const nombreArchivo = mensual ? `${item.id}_mensual_cierre` : item.id;
+    const sufijoRango = recorte.activo && item.periodo ? `_${recorte.desde}_${recorte.hasta}` : "";
+    const nombreArchivo = (mensual ? `${item.id}_mensual_cierre` : item.id) + sufijoRango;
     const estimado = mensual ? 0 : (item.filas || 0);
     if (estimado > 600000) {
       const seguir = window.confirm(

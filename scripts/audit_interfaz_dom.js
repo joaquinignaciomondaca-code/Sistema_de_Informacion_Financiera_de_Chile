@@ -343,6 +343,32 @@ setTimeout(async () => {
   selectorSector.value = "todos";
   selectorSector.dispatchEvent(new window.Event("change", { bubbles: true }));
 
+  const aniosOn = document.getElementById("dl-years-on");
+  const anioDesde = document.getElementById("dl-year-from");
+  const anioHasta = document.getElementById("dl-year-to");
+  const rangoOriginal = { desde: anioDesde.value, hasta: anioHasta.value };
+  const parquetOriginal = document.querySelector('[data-action="parquet"]').getAttribute("href");
+  anioDesde.value = "2025";
+  anioHasta.value = "2024";
+  aniosOn.checked = true;
+  aniosOn.dispatchEvent(new window.Event("change", { bubbles: true }));
+  check("descargas: rango invertido muestra aviso y marca controles inválidos",
+    !document.getElementById("dl-range-error").hidden && anioDesde.getAttribute("aria-invalid") === "true");
+  const csvConPeriodo = document.querySelector('[data-action="csv"][data-id="seguros_renta_fija"]');
+  check("descargas: rango inválido bloquea exportación temporal, no modifica Parquet",
+    csvConPeriodo.disabled && document.querySelector('[data-action="parquet"]').getAttribute("href") === parquetOriginal);
+  anioDesde.value = "2023";
+  anioHasta.value = "2024";
+  anioDesde.dispatchEvent(new window.Event("change", { bubbles: true }));
+  check("descargas: alcance visible distingue recorte CSV/Excel de originales Parquet",
+    /años 2023–2024/.test(document.querySelector('[data-scope="seguros_renta_fija"]').textContent) &&
+    /sin aplicar estos controles/.test(document.querySelector('[data-scope="seguros_renta_fija"]').textContent) &&
+    document.getElementById("dl-range-error").hidden && !csvConPeriodo.disabled);
+  aniosOn.checked = false;
+  anioDesde.value = rangoOriginal.desde;
+  anioHasta.value = rangoOriginal.hasta;
+  aniosOn.dispatchEvent(new window.Event("change", { bubbles: true }));
+
   // Vocabulario: nombres canónicos y ninguna lista de entidades con otro nombre.
   const nombres = Array.from(document.querySelectorAll("#downloads-container .dl-item"))
     .map((n) => n.dataset.id);
