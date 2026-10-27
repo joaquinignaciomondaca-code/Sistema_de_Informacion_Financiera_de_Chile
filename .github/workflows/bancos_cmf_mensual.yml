@@ -54,14 +54,14 @@ jobs:
       period: ${{ steps.publish.outputs.period }}
     steps:
       - name: Checkout de la rama que recibirá la publicación
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 0
           persist-credentials: true
 
       - name: Preparar Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
