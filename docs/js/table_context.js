@@ -42,13 +42,14 @@ window.SIFTableContext = (() => {
       const card = Array.from(panel.container.querySelectorAll(".dl-item")).find(el => el.dataset.id === id);
       if (card && typeof card.scrollIntoView === "function") card.scrollIntoView({ block: "center" });
     } else if (tab === "data" && window.DataViewer) {
-      if (window.DataViewer.currentView !== id) window.DataViewer.loadTable(id, name);
+      if (window.DataViewer.currentView !== id || !window.DataViewer.loadRequestId) window.DataViewer.loadTable(id, name);
     } else if (tab === "sql" && window.ChatTerminal) {
       window.ChatTerminal.setQueryInput(`SELECT * FROM ${id} LIMIT 10;`, name, true);
     }
     applied.set(tab, revision);
   }
   function clear() {
+    const anterior = selected;
     selected = null;
     revision++;
     applied.clear();
@@ -58,11 +59,13 @@ window.SIFTableContext = (() => {
       window.DataDictionary.selectedTableId = null;
       window.DataDictionary.render();
     }
-    if (window.DownloadsPanel && window.DownloadsPanel.controles) {
+    if (anterior && window.DownloadsPanel && window.DownloadsPanel.controles && window.DownloadsPanel.busqueda === anterior.id) {
       window.DownloadsPanel.busqueda = "";
       window.DownloadsPanel.controles.search.value = "";
       window.DownloadsPanel.aplicarFiltros();
     }
+    if (window.erdInstance && typeof window.erdInstance.render === "function") window.erdInstance.render();
+    if (window.cerrarEsquema) window.cerrarEsquema();
     paint();
   }
   return { select, apply, clear, follow(tab) { applied.delete(tab); apply(tab); }, get selected() { return selected; } };

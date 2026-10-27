@@ -2478,6 +2478,13 @@ class ERDGraph {
       this.render();
     });
 
+    const esquemaBtn = document.getElementById("erd-open-schema");
+    if (esquemaBtn) esquemaBtn.addEventListener("click", () => {
+      const seleccionado = window.SIFTableContext && window.SIFTableContext.selected;
+      const node = seleccionado && this.tables.find(t => t.id === seleccionado.id);
+      if (node) this.showSchemaModal(node);
+    });
+
     const grupo = document.getElementById("erd-group-select");
     const sector = document.getElementById("erd-sector-select");
     if (grupo && sector) {
@@ -2684,14 +2691,11 @@ class ERDGraph {
   }
 
   onTableSelect(node) {
-    const query = `SELECT * FROM ${node.id} LIMIT 10;`;
-    if (window.ChatTerminal) {
-      window.ChatTerminal.setQueryInput(query, node.name, true);
-    }
-    if (window.DataViewer) {
-      window.DataViewer.loadTable(node.id, node.name);
-    }
-    this.showSchemaModal(node);
+    // Seleccionar no debe abrir un diálogo, mover el foco ni iniciar DuckDB.
+    if (window.cerrarEsquema) window.cerrarEsquema();
+    if (window.SIFTableContext) window.SIFTableContext.select(node.id, node.name);
+    this.hoveredNode = node;
+    this.render();
   }
 
   showSchemaModal(node) {
@@ -2725,9 +2729,10 @@ class ERDGraph {
     abrirDatos.className = "schema-open-btn";
     abrirDatos.textContent = "Explorar datos de esta tabla →";
     abrirDatos.addEventListener("click", () => {
-      if (window.switchMainTab) window.switchMainTab("data");
+      if (window.SIFTableContext) window.SIFTableContext.select(node.id, node.name);
       if (window.DataViewer) window.DataViewer.loadTable(node.id, node.name);
       if (window.cerrarEsquema) window.cerrarEsquema();
+      if (window.switchMainTab) window.switchMainTab("data");
     });
     actionContainer.replaceChildren(abrirDatos);
 
@@ -2740,6 +2745,9 @@ class ERDGraph {
   }
 
   render() {
+    const seleccionado = window.SIFTableContext && window.SIFTableContext.selected;
+    const esquemaBtn = document.getElementById("erd-open-schema");
+    if (esquemaBtn) esquemaBtn.disabled = !seleccionado || !this.tables.some(t => t.id === seleccionado.id);
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -2901,6 +2909,7 @@ class ERDGraph {
     this.tables.forEach((t) => {
       if (!this.matchesFilter(t)) return;
       const isHovered = this.hoveredNode === t;
+      const isSelected = Boolean(window.SIFTableContext && window.SIFTableContext.selected && window.SIFTableContext.selected.id === t.id);
 
       ctx.save();
       // Sombra
@@ -2913,8 +2922,8 @@ class ERDGraph {
       ctx.fill();
 
       // Borde
-      ctx.strokeStyle = isHovered ? accent : borderColor;
-      ctx.lineWidth = isHovered ? 2 : 1;
+      ctx.strokeStyle = isHovered || isSelected ? accent : borderColor;
+      ctx.lineWidth = isHovered || isSelected ? 2 : 1;
       ctx.stroke();
       ctx.restore();
 

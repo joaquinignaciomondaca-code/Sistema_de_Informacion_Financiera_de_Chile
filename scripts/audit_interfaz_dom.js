@@ -451,6 +451,18 @@ setTimeout(async () => {
   const botonCerrarEsquema = document.getElementById("close-schema-modal");
   const disparadorEsquema = document.getElementById("btn-zoom-reset");
   disparadorEsquema.focus();
+  const vistaAntesDeSeleccion = window.DataViewer.currentView;
+  window.erdInstance.onTableSelect(nodoEsquema);
+  check("mapa: seleccionar no abre diálogo ni cambia foco o muestra del Visor",
+    !modalEsquema.classList.contains("visible") && document.activeElement === disparadorEsquema &&
+    window.DataViewer.currentView === vistaAntesDeSeleccion && window.SIFTableContext.selected.id === nodoEsquema.id);
+  const abrirEsquema = document.getElementById("erd-open-schema");
+  check("mapa: selección habilita acción explícita de esquema", !abrirEsquema.disabled);
+  abrirEsquema.focus();
+  abrirEsquema.click();
+  check("mapa: solo la acción explícita abre el esquema", modalEsquema.classList.contains("visible"));
+  botonCerrarEsquema.click();
+  disparadorEsquema.focus();
   window.erdInstance.showSchemaModal(nodoEsquema);
   check("mapa: diálogo de esquema anuncia tabla y cierre accesible",
     modalEsquema.getAttribute("role") === "dialog"
