@@ -343,6 +343,32 @@ setTimeout(async () => {
   selectorSector.value = "todos";
   selectorSector.dispatchEvent(new window.Event("change", { bubbles: true }));
 
+  const aniosOn = document.getElementById("dl-years-on");
+  const anioDesde = document.getElementById("dl-year-from");
+  const anioHasta = document.getElementById("dl-year-to");
+  const rangoOriginal = { desde: anioDesde.value, hasta: anioHasta.value };
+  const parquetOriginal = document.querySelector('[data-action="parquet"]').getAttribute("href");
+  anioDesde.value = "2025";
+  anioHasta.value = "2024";
+  aniosOn.checked = true;
+  aniosOn.dispatchEvent(new window.Event("change", { bubbles: true }));
+  check("descargas: rango invertido muestra aviso y marca controles inválidos",
+    !document.getElementById("dl-range-error").hidden && anioDesde.getAttribute("aria-invalid") === "true");
+  const csvConPeriodo = document.querySelector('[data-action="csv"][data-id="seguros_renta_fija"]');
+  check("descargas: rango inválido bloquea exportación temporal, no modifica Parquet",
+    csvConPeriodo.disabled && document.querySelector('[data-action="parquet"]').getAttribute("href") === parquetOriginal);
+  anioDesde.value = "2023";
+  anioHasta.value = "2024";
+  anioDesde.dispatchEvent(new window.Event("change", { bubbles: true }));
+  check("descargas: alcance visible distingue recorte CSV/Excel de originales Parquet",
+    /años 2023–2024/.test(document.querySelector('[data-scope="seguros_renta_fija"]').textContent) &&
+    /sin aplicar estos controles/.test(document.querySelector('[data-scope="seguros_renta_fija"]').textContent) &&
+    document.getElementById("dl-range-error").hidden && !csvConPeriodo.disabled);
+  aniosOn.checked = false;
+  anioDesde.value = rangoOriginal.desde;
+  anioHasta.value = rangoOriginal.hasta;
+  aniosOn.dispatchEvent(new window.Event("change", { bubbles: true }));
+
   // Vocabulario: nombres canónicos y ninguna lista de entidades con otro nombre.
   const nombres = Array.from(document.querySelectorAll("#downloads-container .dl-item"))
     .map((n) => n.dataset.id);
@@ -451,6 +477,18 @@ setTimeout(async () => {
   const botonCerrarEsquema = document.getElementById("close-schema-modal");
   const disparadorEsquema = document.getElementById("btn-zoom-reset");
   disparadorEsquema.focus();
+  const vistaAntesDeSeleccion = window.DataViewer.currentView;
+  window.erdInstance.onTableSelect(nodoEsquema);
+  check("mapa: seleccionar no abre diálogo ni cambia foco o muestra del Visor",
+    !modalEsquema.classList.contains("visible") && document.activeElement === disparadorEsquema &&
+    window.DataViewer.currentView === vistaAntesDeSeleccion && window.SIFTableContext.selected.id === nodoEsquema.id);
+  const abrirEsquema = document.getElementById("erd-open-schema");
+  check("mapa: selección habilita acción explícita de esquema", !abrirEsquema.disabled);
+  abrirEsquema.focus();
+  abrirEsquema.click();
+  check("mapa: solo la acción explícita abre el esquema", modalEsquema.classList.contains("visible"));
+  botonCerrarEsquema.click();
+  disparadorEsquema.focus();
   window.erdInstance.showSchemaModal(nodoEsquema);
   check("mapa: diálogo de esquema anuncia tabla y cierre accesible",
     modalEsquema.getAttribute("role") === "dialog"
@@ -468,7 +506,12 @@ setTimeout(async () => {
   document.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
   check("mapa: Escape cierra esquema y devuelve el foco",
     !modalEsquema.classList.contains("visible") && document.activeElement === disparadorEsquema);
+  abrirEsquema.focus();
+  window.erdInstance.showSchemaModal(nodoEsquema);
   window.switchMainTab("info");
+  check("mapa: navegar desde esquema cierra sin devolver foco al panel oculto",
+    !modalEsquema.classList.contains("visible") && document.activeElement === document.getElementById("tab-btn-info") &&
+    window.SIFTableContext.selected.id === nodoEsquema.id);
   check("fuera del mapa: filtros y zoom ocultos",
     document.getElementById("erd-controls-group").style.display === "none" &&
     document.querySelector(".zoom-controls").style.display === "none");
@@ -656,12 +699,13 @@ setTimeout(async () => {
   check("explorador: al limpiar la búsqueda el archivo vuelve a plegarse", !archivoNav.classList.contains("search-open"));
 
   window.switchMainTab("erd");
-  const filaArchivo = document.getElementById("erd-archive-filters");
-  check("mapa: los filtros del archivo empiezan plegados", filaArchivo.hidden);
+  const grupoMapa = document.getElementById("erd-group-select");
+  const sectorMapa = document.getElementById("erd-sector-select");
+  check("mapa: filtros dependientes Grupo y Sector disponibles", Boolean(grupoMapa && sectorMapa));
   window.erdInstance.focusSector("patrimonios_separados");
-  const botonSecur = document.querySelector('.filter-btn[data-filter="securitizacion"]');
+
   check("mapa: securitizadoras y patrimonios separados se ven como una sola entrada",
-    window.erdInstance.filter === "securitizacion" && botonSecur.classList.contains("active") && !filaArchivo.hidden &&
+    window.erdInstance.filter === "securitizacion" && grupoMapa.value === "archivo" && sectorMapa.value === "securitizacion" &&
     window.erdInstance.tables.filter((t) => window.erdInstance.matchesFilter(t)).length === 5);
   check("mapa: una industria archivada muestra el aviso de alcance",
     !document.getElementById("erd-scope-note").hidden && /Alcance congelado/.test(document.getElementById("erd-scope-note").textContent));
@@ -676,8 +720,11 @@ setTimeout(async () => {
 
   window.switchMainTab("dict");
   const fichas = () => Array.from(document.querySelectorAll("#dict-container .dict-table-name")).map((n) => n.textContent.trim());
-  check("diccionario: por defecto sólo el alcance principal",
-    fichas().length > 0 && !fichas().includes("ccaf.balance") && !fichas().includes("fi.bienes_raices") &&
+  window.SIFTableContext.clear();
+  window.DataDictionary.currentGroup = "todos";
+  window.DataDictionary.setFilter("todos");
+  check("diccionario: todos los grupos permite descubrir también archivo y tablas sin datos",
+    fichas().length > 0 && fichas().includes("ccaf.balance") && fichas().includes("fi.bienes_raices") &&
     fichas().some((n) => n.startsWith("B.1 INSTRUMENTOS DE RENTA FIJA")), fichas().filter((n) => n === "ccaf.balance" || n === "fi.bienes_raices").join(", ") || fichas().length + " fichas");
   window.DataDictionary.setFilter("registro");
   check("diccionario: el registro complementario reúne las cuatro listas",
@@ -772,8 +819,8 @@ setTimeout(async () => {
   check("visor: rotula las filas como muestra y no como total",
     /Muestra: 1 fila/.test(contadorMuestra.textContent) && /no es el total/.test(contadorMuestra.title),
     contadorMuestra.textContent);
-  check("visor: explica que filtro/orden solo cubren la muestra y deriva a Descargas",
-    /filtro y orden solo actúan aquí/.test(avisoMuestra.textContent) && /Descargas/.test(avisoMuestra.textContent),
+  check("visor: distingue filtro y orden de pantalla de la descarga completa",
+    /filtro y el orden solo afectan la pantalla/.test(avisoMuestra.textContent) && /no la descarga completa/.test(avisoMuestra.textContent),
     avisoMuestra.textContent);
   check("visor: los controles son topes, no páginas, de 50 a 500 filas",
     /Máx\. filas/.test(document.querySelector("#data-viewer-container .dv-limit-label").textContent) &&
@@ -830,6 +877,18 @@ setTimeout(async () => {
   window.SidebarNav = sidebarOrden;
 
   window.switchMainTab("downloads");
+  check("contexto: Descargas sigue la tabla seleccionada sin requerir otra búsqueda",
+    window.DownloadsPanel.busqueda === "bancos_balance");
+  const quitarContexto = document.querySelector("#table-context button");
+  const borradorAntesDeQuitar = document.getElementById("chat-input").value;
+  quitarContexto.focus();
+  // outside-only no ejecuta onclick: verificar enlace y llamar el mismo método.
+  const quitarEnlazado = /SIFTableContext\.clear\(\)/.test(quitarContexto.getAttribute("onclick"));
+  window.SIFTableContext.clear();
+  check("contexto: quitar selección devuelve foco a pestaña visible y conserva borrador",
+    quitarEnlazado && document.getElementById("table-context").hidden && document.activeElement === document.getElementById("tab-btn-downloads") &&
+    document.getElementById("chat-input").value === borradorAntesDeQuitar);
+  window.DownloadsPanel.container.querySelector("#dl-clear").click();
   const itemsDl = () => Array.from(document.querySelectorAll("#downloads-container .dl-item"));
   const visiblesDl = () => itemsDl().filter((i) => !i.hidden);
   check("descargas: el archivo empieza plegado y fuera del conteo visible",
@@ -983,7 +1042,7 @@ setTimeout(async () => {
   check("la web advierte que la base puede tener errores y pide verificar",
     /Puede haber errores/.test(document.querySelector(".info-fuentes").textContent) &&
     /puede contener errores/.test(document.querySelector(".info-note").textContent) &&
-    /verificaciones/.test(document.getElementById("downloads-container").textContent));
+    /revísalos antes de usarlos/.test(document.getElementById("downloads-container").textContent));
   check("fuentes y limitaciones: la sección declara respaldo y cobertura",
     /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
     /fuentes oficiales/i.test(document.querySelector(".info-fuentes").textContent) &&
@@ -992,9 +1051,9 @@ setTimeout(async () => {
   window.switchMainTab("info");
   document.querySelector('.info-core-card[data-sector="ffmm"] [data-portada="explorar"]')
     .dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("portada: «Ver tablas» abre el sector en el explorador y en el mapa",
+  check("portada: Explorar abre catálogo del sector y conserva explorador",
     document.querySelector('[data-node-id="sector_ffmm"]').classList.contains("open") &&
-    document.getElementById("erd-canvas").style.display === "block" && window.erdInstance.filter === "ffmm");
+    document.getElementById("downloads-container").style.display === "flex" && window.DownloadsPanel.sector === "ffmm");
   const sectoresPortada = ["seguros", "ffmm", "fi", "bancos", "agf", "corredoras_bolsa", "macro"];
   const accionesPortada = Array.from(document.querySelectorAll('[data-portada="explorar"][data-sector]'));
   let todosLosSectoresAbren = accionesPortada.length === sectoresPortada.length;
@@ -1004,10 +1063,11 @@ setTimeout(async () => {
     window.switchMainTab("info");
     boton.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
     todosLosSectoresAbren = todosLosSectoresAbren
-      && window.erdInstance.filter === sector
-      && document.getElementById("erd-canvas").style.display === "block";
+      && window.DownloadsPanel.sector === sector
+      && document.getElementById("downloads-container").style.display === "flex"
+      && window.DownloadsPanel.busqueda === "";
   }
-  check("portada: los siete enlaces sectoriales abren el sector correcto en el mapa",
+  check("portada: los siete enlaces sectoriales abren catálogo sin búsqueda residual",
     todosLosSectoresAbren, sectoresPortada.join(", "));
   window.switchMainTab("info");
   document.querySelector('.info-hero-btn-secondary[data-portada="descargas"]')
@@ -1015,6 +1075,23 @@ setTimeout(async () => {
   check("portada: la acción principal abre Descargas sin filtrar el catálogo",
     document.getElementById("downloads-container").style.display === "flex" &&
     document.getElementById("dl-sector").value === "todos" && visiblesDl().length > 0);
+  const fichaCcaf = document.querySelector('.dl-item[data-id="ccaf_lista_entidades"]');
+  check("catálogo: la ficha CCAF existente se enlaza sin crear rutas nuevas",
+    Boolean(fichaCcaf.querySelector('a[href="datos/ccaf_lista_entidades/"]')) &&
+    document.querySelectorAll('.dl-dataset-context a[href^="datos/"]').length === 1);
+  const segurosCard = document.querySelector('.dl-item[data-id="seguros_lista_entidades"]');
+  check("catálogo: contexto declara muestra parcial y acceso a definiciones",
+    /no es la tabla completa/.test(segurosCard.textContent) &&
+    Boolean(segurosCard.querySelector('[data-action="diccionario"]')));
+  segurosCard.querySelector('[data-action="diccionario"]').click();
+  check("catálogo: Entender columnas abre ficha exacta y mantiene selección compartida",
+    window.SIFTableContext.selected.id === "seguros_lista_entidades" &&
+    window.DataDictionary.selectedTableId === "seguros_lista_entidades" &&
+    document.getElementById("dict-container").style.display === "block");
+  window.switchMainTab("info");
+  document.querySelector('[data-portada="mapa"][data-sector="seguros"]').click();
+  check("portada: acción explícita de relaciones conserva acceso al mapa",
+    window.erdInstance.filter === "seguros" && document.getElementById("erd-canvas").style.display === "block");
   window.DownloadsPanel.filtrarSector("todos");
   window.switchMainTab("info");
   document.querySelector('[data-portada="archivo"]').dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
@@ -1059,6 +1136,43 @@ setTimeout(async () => {
   });
   check("cada enlace ancla apunta a un id existente o a una ruta registrada",
     huorfanos.length === 0, huorfanos.map((a) => a.getAttribute("href")).join(", ") || "sin huérfanos");
+
+  // T6: recorrido real de pestañas, no solo llamadas aisladas al contexto.
+  window.SIFTableContext.select("seguros_lista_entidades", "Lista de aseguradoras");
+  window.switchMainTab("downloads");
+  const controlesContinuidad = window.DownloadsPanel.controles;
+  const grupoContinuidad = document.getElementById("dl-group");
+  grupoContinuidad.value = "secundario";
+  grupoContinuidad.dispatchEvent(new window.Event("change", { bubbles: true }));
+  controlesContinuidad.sector.value = "bancos";
+  controlesContinuidad.sector.dispatchEvent(new window.Event("change", { bubbles: true }));
+  controlesContinuidad.search.value = "balance";
+  controlesContinuidad.search.dispatchEvent(new window.Event("input", { bubbles: true }));
+  controlesContinuidad.yearFrom.value = "2023";
+  controlesContinuidad.yearTo.value = "2024";
+  controlesContinuidad.yearsOn.checked = true;
+  controlesContinuidad.yearsOn.dispatchEvent(new window.Event("change", { bubbles: true }));
+  const resultadosAntes = visiblesDl().map(el => el.dataset.id).join(",");
+  const editorContinuidad = document.getElementById("chat-input");
+  editorContinuidad.value = "SELECT 'borrador de continuidad' AS nota;";
+  window.switchMainTab("dict");
+  const busquedaDictContinuidad = document.getElementById("dict-search-input");
+  busquedaDictContinuidad.value = "patrimonio";
+  busquedaDictContinuidad.dispatchEvent(new window.Event("input", { bubbles: true }));
+  window.switchMainTab("sql");
+  check("recorrido T5: selección implícita al entrar a SQL no reemplaza borrador",
+    editorContinuidad.value === "SELECT 'borrador de continuidad' AS nota;");
+  window.switchMainTab("downloads");
+  check("recorrido T6: volver a Descargas conserva búsqueda, sector, grupo, años y resultados",
+    controlesContinuidad.search.value === "balance" && controlesContinuidad.sector.value === "bancos" &&
+    grupoContinuidad.value === "secundario" && controlesContinuidad.yearsOn.checked &&
+    controlesContinuidad.yearFrom.value === "2023" && controlesContinuidad.yearTo.value === "2024" &&
+    resultadosAntes.length > 0 && visiblesDl().map(el => el.dataset.id).join(",") === resultadosAntes);
+  window.switchMainTab("dict");
+  check("recorrido T6: volver a Diccionario conserva búsqueda manual con la misma selección",
+    document.getElementById("dict-search-input").value === "patrimonio" &&
+    window.DataDictionary.selectedTableId === null &&
+    window.SIFTableContext.selected.id === "seguros_lista_entidades");
 
   const fallos = results.filter((r) => !r.ok);
   for (const r of results) console.log(`${r.ok ? "OK  " : "FALLA"}  ${r.name}${r.extra ? "  -> " + r.extra : ""}`);

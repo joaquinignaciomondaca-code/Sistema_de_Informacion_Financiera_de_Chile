@@ -20,6 +20,7 @@ class DownloadsPanelController {
     this.contexto = null; // { viewName, displayName, rows, columns }
     this.busqueda = "";
     this.sector = "todos";
+    this.grupo = "todos";
     this.recorte = { activo: false, desde: null, hasta: null };
     this.abiertos = new Set();
     this.archivoAbierto = false;
@@ -172,7 +173,7 @@ class DownloadsPanelController {
     const fuera = A ? A.datos().fuera : null;
     const statsHtml = principal
       ? `
-            <div class="dl-stat" title="Conjuntos de la vista principal: 25 del núcleo (seguros, fondos mutuos y fondos de inversión) más instituciones y contexto. El núcleo, por sí solo, son 25."><b>${window.MFCDownload.numero(principal.conjuntos)}</b><span>conjuntos en la vista principal</span></div>
+            <div class="dl-stat" title="Totales del catálogo principal, no de los resultados filtrados."><b>${window.MFCDownload.numero(principal.conjuntos)}</b><span>conjuntos en la vista principal</span></div>
             <div class="dl-stat"><b>${window.MFCDownload.numero(principal.filas)}</b><span>filas</span></div>
             <div class="dl-stat"><b>${window.MFCDownload.bytes(principal.bytes)}</b><span>Parquet</span></div>
             <div class="dl-stat dl-stat-fuera" title="Archivo congelado y registros complementarios: plegados al final del catálogo"><b>${window.MFCDownload.numero(fuera.conjuntos)}</b><span>en archivo</span></div>`
@@ -188,34 +189,38 @@ class DownloadsPanelController {
         <header class="dl-hero">
           <div class="dl-hero-text">
             <h2 id="dl-title">Descargas</h2>
-            <p>
-              Todo lo publicado por el sistema, en un solo lugar: primero el núcleo (seguros, fondos mutuos
-              y fondos de inversión), luego las instituciones y el contexto macro; al final, plegados, el
-              archivo congelado y los registros complementarios. Cada conjunto muestra cuántas filas, qué
-              periodo y cuánto pesa <b>antes</b> de descargar. El Parquet original se baja directo desde este
-              servidor; CSV y Excel se arman con el motor que corre en tu navegador. Los datos se publican tal
-              como los emite la fuente y pueden contener errores: revísalos y haz tus propias verificaciones
-              antes de usarlos.
-            </p>
+            <p>Busca un conjunto y descarga sus datos completos en Parquet, CSV o Excel.</p>
+            <details class="dl-download-help"><summary>Información sobre las descargas</summary>
+              <p>El Parquet original se descarga directamente. CSV y Excel se generan con el motor que corre en tu navegador. Consulta las filas, el período y el tamaño antes de descargar. Los datos pueden contener errores: revísalos antes de usarlos.</p>
+            </details>
           </div>
-          <div class="dl-hero-stats">${statsHtml}
+          <div class="dl-hero-stats" aria-label="Resumen del catálogo principal y archivo; no cambia con los filtros">${statsHtml}
           </div>
         </header>
 
         <section class="dl-context" id="dl-context" hidden aria-live="polite"></section>
 
-        <!-- Los manuales viven en la pestaña Guía; aquí queda el puntero. -->
-        <section class="dl-guia-puntero" id="creditos-puntero" aria-label="Manuales y archivos auditables"></section>
 
         <section class="dl-catalog" aria-labelledby="dl-title">
           <div class="dl-toolbar">
             <div class="dl-search-wrap">
               <input type="search" id="dl-search" autocomplete="off" placeholder="Buscar conjunto, tabla o sector…" aria-label="Buscar conjunto de datos">
             </div>
+            <label class="erd-filter-field" for="dl-group">Grupo
+              <select id="dl-group">
+                <option value="todos">Todos los grupos</option>
+                <option value="nucleo">Inversión institucional</option>
+                <option value="secundario">Instituciones y estados financieros</option>
+                <option value="contexto">Contexto macroeconómico</option>
+                <option value="archivo">Archivo y registros</option>
+              </select>
+            </label>
+            <label class="erd-filter-field" for="dl-sector">Sector
             <select id="dl-sector" aria-label="Filtrar por sector">
               <option value="todos">Todos los sectores</option>
               ${sectoresHtml}
-            </select>
+            </select></label>
+            <button type="button" class="dl-btn dl-btn-ghost" id="dl-clear">Limpiar filtros</button>
             <div class="dl-years">
               <label class="dl-years-toggle">
                 <input type="checkbox" id="dl-years-on"> Recortar series por años
@@ -225,6 +230,7 @@ class DownloadsPanelController {
               <select id="dl-year-to" aria-label="Año final" disabled>${opcionesHtml}</select>
             </div>
             <span class="dl-counter" id="dl-counter"></span>
+            <p id="dl-range-error" class="dl-range-error" role="status" hidden></p>
           </div>
 
           <div class="dl-groups" id="dl-groups"></div>
@@ -233,6 +239,9 @@ class DownloadsPanelController {
             <span>Prueba con el nombre de la tabla (por ejemplo <code>seguros_renta_fija</code>) o quita los filtros.</span>
           </div>
         </section>
+
+        <!-- Los manuales viven en la pestaña Guía; aquí queda el puntero. -->
+        <section class="dl-guia-puntero" id="creditos-puntero" aria-label="Manuales y archivos auditables"></section>
 
         <footer class="dl-notas">
           <b>Cómo leer esta pestaña.</b>
@@ -340,6 +349,25 @@ class DownloadsPanelController {
     `;
   }
 
+  fichaContexto(item) {
+    // Reutiliza metadatos publicados, no redacta una segunda ficha editorial.
+    const tabla = (window.SIFDataDictionary || []).find(t => t.id === item.id);
+    const campos = [
+      ["Cobertura declarada", item.cobertura],
+      ["Frecuencia", tabla && tabla.frecuencia],
+      ["Última actualización", item.actualizado || (tabla && tabla.ultimaActualizacion)],
+      ["Fuente", item.fuente]
+    ].filter(([, valor]) => valor);
+    const filas = campos.map(([etiqueta, valor]) => `<div><dt>${this.escapar(etiqueta)}</dt><dd>${this.escapar(valor)}</dd></div>`).join("");
+    return `<details class="dl-dataset-context">
+      <summary>Entender este conjunto antes de usarlo</summary>
+      <dl>${filas}</dl>
+      <p>La muestra del Visor no es la tabla completa. Para interpretar y sumar importes, consulta el significado de las columnas, sus unidades y monedas y las observaciones de la fuente.</p>
+      <button type="button" class="dl-btn dl-btn-ghost" data-action="diccionario" data-id="${this.escapar(item.id)}">Entender las columnas</button>
+      ${item.id === "ccaf_lista_entidades" ? '<a class="dl-btn dl-btn-ghost" href="datos/ccaf_lista_entidades/">Abrir ficha técnica piloto · URL propia</a>' : ""}
+    </details>`;
+  }
+
   tarjeta(item) {
     const filas = item.filas === null || item.filas === undefined
       ? "filas: se cuentan al consultar"
@@ -384,6 +412,7 @@ class DownloadsPanelController {
                data-buscar="${this.escapar((item.id + " " + item.nombre + " " + item.detalle + " " + item.grupo).toLowerCase())}">
         <div class="dl-item-main">
           <div class="dl-item-title">
+            <strong>${this.escapar(item.detalle || item.nombre)}</strong>
             <code>${this.escapar(item.nombre)}</code>
             ${etiquetas.join("")}
           </div>
@@ -391,12 +420,18 @@ class DownloadsPanelController {
             ${this.escapar(item.descripcion || "")}${item.descripcion ? " · " : ""}${filas} · ${archivos} · ${periodo}
           </div>
           ${fuente}
+          <p class="dl-export-scope" data-scope="${item.id}">${this.escapar(this.resumenExportacion(item))}</p>
+          ${this.fichaContexto(item)}
         </div>
         <div class="dl-item-actions">
           ${this.selectorFrecuencia(item)}
+          <details class="dl-format-menu"><summary class="dl-btn dl-btn-primary">Descargar ▾</summary>
+          <div class="dl-format-options">
           ${botonParquet}
           <button type="button" class="dl-btn dl-btn-motor" data-action="csv" data-id="${item.id}" title="Genera el CSV completo con el motor DuckDB del navegador">CSV</button>
           <button type="button" class="dl-btn dl-btn-motor" data-action="xlsx" data-id="${item.id}" title="Genera un Excel (.xlsx) con el motor DuckDB del navegador">Excel</button>
+          </div></details>
+          <button type="button" class="dl-btn dl-btn-ghost" data-action="visor" data-id="${item.id}">Ver en el Visor</button>
           <button type="button" class="dl-btn dl-btn-ghost" data-action="sql" data-id="${item.id}" title="Abrir esta tabla en Consultas SQL">SQL</button>
         </div>
         <div class="dl-files" data-files="${item.id}" ${this.abiertos.has(item.id) ? "" : "hidden"}>
@@ -466,7 +501,7 @@ class DownloadsPanelController {
           <button type="button" class="dl-btn dl-btn-primary" data-action="pantalla" data-fmt="csv">Descargar pantalla · CSV</button>
           <button type="button" class="dl-btn" data-action="pantalla" data-fmt="xlsx">Excel</button>
           ${parquet}
-          ${item ? `<button type="button" class="dl-btn dl-btn-ghost" data-action="csv" data-id="${item.id}">Serie completa · CSV</button>` : ""}
+          ${item ? `<button type="button" class="dl-btn dl-btn-ghost" data-action="csv" data-id="${item.id}">CSV de la serie · según controles</button>` : ""}
         </div>
       </div>
     `;
@@ -484,6 +519,26 @@ class DownloadsPanelController {
     });
     this.controles.sector.addEventListener("change", (e) => {
       this.sector = e.target.value;
+      this.aplicarFiltros();
+    });
+    const grupoSelect = this.container.querySelector("#dl-group");
+    grupoSelect.addEventListener("change", e => {
+      this.grupo = e.target.value;
+      this.sector = "todos";
+      this.actualizarSectores();
+      this.aplicarFiltros();
+    });
+    this.container.querySelector("#dl-clear").addEventListener("click", () => {
+      this.grupo = "todos";
+      this.sector = "todos";
+      this.busqueda = "";
+      this.controles.search.value = "";
+      grupoSelect.value = "todos";
+      this.actualizarSectores();
+      this.controles.yearsOn.checked = false;
+      this.recorte.activo = false;
+      this.controles.yearFrom.disabled = true;
+      this.controles.yearTo.disabled = true;
       this.aplicarFiltros();
     });
     const recorte = () => {
@@ -505,6 +560,7 @@ class DownloadsPanelController {
       if (!sel) return;
       if (!this.frecuencias) this.frecuencias = new Map();
       this.frecuencias.set(sel.dataset.freq, sel.value);
+      this.actualizarAlcances();
     });
     this.container.addEventListener("click", (e) => {
       const boton = e.target.closest("[data-action]");
@@ -520,6 +576,19 @@ class DownloadsPanelController {
         this.descargarPantalla(boton.dataset.fmt, boton);
       } else if (accion === "csv" || accion === "xlsx") {
         this.exportarSerie(id, accion, boton);
+      } else if (accion === "diccionario") {
+        const item = this.item(id);
+        if (item && window.SIFTableContext) {
+          window.SIFTableContext.select(id, item.nombre);
+          window.SIFTableContext.follow("dict");
+          if (window.switchMainTab) window.switchMainTab("dict");
+        }
+      } else if (accion === "visor") {
+        const item = this.item(id);
+        if (item && window.DataViewer) {
+          window.DataViewer.loadTable(id, item.nombre);
+          if (window.switchMainTab) window.switchMainTab("data");
+        }
       } else if (accion === "sql") {
         this.abrirEnSql(id);
       }
@@ -540,10 +609,61 @@ class DownloadsPanelController {
     boton.setAttribute("aria-expanded", abierto ? "true" : "false");
   }
 
+  actualizarSectores() {
+    const secciones = this.secciones();
+    this.controles.sector.innerHTML = '<option value="todos">Todos los sectores</option>' +
+      (secciones ? secciones.filter(s => this.grupo === "todos" ||
+        (this.grupo === "archivo" ? ["archivo", "registro"].includes(s.nivel.id) : s.nivel.id === this.grupo))
+        .flatMap(s => s.bloques).map(b => `<option value="${this.escapar(b.clave)}">${this.escapar(b.nombre)}</option>`).join("") : this.opcionesSector());
+    this.controles.sector.value = this.sector;
+  }
+
+  errorRecorte(item, recorte = this.recorte) {
+    if (!recorte.activo || (item && !item.periodo)) return "";
+    if (!Number.isInteger(recorte.desde) || !Number.isInteger(recorte.hasta) ||
+        recorte.desde < 1900 || recorte.hasta > 9999 || recorte.desde > recorte.hasta) {
+      return "Revisa el rango: el año inicial debe ser menor o igual al año final.";
+    }
+    return "";
+  }
+
+  resumenExportacion(item) {
+    const error = this.errorRecorte(item);
+    if (error) return `CSV/Excel: ${error} El Parquet original sigue disponible sin recorte.`;
+    const rango = this.recorte.activo && item.periodo
+      ? `años ${this.recorte.desde}–${this.recorte.hasta}` : "serie completa";
+    const frecuencia = this.esDiaria(item)
+      ? (this.frecuenciaDe(item.id) === "mensual" ? " · cierre mensual, no suma mensual" : " · frecuencia diaria") : "";
+    const sinRecorte = this.recorte.activo && !item.periodo ? " Esta tabla no admite recorte por años." : "";
+    return `CSV/Excel: ${rango}${frecuencia}. Parquet: archivos originales, sin aplicar estos controles.${sinRecorte}`;
+  }
+
+  actualizarAlcances() {
+    if (!this.container) return;
+    this.container.querySelectorAll("[data-scope]").forEach(el => {
+      const item = this.item(el.dataset.scope);
+      if (item) el.textContent = this.resumenExportacion(item);
+    });
+    const error = this.errorRecorte();
+    const aviso = this.container.querySelector("#dl-range-error");
+    if (aviso) {
+      aviso.hidden = !error;
+      aviso.textContent = error;
+    }
+    if (this.controles) {
+      for (const control of [this.controles.yearFrom, this.controles.yearTo]) {
+        control.setAttribute("aria-invalid", error ? "true" : "false");
+        if (error) control.setAttribute("aria-describedby", "dl-range-error");
+        else control.removeAttribute("aria-describedby");
+      }
+    }
+    this.refrescarEstadoMotor();
+  }
+
   aplicarFiltros() {
     if (!this.controles) return;
     const q = this.busqueda;
-    const filtroActivo = Boolean(q) || this.sector !== "todos";
+    const filtroActivo = Boolean(q) || this.sector !== "todos" || this.grupo !== "todos";
     let visibles = 0;
     let enArchivo = 0;
     const grupos = this.container.querySelectorAll(".dl-group");
@@ -553,7 +673,10 @@ class DownloadsPanelController {
         const coincideTexto = !q || fila.dataset.buscar.includes(q);
         const coincideSector = this.sector === "todos" || (fila.dataset.bloque || fila.dataset.sector) === this.sector;
         const fuera = fila.dataset.fuera === "1";
-        const visible = coincideTexto && coincideSector && (!fuera || this.archivoAbierto || filtroActivo);
+        const item = this.item(fila.dataset.id);
+        const coincideGrupo = this.grupo === "todos" || (item && (this.grupo === "archivo"
+          ? ["archivo", "registro"].includes(item.nivel) : item.nivel === this.grupo));
+        const visible = coincideTexto && coincideSector && coincideGrupo && (!fuera || this.archivoAbierto || filtroActivo);
         fila.hidden = !visible;
         if (visible) {
           enGrupo += 1;
@@ -581,10 +704,10 @@ class DownloadsPanelController {
       const total = this.listables().length;
       const partes = [`${window.MFCDownload.numero(visibles)} de ${window.MFCDownload.numero(total)} conjuntos`];
       if (archivo && !filtroActivo && !this.archivoAbierto) partes.push("archivo plegado");
-      if (this.recorte.activo) partes.push(`recorte ${this.recorte.desde}–${this.recorte.hasta}`);
+      if (this.recorte.activo) partes.push(this.errorRecorte() ? "rango de años inválido" : `recorte CSV/Excel ${this.recorte.desde}–${this.recorte.hasta}`);
       this.controles.counter.textContent = partes.join(" · ");
     }
-    this.refrescarEstadoMotor();
+    this.actualizarAlcances();
   }
 
   // Filtra por sector desde fuera (botones de la portada). Acepta claves con alias.
@@ -592,6 +715,17 @@ class DownloadsPanelController {
     this.init();
     if (!this.controles) return;
     const A = this.alcance();
+    // Entrada explícita al catálogo: no arrastrar una búsqueda de otra tabla.
+    this.busqueda = "";
+    this.controles.search.value = "";
+    this.recorte.activo = false;
+    this.controles.yearsOn.checked = false;
+    this.controles.yearFrom.disabled = true;
+    this.controles.yearTo.disabled = true;
+    this.grupo = "todos";
+    const grupoSelect = this.container.querySelector("#dl-group");
+    if (grupoSelect) grupoSelect.value = "todos";
+    this.actualizarSectores();
     const bloque = this.bloqueDe(A ? A.clave(clave) : clave) || clave;
     const existe = Array.from(this.controles.sector.options).some((o) => o.value === bloque);
     this.sector = existe ? bloque : "todos";
@@ -611,12 +745,13 @@ class DownloadsPanelController {
       const item = this.item(boton.dataset.id);
       const bloqueado = !disponible || (item && sinPublicar.includes(item.id));
       boton.classList.toggle("dl-btn-off", bloqueado);
-      boton.disabled = Boolean(item && sinPublicar.includes(item.id));
-      boton.title = bloqueado
+      const rangoInvalido = this.errorRecorte(item);
+      boton.disabled = Boolean(boton.classList.contains("dl-btn-busy") || rangoInvalido || (item && sinPublicar.includes(item.id)));
+      boton.title = rangoInvalido || (bloqueado
         ? (disponible
           ? "Esta vista no se pudo publicar en el motor de consulta. Baja el Parquet original."
           : "El motor de consulta no está disponible aquí. Puedes bajar el Parquet original o exportar lo que ves en pantalla.")
-        : `Descargar ${boton.textContent.trim()} de la serie completa (motor DuckDB en tu navegador)`;
+        : `Descargar ${boton.textContent.trim()}: ${item ? this.resumenExportacion(item) : "datos publicados"}`);
     });
     this.container.querySelectorAll(".dl-item").forEach((fila) => {
       const noPublicada = sinPublicar.includes(fila.dataset.id);
@@ -684,63 +819,70 @@ class DownloadsPanelController {
       .filter((c) => c !== "fecha" && c !== "periodo");
   }
 
-  filtroRecorte(item) {
-    if (this.recorte.activo && item.periodo) {
-      return ` WHERE periodo >= '${this.recorte.desde}-01' AND periodo <= '${this.recorte.hasta}-12'`;
+  filtroRecorte(item, recorte = this.recorte) {
+    const error = this.errorRecorte(item, recorte);
+    if (error) throw new Error(error);
+    if (recorte.activo && item.periodo) {
+      return ` WHERE periodo >= '${recorte.desde}-01' AND periodo <= '${recorte.hasta}-12'`;
     }
     return "";
   }
 
-  sqlSerie(item) {
-    return `SELECT * FROM ${item.id}` + this.filtroRecorte(item);
+  sqlSerie(item, recorte = this.recorte) {
+    return `SELECT * FROM ${item.id}` + this.filtroRecorte(item, recorte);
   }
 
-  sqlSerieMensual(item, columnas) {
+  sqlSerieMensual(item, columnas, recorte = this.recorte) {
     const partes = columnas.flatMap((c) => [
       `arg_max(${c}, fecha) FILTER (WHERE ${c} IS NOT NULL) AS ${c}`,
       `max(fecha) FILTER (WHERE ${c} IS NOT NULL) AS ${c}_fecha_dato`
     ]);
-    return `SELECT periodo, ${partes.join(", ")} FROM ${item.id}${this.filtroRecorte(item)} GROUP BY periodo ORDER BY periodo`;
+    return `SELECT periodo, ${partes.join(", ")} FROM ${item.id}${this.filtroRecorte(item, recorte)} GROUP BY periodo ORDER BY periodo`;
   }
 
   async exportarSerie(id, formato, boton) {
     const item = this.item(id);
     if (!item) return;
+    // Congelar el alcance al hacer clic, antes de cualquier espera del motor.
+    const recorte = { ...this.recorte };
+    const mensual = this.esDiaria(item) && this.frecuenciaDe(item.id) === "mensual";
+    const errorRango = this.errorRecorte(item, recorte);
+    if (errorRango) { this.avisar(errorRango); return; }
     const motor = window.DuckDBClient;
     if (!motor || typeof motor.query !== "function") {
       this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
       return;
     }
-    // Primera descarga con motor: se levanta aquí y se avisa en el botón.
-    if (!motor.engineAvailable && typeof motor.ensureStarted === "function") {
-      this.avisar("Cargando el motor de consulta en tu navegador…", 6000);
-      await motor.ensureStarted();
-    }
-    if (!motor.engineAvailable) {
-      this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
-      return;
-    }
-    const mensual = this.esDiaria(item) && this.frecuenciaDe(item.id) === "mensual";
-    let sql = this.sqlSerie(item);
-    if (mensual) {
-      try {
-        sql = this.sqlSerieMensual(item, await this.columnasIndicador(item));
-      } catch (err) {
-        this.avisar("No se pudo preparar la versión mensual: " + (err && err.message ? err.message : err));
+    await this.conBoton(boton, async () => {
+      // Primera descarga con motor: se levanta aquí y se avisa en el botón.
+      if (!motor.engineAvailable && typeof motor.ensureStarted === "function") {
+        this.avisar("Cargando el motor de consulta en tu navegador…", 6000);
+        await motor.ensureStarted();
+      }
+      if (!motor.engineAvailable) {
+        this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
         return;
       }
-    }
-    const nombreArchivo = mensual ? `${item.id}_mensual_cierre` : item.id;
-    const estimado = mensual ? 0 : (item.filas || 0);
-    if (estimado > 600000) {
-      const seguir = window.confirm(
-        `Vista ${item.id}: ${window.MFCDownload.numero(estimado)} filas.\n\n` +
-        "Generar el archivo en el navegador puede tardar y consumir bastante memoria. " +
-        "El Parquet original es más rápido y pesa menos.\n\n¿Continuar con la descarga?"
-      );
-      if (!seguir) return;
-    }
-    await this.conBoton(boton, async () => {
+      let sql = this.sqlSerie(item, recorte);
+      if (mensual) {
+        try {
+          sql = this.sqlSerieMensual(item, await this.columnasIndicador(item), recorte);
+        } catch (err) {
+          this.avisar("No se pudo preparar la versión mensual: " + (err && err.message ? err.message : err));
+          return;
+        }
+      }
+      const sufijoRango = recorte.activo && item.periodo ? `_${recorte.desde}_${recorte.hasta}` : "";
+      const nombreArchivo = (mensual ? `${item.id}_mensual_cierre` : item.id) + sufijoRango;
+      const estimado = mensual ? 0 : (item.filas || 0);
+      if (estimado > 600000) {
+        const seguir = window.confirm(
+          `Vista ${item.id}: ${window.MFCDownload.numero(estimado)} filas.\n\n` +
+          "Generar el archivo en el navegador puede tardar y consumir bastante memoria. " +
+          "El Parquet original es más rápido y pesa menos.\n\n¿Continuar con la descarga?"
+        );
+        if (!seguir) return;
+      }
       this.avisar(`Consultando ${item.id}…`, 4000);
       const res = await motor.query(sql);
       if (!res || !res.success) {
@@ -777,11 +919,15 @@ class DownloadsPanelController {
   /* ── Apoyo ────────────────────────────────────────────────────────────── */
 
   async conBoton(boton, tarea) {
-    if (this.ocupado) return;
+    if (this.ocupado) {
+      this.avisar("Ya hay una descarga en preparación. Espera a que termine antes de iniciar otra.");
+      return;
+    }
     this.ocupado = true;
     const textoOriginal = boton ? boton.textContent : "";
     if (boton) {
       boton.disabled = true;
+      boton.setAttribute("aria-busy", "true");
       boton.classList.add("dl-btn-busy");
       boton.textContent = "Preparando…";
     }
@@ -794,9 +940,11 @@ class DownloadsPanelController {
       this.ocupado = false;
       if (boton) {
         boton.disabled = false;
+        boton.removeAttribute("aria-busy");
         boton.classList.remove("dl-btn-busy");
         boton.textContent = textoOriginal;
       }
+      this.refrescarEstadoMotor();
     }
   }
 

@@ -105,6 +105,12 @@ jobs:
           python -m unittest scripts.test_generar_indice_busqueda -v
           python scripts/generar_indice_busqueda.py --check
           node scripts/test_busqueda.js
+      - name: 'Contexto, borradores SQL y exportaciones completas'
+        run: |
+          node scripts/test_table_context.js
+          node scripts/test_sql_draft.js
+          node scripts/test_download_exports.js
+          node scripts/test_download_scope.js
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
 
       - name: Caché del detector de diseño
@@ -529,10 +535,13 @@ jobs:
           npm install --no-save --no-audit --no-fund jsdom
           node scripts/audit_interfaz_dom.js > dom.log 2>&1; n=$?
           node scripts/test_busqueda_dom.js > busqueda_dom.log 2>&1; b=$?
+          node scripts/test_sql_draft_dom.js > sql_draft_dom.log 2>&1; s=$?
+          node scripts/test_viewer_states_dom.js > viewer_states_dom.log 2>&1; v=$?
           grep -h -E "^FALLA" dom.log busqueda_dom.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=DOM::$linea"; done
           echo "::notice title=DOM::$(tail -n 1 dom.log)"
           tail -n 2 busqueda_dom.log
-          exit $(( n | b ))
+          cat sql_draft_dom.log viewer_states_dom.log
+          exit $(( n | b | s | v ))
 
       - name: 'Aviso de teléfono: flota, se cierra por las tres vías y lo recuerda'
         run: |

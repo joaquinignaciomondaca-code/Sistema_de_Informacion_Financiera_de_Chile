@@ -2788,7 +2788,8 @@ const DICT_FILTROS_ARCHIVO = [
 class DataDictionaryController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.currentSector = "principal";
+    this.currentSector = "todos";
+    this.currentGroup = "todos";
     this.searchQuery = "";
     this.mostrarArchivo = false;
   }
@@ -2819,7 +2820,10 @@ class DataDictionaryController {
   // ¿Entra la tabla en el filtro activo?
   incluye(d, filtro) {
     const A = this.alcance();
-    if (filtro === "todos") return true;
+    if (filtro === "todos") {
+      if (this.currentGroup === "todos") return true;
+      return this.gruposFiltro()[this.currentGroup].sectores.some(([id]) => this.incluye(d, id));
+    }
     if (A && A.tablaOculta(d.id)) return false;
     if (filtro === "principal") return !A || A.esVisible(d.sector);
     if (A) return A.sectoresDe(filtro).indexOf(A.clave(d.sector)) !== -1;
@@ -2844,25 +2848,28 @@ class DataDictionaryController {
     return DICT_FILTROS_ARCHIVO.some(([sec]) => sec === filtro);
   }
 
+  gruposFiltro() {
+    return {
+      nucleo: { nombre: "Inversión institucional", sectores: [["seguros", "Seguros"], ["ffmm", "Fondos mutuos"], ["fi", "Fondos de inversión"]] },
+      secundario: { nombre: "Instituciones y estados financieros", sectores: [["bancos", "Bancos"], ["agf", "Administradoras generales de fondos"], ["corredoras_bolsa", "Corredoras de bolsa"]] },
+      contexto: { nombre: "Contexto macroeconómico", sectores: [["macro", "Macroeconomía y tasas"]] },
+      archivo: { nombre: "Archivo y registros", sectores: DICT_FILTROS_ARCHIVO.filter(([id]) => id !== "todos") }
+    };
+  }
+
   botonesFiltro() {
-    const boton = (sec, etiqueta, extra) =>
-      `<button type="button" class="dict-filter-btn ${extra || ""} ${this.currentSector === sec ? "active" : ""}" data-sec="${sec}">${etiqueta}</button>`;
-    let html = boton("principal", "Principal", "dict-filter-principal");
-    DICT_FILTROS_PRINCIPALES.forEach((grupo) => {
-      html += `<span class="dict-filter-sep" aria-hidden="true"></span>`;
-      html += grupo.map(([sec, etiqueta]) => boton(sec, etiqueta)).join("");
-    });
-    if (!this.alcance()) {
-      // Sin alcance editorial: todos los filtros a la vista, como antes del recorte.
-      return html + DICT_FILTROS_ARCHIVO.map(([sec, etiqueta]) => boton(sec, etiqueta)).join("");
-    }
-    const abierto = this.mostrarArchivo || this.filtroDeArchivo(this.currentSector);
-    html += `<button type="button" class="dict-archive-toggle ${abierto ? "open" : ""}" aria-expanded="${abierto ? "true" : "false"}"
-              title="Industrias fuera del foco de esta edición: siguen documentadas">Archivo y registros</button>`;
-    if (abierto) {
-      html += DICT_FILTROS_ARCHIVO.map(([sec, etiqueta]) => boton(sec, etiqueta, "dict-filter-fuera")).join("");
-    }
-    return html;
+    const grupos = this.gruposFiltro();
+    const sectores = this.currentGroup === "todos"
+      ? Object.values(grupos).flatMap(g => g.sectores) : grupos[this.currentGroup].sectores;
+    return `<label class="erd-filter-field" for="dict-group-select">Grupo
+      <select id="dict-group-select"><option value="todos">Todos los grupos</option>
+        ${Object.entries(grupos).map(([id, g]) => `<option value="${id}" ${this.currentGroup === id ? "selected" : ""}>${g.nombre}</option>`).join("")}
+      </select></label>
+      <label class="erd-filter-field" for="dict-sector-select">Sector
+      <select id="dict-sector-select"><option value="todos">Todos los sectores</option>
+        ${sectores.map(([id, nombre]) => `<option value="${id}" ${this.currentSector === id ? "selected" : ""}>${nombre}</option>`).join("")}
+      </select></label>
+      <button type="button" class="dict-filter-btn" id="dict-clear-filters">Limpiar filtros</button>`;
   }
 
   // Aviso de alcance en las fichas de industrias archivadas o tablas ocultas.
@@ -2928,11 +2935,13 @@ class DataDictionaryController {
   }
 
   setFilter(sector) {
+    this.selectedTableId = null;
     this.currentSector = sector;
     this.render();
   }
 
   setSearch(query) {
+    this.selectedTableId = null;
     this.searchQuery = query.toLowerCase().trim();
     this.render();
   }
@@ -2951,15 +2960,20 @@ class DataDictionaryController {
   render() {
     if (!this.container) return;
 
+    const grupos = this.gruposFiltro();
+    if (this.currentSector !== "todos" && this.currentSector !== "principal") {
+      const grupo = Object.keys(grupos).find(g => grupos[g].sectores.some(([id]) => id === this.currentSector));
+      if (grupo && this.currentGroup !== "todos") this.currentGroup = grupo;
+    }
     const A = this.alcance();
     const rango = (d) => (A ? A.rangoNivel(A.nivelDe(d.sector)) * 100 + A.orden(d.sector) : 0);
     // Orden editorial (núcleo primero); dentro de cada sector se respeta el del catálogo.
     const filtered = DATA_DICTIONARY
-      .filter(d => this.incluye(d, this.currentSector) && this.coincideBusqueda(d))
+      .filter(d => (!this.selectedTableId || d.id === this.selectedTableId) && this.incluye(d, this.currentSector) && this.coincideBusqueda(d))
       .sort((a, b) => rango(a) - rango(b));
     // Si la búsqueda no encuentra nada en el filtro activo, se avisa cuántas fichas
     // coinciden en el catálogo completo (archivo y tablas ocultas incluidas).
-    const enTodo = (filtered.length === 0 && this.searchQuery && this.currentSector !== "todos")
+    const enTodo = (filtered.length === 0 && this.searchQuery && (this.currentSector !== "todos" || this.currentGroup !== "todos"))
       ? DATA_DICTIONARY.filter(d => this.coincideBusqueda(d)).length
       : 0;
 
@@ -2973,12 +2987,16 @@ class DataDictionaryController {
           <div class="dict-sector-filters">
             ${this.botonesFiltro()}
           </div>
+          <div class="dict-results-count" role="status">${filtered.length} tablas encontradas</div>
+          <details class="dict-update-help"><summary>Cómo se actualizan los datos</summary>
           <div class="dict-mode-legend" title="La modalidad describe la extracción y la publicación, no solo si existe un workflow de Actions.">
             <span class="dict-mode-legend-label">Modalidad:</span>
             <span class="dict-mode-badge mode-auto">Automático</span>
             <span class="dict-mode-badge mode-hybrid">Híbrido</span>
             <span class="dict-mode-badge mode-manual">Manual</span>
           </div>
+          <p>La modalidad describe cómo se extraen y publican los datos. La frecuencia programada no garantiza una actualización: la fecha de cada ficha indica la última actualización registrada.</p>
+          </details>
         </div>
 
         <!-- Lista de Tablas y sus Columnas -->
@@ -2990,7 +3008,7 @@ class DataDictionaryController {
                   <span class="dict-table-name">${table.name}</span>
                   <span class="dict-view-badge">Vista: <code>${table.viewName}</code></span>
                   <span class="dict-norma-badge">${table.norma}</span>
-                  <span class="dict-mode-badge mode-${modalidadDatos(table.modo)}" title="${table.modoAyuda || ayudaModalidadDatos(table.modo)}">${table.modo || 'Automático'}</span>
+                  <span class="dict-mode-badge mode-${modalidadDatos(table.modo)}" title="${table.modoAyuda || ayudaModalidadDatos(table.modo)}">${modalidadDatos(table.modo) === 'auto' ? 'Automático' : modalidadDatos(table.modo) === 'hybrid' ? 'Híbrido' : 'Manual'}</span>
                 </div>
                 <div class="dict-card-meta">
                   <span class="dict-freshness-tag">
@@ -3017,10 +3035,12 @@ class DataDictionaryController {
                 </div>
               ` : ''}
               ${table.origen ? `
+                <details class="dict-source-details"><summary>Procedencia y detalles de actualización</summary>
+                <p>${table.modoAyuda || ayudaModalidadDatos(table.modo)}</p>
                 <div class="dict-table-source">
                   <span class="source-badge">Origen de Datos</span>
                   <span class="source-text">${this.renderSource(table.origen)}</span>
-                </div>
+                </div></details>
               ` : ''}
 
               <!-- Tabla de columnas -->
@@ -3085,8 +3105,30 @@ class DataDictionaryController {
 
     this.container.querySelectorAll(".dict-filter-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
+        if (!e.currentTarget.dataset.sec) return;
+        this.currentGroup = "todos";
         this.setFilter(e.currentTarget.dataset.sec);
       });
+    });
+
+    const grupoSelect = this.container.querySelector("#dict-group-select");
+    const sectorSelect = this.container.querySelector("#dict-sector-select");
+    grupoSelect.addEventListener("change", e => {
+      this.currentGroup = e.target.value;
+      this.setFilter("todos");
+      this.container.querySelector("#dict-group-select").focus();
+    });
+    sectorSelect.addEventListener("change", e => {
+      this.setFilter(e.target.value);
+      this.container.querySelector("#dict-sector-select").focus();
+    });
+    this.container.querySelector("#dict-clear-filters").addEventListener("click", () => {
+      this.selectedTableId = null;
+      this.currentGroup = "todos";
+      this.currentSector = "todos";
+      this.searchQuery = "";
+      this.render();
+      this.container.querySelector("#dict-search-input").focus();
     });
 
     const archivoBtn = this.container.querySelector(".dict-archive-toggle");

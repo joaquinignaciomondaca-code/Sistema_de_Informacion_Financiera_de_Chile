@@ -2478,22 +2478,28 @@ class ERDGraph {
       this.render();
     });
 
-    // Filtros
-    document.querySelectorAll(".filter-btn").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const targetFilter = e.currentTarget.dataset.filter;
-        this.focusSector(targetFilter);
-      });
+    const esquemaBtn = document.getElementById("erd-open-schema");
+    if (esquemaBtn) esquemaBtn.addEventListener("click", () => {
+      const seleccionado = window.SIFTableContext && window.SIFTableContext.selected;
+      const node = seleccionado && this.tables.find(t => t.id === seleccionado.id);
+      if (node) this.showSchemaModal(node);
     });
 
-    // Archivo y registros: sus filtros quedan plegados detrás de un botón propio.
-    const archivoBtn = document.getElementById("erd-archive-toggle");
-    if (archivoBtn) {
-      archivoBtn.addEventListener("click", () => {
-        const fila = document.getElementById("erd-archive-filters");
-        this.mostrarFiltrosArchivo(Boolean(fila && fila.hidden));
+    const grupo = document.getElementById("erd-group-select");
+    const sector = document.getElementById("erd-sector-select");
+    if (grupo && sector) {
+      grupo.addEventListener("change", () => {
+        const opciones = this.gruposFiltro()[grupo.value];
+        this.focusSector(opciones[0][0]);
       });
+      sector.addEventListener("change", () => this.focusSector(sector.value));
+      document.getElementById("erd-fit-view").addEventListener("click", () => {
+        this.autoCenterSector();
+        this.render();
+      });
+      this.syncFilterUi();
     }
+
   }
 
   /* ── Alcance editorial: qué nodos entran en cada filtro ──────────────────
@@ -2550,8 +2556,34 @@ class ERDGraph {
     }
   }
 
+  gruposFiltro() {
+    return {
+      nucleo: [["seguros", "Seguros"], ["ffmm", "Fondos mutuos"], ["fi", "Fondos de inversión"]],
+      secundario: [["bancos", "Bancos"], ["agf", "Administradoras generales de fondos"], ["corredoras_bolsa", "Corredoras de bolsa"]],
+      contexto: [["macro", "Macroeconomía y tasas"]],
+      archivo: [["factoring_leasing", "Factoring y leasing"], ["securitizacion", "Securitización"], ["cajas_compensacion", "Cajas de compensación"], ["registro", "Registros de entidades"], ["pensiones", "Fondos de pensiones · entidades"], ["cooperativas", "Cooperativas · entidades"], ["sistemas_pago", "Sistemas de pago · entidades"], ["fintech", "Fintech · entidades"]],
+      general: [["todos", "Vista principal"], ["completo", "Mapa completo, incluido archivo"]]
+    };
+  }
+
   // Botón activo, fila de archivo y aviso de alcance según el filtro vigente.
   syncFilterUi() {
+    const grupo = document.getElementById("erd-group-select");
+    const sector = document.getElementById("erd-sector-select");
+    if (grupo && sector) {
+      const grupos = this.gruposFiltro();
+      const clave = Object.keys(grupos).find(g => grupos[g].some(([id]) => id === this.filter));
+      if (clave) {
+        grupo.value = clave;
+        sector.replaceChildren(...grupos[clave].map(([id, nombre]) => {
+          const option = document.createElement("option");
+          option.value = id;
+          option.textContent = nombre;
+          return option;
+        }));
+        sector.value = this.filter;
+      }
+    }
     document.querySelectorAll(".filter-btn").forEach((b) => {
       b.classList.toggle("active", b.dataset.filter === this.filter);
     });
@@ -2659,14 +2691,11 @@ class ERDGraph {
   }
 
   onTableSelect(node) {
-    const query = `SELECT * FROM ${node.id} LIMIT 10;`;
-    if (window.ChatTerminal) {
-      window.ChatTerminal.setQueryInput(query, node.name);
-    }
-    if (window.DataViewer) {
-      window.DataViewer.loadTable(node.id, node.name);
-    }
-    this.showSchemaModal(node);
+    // Seleccionar no debe abrir un diálogo, mover el foco ni iniciar DuckDB.
+    if (window.cerrarEsquema) window.cerrarEsquema();
+    if (window.SIFTableContext) window.SIFTableContext.select(node.id, node.name);
+    this.hoveredNode = node;
+    this.render();
   }
 
   showSchemaModal(node) {
@@ -2700,9 +2729,9 @@ class ERDGraph {
     abrirDatos.className = "schema-open-btn";
     abrirDatos.textContent = "Explorar datos de esta tabla →";
     abrirDatos.addEventListener("click", () => {
-      if (window.switchMainTab) window.switchMainTab("data");
+      if (window.SIFTableContext) window.SIFTableContext.select(node.id, node.name);
       if (window.DataViewer) window.DataViewer.loadTable(node.id, node.name);
-      if (window.cerrarEsquema) window.cerrarEsquema();
+      if (window.switchMainTab) window.switchMainTab("data");
     });
     actionContainer.replaceChildren(abrirDatos);
 
@@ -2715,6 +2744,9 @@ class ERDGraph {
   }
 
   render() {
+    const seleccionado = window.SIFTableContext && window.SIFTableContext.selected;
+    const esquemaBtn = document.getElementById("erd-open-schema");
+    if (esquemaBtn) esquemaBtn.disabled = !seleccionado || !this.tables.some(t => t.id === seleccionado.id);
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -2736,7 +2768,7 @@ class ERDGraph {
     // 4. Nombre completo del nodo bajo el puntero y leyenda de cardinalidad:
     //    los dos van fuera de la transformación, fijos en la esquina.
     this.drawTooltip(ctx);
-    this.drawLeyendaCardinalidad(ctx);
+    // La leyenda vive en HTML desplegable, accesible y fuera del canvas.
   }
 
   drawLeyendaCardinalidad(ctx) {
@@ -2876,6 +2908,7 @@ class ERDGraph {
     this.tables.forEach((t) => {
       if (!this.matchesFilter(t)) return;
       const isHovered = this.hoveredNode === t;
+      const isSelected = Boolean(window.SIFTableContext && window.SIFTableContext.selected && window.SIFTableContext.selected.id === t.id);
 
       ctx.save();
       // Sombra
@@ -2888,8 +2921,8 @@ class ERDGraph {
       ctx.fill();
 
       // Borde
-      ctx.strokeStyle = isHovered ? accent : borderColor;
-      ctx.lineWidth = isHovered ? 2 : 1;
+      ctx.strokeStyle = isHovered || isSelected ? accent : borderColor;
+      ctx.lineWidth = isHovered || isSelected ? 2 : 1;
       ctx.stroke();
       ctx.restore();
 
