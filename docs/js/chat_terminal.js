@@ -335,10 +335,14 @@ class ChatTerminalController {
   }
 
   setQueryInput(sql, tableName, preserveDraft = false) {
-    if (preserveDraft && this.input.value.trim()) return;
+    const actual = this.input.value.trim();
+    if (preserveDraft && actual) return false;
+    if (!preserveDraft && actual && actual !== sql.trim() &&
+        !window.confirm("Hay una consulta en el editor. ¿Quieres reemplazarla por la consulta seleccionada?")) return false;
     this.input.value = sql;
     this.input.focus();
     this.addSystemMessage(`Tabla seleccionada: <b>${this.escapeHtml(tableName)}</b>. Presiona Enter o clic en Ejecutar para consultar.`);
+    return true;
   }
 
   setCustomChips(chips, contextTitle) {
