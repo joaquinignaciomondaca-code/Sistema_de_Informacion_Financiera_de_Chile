@@ -49,6 +49,8 @@ window.SIFTableContext = (() => {
     applied.set(tab, revision);
   }
   function clear() {
+    const barra = document.getElementById("table-context");
+    const focoEnBarra = barra && barra.contains(document.activeElement);
     const anterior = selected;
     selected = null;
     revision++;
@@ -67,6 +69,10 @@ window.SIFTableContext = (() => {
     if (window.erdInstance && typeof window.erdInstance.render === "function") window.erdInstance.render();
     if (window.cerrarEsquema) window.cerrarEsquema();
     paint();
+    if (focoEnBarra) {
+      const tab = document.querySelector('.panel-tabs [role="tab"][aria-selected="true"]');
+      if (tab) tab.focus();
+    }
   }
   return { select, apply, clear, follow(tab) { applied.delete(tab); apply(tab); }, get selected() { return selected; } };
 })();
