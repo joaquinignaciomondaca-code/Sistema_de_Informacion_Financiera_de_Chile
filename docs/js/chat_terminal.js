@@ -58,8 +58,7 @@ class ChatTerminalController {
       chip.addEventListener("click", (e) => {
         const query = e.currentTarget.dataset.query;
         if (query) {
-          this.input.value = query;
-          this.handleSend();
+          this.runSuggestedQuery(query);
         }
       });
     });
@@ -122,7 +121,7 @@ class ChatTerminalController {
       try {
         const sql = decodeURIComponent(hash.substring(5));
         if (sql) {
-          this.input.value = sql;
+          if (!this.replaceQuery(sql)) return;
           // Un enlace compartido ejecuta SQL en el navegador de quien lo abre.
           // Decirlo evita que una consulta ajena pase por propia: el visitante ve
           // el texto antes del resultado y puede borrarlo sin ejecutarlo.
@@ -133,7 +132,8 @@ class ChatTerminalController {
             "(o bórrala y escribe la tuya)."
           );
           setTimeout(() => {
-            this.handleSend();
+            // No ejecutar un borrador distinto escrito mientras se esperaba.
+            if (this.input.value === sql) this.handleSend();
           }, 600);
         }
       } catch (err) {
@@ -293,7 +293,7 @@ class ChatTerminalController {
         const idx = parseInt(item.dataset.index, 10);
         const q = queries[idx];
         if (q) {
-          this.input.value = q.sql;
+          if (!this.replaceQuery(q.sql)) return;
           document.getElementById("saved-queries-modal").classList.remove("visible");
           const triggerBtn = document.getElementById("btn-show-favorites");
           if (triggerBtn) triggerBtn.setAttribute("aria-expanded", "false");
@@ -334,13 +334,24 @@ class ChatTerminalController {
     this.renderFavoritesList();
   }
 
-  setQueryInput(sql, tableName, preserveDraft = false) {
+  replaceQuery(sql, preserveDraft = false) {
     const actual = this.input.value.trim();
     if (preserveDraft && actual) return false;
     if (!preserveDraft && actual && actual !== sql.trim() &&
         !window.confirm("Hay una consulta en el editor. ¿Quieres reemplazarla por la consulta seleccionada?")) return false;
     this.input.value = sql;
     this.input.focus();
+    return true;
+  }
+
+  runSuggestedQuery(sql) {
+    if (!this.replaceQuery(sql)) return false;
+    this.handleSend();
+    return true;
+  }
+
+  setQueryInput(sql, tableName, preserveDraft = false) {
+    if (!this.replaceQuery(sql, preserveDraft)) return false;
     this.addSystemMessage(`Tabla seleccionada: <b>${this.escapeHtml(tableName)}</b>. Presiona Enter o clic en Ejecutar para consultar.`);
     return true;
   }
@@ -356,8 +367,7 @@ class ChatTerminalController {
       chip.addEventListener("click", (e) => {
         const query = e.currentTarget.dataset.query;
         if (query) {
-          this.input.value = query;
-          this.handleSend();
+          this.runSuggestedQuery(query);
         }
       });
     });
@@ -371,8 +381,7 @@ class ChatTerminalController {
       chip.addEventListener("click", (e) => {
         const query = e.currentTarget.dataset.query;
         if (query) {
-          this.input.value = query;
-          this.handleSend();
+          this.runSuggestedQuery(query);
         }
       });
     });
