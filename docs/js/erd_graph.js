@@ -2731,7 +2731,6 @@ class ERDGraph {
     abrirDatos.addEventListener("click", () => {
       if (window.SIFTableContext) window.SIFTableContext.select(node.id, node.name);
       if (window.DataViewer) window.DataViewer.loadTable(node.id, node.name);
-      if (window.cerrarEsquema) window.cerrarEsquema();
       if (window.switchMainTab) window.switchMainTab("data");
     });
     actionContainer.replaceChildren(abrirDatos);
