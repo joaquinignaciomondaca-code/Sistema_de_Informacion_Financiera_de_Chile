@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261027-0730-recorrido-interno-sql">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261027-0734-explorar-conjuntos-contexto">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -259,6 +259,7 @@
                 <div class="info-hero-actions">
                   <a class="info-hero-btn info-hero-btn-primary" href="#catalogo-principal">Explorar por sector <span aria-hidden="true">↘</span></a>
                   <button type="button" class="info-hero-btn info-hero-btn-secondary" data-portada="descargas">Ver descargas <span aria-hidden="true">→</span></button>
+                  <button type="button" class="info-core-btn" data-portada="mapa">Entender relaciones entre tablas</button>
                 </div>
                 <p class="info-hero-capabilities"><span>Parquet, CSV y Excel</span><i aria-hidden="true"></i><span>SQL en tu navegador</span><i aria-hidden="true"></i><span>Sin registro</span></p>
               </div>
@@ -292,19 +293,19 @@
                   <div class="info-core-head"><span class="info-card-icon">SE</span><div><h3>Seguros</h3><span class="info-core-source">CMF · Circular 1835</span></div></div>
                   <p>Carteras mensuales de renta fija, acciones, fondos, bienes raíces y derivados.</p>
                   <p class="info-core-meta" data-alcance="sector.seguros.resumen">24 elementos · más de 10 M filas · 2016–2026</p>
-                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="seguros">Explorar seguros <span aria-hidden="true">→</span></button></div>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="seguros">Explorar seguros <span aria-hidden="true">→</span></button><button type="button" class="info-core-btn" data-portada="mapa" data-sector="seguros">Ver relaciones</button></div>
                 </article>
                 <article class="info-core-card" data-sector="ffmm">
                   <div class="info-core-head"><span class="info-card-icon">FM</span><div><h3>Fondos mutuos</h3><span class="info-core-source">CMF · Circular 1333 · IFRS</span></div></div>
                   <p>Carteras por instrumento y emisor, derivados y estados IFRS anuales.</p>
                   <p class="info-core-meta" data-alcance="sector.ffmm.resumen">7 elementos · más de 3,6 M filas · 2001–2026</p>
-                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="ffmm">Explorar fondos mutuos <span aria-hidden="true">→</span></button></div>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="ffmm">Explorar fondos mutuos <span aria-hidden="true">→</span></button><button type="button" class="info-core-btn" data-portada="mapa" data-sector="ffmm">Ver relaciones</button></div>
                 </article>
                 <article class="info-core-card" data-sector="fi">
                   <div class="info-core-head"><span class="info-card-icon">FI</span><div><h3>Fondos de inversión</h3><span class="info-core-source">CMF · Ley Única de Fondos · IFRS</span></div></div>
                   <p>Carteras trimestrales, inversiones valorizadas y estados financieros por fondo.</p>
                   <p class="info-core-meta" data-alcance="sector.fi.resumen">9 elementos · más de 3,1 M filas · 2012–2026</p>
-                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="fi">Explorar fondos de inversión <span aria-hidden="true">→</span></button></div>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="fi">Explorar fondos de inversión <span aria-hidden="true">→</span></button><button type="button" class="info-core-btn" data-portada="mapa" data-sector="fi">Ver relaciones</button></div>
                 </article>
               </div>
             </section>
@@ -766,29 +767,29 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/alcance.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/sidebar.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/creditos.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/table_context.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/download_utils.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/portada.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
-  <script src="js/como_usar.js?v=fl-20261027-0730-recorrido-interno-sql" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/alcance.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/sidebar.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/creditos.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/table_context.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/download_utils.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/portada.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
+  <script src="js/como_usar.js?v=fl-20261027-0734-explorar-conjuntos-contexto" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

@@ -348,6 +348,25 @@ class DownloadsPanelController {
     `;
   }
 
+  fichaContexto(item) {
+    // Reutiliza metadatos publicados, no redacta una segunda ficha editorial.
+    const tabla = (window.SIFDataDictionary || []).find(t => t.id === item.id);
+    const campos = [
+      ["Cobertura declarada", item.cobertura],
+      ["Frecuencia", tabla && tabla.frecuencia],
+      ["Última actualización", item.actualizado || (tabla && tabla.ultimaActualizacion)],
+      ["Fuente", item.fuente]
+    ].filter(([, valor]) => valor);
+    const filas = campos.map(([etiqueta, valor]) => `<div><dt>${this.escapar(etiqueta)}</dt><dd>${this.escapar(valor)}</dd></div>`).join("");
+    return `<details class="dl-dataset-context">
+      <summary>Entender este conjunto antes de usarlo</summary>
+      <dl>${filas}</dl>
+      <p>La muestra del Visor no es la tabla completa. Para interpretar y sumar importes, consulta el significado de las columnas, sus unidades y monedas y las observaciones de la fuente.</p>
+      <button type="button" class="dl-btn dl-btn-ghost" data-action="diccionario" data-id="${this.escapar(item.id)}">Entender las columnas</button>
+      ${item.id === "ccaf_lista_entidades" ? '<a class="dl-btn dl-btn-ghost" href="datos/ccaf_lista_entidades/">Abrir ficha técnica piloto · URL propia</a>' : ""}
+    </details>`;
+  }
+
   tarjeta(item) {
     const filas = item.filas === null || item.filas === undefined
       ? "filas: se cuentan al consultar"
@@ -392,6 +411,7 @@ class DownloadsPanelController {
                data-buscar="${this.escapar((item.id + " " + item.nombre + " " + item.detalle + " " + item.grupo).toLowerCase())}">
         <div class="dl-item-main">
           <div class="dl-item-title">
+            <strong>${this.escapar(item.detalle || item.nombre)}</strong>
             <code>${this.escapar(item.nombre)}</code>
             ${etiquetas.join("")}
           </div>
@@ -399,6 +419,7 @@ class DownloadsPanelController {
             ${this.escapar(item.descripcion || "")}${item.descripcion ? " · " : ""}${filas} · ${archivos} · ${periodo}
           </div>
           ${fuente}
+          ${this.fichaContexto(item)}
         </div>
         <div class="dl-item-actions">
           ${this.selectorFrecuencia(item)}
@@ -552,6 +573,13 @@ class DownloadsPanelController {
         this.descargarPantalla(boton.dataset.fmt, boton);
       } else if (accion === "csv" || accion === "xlsx") {
         this.exportarSerie(id, accion, boton);
+      } else if (accion === "diccionario") {
+        const item = this.item(id);
+        if (item && window.SIFTableContext) {
+          window.SIFTableContext.select(id, item.nombre);
+          window.SIFTableContext.follow("dict");
+          if (window.switchMainTab) window.switchMainTab("dict");
+        }
       } else if (accion === "visor") {
         const item = this.item(id);
         if (item && window.DataViewer) {
@@ -642,6 +670,13 @@ class DownloadsPanelController {
     this.init();
     if (!this.controles) return;
     const A = this.alcance();
+    // Entrada explícita al catálogo: no arrastrar una búsqueda de otra tabla.
+    this.busqueda = "";
+    this.controles.search.value = "";
+    this.recorte.activo = false;
+    this.controles.yearsOn.checked = false;
+    this.controles.yearFrom.disabled = true;
+    this.controles.yearTo.disabled = true;
     this.grupo = "todos";
     const grupoSelect = this.container.querySelector("#dl-group");
     if (grupoSelect) grupoSelect.value = "todos";
