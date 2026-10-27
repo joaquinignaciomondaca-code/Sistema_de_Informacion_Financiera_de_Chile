@@ -8,11 +8,63 @@ Suite integral de auditoría y verificación de calidad y consistencia contable 
   4. patrimonios_separados_balance (parquet)
 """
 
-import os
-import sys
 import json
+import os
+import unicodedata
+
 import pandas as pd
-import numpy as np
+
+
+CLAVES_BALANCE = ["periodo", "rut", "tipo_balance", "estado_financiero"]
+TOLERANCIA_CUADRE = 1000
+CUENTAS_ACTIVOS_TOTAL = {"total de activos", "activos total"}
+CUENTAS_PATRIMONIO_PASIVOS_TOTAL = {
+    "total de patrimonio y pasivos",
+    "patrimonio neto y pasivos total",
+}
+
+
+def normalizar_cuenta(cuenta: str) -> str:
+    """Normaliza acentos y puntuación menor de una glosa contable."""
+    texto = unicodedata.normalize("NFKD", str(cuenta or ""))
+    texto = "".join(c for c in texto if not unicodedata.combining(c))
+    return " ".join(texto.lower().replace(",", " ").replace(".", " ").split())
+
+
+def _coalescer_aliases(totales: pd.DataFrame, nombres: set[str]) -> tuple[pd.Series, pd.Series]:
+    """Unifica glosas equivalentes y marca grupos con alias de valores distintos."""
+    resultado = pd.Series(float("nan"), index=totales.index, dtype="float64")
+    conflictos = pd.Series(False, index=totales.index, dtype=bool)
+    for columna in totales.columns:
+        if normalizar_cuenta(columna) not in nombres:
+            continue
+        candidato = pd.to_numeric(totales[columna], errors="coerce")
+        conflictos |= resultado.notna() & candidato.notna() & resultado.ne(candidato)
+        resultado = resultado.fillna(candidato)
+    return resultado, conflictos
+
+
+def resumir_cuadre_balance(df_b: pd.DataFrame) -> pd.DataFrame:
+    """Devuelve una fila por balance, conservando también los que no se pueden cotejar."""
+    seleccion = df_b[df_b["repeticion"] == 1]
+    grupos = pd.MultiIndex.from_frame(seleccion[CLAVES_BALANCE].drop_duplicates())
+    totales = seleccion.pivot_table(
+        index=CLAVES_BALANCE, columns="cuenta", values="valor", aggfunc="first"
+    ).reindex(grupos)
+    activos, conflictos_activos = _coalescer_aliases(totales, CUENTAS_ACTIVOS_TOTAL)
+    pasivos_patrimonio, conflictos_pasivos = _coalescer_aliases(
+        totales, CUENTAS_PATRIMONIO_PASIVOS_TOTAL
+    )
+    conflicto = conflictos_activos | conflictos_pasivos
+    verificable = activos.notna() & pasivos_patrimonio.notna() & ~conflicto
+    return pd.DataFrame({
+        "activos": activos,
+        "patrimonio_y_pasivos": pasivos_patrimonio,
+        "diferencia": (activos - pasivos_patrimonio).abs(),
+        "conflicto": conflicto,
+        "verificable": verificable,
+    }, index=totales.index)
+
 
 def calcular_dv(rut_str: str) -> str:
     rut = str(rut_str).strip().replace(".", "").replace("-", "")
@@ -82,13 +134,34 @@ def main():
         errores.append("Faltan las particiones de securitizadoras_balance.")
     else:
         df_b = pd.concat([pd.read_parquet(a) for a in archivos], ignore_index=True)
-        tot = df_b[df_b["repeticion"] == 1].pivot_table(
-            index=["periodo", "rut", "tipo_balance", "estado_financiero"], columns="cuenta", values="valor", aggfunc="first")
-        if {"Total de activos", "Total de patrimonio y pasivos"} <= set(tot.columns):
-            dif = (tot["Total de activos"] - tot["Total de patrimonio y pasivos"]).abs().dropna()
-            print(f"Balances: {len(tot)} | Activos = patrimonio + pasivos en {int((dif == 0).sum())} de {len(dif)}")
-            if (dif > 1000).any():
-                errores.append(f"{int((dif > 1000).sum())} balances de securitizadoras no cuadran (activos vs patrimonio y pasivos)")
+        resumen = resumir_cuadre_balance(df_b)
+        if resumen.empty:
+            errores.append("No se encontraron balances con repeticion=1 en securitizadoras_balance.")
+        verificables = resumen["verificable"]
+        dentro_tolerancia = verificables & (resumen["diferencia"] <= TOLERANCIA_CUADRE)
+        descuadrados = verificables & (resumen["diferencia"] > TOLERANCIA_CUADRE)
+        conflictos = resumen["conflicto"]
+        no_verificables = ~verificables
+        print(
+            f"Balances: {len(resumen)} | dentro de tolerancia (≤ {TOLERANCIA_CUADRE}): "
+            f"{int(dentro_tolerancia.sum())}/{len(resumen)}"
+        )
+        if no_verificables.any():
+            errores.append(
+                f"{int(no_verificables.sum())} balances no se pudieron verificar: "
+                "faltan totales o hay glosas equivalentes con valores contradictorios"
+            )
+            for clave in resumen.index[no_verificables][:5]:
+                print(f"  [NO VERIFICABLE] {clave}")
+        if conflictos.any():
+            errores.append(
+                f"{int(conflictos.sum())} balances tienen glosas alias con valores contradictorios"
+            )
+        if descuadrados.any():
+            errores.append(
+                f"{int(descuadrados.sum())} balances de securitizadoras no cuadran "
+                "(activos vs patrimonio y pasivos)"
+            )
 
     # 3. Maestro Patrimonios Separados (Programas y Lineas)
     print("\n--- 3. AUDITORIA: patrimonios_separados_maestro ---")
@@ -146,4 +219,4 @@ def main():
         return 1
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())

@@ -57,7 +57,7 @@ jobs:
     timeout-minutes: 35
     steps:
       - name: Checkout de la rama que inició el flujo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # En push y schedule se trabaja sobre la rama que dispara el flujo (el
           # último paso publica ahí). En pull_request `github.ref_name` vale
@@ -68,7 +68,7 @@ jobs:
           fetch-depth: 1
 
       - name: Configurar Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.11'
           cache: 'pip'
