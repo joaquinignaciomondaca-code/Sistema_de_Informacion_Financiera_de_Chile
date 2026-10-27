@@ -6589,7 +6589,7 @@ body {
   border-color: var(--border-color);
   border-radius: 14px;
   background: var(--panel-elevated);
-  box-shadow: inset 3px 0 0 var(--accent-mint), 0 16px 40px rgba(0, 0, 0, 0.16);
+  box-shadow: none;
 }
 
 .info-hero-premium::after { display: none; }
