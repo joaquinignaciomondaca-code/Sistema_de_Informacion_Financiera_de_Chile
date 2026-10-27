@@ -557,6 +557,20 @@ def escribir_periodo(periodo: str, filas: dict, tablas: list[str]) -> dict:
     return conteo
 
 
+def avisos_repeticiones_exactas(filas: dict, tablas: list[str] | None = None) -> list[str]:
+    """Informa filas completas repetidas en registros parseados sin atribuirles causa."""
+    avisos = []
+    for tabla in TABLAS if tablas is None else tablas:
+        df = pd.DataFrame(filas.get(tabla, []))
+        extras = int(df.duplicated().sum()) if len(df) else 0
+        if extras:
+            avisos.append(
+                f"{tabla}: {extras} apariciones extra de filas 100% idénticas tras la lectura; "
+                "origen y validez semántica no determinados"
+            )
+    return avisos
+
+
 def escribir_manifiestos(control: dict) -> None:
     for tabla in TABLAS:
         (SALIDA / tabla).mkdir(parents=True, exist_ok=True)
@@ -911,12 +925,9 @@ def main(argv=None) -> int:
                 filas[t].extend(f[t])
             companias[sector] = comp
         conteo = escribir_periodo(periodo, filas, faltan)
-        # Duplicados exactos: la fuente (compañía/CMF) a veces repite líneas idénticas; se publica
-        # tal cual, pero se avisa (al agregar por instrumento o compañía, esos meses sobrestiman).
-        for t in TABLAS:
-            d = int(pd.DataFrame(filas[t]).duplicated().sum())
-            if d:
-                avisos.append(f"{t}: {d} filas 100% idénticas (duplicados de la fuente)")
+        # Se avisan las filas completas idénticas observadas tras la lectura. Este conteo
+        # no coteja el ZIP crudo y no atribuye causa ni validez semántica; no deduplica.
+        avisos.extend(avisos_repeticiones_exactas(filas))
         previo = control["periodos"].get(periodo)
         if previo is None:  # primera vez que se procesa el mes: registrar las compañías que reportan
             # Los meses se cuentan por filas publicadas: una compañía que solo envía archivos

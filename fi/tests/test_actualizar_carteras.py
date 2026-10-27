@@ -152,6 +152,23 @@ class PactosHistoricosTest(unittest.TestCase):
         self.assertEqual(moneda, "$$")
         self.assertEqual(len(leer_pactos(raw)[0]), 1)
 
+    def test_preserva_operaciones_exactamente_repetidas(self):
+        operacion = [
+            "CRV", "31/12/2024", "01/01/2025", "Banco de Chile", "97006000", "1.000", "$$", "0,1200",
+            "1.001", "1.000", "CL0000000001", "BCHIUO0911", "Banco de Chile", "BTP", "900",
+        ]
+        pagina = _tabla_pactos(
+            "202412", "CRV", operacion, {5: "1.000", 8: "1.001", 9: "1.000", 14: "900"}
+        )
+
+        filas, malas, descuadres, _, excluidas = leer_pactos_detallado((pagina + pagina).encode())
+
+        self.assertEqual(malas, [])
+        self.assertEqual(descuadres, [])
+        self.assertEqual(excluidas, 0)
+        self.assertEqual(len(filas), 2)
+        self.assertEqual(filas[0], filas[1])
+
     def test_excluye_plantillas_historicas_con_rut_ficticio_no_cero(self):
         rellenos = [
             [

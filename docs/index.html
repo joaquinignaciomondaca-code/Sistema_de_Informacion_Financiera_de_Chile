@@ -31,7 +31,7 @@
   <meta name="twitter:image" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png">
   <meta name="twitter:image:alt" content="SIF — Sistema de Información Financiera de Chile">
 
-  <meta name="sif:data-release" content="2026-10-25.fb9d60ca0bd3">
+  <meta name="sif:data-release" content="2026-10-26.b332bba5e1ca">
 <!-- SEO:FIN -->
   <link rel="icon" type="image/svg+xml" href="assets/logo_sif_isotipo.svg">
   <link rel="apple-touch-icon" href="assets/logo_sif_isotipo.svg">
@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261026-0302-erd-schema-xss">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261026-2254-ux-hero-ledger">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -251,7 +251,7 @@
           <div class="info-scroll">
             <section class="info-hero info-hero-premium" aria-labelledby="home-title">
               <div class="info-hero-copy">
-                <h1 id="home-title" class="info-hero-title">El sistema financiero chileno,<br><span>abierto en datos.</span></h1>
+                <h1 id="home-title" class="info-hero-title">El sistema financiero chileno,<br>abierto en datos.</h1>
                 <p class="info-lead">Carteras, estados financieros y series de mercado de fuentes oficiales, reunidos para explorar, consultar y descargar.</p>
                 <div class="info-hero-actions">
                   <a class="info-hero-btn info-hero-btn-primary" href="#catalogo-principal">Explorar por sector <span aria-hidden="true">↘</span></a>
@@ -260,10 +260,10 @@
                 <p class="info-hero-capabilities"><span>Parquet, CSV y Excel</span><i aria-hidden="true"></i><span>SQL en tu navegador</span><i aria-hidden="true"></i><span>Sin registro</span></p>
               </div>
               <div class="info-hero-aside" role="group" aria-label="Alcance destacado del catálogo">
-                <div class="info-hero-aside-head"><span>EL CATÁLOGO, DE UN VISTAZO</span><span class="info-hero-live"><i aria-hidden="true"></i> Fuentes oficiales</span></div>
+                <div class="info-hero-aside-head"><span>Alcance del catálogo</span><span class="info-hero-source">Fuentes oficiales</span></div>
                 <div class="info-hero-stat-grid">
-                  <div class="info-hero-stat"><b data-alcance="visible.conjuntos">74</b><span>elementos visibles</span></div>
-                  <div class="info-hero-stat"><b data-alcance="visible.filas">más de 19 millones</b><span>filas en elementos visibles</span></div>
+                  <div class="info-hero-stat"><span>Elementos del catálogo</span><b data-alcance="visible.conjuntos">74</b></div>
+                  <div class="info-hero-stat"><span>Filas publicadas</span><b data-alcance="visible.filas">más de 19 millones</b></div>
                 </div>
                 <div class="info-hero-network" aria-hidden="true">
                   <svg viewBox="0 0 400 100" role="presentation" focusable="false">
@@ -273,7 +273,6 @@
                   </svg>
                   <div class="info-hero-network-labels"><span>Fuentes</span><b>SIF</b><span>Consulta</span></div>
                 </div>
-                <p class="info-hero-aside-foot">Un solo espacio para navegar datos financieros de Chile.</p>
               </div>
             </section>
 
@@ -764,28 +763,28 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/alcance.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/sidebar.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/creditos.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/download_utils.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/portada.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
-  <script src="js/como_usar.js?v=fl-20261026-0302-erd-schema-xss" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/alcance.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/sidebar.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/creditos.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/download_utils.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/portada.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
+  <script src="js/como_usar.js?v=fl-20261026-2254-ux-hero-ledger" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
