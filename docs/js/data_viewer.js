@@ -824,7 +824,7 @@ class DataViewerController {
 
     if (this.isLoading) {
       this.container.innerHTML = `
-        <div class="dv-loading-state">
+        <div class="dv-loading-state" role="status" aria-live="polite">
           <div class="dv-spinner"></div>
           <span>Consultando <code>${dvEscapar(this.currentView)}</code> con DuckDB-Wasm...</span>
         </div>
@@ -876,8 +876,12 @@ class DataViewerController {
           <b>No se pudieron cargar datos reales de <code>${dvEscapar(this.currentView)}</code>.</b>
           <pre>${dvEscapar(this.error)}</pre>
           <span>Revisa el indicador DuckDB de la cabecera. Esta aplicación no muestra datos de demostración.</span>
+          <button type="button" class="dv-export-btn dv-retry">Reintentar carga</button>
         </div>
       `;
+      this.container.querySelector(".dv-retry").addEventListener("click", () => {
+        this.loadTable(this.currentView, this.currentDisplayName, this.currentLimit);
+      });
       return;
     }
 
