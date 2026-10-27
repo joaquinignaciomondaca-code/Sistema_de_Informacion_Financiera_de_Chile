@@ -1137,6 +1137,43 @@ setTimeout(async () => {
   check("cada enlace ancla apunta a un id existente o a una ruta registrada",
     huorfanos.length === 0, huorfanos.map((a) => a.getAttribute("href")).join(", ") || "sin huérfanos");
 
+  // T6: recorrido real de pestañas, no solo llamadas aisladas al contexto.
+  window.SIFTableContext.select("seguros_lista_entidades", "Lista de aseguradoras");
+  window.switchMainTab("downloads");
+  const controlesContinuidad = window.DownloadsPanel.controles;
+  const grupoContinuidad = document.getElementById("dl-group");
+  grupoContinuidad.value = "secundario";
+  grupoContinuidad.dispatchEvent(new window.Event("change", { bubbles: true }));
+  controlesContinuidad.sector.value = "bancos";
+  controlesContinuidad.sector.dispatchEvent(new window.Event("change", { bubbles: true }));
+  controlesContinuidad.search.value = "balance";
+  controlesContinuidad.search.dispatchEvent(new window.Event("input", { bubbles: true }));
+  controlesContinuidad.yearFrom.value = "2023";
+  controlesContinuidad.yearTo.value = "2024";
+  controlesContinuidad.yearsOn.checked = true;
+  controlesContinuidad.yearsOn.dispatchEvent(new window.Event("change", { bubbles: true }));
+  const resultadosAntes = visiblesDl().map(el => el.dataset.id).join(",");
+  const editorContinuidad = document.getElementById("chat-input");
+  editorContinuidad.value = "SELECT 'borrador de continuidad' AS nota;";
+  window.switchMainTab("dict");
+  const busquedaDictContinuidad = document.getElementById("dict-search-input");
+  busquedaDictContinuidad.value = "patrimonio";
+  busquedaDictContinuidad.dispatchEvent(new window.Event("input", { bubbles: true }));
+  window.switchMainTab("sql");
+  check("recorrido T5: selección implícita al entrar a SQL no reemplaza borrador",
+    editorContinuidad.value === "SELECT 'borrador de continuidad' AS nota;");
+  window.switchMainTab("downloads");
+  check("recorrido T6: volver a Descargas conserva búsqueda, sector, grupo, años y resultados",
+    controlesContinuidad.search.value === "balance" && controlesContinuidad.sector.value === "bancos" &&
+    grupoContinuidad.value === "secundario" && controlesContinuidad.yearsOn.checked &&
+    controlesContinuidad.yearFrom.value === "2023" && controlesContinuidad.yearTo.value === "2024" &&
+    resultadosAntes.length > 0 && visiblesDl().map(el => el.dataset.id).join(",") === resultadosAntes);
+  window.switchMainTab("dict");
+  check("recorrido T6: volver a Diccionario conserva búsqueda manual con la misma selección",
+    document.getElementById("dict-search-input").value === "patrimonio" &&
+    window.DataDictionary.selectedTableId === null &&
+    window.SIFTableContext.selected.id === "seguros_lista_entidades");
+
   const fallos = results.filter((r) => !r.ok);
   for (const r of results) console.log(`${r.ok ? "OK  " : "FALLA"}  ${r.name}${r.extra ? "  -> " + r.extra : ""}`);
   if (errors.length) {
