@@ -26,7 +26,7 @@ No se asigna porcentaje de esfuerzo restante: las tres entregas no tienen igual 
 | T5 · Borrador SQL | Protección de acciones programáticas, cancelar/aceptar, sugerencias/favoritas y navegación DOM | No es prueba visual ni de todos los navegadores |
 | T6 · Filtros y regreso | Recorrido DOM Descargas → Diccionario → SQL → Descargas → Diccionario conserva búsqueda, sector, grupo, años, resultados y borrador | La búsqueda manual del Diccionario abandona la ficha exacta local, pero conserva contexto global: comportamiento intencional |
 
-Última batería DOM: **172/173**, único fallo de métricas heredadas; móvil **15/15**. La discrepancia de métricas requiere conciliación separada, no regeneración ciega de datos. PR #86 permanece abierto como borrador; no se declara CI completamente verde.
+Última batería DOM: **172/173**, único fallo de métricas heredadas; móvil **15/15**. Prueba DOM específica de estados del Visor aprobada (ausencia, error, vacío, cero, reintento, concurrencia y observación). La discrepancia de métricas requiere conciliación separada, no regeneración ciega de datos. PR #86 permanece abierto como borrador; no se declara CI completamente verde.
 
 ## Acuerdo de trabajo
 
@@ -193,3 +193,11 @@ Verificación: DOM general 164/165 (mismo fallo heredado de métricas); DOM móv
 ### Consolidación: recorrido de regresión completo T5/T6
 
 Se añaden tres comprobaciones al DOM real de la aplicación: se sigue una selección, se introducen filtros manuales de grupo/sector/búsqueda/años en Descargas, se busca otra información en Diccionario y se navega por SQL antes de volver. Se verifican resultados visibles no vacíos e idénticos, controles conservados, borrador intacto y búsqueda manual del Diccionario no sustituida por la ficha seleccionada. Las tres pasan. No se modificó comportamiento de producto en esta iteración; se amplió evidencia y se separó estado vigente de la cronología del plan.
+
+
+### Revisión final técnica: estados del Visor
+
+- Mejora acotada: error técnico ofrece Reintentar carga conservando tabla/límite; no lo transforma en ausencia de datos. El estado de carga tiene `role=status` y anuncio cortés. Sin cambios de cifras, cobertura ni semántica financiera.
+- `test_viewer_states_dom.js` carga el módulo real en jsdom y simula respuestas, sin red. Comprueba: falta de publicación no es fallo; aviso cerrable/reabrible con foco y recuerdo por tabla; error escapado; reintento por botón real con misma consulta/límite; valor cero conservado; resultado vacío sin atribuir ausencia de publicación; respuesta antigua ignorada; repeticiones presentadas como nota, no alerta, con porcentaje pequeño no redondeado a cero y fidelidad a fuente.
+- Incorporado al paso DOM del workflow, incluyendo su estado de salida. Aprobado localmente; DOM general 172/173 con único fallo heredado; móvil DOM 15/15; estáticas interfaz y móvil aprobadas (móvil 14/14).
+- Balance: los frentes técnicos previstos de consolidación tienen implementación y regresiones locales. No se propone otra ampliación automática. Quedan la revisión visual y de claridad del responsable, la descarga real fuera de vista previa y el ejercicio real de gran volumen, más la conciliación separada de métricas. PR conserva estado borrador hasta decidir cierre; no se declara validación por usuarios nuevos ni CI remota verde.
