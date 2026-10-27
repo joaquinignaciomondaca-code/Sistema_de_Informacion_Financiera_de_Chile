@@ -656,12 +656,13 @@ setTimeout(async () => {
   check("explorador: al limpiar la búsqueda el archivo vuelve a plegarse", !archivoNav.classList.contains("search-open"));
 
   window.switchMainTab("erd");
-  const filaArchivo = document.getElementById("erd-archive-filters");
-  check("mapa: los filtros del archivo empiezan plegados", filaArchivo.hidden);
+  const grupoMapa = document.getElementById("erd-group-select");
+  const sectorMapa = document.getElementById("erd-sector-select");
+  check("mapa: filtros dependientes Grupo y Sector disponibles", Boolean(grupoMapa && sectorMapa));
   window.erdInstance.focusSector("patrimonios_separados");
-  const botonSecur = document.querySelector('.filter-btn[data-filter="securitizacion"]');
+
   check("mapa: securitizadoras y patrimonios separados se ven como una sola entrada",
-    window.erdInstance.filter === "securitizacion" && botonSecur.classList.contains("active") && !filaArchivo.hidden &&
+    window.erdInstance.filter === "securitizacion" && grupoMapa.value === "archivo" && sectorMapa.value === "securitizacion" &&
     window.erdInstance.tables.filter((t) => window.erdInstance.matchesFilter(t)).length === 5);
   check("mapa: una industria archivada muestra el aviso de alcance",
     !document.getElementById("erd-scope-note").hidden && /Alcance congelado/.test(document.getElementById("erd-scope-note").textContent));
@@ -676,8 +677,11 @@ setTimeout(async () => {
 
   window.switchMainTab("dict");
   const fichas = () => Array.from(document.querySelectorAll("#dict-container .dict-table-name")).map((n) => n.textContent.trim());
-  check("diccionario: por defecto sólo el alcance principal",
-    fichas().length > 0 && !fichas().includes("ccaf.balance") && !fichas().includes("fi.bienes_raices") &&
+  window.SIFTableContext.clear();
+  window.DataDictionary.currentGroup = "todos";
+  window.DataDictionary.setFilter("todos");
+  check("diccionario: todos los grupos permite descubrir también archivo y tablas sin datos",
+    fichas().length > 0 && fichas().includes("ccaf.balance") && fichas().includes("fi.bienes_raices") &&
     fichas().some((n) => n.startsWith("B.1 INSTRUMENTOS DE RENTA FIJA")), fichas().filter((n) => n === "ccaf.balance" || n === "fi.bienes_raices").join(", ") || fichas().length + " fichas");
   window.DataDictionary.setFilter("registro");
   check("diccionario: el registro complementario reúne las cuatro listas",
@@ -772,8 +776,8 @@ setTimeout(async () => {
   check("visor: rotula las filas como muestra y no como total",
     /Muestra: 1 fila/.test(contadorMuestra.textContent) && /no es el total/.test(contadorMuestra.title),
     contadorMuestra.textContent);
-  check("visor: explica que filtro/orden solo cubren la muestra y deriva a Descargas",
-    /filtro y orden solo actúan aquí/.test(avisoMuestra.textContent) && /Descargas/.test(avisoMuestra.textContent),
+  check("visor: distingue filtro y orden de pantalla de la descarga completa",
+    /filtro y el orden solo afectan la pantalla/.test(avisoMuestra.textContent) && /no la descarga completa/.test(avisoMuestra.textContent),
     avisoMuestra.textContent);
   check("visor: los controles son topes, no páginas, de 50 a 500 filas",
     /Máx\. filas/.test(document.querySelector("#data-viewer-container .dv-limit-label").textContent) &&
@@ -830,6 +834,10 @@ setTimeout(async () => {
   window.SidebarNav = sidebarOrden;
 
   window.switchMainTab("downloads");
+  check("contexto: Descargas sigue la tabla seleccionada sin requerir otra búsqueda",
+    window.DownloadsPanel.busqueda === "bancos_balance");
+  window.SIFTableContext.clear();
+  window.DownloadsPanel.container.querySelector("#dl-clear").click();
   const itemsDl = () => Array.from(document.querySelectorAll("#downloads-container .dl-item"));
   const visiblesDl = () => itemsDl().filter((i) => !i.hidden);
   check("descargas: el archivo empieza plegado y fuera del conteo visible",
@@ -983,7 +991,7 @@ setTimeout(async () => {
   check("la web advierte que la base puede tener errores y pide verificar",
     /Puede haber errores/.test(document.querySelector(".info-fuentes").textContent) &&
     /puede contener errores/.test(document.querySelector(".info-note").textContent) &&
-    /verificaciones/.test(document.getElementById("downloads-container").textContent));
+    /revísalos antes de usarlos/.test(document.getElementById("downloads-container").textContent));
   check("fuentes y limitaciones: la sección declara respaldo y cobertura",
     /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
     /fuentes oficiales/i.test(document.querySelector(".info-fuentes").textContent) &&

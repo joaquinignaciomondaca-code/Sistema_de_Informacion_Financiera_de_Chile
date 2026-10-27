@@ -1,0 +1,26 @@
+// Regresión hermética: contexto implícito y reemplazo explícito del editor SQL.
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+let aceptar = false;
+let confirmaciones = 0;
+const window = { confirm() { confirmaciones++; return aceptar; } };
+vm.runInNewContext(fs.readFileSync('docs/js/chat_terminal.js', 'utf8'), { window });
+const terminal = Object.create(window.ChatTerminalController.prototype);
+terminal.input = { value: 'SELECT 1;', focus() {} };
+terminal.addSystemMessage = () => {};
+terminal.escapeHtml = s => s;
+assert.equal(terminal.setQueryInput('SELECT 2;', 'otra', true), false);
+assert.equal(confirmaciones, 0);
+assert.equal(terminal.input.value, 'SELECT 1;');
+assert.equal(terminal.setQueryInput('SELECT 2;', 'otra'), false);
+assert.equal(terminal.input.value, 'SELECT 1;');
+aceptar = true;
+assert.equal(terminal.setQueryInput('SELECT 2;', 'otra'), true);
+assert.equal(terminal.input.value, 'SELECT 2;');
+const antes = confirmaciones;
+assert.equal(terminal.setQueryInput('SELECT 2;', 'otra'), true);
+assert.equal(confirmaciones, antes);
+terminal.input.value = '';
+assert.equal(terminal.setQueryInput('SELECT 3;', 'nueva', true), true);
+console.log('OK: borrador protegido; reemplazo explícito confirmado/cancelado; editor vacío y misma consulta.');

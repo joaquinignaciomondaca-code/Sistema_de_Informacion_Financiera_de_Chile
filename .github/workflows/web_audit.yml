@@ -105,6 +105,10 @@ jobs:
           python -m unittest scripts.test_generar_indice_busqueda -v
           python scripts/generar_indice_busqueda.py --check
           node scripts/test_busqueda.js
+      - name: 'Contexto de tabla y protección de borradores SQL'
+        run: |
+          node scripts/test_table_context.js
+          node scripts/test_sql_draft.js
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
 
       - name: Caché del detector de diseño
