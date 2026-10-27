@@ -40,7 +40,7 @@ window.SIFTableContext = (() => {
       panel.actualizarSectores();
       panel.aplicarFiltros();
       const card = Array.from(panel.container.querySelectorAll(".dl-item")).find(el => el.dataset.id === id);
-      if (card) card.scrollIntoView({ block: "center" });
+      if (card && typeof card.scrollIntoView === "function") card.scrollIntoView({ block: "center" });
     } else if (tab === "data" && window.DataViewer) {
       if (window.DataViewer.currentView !== id) window.DataViewer.loadTable(id, name);
     } else if (tab === "sql" && window.ChatTerminal) {
