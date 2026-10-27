@@ -236,5 +236,35 @@ class InformeTests(unittest.TestCase):
                                      f"{fila['objeto']}: una clave propuesta no puede tener sobrantes")
 
 
+class ArtefactoClavesTests(unittest.TestCase):
+    """El modo --check compara el informe y nunca modifica el checkout."""
+
+    def test_check_detecta_deriva_sin_sobrescribir_el_csv(self):
+        with tempfile.TemporaryDirectory() as temporal:
+            destino = Path(temporal) / "claves.csv"
+            anterior = b"informe versionado antiguo\r\n"
+            destino.write_bytes(anterior)
+            generado = vc.serializar_csv([{"objeto": "demo", "tipo": "fk"}])
+
+            self.assertFalse(vc.guardar_o_comprobar_csv(destino, generado, check=True))
+            self.assertEqual(destino.read_bytes(), anterior)
+
+    def test_check_de_archivo_ausente_falla_sin_crearlo(self):
+        with tempfile.TemporaryDirectory() as temporal:
+            destino = Path(temporal) / "no-existe.csv"
+            generado = vc.serializar_csv([])
+
+            self.assertFalse(vc.guardar_o_comprobar_csv(destino, generado, check=True))
+            self.assertFalse(destino.exists())
+
+    def test_modo_generacion_escribe_el_csv_serializado(self):
+        with tempfile.TemporaryDirectory() as temporal:
+            destino = Path(temporal) / "claves.csv"
+            generado = vc.serializar_csv([{"objeto": "demo", "tipo": "fk"}])
+
+            self.assertTrue(vc.guardar_o_comprobar_csv(destino, generado, check=False))
+            self.assertEqual(destino.read_bytes(), generado)
+
+
 if __name__ == "__main__":
     unittest.main()

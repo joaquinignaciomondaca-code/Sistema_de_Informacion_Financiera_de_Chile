@@ -63,7 +63,9 @@ cifras de la tarjeta social salen de `catalog.json`. Si se escribieran a mano,
 en dos releases dirían otra cosa.
 
 Y el CI falla si quedan desactualizados (`--check` en cada uno) o si algo del
-contrato deja de cumplirse.
+contrato deja de cumplirse. En particular, `python3 scripts/verificar_claves.py --check`
+compara `docs/api/claves.csv` con la salida actual y valida sus invariantes sin
+sobrescribir el archivo; sin `--check`, el comando lo genera.
 
 Como los datos cambian solos, el flujo **«Contrato derivado»**
 (`.github/workflows/contrato_publicado.yml`) regenera estos archivos cuando un

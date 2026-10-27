@@ -1,6 +1,6 @@
 {
  "version": "v2",
- "actualizado": "2026-10-23",
+ "actualizado": "2026-10-27",
  "que_es": "Las comprobaciones del contrato de la API, con el nivel de control de cada una. El nivel decide qué pasa cuando falla.",
  "niveles": {
   "invariante": "Rompe el build. El contrato promete algo que los datos no cumplen, o el descriptor se quedó atrás: no se puede publicar.",
@@ -44,9 +44,9 @@
    "id": "claves.pk_declarada",
    "nivel": "invariante",
    "comando": "python3 scripts/verificar_claves.py --check",
-   "que": "Una clave primaria declarada en el diccionario es única sobre todas las filas publicadas. Sin excepciones: las 8 que fallaban se corrigieron en la tarea 1a.9.",
+   "que": "Una clave primaria declarada en el diccionario es única sobre todas las filas publicadas. Además, el CSV versionado coincide byte a byte con su salida actual; `--check` valida ambas cosas sin modificarlo. Sin excepciones: las 8 que fallaban se corrigieron en la tarea 1a.9.",
    "estado": "ok",
-   "evidencia": "48 declaradas y verificadas · 0 excepciones"
+   "evidencia": "CSV al día · 48 PK declaradas y verificadas · 0 excepciones"
   },
   {
    "id": "claves.filas_repetidas",

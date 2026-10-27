@@ -56,6 +56,7 @@ on:
       - 'scripts/test_sql_compact_parquets.py'
       - 'pipelines/**'
       - 'factoring_leasing/**'
+      - 'securitizadoras/**'
       - 'bancos/**'
       - 'corredoras_bolsa/**'
       - 'ffmm/**'
@@ -83,10 +84,10 @@ jobs:
     steps:
       # fetch-depth: 0 trae el historial completo: la auditoría de credenciales
       # revisa todos los blobs, no sólo el commit actual.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: 'Contrato: manifiesto ETL, API y descargas comparten métricas'
@@ -107,7 +108,7 @@ jobs:
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
 
       - name: Caché del detector de diseño
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.npm
@@ -503,6 +504,11 @@ jobs:
           grep -h -E "^(Sector|Total|Resultados)" eeff.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=EEFF IFRS::$linea"; done
           exit $n
 
+      - name: 'Securitizadoras: aliases de glosas y cobertura de todos los balances'
+        run: |
+          python -m unittest discover -s securitizadoras/tests -v
+          python securitizadoras/scripts/audit_securitizadoras.py
+
       - name: Estados financieros FI · cuadratura y completitud de todos los contextos
         run: python -m fi.scripts.auditar_eeff --permitir-vacio
 
@@ -587,7 +593,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
@@ -623,8 +629,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Toda tabla publicada tiene quien la actualice
@@ -647,8 +653,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Dependencias
@@ -694,10 +700,10 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Dependencias para verificar filas Parquet
