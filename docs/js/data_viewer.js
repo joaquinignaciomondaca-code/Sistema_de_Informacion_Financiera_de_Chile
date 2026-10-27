@@ -354,13 +354,15 @@ class DataViewerController {
     // Un porcentaje pequeño no se redondea a cero: hay duplicados igual.
     const pct = Number(clave.pct_repetidas);
     const pctTexto = (pct > 0 && pct < 0.1 ? pct.toFixed(3) : pct.toFixed(1)).replace(".", ",");
-    let texto = `Esta tabla contiene filas duplicadas de origen: ${num(clave.sobrantes)} ` +
-      `de ${num(clave.filas)} filas (${pctTexto} %). No sumes sin agrupar.`;
+    let texto = `La fuente primaria contiene filas repetidas: ${num(clave.sobrantes)} ` +
+      `de ${num(clave.filas)} filas (${pctTexto} %). Se conservan para mantener la fidelidad ` +
+      `a los datos de origen, sin eliminarlas automáticamente. Antes de sumar importes, ` +
+      `revisa la unidad de observación y los criterios de agrupación para evitar doble conteo.`;
     if (clave.ejemplo) {
       texto += ` En ${clave.ejemplo.periodo}, sumar ${clave.ejemplo.columna} sin agrupar ` +
         `sobreestima ${num(clave.ejemplo.pct)} %.`;
     }
-    return `<div class="scope-banner scope-banner-claves" role="note"><b>Filas repetidas</b><span>${dvEscapar(texto)}</span></div>`;
+    return `<div class="scope-banner scope-banner-claves" role="note"><b>Observación sobre la fuente</b><span>${dvEscapar(texto)}</span></div>`;
   }
 
   // Fecha de la última actualización de la tabla abierta. La barra llevaba
@@ -394,6 +396,7 @@ class DataViewerController {
   async loadTable(viewName, displayName, limit = 100) {
     const requestId = (this.loadRequestId || 0) + 1;
     this.loadRequestId = requestId;
+    if (window.SIFTableContext) window.SIFTableContext.select(viewName, displayName);
     this.currentView = viewName;
     this.currentDisplayName = displayName || viewName;
     const industry = this.sectorForView(viewName);
@@ -406,6 +409,7 @@ class DataViewerController {
     this.sortAsc = true;
     this.isLoading = true;
     this.error = null;
+    this.noPublishedData = false;
     this.render();
 
     const t0 = performance.now();
@@ -429,6 +433,7 @@ class DataViewerController {
       } else {
         this.currentColumns = [];
         this.currentRows = [];
+        this.noPublishedData = Boolean(res && res.noPublishedData);
         this.error = res ? res.error : "Error desconocido";
       }
     } catch (err) {
@@ -571,6 +576,69 @@ class DataViewerController {
     }
   }
 
+  menuDescarga() {
+    const item = ((window.DOWNLOAD_CATALOG || {}).grupos || [])
+      .flatMap(g => g.items).find(t => t.id === this.currentView);
+    const archivos = item ? item.archivos || [] : [];
+    const parquet = archivos.length ? `
+      <div class="dv-download-label">Parquet original${archivos.length > 1 ? " · por período" : ""}</div>
+      <div class="dv-download-files">${archivos.map(a => `
+        <a class="dv-download-option" href="${dvEscapar(a.ruta)}" download>
+          Parquet${a.periodo ? ` · ${dvEscapar(a.periodo)}` : ""}
+        </a>`).join("")}</div>` : "";
+    return `<details class="dv-download-menu">
+      <summary class="dv-export-btn">Descargar ▾</summary>
+      <div class="dv-download-panel">
+        <strong>Tabla completa</strong>
+        <p>Todas las filas y columnas, sin el filtro ni el límite de la muestra.</p>
+        <button type="button" class="dv-download-option" onclick="window.DataViewer.descargarCompleta(this, 'csv')">CSV · compatible con Excel</button>
+        <button type="button" class="dv-download-option" onclick="window.DataViewer.descargarCompleta(this, 'xlsx')">Excel · .xlsx</button>
+        ${parquet}
+        <p>Las exportaciones grandes pueden dividirse en un ZIP.</p>
+        ${item && item.atribucion ? `<small>${dvEscapar(item.atribucion)}</small>` : ""}
+      </div>
+    </details>`;
+  }
+
+  async descargarCompleta(boton, formato = "csv") {
+    if (!["csv", "xlsx"].includes(formato)) return;
+    if (this.descargaEnCurso) return;
+    // Capturar la vista: cambiar de tabla durante la consulta no cambia el archivo.
+    const vista = this.currentView;
+    const avisar = texto => {
+      if (window.MFCUI && window.MFCUI.toast) window.MFCUI.toast(texto, "info", 6000);
+    };
+    if (!window.DuckDBClient || !window.MFCDownload) {
+      avisar("La descarga todavía no está disponible. Intenta nuevamente.");
+      return;
+    }
+    const item = ((window.DOWNLOAD_CATALOG || {}).grupos || [])
+      .flatMap(g => g.items).find(t => t.id === vista);
+    if (item && item.filas > 250000 && !window.confirm(
+      `La tabla completa contiene aproximadamente ${item.filas.toLocaleString("es-CL")} filas. Prepararla puede tardar y consumir memoria. ¿Continuar?`
+    )) return;
+    this.descargaEnCurso = true;
+    const texto = boton.textContent;
+    boton.disabled = true;
+    boton.textContent = "Preparando descarga…";
+    try {
+      avisar(`Preparando la tabla completa ${vista} (sin filtros ni límite de filas)…`);
+      const res = await window.DuckDBClient.query(`SELECT * FROM ${vista}`);
+      if (!res || !res.success) throw new Error((res && res.error) || "No se pudieron consultar los datos.");
+      if (!res.rows || !res.rows.length) throw new Error("La tabla no contiene filas para descargar.");
+      const resumen = await window.MFCDownload.exportarFilas(res.rows, res.columns || [], {
+        formato, nombre: vista, particionar: true
+      });
+      avisar(`Descarga lista: ${resumen.filas.toLocaleString("es-CL")} filas${resumen.comprimido ? " en ZIP" : formato === "xlsx" ? " en Excel" : " en CSV"}.`);
+    } catch (error) {
+      avisar(`No se pudo completar la descarga: ${error.message}`);
+    } finally {
+      this.descargaEnCurso = false;
+      boton.disabled = false;
+      boton.textContent = texto;
+    }
+  }
+
   exportCSV() {
     if (!this.currentRows.length) return;
     const cols = this.currentColumns;
@@ -692,6 +760,65 @@ class DataViewerController {
     });
   }
 
+  // El ancho inicial lo calcula el navegador con todo el texto de la muestra.
+  // Sólo se fija al ajustar: filtrar u ordenar no debe perder el ancho elegido.
+  prepararAnchos() {
+    const table = this.container.querySelector(".dv-table");
+    if (!table) return;
+    this.anchosPorVista = this.anchosPorVista || new Map();
+    if (!this.anchosPorVista.has(this.currentView)) this.anchosPorVista.set(this.currentView, new Map());
+    const guardados = this.anchosPorVista.get(this.currentView);
+    const headers = Array.from(table.querySelectorAll("th"));
+    const widths = headers.map((th, i) => guardados.get(this.columnasMostradas[i]) || th.getBoundingClientRect().width);
+    // No medir paneles ocultos (por ejemplo durante la carga inicial).
+    if (widths.some(w => !w)) return;
+    const group = document.createElement("colgroup");
+    widths.forEach(width => {
+      const col = document.createElement("col");
+      col.style.width = `${width}px`;
+      group.appendChild(col);
+    });
+    table.prepend(group);
+    table.style.tableLayout = "fixed";
+    table.style.minWidth = "0";
+    const aplicar = (i, width) => {
+      widths[i] = Math.max(60, Math.round(width));
+      group.children[i].style.width = `${widths[i]}px`;
+      table.style.width = `${widths.reduce((a, b) => a + b, 0)}px`;
+      guardados.set(this.columnasMostradas[i], widths[i]);
+    };
+    table.style.width = `${widths.reduce((a, b) => a + b, 0)}px`;
+    headers.forEach((th, i) => {
+      const handle = document.createElement("button");
+      handle.type = "button";
+      handle.className = "dv-column-resizer";
+      handle.setAttribute("aria-label", `Ajustar ancho de ${this.columnasMostradas[i]}`);
+      handle.title = "Arrastra para ajustar el ancho; usa las flechas para ajustarlo con teclado";
+      handle.addEventListener("click", e => e.stopPropagation());
+      handle.addEventListener("keydown", e => {
+        if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+        e.preventDefault();
+        aplicar(i, widths[i] + (e.key === "ArrowRight" ? 20 : -20));
+      });
+      handle.addEventListener("pointerdown", e => {
+        e.preventDefault();
+        const inicio = e.clientX;
+        const ancho = widths[i];
+        handle.setPointerCapture(e.pointerId);
+        const mover = ev => aplicar(i, ancho + ev.clientX - inicio);
+        const terminar = () => {
+          handle.removeEventListener("pointermove", mover);
+          handle.removeEventListener("pointerup", terminar);
+          handle.removeEventListener("pointercancel", terminar);
+        };
+        handle.addEventListener("pointermove", mover);
+        handle.addEventListener("pointerup", terminar);
+        handle.addEventListener("pointercancel", terminar);
+      });
+      th.appendChild(handle);
+    });
+  }
+
   render() {
     if (!this.container) return;
 
@@ -702,6 +829,42 @@ class DataViewerController {
           <span>Consultando <code>${dvEscapar(this.currentView)}</code> con DuckDB-Wasm...</span>
         </div>
       `;
+      return;
+    }
+
+    if (this.noPublishedData) {
+      const cerrado = this.avisosSinDatosCerrados && this.avisosSinDatosCerrados.has(this.currentView);
+      this.container.innerHTML = `
+        <div class="dv-unpublished-state">
+          <aside class="dv-info-notice" ${cerrado ? "hidden" : ""} aria-label="Información sobre disponibilidad de datos">
+            <div role="status">
+              <strong>No se encontraron datos publicados para esta sección.</strong>
+              <p>En la versión actual del sistema, esta tabla no contiene registros ni archivos publicados. Esto no permite concluir que las instituciones no hayan reportado datos a la fuente.</p>
+            </div>
+            <button type="button" class="dv-notice-close" aria-label="Cerrar aviso de disponibilidad" title="Cerrar aviso">×</button>
+          </aside>
+          <div class="dv-unpublished-summary">
+            <h3>${dvEscapar(this.currentDisplayName || this.currentView)}</h3>
+            <p>Sin registros disponibles para visualizar o descargar.</p>
+            <button type="button" class="dv-export-btn dv-unpublished-dictionary" onclick="window.switchMainTab('dict')">Ver definición en el Diccionario</button>
+            <button type="button" class="dv-export-btn dv-notice-reopen" ${cerrado ? "" : "hidden"}>Ver aviso de disponibilidad</button>
+          </div>
+        </div>`;
+      const aviso = this.container.querySelector(".dv-info-notice");
+      const reabrir = this.container.querySelector(".dv-notice-reopen");
+      this.container.querySelector(".dv-notice-close").addEventListener("click", () => {
+        if (!this.avisosSinDatosCerrados) this.avisosSinDatosCerrados = new Set();
+        this.avisosSinDatosCerrados.add(this.currentView);
+        aviso.hidden = true;
+        reabrir.hidden = false;
+        reabrir.focus();
+      });
+      reabrir.addEventListener("click", () => {
+        this.avisosSinDatosCerrados.delete(this.currentView);
+        aviso.hidden = false;
+        reabrir.hidden = true;
+        this.container.querySelector(".dv-notice-close").focus();
+      });
       return;
     }
 
@@ -773,7 +936,7 @@ class DataViewerController {
             ${this.actualizado() ? `<span class="dv-badge-update" title="Fecha de última actualización del pipeline">Actualizado: ${dvEscapar(this.actualizado())}</span>` : ""}
             <span class="dv-meta-timing"><b>${this.elapsedMs} ms</b></span>
             <span class="dv-count-info" title="Filas cargadas por LIMIT en el visor; no es el total del conjunto.">${this.resumenFilasMuestra(rows)} · ${mostradas.length}${mostradas.length < this.currentColumns.length ? ` de ${this.currentColumns.length}` : ""} columnas</span>
-            <span class="dv-sample-hint">Muestra parcial: filtro y orden solo actúan aquí. Serie completa en Descargas.</span>
+            <span class="dv-sample-hint">Muestra parcial: el filtro y el orden solo afectan la pantalla, no la descarga completa.</span>
             <span class="dv-scroll-tag" title="Usa la barra de desplazamiento horizontal para explorar todas las columnas">Desplaza ↔</span>
           </div>
           
@@ -800,9 +963,8 @@ class DataViewerController {
                 : `Todas las columnas (${presentacion.todas.length})`}
             </button>
 
-            <button type="button" class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir la pestaña Descargas con esta tabla seleccionada (Parquet, CSV, Excel)">
-              Descargar datos
-            </button>
+            ${this.menuDescarga()}
+
           </div>
         </div>
 
@@ -822,6 +984,50 @@ class DataViewerController {
         </div>
       </div>
     `;
+
+    this.prepararAnchos();
+    const menuDescarga = this.container.querySelector(".dv-download-menu");
+    if (menuDescarga) {
+      const panel = menuDescarga.querySelector(".dv-download-panel");
+      const posicionar = () => {
+        if (!menuDescarga.open) return;
+        const rect = menuDescarga.querySelector("summary").getBoundingClientRect();
+        const viewport = window.visualViewport;
+        const left = viewport ? viewport.offsetLeft : 0;
+        const top = viewport ? viewport.offsetTop : 0;
+        const width = viewport ? viewport.width : window.innerWidth;
+        const height = viewport ? viewport.height : window.innerHeight;
+        const margen = 12;
+        const ancho = Math.min(320, width - margen * 2);
+        const abajo = Math.max(0, top + height - rect.bottom - margen - 6);
+        const arriba = Math.max(0, rect.top - top - margen - 6);
+        const abrirArriba = abajo < 240 && arriba > abajo;
+        panel.style.width = `${ancho}px`;
+        panel.style.left = `${Math.max(left + margen, Math.min(rect.right - ancho, left + width - ancho - margen))}px`;
+        panel.style.maxHeight = `${abrirArriba ? arriba : abajo}px`;
+        panel.style.top = abrirArriba ? "auto" : `${rect.bottom + 6}px`;
+        panel.style.bottom = abrirArriba ? `${window.innerHeight - rect.top + 6}px` : "auto";
+      };
+      menuDescarga.addEventListener("toggle", posicionar);
+      // Un controlador por visor, incluso después de filtrar o cambiar de tabla.
+      if (this.descargaMenuController) this.descargaMenuController.abort();
+      this.descargaMenuController = new AbortController();
+      const opciones = { signal: this.descargaMenuController.signal };
+      window.addEventListener("resize", posicionar, opciones);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", posicionar, opciones);
+        window.visualViewport.addEventListener("scroll", posicionar, opciones);
+      }
+      document.addEventListener("pointerdown", e => {
+        if (!menuDescarga.contains(e.target)) menuDescarga.open = false;
+      }, opciones);
+      menuDescarga.addEventListener("keydown", e => {
+        if (e.key === "Escape") {
+          menuDescarga.open = false;
+          menuDescarga.querySelector("summary").focus();
+        }
+      });
+    }
 
     const filterInput = document.getElementById("dv-filter-input");
     if (filterInput) {
