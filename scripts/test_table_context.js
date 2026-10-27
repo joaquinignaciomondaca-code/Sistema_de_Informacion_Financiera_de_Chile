@@ -1,0 +1,38 @@
+// Prueba hermética del contexto: no requiere DuckDB, red ni DOM externo.
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const window = {};
+const document = { getElementById: () => null, querySelectorAll: () => [] };
+vm.runInNewContext(fs.readFileSync('docs/js/table_context.js', 'utf8'), { window, document });
+const ctx = window.SIFTableContext;
+let renders = 0;
+window.DataDictionary = { render() { renders++; }, container: { scrollTop: 10 } };
+ctx.select('bancos_balance', 'Balance');
+ctx.apply('dict');
+assert.equal(window.DataDictionary.selectedTableId, 'bancos_balance');
+assert.equal(renders, 1);
+// La búsqueda manual no se pierde al volver a la pestaña.
+window.DataDictionary.searchQuery = 'patrimonio';
+ctx.apply('dict');
+assert.equal(renders, 1);
+assert.equal(window.DataDictionary.searchQuery, 'patrimonio');
+ctx.select('bancos_balance', 'Balance');
+ctx.apply('dict');
+assert.equal(renders, 1);
+ctx.select('agf_balance', 'AGF');
+ctx.apply('dict');
+assert.equal(window.DataDictionary.selectedTableId, 'agf_balance');
+assert.equal(window.DataDictionary.searchQuery, '');
+let focused;
+window.erdInstance = { focusTable(id) { focused = id; } };
+ctx.apply('erd');
+assert.equal(focused, 'agf_balance');
+let sqlArgs;
+window.ChatTerminal = { setQueryInput(...args) { sqlArgs = args; } };
+ctx.apply('sql');
+assert.equal(sqlArgs[2], true, 'La navegación debe preservar el borrador SQL');
+ctx.clear();
+assert.equal(ctx.selected, null);
+assert.equal(window.DataDictionary.selectedTableId, null);
+console.log('OK: selección compartida, sincronización por revisión, filtros manuales y borrador SQL.');

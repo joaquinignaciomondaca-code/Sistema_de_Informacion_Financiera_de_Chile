@@ -2478,22 +2478,21 @@ class ERDGraph {
       this.render();
     });
 
-    // Filtros
-    document.querySelectorAll(".filter-btn").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const targetFilter = e.currentTarget.dataset.filter;
-        this.focusSector(targetFilter);
+    const grupo = document.getElementById("erd-group-select");
+    const sector = document.getElementById("erd-sector-select");
+    if (grupo && sector) {
+      grupo.addEventListener("change", () => {
+        const opciones = this.gruposFiltro()[grupo.value];
+        this.focusSector(opciones[0][0]);
       });
-    });
-
-    // Archivo y registros: sus filtros quedan plegados detrás de un botón propio.
-    const archivoBtn = document.getElementById("erd-archive-toggle");
-    if (archivoBtn) {
-      archivoBtn.addEventListener("click", () => {
-        const fila = document.getElementById("erd-archive-filters");
-        this.mostrarFiltrosArchivo(Boolean(fila && fila.hidden));
+      sector.addEventListener("change", () => this.focusSector(sector.value));
+      document.getElementById("erd-fit-view").addEventListener("click", () => {
+        this.autoCenterSector();
+        this.render();
       });
+      this.syncFilterUi();
     }
+
   }
 
   /* ── Alcance editorial: qué nodos entran en cada filtro ──────────────────
@@ -2550,8 +2549,34 @@ class ERDGraph {
     }
   }
 
+  gruposFiltro() {
+    return {
+      nucleo: [["seguros", "Seguros"], ["ffmm", "Fondos mutuos"], ["fi", "Fondos de inversión"]],
+      secundario: [["bancos", "Bancos"], ["agf", "Administradoras generales de fondos"], ["corredoras_bolsa", "Corredoras de bolsa"]],
+      contexto: [["macro", "Macroeconomía y tasas"]],
+      archivo: [["factoring_leasing", "Factoring y leasing"], ["securitizacion", "Securitización"], ["cajas_compensacion", "Cajas de compensación"], ["registro", "Registros de entidades"], ["pensiones", "Fondos de pensiones · entidades"], ["cooperativas", "Cooperativas · entidades"], ["sistemas_pago", "Sistemas de pago · entidades"], ["fintech", "Fintech · entidades"]],
+      general: [["todos", "Vista principal"], ["completo", "Mapa completo, incluido archivo"]]
+    };
+  }
+
   // Botón activo, fila de archivo y aviso de alcance según el filtro vigente.
   syncFilterUi() {
+    const grupo = document.getElementById("erd-group-select");
+    const sector = document.getElementById("erd-sector-select");
+    if (grupo && sector) {
+      const grupos = this.gruposFiltro();
+      const clave = Object.keys(grupos).find(g => grupos[g].some(([id]) => id === this.filter));
+      if (clave) {
+        grupo.value = clave;
+        sector.replaceChildren(...grupos[clave].map(([id, nombre]) => {
+          const option = document.createElement("option");
+          option.value = id;
+          option.textContent = nombre;
+          return option;
+        }));
+        sector.value = this.filter;
+      }
+    }
     document.querySelectorAll(".filter-btn").forEach((b) => {
       b.classList.toggle("active", b.dataset.filter === this.filter);
     });
@@ -2661,7 +2686,7 @@ class ERDGraph {
   onTableSelect(node) {
     const query = `SELECT * FROM ${node.id} LIMIT 10;`;
     if (window.ChatTerminal) {
-      window.ChatTerminal.setQueryInput(query, node.name);
+      window.ChatTerminal.setQueryInput(query, node.name, true);
     }
     if (window.DataViewer) {
       window.DataViewer.loadTable(node.id, node.name);
@@ -2736,7 +2761,7 @@ class ERDGraph {
     // 4. Nombre completo del nodo bajo el puntero y leyenda de cardinalidad:
     //    los dos van fuera de la transformación, fijos en la esquina.
     this.drawTooltip(ctx);
-    this.drawLeyendaCardinalidad(ctx);
+    // La leyenda vive en HTML desplegable, accesible y fuera del canvas.
   }
 
   drawLeyendaCardinalidad(ctx) {

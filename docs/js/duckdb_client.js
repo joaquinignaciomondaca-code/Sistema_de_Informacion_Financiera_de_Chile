@@ -665,7 +665,9 @@ class DuckDBClient {
       } else {
         files = manifest.files;
         if (!Array.isArray(files) || files.length === 0) {
-          throw new Error(`No hay particiones publicadas para ${view.name}`);
+          const error = new Error(`No hay particiones publicadas para ${view.name}`);
+          if (Array.isArray(files) && files.length === 0 && manifest.total_records === 0) error.code = "NO_PUBLISHED_DATA";
+          throw error;
         }
       }
     } else {
@@ -773,10 +775,12 @@ class DuckDBClient {
         delete this.viewErrors[name];
       })().catch((err) => {
         const motivo = err && err.message ? err.message : String(err);
-        if (!this.unavailableViews.includes(name)) this.unavailableViews.push(name);
+        if (err.code !== "NO_PUBLISHED_DATA" && !this.unavailableViews.includes(name)) this.unavailableViews.push(name);
         this.viewErrors[name] = motivo;
         this.updateEngineBadge();
-        throw new Error(`Vista ${name} no disponible: ${motivo}`);
+        const error = new Error(`Vista ${name} no disponible: ${motivo}`);
+        error.code = err.code;
+        throw error;
       });
       this.viewPromises.set(name, pending);
     }
@@ -930,6 +934,7 @@ class DuckDBClient {
       return {
         success: false,
         error: mensaje,
+        noPublishedData: err.code === "NO_PUBLISHED_DATA",
         elapsedMs: (performance.now() - t0).toFixed(1)
       };
     }

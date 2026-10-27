@@ -6876,3 +6876,198 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .info-foot { transition: none; }
 }
+
+/* El visor comienza con columnas ajustadas al contenido de la muestra. */
+.dv-table th,
+.dv-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dv-table th { padding-right: 18px; }
+
+.dv-column-resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: col-resize;
+  touch-action: none;
+}
+
+.dv-column-resizer:hover,
+.dv-column-resizer:focus-visible {
+  background: var(--accent-mint);
+  outline: 2px solid var(--accent-mint);
+  outline-offset: -2px;
+}
+
+/* Un único punto de descarga en el visor, sin abandonar la tabla. */
+.dv-download-menu { position: relative; }
+.dv-download-menu > summary { list-style: none; cursor: pointer; }
+.dv-download-menu > summary::-webkit-details-marker { display: none; }
+.dv-download-panel {
+  position: fixed;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  width: min(320px, 80vw);
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  box-shadow: 0 8px 24px rgba(var(--neutral-rgb), 0.2);
+}
+.dv-download-panel p, .dv-download-panel small {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.dv-download-option {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 9px 10px;
+  margin-top: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dv-download-option:hover { color: var(--accent-mint-text); }
+.dv-download-option:disabled { opacity: 0.6; cursor: wait; }
+.dv-download-label { margin-top: 12px; font-size: 12px; color: var(--text-muted); }
+.dv-download-files { max-height: 180px; overflow-y: auto; }
+
+/* Filtros dependientes del mapa: el espacio se reserva para el gráfico. */
+.erd-controls-group {
+  max-width: 100%;
+  flex-wrap: wrap;
+  overflow: visible;
+  gap: 10px 16px;
+}
+.erd-filter-field { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); }
+.erd-filter-field select {
+  max-width: min(310px, 65vw);
+  min-width: 160px;
+  padding: 7px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: inherit;
+}
+.erd-legend { font-size: 12px; color: var(--text-secondary); }
+.erd-legend summary { cursor: pointer; padding: 7px 0; }
+.erd-legend p { max-width: 600px; line-height: 1.5; margin: 6px 0; }
+
+.dict-sector-filters { flex-wrap: wrap; gap: 10px 16px; }
+.dict-results-count { font-size: 13px; color: var(--text-muted); }
+.dict-update-help, .dict-source-details { font-size: 13px; color: var(--text-secondary); }
+.dict-update-help summary, .dict-source-details summary { cursor: pointer; padding: 6px 0; }
+.dict-update-help p, .dict-source-details p { line-height: 1.5; max-width: 850px; }
+.dict-source-details { margin-bottom: 12px; }
+
+/* Descargas: encontrar los conjuntos antes de leer la ayuda. */
+.dl-hero { gap: 10px; padding-bottom: 10px; }
+.dl-hero-text { max-width: 100%; }
+.dl-download-help { margin-top: 6px; color: var(--text-secondary); font-size: 12px; }
+.dl-download-help summary { cursor: pointer; }
+.dl-hero-stats { display: flex; flex-wrap: wrap; gap: 6px 18px; width: 100%; }
+.dl-hero-stats .dl-stat {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+}
+.dl-hero-stats .dl-stat span { text-transform: none; letter-spacing: 0; }
+.dl-format-menu summary { list-style: none; cursor: pointer; }
+.dl-format-menu summary::-webkit-details-marker { display: none; }
+.dl-format-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 0;
+}
+.dl-format-menu[open] { flex-basis: 100%; }
+.dl-item-actions .dl-format-menu { max-width: 100%; }
+.dl-toolbar .erd-filter-field select { min-width: 130px; }
+@media (max-width: 640px) {
+  .dl-toolbar .erd-filter-field { width: 100%; }
+  .dl-toolbar .erd-filter-field select { flex: 1; min-width: 0; max-width: 100%; }
+}
+
+/* Une barre haute sur plusieurs lignes ne doit pas chevaucher le catalogue. */
+.dl-toolbar { position: relative; top: auto; margin-bottom: 16px; }
+.table-context-bar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 7px 14px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.table-context-bar[hidden] { display: none; }
+.table-context-bar code { color: var(--accent-blue-text); overflow-wrap: anywhere; }
+.table-context-bar button {
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: 4px 8px;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* Ausencia publicada: aviso informativo, no error del motor. */
+.dv-unpublished-state { padding: 20px; overflow-y: auto; }
+.dv-info-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid rgba(var(--info-rgb), 0.4);
+  border-radius: 6px;
+  background: rgba(var(--info-rgb), 0.08);
+  color: var(--text-primary);
+}
+.dv-info-notice[hidden], .dv-notice-reopen[hidden] { display: none; }
+.dv-info-notice strong { color: var(--accent-blue-text); }
+.dv-info-notice p, .dv-unpublished-summary p { font-size: 13px; line-height: 1.6; color: var(--text-secondary); }
+.dv-info-notice p { margin: 6px 0 0; }
+.dv-notice-close {
+  margin-left: auto;
+  flex-shrink: 0;
+  min-width: 36px;
+  min-height: 36px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 22px;
+}
+.dv-unpublished-summary { margin-top: 22px; }
+.dv-unpublished-summary h3 { overflow-wrap: anywhere; font-size: 16px; color: var(--text-primary); }

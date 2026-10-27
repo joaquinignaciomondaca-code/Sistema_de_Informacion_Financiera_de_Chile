@@ -20,6 +20,7 @@ class DownloadsPanelController {
     this.contexto = null; // { viewName, displayName, rows, columns }
     this.busqueda = "";
     this.sector = "todos";
+    this.grupo = "todos";
     this.recorte = { activo: false, desde: null, hasta: null };
     this.abiertos = new Set();
     this.archivoAbierto = false;
@@ -172,7 +173,7 @@ class DownloadsPanelController {
     const fuera = A ? A.datos().fuera : null;
     const statsHtml = principal
       ? `
-            <div class="dl-stat" title="Conjuntos de la vista principal: 25 del núcleo (seguros, fondos mutuos y fondos de inversión) más instituciones y contexto. El núcleo, por sí solo, son 25."><b>${window.MFCDownload.numero(principal.conjuntos)}</b><span>conjuntos en la vista principal</span></div>
+            <div class="dl-stat" title="Totales del catálogo principal, no de los resultados filtrados."><b>${window.MFCDownload.numero(principal.conjuntos)}</b><span>conjuntos en la vista principal</span></div>
             <div class="dl-stat"><b>${window.MFCDownload.numero(principal.filas)}</b><span>filas</span></div>
             <div class="dl-stat"><b>${window.MFCDownload.bytes(principal.bytes)}</b><span>Parquet</span></div>
             <div class="dl-stat dl-stat-fuera" title="Archivo congelado y registros complementarios: plegados al final del catálogo"><b>${window.MFCDownload.numero(fuera.conjuntos)}</b><span>en archivo</span></div>`
@@ -188,34 +189,38 @@ class DownloadsPanelController {
         <header class="dl-hero">
           <div class="dl-hero-text">
             <h2 id="dl-title">Descargas</h2>
-            <p>
-              Todo lo publicado por el sistema, en un solo lugar: primero el núcleo (seguros, fondos mutuos
-              y fondos de inversión), luego las instituciones y el contexto macro; al final, plegados, el
-              archivo congelado y los registros complementarios. Cada conjunto muestra cuántas filas, qué
-              periodo y cuánto pesa <b>antes</b> de descargar. El Parquet original se baja directo desde este
-              servidor; CSV y Excel se arman con el motor que corre en tu navegador. Los datos se publican tal
-              como los emite la fuente y pueden contener errores: revísalos y haz tus propias verificaciones
-              antes de usarlos.
-            </p>
+            <p>Busca un conjunto y descarga sus datos completos en Parquet, CSV o Excel.</p>
+            <details class="dl-download-help"><summary>Información sobre las descargas</summary>
+              <p>El Parquet original se descarga directamente. CSV y Excel se generan con el motor que corre en tu navegador. Consulta las filas, el período y el tamaño antes de descargar. Los datos pueden contener errores: revísalos antes de usarlos.</p>
+            </details>
           </div>
-          <div class="dl-hero-stats">${statsHtml}
+          <div class="dl-hero-stats" aria-label="Resumen del catálogo principal y archivo; no cambia con los filtros">${statsHtml}
           </div>
         </header>
 
         <section class="dl-context" id="dl-context" hidden aria-live="polite"></section>
 
-        <!-- Los manuales viven en la pestaña Guía; aquí queda el puntero. -->
-        <section class="dl-guia-puntero" id="creditos-puntero" aria-label="Manuales y archivos auditables"></section>
 
         <section class="dl-catalog" aria-labelledby="dl-title">
           <div class="dl-toolbar">
             <div class="dl-search-wrap">
               <input type="search" id="dl-search" autocomplete="off" placeholder="Buscar conjunto, tabla o sector…" aria-label="Buscar conjunto de datos">
             </div>
+            <label class="erd-filter-field" for="dl-group">Grupo
+              <select id="dl-group">
+                <option value="todos">Todos los grupos</option>
+                <option value="nucleo">Inversión institucional</option>
+                <option value="secundario">Instituciones y estados financieros</option>
+                <option value="contexto">Contexto macroeconómico</option>
+                <option value="archivo">Archivo y registros</option>
+              </select>
+            </label>
+            <label class="erd-filter-field" for="dl-sector">Sector
             <select id="dl-sector" aria-label="Filtrar por sector">
               <option value="todos">Todos los sectores</option>
               ${sectoresHtml}
-            </select>
+            </select></label>
+            <button type="button" class="dl-btn dl-btn-ghost" id="dl-clear">Limpiar filtros</button>
             <div class="dl-years">
               <label class="dl-years-toggle">
                 <input type="checkbox" id="dl-years-on"> Recortar series por años
@@ -233,6 +238,9 @@ class DownloadsPanelController {
             <span>Prueba con el nombre de la tabla (por ejemplo <code>seguros_renta_fija</code>) o quita los filtros.</span>
           </div>
         </section>
+
+        <!-- Los manuales viven en la pestaña Guía; aquí queda el puntero. -->
+        <section class="dl-guia-puntero" id="creditos-puntero" aria-label="Manuales y archivos auditables"></section>
 
         <footer class="dl-notas">
           <b>Cómo leer esta pestaña.</b>
@@ -394,9 +402,13 @@ class DownloadsPanelController {
         </div>
         <div class="dl-item-actions">
           ${this.selectorFrecuencia(item)}
+          <details class="dl-format-menu"><summary class="dl-btn dl-btn-primary">Descargar ▾</summary>
+          <div class="dl-format-options">
           ${botonParquet}
           <button type="button" class="dl-btn dl-btn-motor" data-action="csv" data-id="${item.id}" title="Genera el CSV completo con el motor DuckDB del navegador">CSV</button>
           <button type="button" class="dl-btn dl-btn-motor" data-action="xlsx" data-id="${item.id}" title="Genera un Excel (.xlsx) con el motor DuckDB del navegador">Excel</button>
+          </div></details>
+          <button type="button" class="dl-btn dl-btn-ghost" data-action="visor" data-id="${item.id}">Ver en el Visor</button>
           <button type="button" class="dl-btn dl-btn-ghost" data-action="sql" data-id="${item.id}" title="Abrir esta tabla en Consultas SQL">SQL</button>
         </div>
         <div class="dl-files" data-files="${item.id}" ${this.abiertos.has(item.id) ? "" : "hidden"}>
@@ -486,6 +498,26 @@ class DownloadsPanelController {
       this.sector = e.target.value;
       this.aplicarFiltros();
     });
+    const grupoSelect = this.container.querySelector("#dl-group");
+    grupoSelect.addEventListener("change", e => {
+      this.grupo = e.target.value;
+      this.sector = "todos";
+      this.actualizarSectores();
+      this.aplicarFiltros();
+    });
+    this.container.querySelector("#dl-clear").addEventListener("click", () => {
+      this.grupo = "todos";
+      this.sector = "todos";
+      this.busqueda = "";
+      this.controles.search.value = "";
+      grupoSelect.value = "todos";
+      this.actualizarSectores();
+      this.controles.yearsOn.checked = false;
+      this.recorte.activo = false;
+      this.controles.yearFrom.disabled = true;
+      this.controles.yearTo.disabled = true;
+      this.aplicarFiltros();
+    });
     const recorte = () => {
       this.recorte = {
         activo: this.controles.yearsOn.checked,
@@ -520,6 +552,12 @@ class DownloadsPanelController {
         this.descargarPantalla(boton.dataset.fmt, boton);
       } else if (accion === "csv" || accion === "xlsx") {
         this.exportarSerie(id, accion, boton);
+      } else if (accion === "visor") {
+        const item = this.item(id);
+        if (item && window.DataViewer) {
+          window.DataViewer.loadTable(id, item.nombre);
+          if (window.switchMainTab) window.switchMainTab("data");
+        }
       } else if (accion === "sql") {
         this.abrirEnSql(id);
       }
@@ -540,10 +578,19 @@ class DownloadsPanelController {
     boton.setAttribute("aria-expanded", abierto ? "true" : "false");
   }
 
+  actualizarSectores() {
+    const secciones = this.secciones();
+    this.controles.sector.innerHTML = '<option value="todos">Todos los sectores</option>' +
+      (secciones ? secciones.filter(s => this.grupo === "todos" ||
+        (this.grupo === "archivo" ? ["archivo", "registro"].includes(s.nivel.id) : s.nivel.id === this.grupo))
+        .flatMap(s => s.bloques).map(b => `<option value="${this.escapar(b.clave)}">${this.escapar(b.nombre)}</option>`).join("") : this.opcionesSector());
+    this.controles.sector.value = this.sector;
+  }
+
   aplicarFiltros() {
     if (!this.controles) return;
     const q = this.busqueda;
-    const filtroActivo = Boolean(q) || this.sector !== "todos";
+    const filtroActivo = Boolean(q) || this.sector !== "todos" || this.grupo !== "todos";
     let visibles = 0;
     let enArchivo = 0;
     const grupos = this.container.querySelectorAll(".dl-group");
@@ -553,7 +600,10 @@ class DownloadsPanelController {
         const coincideTexto = !q || fila.dataset.buscar.includes(q);
         const coincideSector = this.sector === "todos" || (fila.dataset.bloque || fila.dataset.sector) === this.sector;
         const fuera = fila.dataset.fuera === "1";
-        const visible = coincideTexto && coincideSector && (!fuera || this.archivoAbierto || filtroActivo);
+        const item = this.item(fila.dataset.id);
+        const coincideGrupo = this.grupo === "todos" || (item && (this.grupo === "archivo"
+          ? ["archivo", "registro"].includes(item.nivel) : item.nivel === this.grupo));
+        const visible = coincideTexto && coincideSector && coincideGrupo && (!fuera || this.archivoAbierto || filtroActivo);
         fila.hidden = !visible;
         if (visible) {
           enGrupo += 1;
@@ -592,6 +642,10 @@ class DownloadsPanelController {
     this.init();
     if (!this.controles) return;
     const A = this.alcance();
+    this.grupo = "todos";
+    const grupoSelect = this.container.querySelector("#dl-group");
+    if (grupoSelect) grupoSelect.value = "todos";
+    this.actualizarSectores();
     const bloque = this.bloqueDe(A ? A.clave(clave) : clave) || clave;
     const existe = Array.from(this.controles.sector.options).some((o) => o.value === bloque);
     this.sector = existe ? bloque : "todos";

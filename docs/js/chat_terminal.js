@@ -334,7 +334,8 @@ class ChatTerminalController {
     this.renderFavoritesList();
   }
 
-  setQueryInput(sql, tableName) {
+  setQueryInput(sql, tableName, preserveDraft = false) {
+    if (preserveDraft && this.input.value.trim()) return;
     this.input.value = sql;
     this.input.focus();
     this.addSystemMessage(`Tabla seleccionada: <b>${this.escapeHtml(tableName)}</b>. Presiona Enter o clic en Ejecutar para consultar.`);

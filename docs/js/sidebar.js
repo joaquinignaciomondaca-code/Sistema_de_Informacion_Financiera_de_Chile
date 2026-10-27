@@ -1936,12 +1936,13 @@ class SidebarController {
     // Sincronizar con el Visor de Datos
     if (window.DataViewer) {
       window.DataViewer.loadTable(tableId, tableName);
+      if (window.switchMainTab) window.switchMainTab("data");
     }
 
     // Cargar consulta automatica en el chat/terminal usando vista semántica
     if (window.ChatTerminal) {
       const defaultSql = `SELECT * FROM ${tableId} LIMIT 10;`;
-      window.ChatTerminal.setQueryInput(defaultSql, tableName);
+      window.ChatTerminal.setQueryInput(defaultSql, tableName, true);
     }
   }
 
