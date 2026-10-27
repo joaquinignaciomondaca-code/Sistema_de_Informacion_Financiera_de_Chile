@@ -64,13 +64,13 @@ class ChatTerminalController {
     });
 
     // Cerrar modal de esquema: botón y Escape, devolviendo el foco a donde estaba.
-    const cerrarEsquema = () => {
+    const cerrarEsquema = (restaurarFoco = true) => {
       const modal = document.getElementById("schema-modal");
       if (!modal || !modal.classList.contains("visible")) return;
       modal.classList.remove("visible");
       const previo = window.__focoAntesDelEsquema;
       window.__focoAntesDelEsquema = null;
-      if (previo && typeof previo.focus === "function" && document.contains(previo)) previo.focus();
+      if (restaurarFoco !== false && previo && typeof previo.focus === "function" && document.contains(previo)) previo.focus();
     };
     window.cerrarEsquema = cerrarEsquema;
     const closeBtn = document.getElementById("close-schema-modal");

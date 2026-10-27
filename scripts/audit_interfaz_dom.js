@@ -506,7 +506,12 @@ setTimeout(async () => {
   document.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
   check("mapa: Escape cierra esquema y devuelve el foco",
     !modalEsquema.classList.contains("visible") && document.activeElement === disparadorEsquema);
+  abrirEsquema.focus();
+  window.erdInstance.showSchemaModal(nodoEsquema);
   window.switchMainTab("info");
+  check("mapa: navegar desde esquema cierra sin devolver foco al panel oculto",
+    !modalEsquema.classList.contains("visible") && document.activeElement === document.getElementById("tab-btn-info") &&
+    window.SIFTableContext.selected.id === nodoEsquema.id);
   check("fuera del mapa: filtros y zoom ocultos",
     document.getElementById("erd-controls-group").style.display === "none" &&
     document.querySelector(".zoom-controls").style.display === "none");
@@ -874,7 +879,15 @@ setTimeout(async () => {
   window.switchMainTab("downloads");
   check("contexto: Descargas sigue la tabla seleccionada sin requerir otra búsqueda",
     window.DownloadsPanel.busqueda === "bancos_balance");
+  const quitarContexto = document.querySelector("#table-context button");
+  const borradorAntesDeQuitar = document.getElementById("chat-input").value;
+  quitarContexto.focus();
+  // outside-only no ejecuta onclick: verificar enlace y llamar el mismo método.
+  const quitarEnlazado = /SIFTableContext\.clear\(\)/.test(quitarContexto.getAttribute("onclick"));
   window.SIFTableContext.clear();
+  check("contexto: quitar selección devuelve foco a pestaña visible y conserva borrador",
+    quitarEnlazado && document.getElementById("table-context").hidden && document.activeElement === document.getElementById("tab-btn-downloads") &&
+    document.getElementById("chat-input").value === borradorAntesDeQuitar);
   window.DownloadsPanel.container.querySelector("#dl-clear").click();
   const itemsDl = () => Array.from(document.querySelectorAll("#downloads-container .dl-item"));
   const visiblesDl = () => itemsDl().filter((i) => !i.hidden);

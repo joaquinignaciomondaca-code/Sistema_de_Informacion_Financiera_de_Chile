@@ -153,3 +153,12 @@ Verificación: DOM general 164/165 (mismo fallo heredado de métricas); DOM móv
 - La operación protegida abarca ahora preparación, motor, consulta y generación. El botón muestra Preparando y `aria-busy`; las solicitudes simultáneas reciben explicación sin duplicar operación. La limpieza ocurre también ante error y permite reintentar; al terminar se reaplican restricciones actuales del rango/vista, sin deshabilitar Parquet.
 - Prueba hermética ampliada: arranque pendiente, segunda solicitud bloqueada, rechazo simulado capturado, restauración de etiqueta/estado accesible y reintento exitoso. Pasa; no simula permisos de descarga del navegador.
 - Verificación: alcance/carga y exportaciones sintéticas reales aprobados; DOM general 167/168 (único fallo: métricas heredadas); móvil DOM 15/15. Sin nueva validación visual ni CI remota afirmada.
+
+
+### Consolidación: foco al navegar y quitar contexto
+
+- Hallazgo de código: cerrar el esquema por cambio de pestaña restauraba el foco al disparador del Mapa, ya oculto. Quitar selección desde su botón también ocultaba el propio elemento enfocado.
+- Cierre por navegación no restaura foco al origen; si el foco estaba en contenido que se abandona, se dirige a la pestaña de destino. Cierre explícito o Escape siguen restaurando el disparador. La acción Explorar datos usa ese mismo cierre por navegación.
+- Quitar selección desde la barra dirige el foco a la pestaña activa; si se limpia programáticamente desde otro sitio no mueve el foco por ese motivo. No se modifica el borrador SQL.
+- DOM **169/170**: dos regresiones nuevas aprobadas, navegación desde esquema conserva identidad seleccionada y quitar contexto conserva borrador. La prueba del botón Quitar verifica su enlace onclick y llama al método porque jsdom outside-only no ejecuta manejadores inline. Único fallo general: métricas heredadas.
+- También aprobados: móvil DOM 15/15, contexto hermético, SQL DOM, alcance/carga de descargas y auditoría estática de interfaz. Sin afirmación de revisión visual, lector de pantalla real ni CI remota.
