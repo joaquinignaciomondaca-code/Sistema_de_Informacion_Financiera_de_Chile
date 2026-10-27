@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-202609-30046-22368">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261027-2215-estados-visor">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -220,29 +220,34 @@
           </div>
         </div>
 
+        <div id="table-context" class="table-context-bar" hidden role="status">
+          <span>Tabla seleccionada: <code></code></span>
+          <button type="button" onclick="window.SIFTableContext.clear()">Quitar selección</button>
+        </div>
+
         <!-- Sub-barra: filtros del mapa relacional, ordenados por nivel editorial.
              El archivo y los registros complementarios quedan plegados detrás de su botón. -->
         <div class="erd-controls-group" id="erd-controls-group" style="display: none;">
-            <span class="erd-tier-label" title="Núcleo · inversión institucional">Núcleo</span>
-            <button type="button" class="filter-btn active" data-filter="seguros">Seguros</button>
-            <button type="button" class="filter-btn" data-filter="ffmm">FFMM</button>
-            <button type="button" class="filter-btn" data-filter="fi">FFII</button>
-            <span class="erd-tier-label" title="Instituciones y estados financieros">Instituciones</span>
-            <button type="button" class="filter-btn" data-filter="bancos">Bancos</button>
-            <button type="button" class="filter-btn" data-filter="agf">AGF</button>
-            <button type="button" class="filter-btn" data-filter="corredoras_bolsa">Corredoras</button>
-            <span class="erd-tier-label" title="Contexto macroeconómico">Contexto</span>
-            <button type="button" class="filter-btn" data-filter="macro">Macro</button>
-            <span class="erd-tier-sep" aria-hidden="true"></span>
-            <button type="button" class="filter-btn" data-filter="todos" title="Núcleo, instituciones y contexto en un solo mapa">Vista principal</button>
-            <button type="button" class="filter-toggle-btn" id="erd-archive-toggle" aria-expanded="false" aria-controls="erd-archive-filters" title="Industrias fuera del foco de esta edición: siguen publicadas, consultables y descargables">Archivo y registros</button>
-            <span class="erd-archive-filters" id="erd-archive-filters" hidden>
-              <button type="button" class="filter-btn filter-btn-fuera" data-filter="factoring_leasing">Factoring &amp; Leasing</button>
-              <button type="button" class="filter-btn filter-btn-fuera" data-filter="securitizacion" title="Securitizadoras y patrimonios separados">Securitización</button>
-              <button type="button" class="filter-btn filter-btn-fuera" data-filter="cajas_compensacion">Cajas de Compensación</button>
-              <button type="button" class="filter-btn filter-btn-fuera" data-filter="registro" title="AFP, cooperativas, sistemas de pago y fintech: sólo listas de entidades">Registro de entidades</button>
-              <button type="button" class="filter-btn filter-btn-fuera" data-filter="completo" title="Todas las industrias, archivo incluido">Mapa completo</button>
-            </span>
+            <label class="erd-filter-field" for="erd-group-select">Grupo
+              <select id="erd-group-select">
+                <option value="nucleo">Inversión institucional</option>
+                <option value="secundario">Instituciones y estados financieros</option>
+                <option value="contexto">Contexto macroeconómico</option>
+                <option value="archivo">Archivo y registros</option>
+                <option value="general">Vista general</option>
+              </select>
+            </label>
+            <label class="erd-filter-field" for="erd-sector-select">Sector
+              <select id="erd-sector-select"><option value="seguros">Seguros</option></select>
+            </label>
+            <button type="button" class="filter-toggle-btn" id="erd-fit-view" title="Ajustar el mapa al sector seleccionado">Restablecer vista</button>
+            <button type="button" class="filter-toggle-btn" id="erd-open-schema" disabled>Ver esquema seleccionado</button>
+            <span class="erd-selection-hint">Pulsa una tabla para seleccionarla; abre su esquema solo cuando lo necesites.</span>
+            <details class="erd-legend">
+              <summary>Cómo leer las relaciones</summary>
+              <p><strong>1:N:</strong> un registro de la izquierda tiene varios a la derecha. Filtra por período antes de sumar o unir.</p>
+              <p>Etiqueta amarilla: unión no uno a uno. Roja: sin coincidencias. Sin etiqueta: 1:1 o no medido.</p>
+            </details>
             <span class="erd-scope-note" id="erd-scope-note" role="status" hidden></span>
         </div>
 
@@ -256,6 +261,7 @@
                 <div class="info-hero-actions">
                   <a class="info-hero-btn info-hero-btn-primary" href="#catalogo-principal">Explorar por sector <span aria-hidden="true">↘</span></a>
                   <button type="button" class="info-hero-btn info-hero-btn-secondary" data-portada="descargas">Ver descargas <span aria-hidden="true">→</span></button>
+                  <button type="button" class="info-core-btn" data-portada="mapa">Entender relaciones entre tablas</button>
                 </div>
                 <p class="info-hero-capabilities"><span>Parquet, CSV y Excel</span><i aria-hidden="true"></i><span>SQL en tu navegador</span><i aria-hidden="true"></i><span>Sin registro</span></p>
               </div>
@@ -289,19 +295,19 @@
                   <div class="info-core-head"><span class="info-card-icon">SE</span><div><h3>Seguros</h3><span class="info-core-source">CMF · Circular 1835</span></div></div>
                   <p>Carteras mensuales de renta fija, acciones, fondos, bienes raíces y derivados.</p>
                   <p class="info-core-meta" data-alcance="sector.seguros.resumen">24 elementos · más de 10 M filas · 2016–2026</p>
-                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="seguros">Explorar seguros <span aria-hidden="true">→</span></button></div>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="seguros">Explorar seguros <span aria-hidden="true">→</span></button><button type="button" class="info-core-btn" data-portada="mapa" data-sector="seguros">Ver relaciones</button></div>
                 </article>
                 <article class="info-core-card" data-sector="ffmm">
                   <div class="info-core-head"><span class="info-card-icon">FM</span><div><h3>Fondos mutuos</h3><span class="info-core-source">CMF · Circular 1333 · IFRS</span></div></div>
                   <p>Carteras por instrumento y emisor, derivados y estados IFRS anuales.</p>
                   <p class="info-core-meta" data-alcance="sector.ffmm.resumen">7 elementos · más de 3,6 M filas · 2001–2026</p>
-                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="ffmm">Explorar fondos mutuos <span aria-hidden="true">→</span></button></div>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="ffmm">Explorar fondos mutuos <span aria-hidden="true">→</span></button><button type="button" class="info-core-btn" data-portada="mapa" data-sector="ffmm">Ver relaciones</button></div>
                 </article>
                 <article class="info-core-card" data-sector="fi">
                   <div class="info-core-head"><span class="info-card-icon">FI</span><div><h3>Fondos de inversión</h3><span class="info-core-source">CMF · Ley Única de Fondos · IFRS</span></div></div>
                   <p>Carteras trimestrales, inversiones valorizadas y estados financieros por fondo.</p>
                   <p class="info-core-meta" data-alcance="sector.fi.resumen">9 elementos · más de 3,1 M filas · 2012–2026</p>
-                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="fi">Explorar fondos de inversión <span aria-hidden="true">→</span></button></div>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="fi">Explorar fondos de inversión <span aria-hidden="true">→</span></button><button type="button" class="info-core-btn" data-portada="mapa" data-sector="fi">Ver relaciones</button></div>
                 </article>
               </div>
             </section>
@@ -763,28 +769,29 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/alcance.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/chart_renderer.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/erd_graph.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/sql_guard.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/duckdb_client.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/chat_terminal.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/sidebar.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/ux_shell.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/creditos.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/theme_switcher.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/estado_claves.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/data_dictionary.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/data_viewer.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/download_utils.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/download_catalog.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/downloads_panel.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/portada.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/calidad_datos.js?v=fl-202609-30046-22368" defer></script>
-  <script src="js/como_usar.js?v=fl-202609-30046-22368" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/alcance.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/sidebar.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/creditos.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/table_context.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/download_utils.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/portada.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/como_usar.js?v=fl-20261027-2215-estados-visor" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -843,6 +850,13 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
 
       window.switchMainTab = (activeTab) => {
         const target = TAB_REGISTRY[activeTab] ? activeTab : "info";
+        const focoActual = document.activeElement;
+        const esquema = document.getElementById("schema-modal");
+        const saleDelContenido = Object.keys(TAB_REGISTRY).some(key => {
+          const panel = document.getElementById(TAB_REGISTRY[key].container);
+          return key !== target && panel && panel.contains(focoActual);
+        }) || (target !== "erd" && ((esquema && esquema.contains(focoActual)) ||
+          (erdControls && erdControls.contains(focoActual))));
         Object.keys(TAB_REGISTRY).forEach((key) => {
           const spec = TAB_REGISTRY[key];
           const isActive = key === target;
@@ -860,6 +874,7 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
 
         // El canvas ya tiene su tamaño definitivo (se acaba de mostrar), así que
         // construirlo aquí no fuerza un reflujo sobre una pestaña oculta.
+        if (target !== "erd" && window.cerrarEsquema) window.cerrarEsquema(false);
         if (target === "erd") window.asegurarERD();
         if (target === "erd" && window.erdInstance) window.erdInstance.resize();
 
@@ -871,7 +886,7 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
         }
         if (target === "dict" && window.DataDictionary) window.DataDictionary.render();
         if (target === "data" && window.DataViewer) {
-          if (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0) window.DataViewer.init();
+          if (!(window.SIFTableContext && window.SIFTableContext.selected) && !window.DataViewer.isLoading && !window.DataViewer.noPublishedData && (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0)) window.DataViewer.init();
         }
         if (target === "sql" && window.ChatTerminal && window.ChatTerminal.focusTerminal) window.ChatTerminal.focusTerminal();
         if (target === "downloads" && window.DownloadsPanel) window.DownloadsPanel.render();
@@ -879,6 +894,9 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
         // y de Descargas: se pintan después de que Descargas reconstruye su HTML,
         // para no perderlos.
         if (window.SIFCreditos) window.SIFCreditos.pintar();
+        if (window.SIFTableContext) window.SIFTableContext.apply(target);
+        // No devolver foco a un panel que acaba de ocultarse al navegar.
+        if (saleDelContenido) document.getElementById(TAB_REGISTRY[target].button).focus();
         if (window.MFCUI && window.MFCUI.rememberTab) window.MFCUI.rememberTab(target);
       };
 
