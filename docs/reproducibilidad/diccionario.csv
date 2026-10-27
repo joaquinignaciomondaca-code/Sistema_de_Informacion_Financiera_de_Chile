@@ -1,21 +1,21 @@
 tabla,vista,sector,norma,columna,tipo,rol,significado,criterio_contable
-macro.tasas_corto_plazo,macro_tasas_corto_plazo,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.tasas_corto_plazo,macro_tasas_corto_plazo,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.tasas_corto_plazo,macro_tasas_corto_plazo,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.tasas_corto_plazo,macro_tasas_corto_plazo,macro,Estadísticas oficiales BCCh,tpm_pct,DOUBLE,Métrica,"Tasa de Política Monetaria fijada por el Consejo del Banco Central, en porcentaje anual.",No aplica
 macro.tasas_corto_plazo,macro_tasas_corto_plazo,macro,Estadísticas oficiales BCCh,tib_promedio_pct,DOUBLE,Métrica,"Tasa interbancaria promedio (TIB): tasa a la que los bancos se prestan a un día, en porcentaje anual.",No aplica
-macro.swaps_camara,macro_swaps_camara,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.swaps_camara,macro_swaps_camara,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.swaps_camara,macro_swaps_camara,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.swaps_camara,macro_swaps_camara,macro,Estadísticas oficiales BCCh,swap_camara_pesos_90_dias_pct,DOUBLE,Métrica,"Tasa fija del swap promedio de cámara en pesos a 90 días, en porcentaje anual.",No aplica
 macro.swaps_camara,macro_swaps_camara,macro,Estadísticas oficiales BCCh,swap_camara_pesos_180_dias_pct,DOUBLE,Métrica,"Tasa fija del swap promedio de cámara en pesos a 180 días, en porcentaje anual.",No aplica
 macro.swaps_camara,macro_swaps_camara,macro,Estadísticas oficiales BCCh,swap_camara_pesos_360_dias_pct,DOUBLE,Métrica,"Tasa fija del swap promedio de cámara en pesos a 360 días, en porcentaje anual.",No aplica
 macro.swaps_camara,macro_swaps_camara,macro,Estadísticas oficiales BCCh,swap_camara_pesos_2_anos_pct,DOUBLE,Métrica,"Tasa fija del swap promedio de cámara en pesos a 2 años, en porcentaje anual.",No aplica
 macro.swaps_camara,macro_swaps_camara,macro,Estadísticas oficiales BCCh,swap_camara_uf_1_ano_pct,DOUBLE,Métrica,"Tasa fija del swap promedio de cámara en UF a 1 año, en porcentaje anual.",No aplica
-macro.curva_bonos_pesos,macro_curva_bonos_pesos,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.curva_bonos_pesos,macro_curva_bonos_pesos,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.curva_bonos_pesos,macro_curva_bonos_pesos,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.curva_bonos_pesos,macro_curva_bonos_pesos,macro,Estadísticas oficiales BCCh,rendimiento_bono_pesos_2_anos_pct,DOUBLE,Métrica,"Tasa de mercado secundario del bono del Banco Central en pesos a 2 años (BCP-2), en porcentaje anual.",No aplica
 macro.curva_bonos_pesos,macro_curva_bonos_pesos,macro,Estadísticas oficiales BCCh,rendimiento_bono_pesos_5_anos_pct,DOUBLE,Métrica,"Tasa de mercado secundario del bono del Banco Central en pesos a 5 años (BCP-5), en porcentaje anual.",No aplica
 macro.curva_bonos_pesos,macro_curva_bonos_pesos,macro,Estadísticas oficiales BCCh,rendimiento_bono_pesos_10_anos_pct,DOUBLE,Métrica,"Tasa de mercado secundario del bono del Banco Central en pesos a 10 años (BCP-10), en porcentaje anual.",No aplica
-macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,rendimiento_bono_uf_1_ano_pct,DOUBLE,Métrica,"Tasa de mercado secundario del bono en UF a 1 año (BCU-1), en porcentaje anual sobre UF.",No aplica
 macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,rendimiento_bono_uf_2_anos_pct,DOUBLE,Métrica,"Tasa de mercado secundario del bono en UF a 2 años (BCU-2), en porcentaje anual sobre UF.",No aplica
@@ -23,17 +23,17 @@ macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,ren
 macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,rendimiento_bono_uf_10_anos_pct,DOUBLE,Métrica,"Tasa de mercado secundario del bono en UF a 10 años (BCU-10), en porcentaje anual sobre UF.",No aplica
 macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,rendimiento_bono_uf_20_anos_pct,DOUBLE,Métrica,"Tasa de mercado secundario del bono en UF a 20 años (BCU-20), en porcentaje anual sobre UF.",No aplica
 macro.curva_bonos_uf,macro_curva_bonos_uf,macro,Estadísticas oficiales BCCh,rendimiento_bono_uf_30_anos_pct,DOUBLE,Métrica,"Tasa de mercado secundario del bono en UF a 30 años (BCU-30), en porcentaje anual sobre UF.",No aplica
-macro.inflacion_implicita,macro_inflacion_implicita,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.inflacion_implicita,macro_inflacion_implicita,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.inflacion_implicita,macro_inflacion_implicita,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.inflacion_implicita,macro_inflacion_implicita,macro,Estadísticas oficiales BCCh,inflacion_implicita_5_anos_pct,DOUBLE,Métrica,Rendimiento del bono en pesos a 5 años menos el del bono en UF a 5 años: inflación anual promedio que el mercado espera para ese plazo. Calculada por SIF.,No aplica
 macro.inflacion_implicita,macro_inflacion_implicita,macro,Estadísticas oficiales BCCh,inflacion_implicita_10_anos_pct,DOUBLE,Métrica,Rendimiento del bono en pesos a 10 años menos el del bono en UF a 10 años: inflación anual promedio que el mercado espera para ese plazo. Calculada por SIF.,No aplica
-macro.dolar_observado,macro_dolar_observado,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.dolar_observado,macro_dolar_observado,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.dolar_observado,macro_dolar_observado,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.dolar_observado,macro_dolar_observado,macro,Estadísticas oficiales BCCh,dolar_observado_clp_por_usd,DOUBLE,Métrica,Pesos chilenos por un dólar de los Estados Unidos (dólar observado publicado por el BCCh para el día).,No aplica
-macro.euro_observado,macro_euro_observado,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.euro_observado,macro_euro_observado,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.euro_observado,macro_euro_observado,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.euro_observado,macro_euro_observado,macro,Estadísticas oficiales BCCh,euro_observado_clp_por_eur,DOUBLE,Métrica,Pesos chilenos por un euro (euro observado publicado por el BCCh para el día).,No aplica
-macro.tipo_cambio_multilateral,macro_tipo_cambio_multilateral,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.tipo_cambio_multilateral,macro_tipo_cambio_multilateral,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.tipo_cambio_multilateral,macro_tipo_cambio_multilateral,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.tipo_cambio_multilateral,macro_tipo_cambio_multilateral,macro,Estadísticas oficiales BCCh,tipo_cambio_nominal_multilateral_indice,DOUBLE,Métrica,Índice de tipo de cambio nominal multilateral (TCM): valor del peso frente a una canasta de monedas de socios comerciales.,No aplica
 macro.tipo_cambio_multilateral,macro_tipo_cambio_multilateral,macro,Estadísticas oficiales BCCh,tipo_cambio_nominal_multilateral_5_monedas_indice,DOUBLE,Métrica,"Índice TCM-5: peso frente a las monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro.",No aplica
@@ -42,7 +42,7 @@ macro.tipo_cambio_real,macro_tipo_cambio_real,macro,Estadísticas oficiales BCCh
 macro.tipo_cambio_real,macro_tipo_cambio_real,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.tipo_cambio_real,macro_tipo_cambio_real,macro,Estadísticas oficiales BCCh,tipo_cambio_real_general_indice,DOUBLE,Métrica,"Índice de tipo de cambio real general (TCR), promedio 1986=100. Un valor mayor indica un peso más depreciado en términos reales.",No aplica
 macro.tipo_cambio_real,macro_tipo_cambio_real,macro,Estadísticas oficiales BCCh,tipo_cambio_real_5_monedas_indice,DOUBLE,Métrica,"Índice de tipo de cambio real TCR-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro), promedio 1986=100.",No aplica
-macro.uf,macro_uf,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.uf,macro_uf,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.uf,macro_uf,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.uf,macro_uf,macro,Estadísticas oficiales BCCh,uf_valor_clp,DOUBLE,Métrica,"Valor de la Unidad de Fomento del día, en pesos chilenos.",No aplica
 macro.utm,macro_utm,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Primer día del mes al que corresponde el dato (AAAA-MM-01).,No aplica
@@ -69,18 +69,18 @@ macro.mercado_laboral,macro_mercado_laboral,macro,Estadísticas oficiales BCCh,d
 macro.mercado_laboral,macro_mercado_laboral,macro,Estadísticas oficiales BCCh,ocupados_miles_personas,DOUBLE,Métrica,"Personas ocupadas, en miles.",No aplica
 macro.mercado_laboral,macro_mercado_laboral,macro,Estadísticas oficiales BCCh,asalariados_miles_personas,DOUBLE,Métrica,"Personas ocupadas como asalariadas, en miles.",No aplica
 macro.mercado_laboral,macro_mercado_laboral,macro,Estadísticas oficiales BCCh,fuerza_trabajo_miles_personas,DOUBLE,Métrica,"Fuerza de trabajo (ocupados más desocupados), en miles de personas.",No aplica
-macro.cobre,macro_cobre,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.cobre,macro_cobre,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.cobre,macro_cobre,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.cobre,macro_cobre,macro,Estadísticas oficiales BCCh,cobre_refinado_usd_por_libra,DOUBLE,Métrica,"Precio del cobre refinado en la Bolsa de Metales de Londres del día, en dólares por libra.",No aplica
 macro.cobre,macro_cobre,macro,Estadísticas oficiales BCCh,cobre_referencial_mensual_usd_por_libra,DOUBLE,Métrica,"Precio referencial mensual del cobre publicado por el BCCh, en dólares por libra. Aparece en la fila del primer día de cada mes.",No aplica
-macro.metales_preciosos,macro_metales_preciosos,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.metales_preciosos,macro_metales_preciosos,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.metales_preciosos,macro_metales_preciosos,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.metales_preciosos,macro_metales_preciosos,macro,Estadísticas oficiales BCCh,oro_usd_por_onza_troy,DOUBLE,Métrica,"Precio del oro del día, en dólares por onza troy.",No aplica
 macro.metales_preciosos,macro_metales_preciosos,macro,Estadísticas oficiales BCCh,plata_usd_por_onza_troy,DOUBLE,Métrica,"Precio de la plata del día, en dólares por onza troy.",No aplica
 macro.reservas_internacionales,macro_reservas_internacionales,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Primer día del mes al que corresponde el dato (AAAA-MM-01).,No aplica
 macro.reservas_internacionales,macro_reservas_internacionales,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.reservas_internacionales,macro_reservas_internacionales,macro,Estadísticas oficiales BCCh,reservas_internacionales_millones_usd,DOUBLE,Métrica,"Activos de reserva internacional del Banco Central al cierre del mes, en millones de dólares.",No aplica
-macro.tasa_referencia_fed,macro_tasa_referencia_fed,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.tasa_referencia_fed,macro_tasa_referencia_fed,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.tasa_referencia_fed,macro_tasa_referencia_fed,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.tasa_referencia_fed,macro_tasa_referencia_fed,macro,Estadísticas oficiales BCCh,tasa_fed_funds_pct,DOUBLE,Métrica,"Tasa efectiva de fondos federales de la Reserva Federal de los Estados Unidos del día, en porcentaje anual.",No aplica
 macro.deuda_publica_pct_pib,macro_deuda_publica_pct_pib,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Primer día del trimestre al que corresponde el dato (AAAA-MM-01).,No aplica
@@ -94,7 +94,7 @@ macro.expectativas_tpm,macro_expectativas_tpm,macro,Estadísticas oficiales BCCh
 macro.expectativas_tpm,macro_expectativas_tpm,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.expectativas_tpm,macro_expectativas_tpm,macro,Estadísticas oficiales BCCh,expectativa_tpm_11_meses_pct,DOUBLE,Métrica,"Mediana de la EEE para la TPM dentro de 11 meses, en porcentaje.",No aplica
 macro.expectativas_tpm,macro_expectativas_tpm,macro,Estadísticas oficiales BCCh,expectativa_tpm_23_meses_pct,DOUBLE,Métrica,"Mediana de la EEE para la TPM dentro de 23 meses, en porcentaje.",No aplica
-macro.expectativas_operadores,macro_expectativas_operadores,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,"Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",No aplica
+macro.expectativas_operadores,macro_expectativas_operadores,macro,Estadísticas oficiales BCCh,fecha,VARCHAR,PK,Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.,No aplica
 macro.expectativas_operadores,macro_expectativas_operadores,macro,Estadísticas oficiales BCCh,periodo,VARCHAR,Fecha,"Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",No aplica
 macro.expectativas_operadores,macro_expectativas_operadores,macro,Estadísticas oficiales BCCh,expectativa_inflacion_12_meses_pct,DOUBLE,Métrica,"Mediana de la Encuesta de Operadores Financieros para la inflación anual dentro de 12 meses, en porcentaje.",No aplica
 macro.expectativas_operadores,macro_expectativas_operadores,macro,Estadísticas oficiales BCCh,expectativa_tpm_12_meses_pct,DOUBLE,Métrica,"Mediana de la Encuesta de Operadores Financieros para la TPM dentro de 12 meses, en porcentaje.",No aplica

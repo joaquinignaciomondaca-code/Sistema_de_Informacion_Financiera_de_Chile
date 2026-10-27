@@ -2,6 +2,8 @@
 
 > **Snapshot histórico (2026-10-07).** Las coberturas y cifras siguientes reflejan los archivos de ese corte; no describen la publicación actual. El corte vigente de `seguros_pactos` (2026-09, 11.371 filas) está en [`cobertura_repos_pactos_2026-10-07.md`](cobertura_repos_pactos_2026-10-07.md) y la evidencia general en [`auditoria_fuentes_cifras_rediseno_2026-10-24.md`](auditoria_fuentes_cifras_rediseno_2026-10-24.md).
 
+> **Rectificación de clasificación (2026-10-26).** La atribución de F3 a la fuente en esta nota era demasiado concluyente: no se conserva aquí el ZIP CMF crudo y la corroboración directa no se pudo ejecutar. Lo comprobado es que los Parquet publicados contienen filas completas idénticas y que el parser actual no las elimina; los conteos declarados en cabeceras/manifiestos y las pruebas sobre muestras no permiten identificar qué filas estaban en el ZIP histórico. Para F3, la clasificación vigente es **repeticiones observadas en la publicación; origen y causa no determinados**. Esta precisión también aplica al veredicto general sobre F3/F4/F5: la evidencia interna y el contexto son hipótesis, no una corroboración directa del contenido de cada ZIP. Este párrafo sustituye cualquier afirmación causal anterior en la nota; no declara las filas defectuosas ni legítimas.
+
 Objeto auditado: **todos los datos publicados del sector seguros** — las 8 tablas de
 `docs/outputs/seguros/` (`renta_fija`, `acciones`, `fondos_mutuos`, `bienes_raices`,
 `extranjeros`, `derivados`, `pactos`, `control_inversiones`), el maestro
@@ -21,16 +23,15 @@ fechas y sus lógicas cruzadas, cuadraturas contables por tabla, y cotejo de cad
 contra los archivos en disco. Se corrieron además las pruebas del lector
 (`python -m seguros.tests.test_formato_1835`) y las de `pipelines.auto` (14/14 OK).
 
-## Veredicto
+## Veredicto (rectificado 2026-10-26)
 
-**Los datos publicados son fieles a lo que la CMF entrega y pasan la auditoría estructural
-completa.** La cobertura es continua, los esquemas son estables, los manifiestos cuadran al
-100 % con los Parquet, las cuadraturas contables centrales se cumplen y los RUT y fechas
-son válidos. Se encontraron **un defecto de la automatización (corregido)**, **tres
-defectos de calidad que vienen de la fuente** (duplicados exactos, doble reporte en meses de
-fusión, fechas imposibles) y **un defecto del maestro de entidades** (meses contados sin filas
-publicadas). Nada de esto invalida la serie publicada, pero tres puntos ameritan decisión del
-dueño del pipeline (ver Recomendaciones).
+**El corte auditado es internamente coherente en los controles medidos:** cobertura, esquemas,
+conteos de manifiesto, algunas cuadraturas y pruebas locales del lector. Esto no acredita
+fidelidad línea a línea con los ZIP de la CMF, que no están archivados aquí. Se corrigió un
+defecto de automatización y otro del maestro; F3, F4 y F5 siguen siendo anomalías observadas
+en la publicación con origen sin corroborar directamente. No se deduplicaron filas ni se
+concluye que las anomalías sean legítimas o defectuosas. La clasificación y las decisiones
+sobre uso/mitigación siguen abiertas.
 
 ## 1. Verificaciones que cuadran
 
@@ -49,12 +50,12 @@ dueño del pipeline (ver Recomendaciones).
 | Cuadratura `bienes_raices` | `costo − depreciación = costo_corregido` exacto en 724.311/724.319 filas (±1 M$ en el resto) |
 | Cuadratura `control_inversiones` | `representativas + no representativas = valor_final` cuadra en el **99,83 %** (193 filas con ±2 M$ de redondeo) |
 | Cuadratura `fondos_mutuos` | `unidades × valor_cuota = valor_final` cuadra en el 93,8 % de las filas en pesos (el resto: redondeo de cuota y 1.808 filas en PROM) |
-| Claves naturales | 0 duplicados por clave en `derivados`, `pactos`, `bienes_raices`; los duplicados por clave en `acciones`/`fondos_mutuos`/`renta_fija` son compras distintas del mismo instrumento (valores distintos) |
+| Claves naturales | 0 colisiones por clave en `derivados`, `pactos`, `bienes_raices`; en `acciones`/`fondos_mutuos`/`renta_fija` hay varias filas con la misma clave propuesta y valores distintos. Sin línea cruda o identificador de evento, la clave no basta para decidir si son compras distintas o un reporte repetido |
 | `data_manifest.json` | 9 entradas de seguros; `registros_reales` y corte cuadran con los Parquet/manifests |
 | Web | `download_catalog.js` publica las 9 tablas con rutas, cobertura y bytes reales; `data_dictionary.js` define las vistas y columnas; `inventario.json` mapea las tablas al workflow `seguros_carteras.yml` |
 | Afirmaciones del README | 11.153 filas de pactos ✔; 155 filas en 2026-08 ✔; cobertura 2016-11 a 2026-08 ✔; `updated_at` 2026-09-28 ✔ |
 | Pruebas | Lector 1835 OK sobre muestras reales de ambos formatos (cuadratura de bonos 100 %, exclusión de archivos defectuosos OK); `pipelines.auto` 14/14 OK; contrato de publicadores OK |
-| Avisos de la fuente | 1.947 avisos acumulados y publicados en el manifiesto: 1.381 totales declarados que no cuadran, 280 encabezados con otro período, 149 archivos sin registro de totales, 124 sin encabezado, 11 campos ilegibles, 2 archivos excluidos (2025-05) |
+| Avisos registrados en manifiesto | 1.947 avisos acumulados en el corte auditado: 1.381 diferencias entre conteos declarados y leídos, 280 encabezados con otro período, 149 archivos sin registro de totales, 124 sin encabezado, 11 campos ilegibles, 2 archivos excluidos (2025-05). Son observaciones del proceso de lectura, no corroboración independiente del ZIP |
 
 ## 2. Hallazgos
 
@@ -92,21 +93,20 @@ conserva reemplazando in-place); (4) la descripción de `meses_reportados` en
 compañías retiradas siguen documentadas aquí: enviaron reporte (archivos C sin detalle) pero
 nunca publicaron una fila.
 
-### F3 (medio, calidad de la fuente — duplicados exactos)
+### F3 (medio, filas exactamente repetidas en la publicación; origen no confirmado)
 
-Hay **filas 100 % idénticas** publicadas: `renta_fija` 28.240 filas de más (1,27 %),
-`extranjeros` 5.931 (1,27 %), `fondos_mutuos` 92, `acciones` 4. Llegan con multiplicidad de
-hasta 22 (ej.: bono `BNTRA-D` de Seguros Vida Security, 2025-03, 22 copias idénticas). No es
-un artefacto del lector: las muestras de la fuente no traen duplicados, la escritura
-reemplaza el período completo y ningún compañía-mes está duplicado por entero — las líneas
-repetidas vienen dentro del archivo que envía la compañía y la CMF las publica tal cual. El
-pipeline no deduplica. Al agregar por instrumento o compañía, esos meses sobrestiman
-el valor final. **Mitigación aplicada**: el publicador ahora avisa cada mes con duplicados
-exactos (`<tabla>: N filas 100% idénticas (duplicados de la fuente)`), así el lector queda
-documentado en el manifiesto; los datos ya publicados se conservan tal cual (son la fuente).
-La deduplicación aktive queda como decisión de política (ver Recomendaciones).
+Los Parquet del corte auditado contienen **filas 100 % idénticas**: `renta_fija` 28.240
+apariciones extra (1,27 %), `extranjeros` 5.931 (1,27 %), `fondos_mutuos` 92 y `acciones` 4.
+La multiplicidad observada llega a 22 (ej.: bono `BNTRA-D` de Seguros Vida Security,
+2025-03). El parser actual no deduplica y reemplaza el período completo, pero no se conservan
+los ZIP históricos para comparar sus líneas con las publicadas. Las muestras disponibles son
+pequeñas y no contienen estas repeticiones. Por ello, no puede descartarse ni una repetición
+presente en el archivo de origen ni una introducida por una versión histórica del proceso;
+las cifras no determinan por sí solas si las filas representan eventos distintos ni si deben
+sumarse. El pipeline conserva las filas y registra un aviso neutral de repetición; no aplica
+deduplicación automática. La política de uso y cualquier mitigación siguen pendientes.
 
-### F4 (medio, calidad de la fuente — doble reporte en el control)
+### F4 (medio, claves repetidas con valores distintos; causalidad no confirmada)
 
 `control_inversiones` tiene **155 claves repetidas** `(periodo, sector, rut,
 tipo_inversion)` en **13 compañías-mes**, todas con valores distintos: la compañía envió dos
@@ -117,7 +117,7 @@ Alemana / Uc-Christus (`76511423`, 2024-12) y HDI (`99231000`, 2024-06, mismo no
 distintos). No hay aviso en el manifiesto para este patrón (los avisos de esos meses no lo
 mencionan) y las agregaciones por compañía-mes suman ambos reportes.
 
-### F5 (bajo, calidad de la fuente — fechas imposibles)
+### F5 (bajo, fechas anómalas en la publicación; origen no cotejado)
 
 - `renta_fija`: 378 filas con vencimiento **> 2070** (máx. `2173-03-12`; nemotécnicos
   `BLAPO-F/G/H`, `USP32133CH47`, `US05890PAC05`, `USP1027DHQ71`). El mismo bono aparece en
@@ -129,7 +129,7 @@ mencionan) y las agregaciones por compañía-mes suman ambos reportes.
   soberanos a 100 años legítimos (México, bono `91086QAZ1`, vence 2110) y otros dudosos
   (máx. `2174-11-18`).
 
-### F6 (bajo, calidad de la fuente — identificadores y nombres)
+### F6 (bajo, identificadores y nombres publicados; origen no cotejado)
 
 - `acciones`: 39 filas con `run_fondo = "1"` (Euroamerica, nemotécnico `CFIPLIDER`,
   2016-11 a 2017-06 y más).
@@ -139,7 +139,7 @@ mencionan) y las agregaciones por compañía-mes suman ambos reportes.
   la mezcla (otras sí traen la Ñ, p. ej. `CN LIFE COMPAÑIA…`) indica que cada compañía
   envía el archivo en una codificación distinta.
 
-### F7 (bajo, calidad de la fuente — cuadratura parcial en bienes raíces)
+### F7 (bajo, cuadratura parcial en bienes raíces; origen no corroborado)
 
 `costo_corregido − deterioro = valor_final` cuadra en el 90,58 % de las filas; en el 9,42 %
 restante el valor final informado es distinto (mediana de desvío 405 M$) y el deterioro
@@ -188,20 +188,22 @@ la compañía no reportó; el pipeline publica lo que la CMF publica y no interp
 | :--- | :--- | :--- | :--- |
 | 1 | F1: el paso de pruebas del workflow ejecutaba 0 pruebas | El paso corre `python -m seguros.tests.test_formato_1835` (el `main()` real) además del unittest de `estable`; contrato de publicadores sigue pasando (9/9) | `.github/workflows/seguros_carteras.yml` |
 | 2 | F2: maestro con meses sobrestimados (11 compañías; 3 sin filas publicadas) | Los meses se cuentan por filas publicadas; se agregó `--solo-maestro` y se recalculó el maestro desde los Parquet: 87 → **84 compañías**, métricas cuadradas al 100 %; `data_manifest.json` recalculado (solo cambió `seguros_maestro` 87 → 84, con el orden del catálogo preservado); la descripción de `meses_reportados` ahora dice «meses con filas publicadas» | `seguros/scripts/actualizar_carteras.py`, `seguros/scripts/metadatos_web.py`, `docs/outputs/seguros/aseguradoras.parquet`, `docs/outputs/seguros/manifest.json`, `data_manifest.json` |
-| 3 | F3: duplicados exactos sin aviso | El publicador avisa cada mes con duplicados exactos por tabla en el manifiesto | `seguros/scripts/actualizar_carteras.py` |
+| 3 | F3: filas completas idénticas sin aviso | El publicador registra las apariciones extra observadas tras la lectura y explicita que origen/validez no están determinados; no deduplica | `seguros/scripts/actualizar_carteras.py` |
 | 4 | F4: doble reporte en el control sin aviso | `leer_zip` avisa cada clave `(rut, tipo_inversion)` con valores distintos en el mes | `seguros/scripts/actualizar_carteras.py` |
 | 5 | F8: formato del RUT distinto entre manifiesto y Parquet | `cargar_control` normaliza las claves al formato canónico (cuerpo sin DV); el control recalculado ya se guarda así | `seguros/scripts/actualizar_carteras.py`, `docs/outputs/seguros/manifest.json` |
 
 **Verificación tras las correcciones**: `python -m seguros.tests.test_formato_1835` OK;
 `pipelines.auto` 14/14 OK; el maestro recalculado cuadra al 100 % con las filas publicadas
 (0 diferencias en 84 compañías); los 118 períodos y las 8 tablas de detalle **no se
-tocaron** (siguen siendo la fuente CMF tal cual).
+tocaron** en aquellas correcciones. Su cotejo histórico línea a línea con la fuente CMF
+permanece pendiente.
 
 ## 5. Recomendaciones pendientes (decisión de política del pipeline)
 
-1. **F3**: deduplicar filas 100 % idénticas al publicar (hoy se avisan, no se eliminan). Si se
-   adopta, conviene reescribir la historia afectada (28.240 filas en `renta_fija`, 5.931 en
-   `extranjeros`, 92 en `fondos_mutuos`, 4 en `acciones`).
+1. **F3**: conservar las filas mientras no haya clasificación con evidencia. Cotejar ZIPs
+   originales y salida histórica; después decidir, como política explícita, si corresponde un
+   aviso contextual, una limitación de agregaciones o alguna transformación. No deduplicar
+   automáticamente; los conteos anteriores no prueban que esas apariciones sean sobrantes.
 2. **F4**: en meses de traslape de fusiones, decidir si el control publica ambos reportes
    (hoy, con aviso) o solo el de la sociedad sobreviviente.
 3. **F5–F7**: documentar en el diccionario de datos como calidad de la fuente (fechas
@@ -210,10 +212,15 @@ tocaron** (siguen siendo la fuente CMF tal cual).
    se quiere la historia completa, basta bajar `DESDE_TABLA` y dejar que el flujo
    incremental complete los meses (el código ya lo soporta).
 
-## 6. Corroboración: ¿tema de la CMF o error nuestro?
+## 6. Contraste de hipótesis: ¿tema de la CMF o del proceso?
 
-**Veredicto: los hallazgos de calidad (F3, F4, F5) son de la fuente (compañías/CMF), no del
-lector.** El pipeline publica fielmente lo que la CMF entrega. Evidencia:
+**Conclusión revisada (2026-10-26):** las pruebas disponibles comprueban el parser contra las
+muestras versionadas y permiten describir anomalías en los Parquet publicados, pero los ZIP
+crudos históricos no están disponibles aquí. Por eso, el veredicto previo que atribuía F3,
+F4 y F5 a la fuente, y afirmaba fidelidad para esos ZIP, no está corroborado directamente.
+Para F3 se conserva la clasificación «repeticiones observadas en la publicación; origen y
+causa no determinados». En F4/F5, los patrones internos y el contexto externo citados abajo
+son indicios, no una comparación línea a línea con la fuente.
 
 **El lector está bien verificado**
 
@@ -228,37 +235,39 @@ lector.** El pipeline publica fielmente lo que la CMF entrega. Evidencia:
   DCV) y la cuadratura `costo_amortizado − deterioro = valor_final` exacta.
 - El test del lector sobre muestras reales de ambos formatos pasa con cuadratura 100 %.
 
-**F3 (duplicados) — fuente**
+**F3 — evidencia indirecta, causa sin corroborar**
 
-- La propia compañía declaró menos líneas de las que envió: 2025-03, `99301000`, archivo de
-  acciones declaró 77 líneas y envió 84; control declaró 30 y envió 37 (avisos del
-  manifiesto). Las líneas extra son los duplicados.
-- Multiplicidad variable (2–22) distribuida en todos los meses; un lector con corrimiento
-  produciría basura, no filas 100 % idénticas, y la cuadratura (100 %) se rompería.
-- Las muestras de la fuente no traen duplicados (son chicas; no concluyentes solas).
+- Para 2025-03, `99301000`, los controles guardados reportan diferencias entre líneas
+  declaradas y leídas (acciones 77/84; control 30/37). Sin el ZIP, esto no identifica cuáles
+  líneas concretas son repetidas ni demuestra que el exceso esté en el archivo de origen.
+- La multiplicidad 2–22 y las cuadraturas conservadas son compatibles con filas idénticas ya
+  presentes antes de la publicación, pero no excluyen un defecto histórico de extracción o
+  transformación. Las muestras versionadas no traen duplicados y son demasiado pequeñas para
+  decidirlo.
+- El parser actual conserva las filas recibidas y avisa la repetición calculada después de
+  leerlas; ese comportamiento no prueba la procedencia de los Parquet históricos.
 
-**F4 (doble reporte) — fuente**
+**F4 — claves repetidas en el control publicado; ZIP crudo no cotejado**
 
-- HDI 2024-06: los 12 `tipo_inversion` aparecen exactamente 2 veces con **valores distintos**;
-  un lector duplicador produciría valores idénticos → son dos reportes distintos (dos
-  archivos C en el ZIP de la CMF).
-- Eventos societarios corroborados públicamente: Zurich (división 2024; fusión por
-  incorporación de la NewCo Rentas Vitalicias materializada el 4-11-2024 y posterior venta a
-  Ohio National — Diario Oficial/Diario Estrategia/CMF); Chilena Consolidada cambió de razón
-  social a Zurich Chile Seguros de Vida en 2022; CLC es de Clínica Las Condes y **sigue
-  vigente** (CMF) → el archivo «SEGUROS CLC» bajo el RUT de Principal (2018-06) es un error
-  de la fuente, no una fusión; Alemana es de Clínica Alemana (CMF) y se asoció con UC
-  Christus en 2024. Principal (96588080) fue Seguros de Vida Banmédica hasta 1998 (CMF).
+- HDI 2024-06: los 12 `tipo_inversion` aparecen exactamente 2 veces con valores distintos en
+  los datos publicados. El patrón es compatible con dos líneas o reportes, pero sin el ZIP no
+  verifica que sean dos archivos C ni descarta otra explicación del proceso.
+- El contexto societario documentado para Zurich, Chilena Consolidada, CLC, Alemana y
+  Principal ayuda a generar hipótesis sobre posibles traslapes. No demuestra por sí mismo qué
+  archivos incluyó cada ZIP ni autoriza atribuir a la fuente el caso «SEGUROS CLC» asociado a
+  Principal en 2018-06; ese enlace requiere corroboración del archivo crudo.
 
-**F5 (fechas imposibles) — fuente**
+**F5 — fechas anómalas en la publicación; origen no cotejado**
 
-- `BLAPO-F`/`BLAPO-G` son bonos de **Empresas La Polar**: BLAPO-F venció el 31-07-2022 y
-  BLAPO-G vence el 31-07-2032 (cbonds). En los datos aparecen con vencimiento 2173 → error
-  de la compañía en el archivo.
-- Los bonos del Tesoro de EE.UU. a 30 años emitidos en 2024 vencen en 2054; ninguno vence
-  en 2173. El mismo bono (`USP32133CH47`) aparece con vencimiento 2034-12-12 en otras filas
-  del mismo mes.
-- México sí emitió bonos a 100 años (vence 2110): esos vencimientos largos son legítimos.
+- En los datos publicados, `BLAPO-F`/`BLAPO-G` aparecen con vencimiento 2173. Referencias
+  externas de instrumentos sitúan los bonos de Empresas La Polar con vencimientos en 2022 y
+  2032, respectivamente; la discrepancia es real en la publicación, pero sin el ZIP no se
+  determina si ya venía en el archivo o surgió en el proceso.
+- Los bonos del Tesoro de EE.UU. a 30 años emitidos en 2024 se esperan con vencimiento en
+  2054; el mismo bono (`USP32133CH47`) aparece con 2034-12-12 en otras filas del mismo mes.
+  Son señales para cotejar, no trazabilidad a la línea cruda.
+- México sí emitió bonos a 100 años (vencimiento 2110), por lo que una fecha larga no es
+  anómala por sí sola.
 
 **Límite: la corroboración cruda quedó bloqueada por billing**
 
@@ -273,9 +282,9 @@ lo publicado). El workflow temporal usado para el intento se retiró; el script 
 ## 7. Límites de la auditoría
 
 - No se pudo descargar los ZIP originales de la CMF desde este entorno (el proxy no lo
-  permite), así que la atribución «dato fuente vs. error del lector» se hizo por consistencia
-  interna: muestras reales, cambio de formato 2024-12, distribuciones por período y
-  cuadraturas. Donde la duda es razonable (F3, F4, F5) se indica la evidencia interna.
+  permite). Las muestras, el cambio de formato 2024-12, las distribuciones por período y las
+  cuadraturas son controles internos; no sustituyen el cotejo línea a línea y no bastan para
+  atribuir F3/F4/F5 a la fuente o al proceso histórico.
 - La corrida programada del 2026-10-04 no se pudo re-verificar en vivo (requiere GitHub
   Actions); se auditó su configuración y el estado publicado que resultó de ella.
 - No se auditaron los estados financieros IFRS del sector (no están en este repositorio);

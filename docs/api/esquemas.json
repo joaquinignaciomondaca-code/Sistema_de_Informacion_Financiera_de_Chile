@@ -11,7 +11,7 @@
  },
  "como_se_genera": "python3 scripts/build_esquemas.py",
  "contrato": "sif-api/esquemas",
- "generado": "2026-10-25",
+ "generado": "2026-10-26",
  "objetos": {
   "afp_lista_entidades": {
    "archivo": "outputs/pensiones/afp_maestro_administradoras.parquet",
@@ -4605,7 +4605,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -4630,9 +4630,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-23",
+   "corte": "2014-01-01 a 2026-10-26",
    "estado": "publicado",
-   "filas": 3262,
+   "filas": 3263,
    "manifest_id": "macro_cobre",
    "nivel": "contexto",
    "nombre_visible": "macro.cobre",
@@ -4647,7 +4647,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -4696,7 +4696,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -4801,7 +4801,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -4819,9 +4819,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-23",
+   "corte": "2014-01-02 a 2026-10-26",
    "estado": "publicado",
-   "filas": 3190,
+   "filas": 3191,
    "manifest_id": "macro_dolar_observado",
    "nivel": "contexto",
    "nombre_visible": "macro.dolar_observado",
@@ -4836,7 +4836,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -4854,9 +4854,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-23",
+   "corte": "2014-01-02 a 2026-10-26",
    "estado": "publicado",
-   "filas": 3190,
+   "filas": 3191,
    "manifest_id": "macro_euro_observado",
    "nivel": "contexto",
    "nombre_visible": "macro.euro_observado",
@@ -4913,7 +4913,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -5060,7 +5060,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -5207,7 +5207,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -5232,9 +5232,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-23",
+   "corte": "2014-01-02 a 2026-10-26",
    "estado": "publicado",
-   "filas": 3190,
+   "filas": 3191,
    "manifest_id": "macro_metales_preciosos",
    "nivel": "contexto",
    "nombre_visible": "macro.metales_preciosos",
@@ -5400,7 +5400,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-25",
+   "corte": "2014-01-01 a 2026-10-26",
    "estado": "publicado",
    "filas": 51,
    "manifest_id": "macro_series_catalogo",
@@ -5417,7 +5417,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -5480,7 +5480,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -5515,7 +5515,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -5540,9 +5540,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-23",
+   "corte": "2014-01-02 a 2026-10-26",
    "estado": "publicado",
-   "filas": 3191,
+   "filas": 3192,
    "manifest_id": "macro_tasas_corto_plazo",
    "nivel": "contexto",
    "nombre_visible": "macro.tasas_corto_plazo",
@@ -5557,7 +5557,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -5589,9 +5589,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-23",
+   "corte": "2014-01-02 a 2026-10-26",
    "estado": "publicado",
-   "filas": 3190,
+   "filas": 3191,
    "manifest_id": "macro_tipo_cambio_multilateral",
    "nivel": "contexto",
    "nombre_visible": "macro.tipo_cambio_multilateral",
@@ -5648,7 +5648,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fecha",
      "rol": "PK",
-     "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+     "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
      "tipo": "VARCHAR"
     },
     {
@@ -5666,9 +5666,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-25",
+   "corte": "2014-01-01 a 2026-10-26",
    "estado": "publicado",
-   "filas": 4681,
+   "filas": 4682,
    "manifest_id": "macro_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.uf",
@@ -11588,8 +11588,8 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 19777523,
-  "filas_unicas": 19777523,
+  "filas_por_objeto": 19777530,
+  "filas_unicas": 19777530,
   "objetos": 90,
   "sin_esquema": 4,
   "tablas_manifiesto": 89,

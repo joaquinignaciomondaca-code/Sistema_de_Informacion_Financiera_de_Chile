@@ -33,6 +33,8 @@ on:
       - 'scripts/generar_indice_busqueda.py'
       - 'scripts/test_generar_indice_busqueda.py'
       - 'scripts/build_metricas_publicadas.py'
+      - 'scripts/build_macro_web.py'
+      - 'macro/scripts/build_tablas_tematicas.py'
       - 'scripts/build_indice_notas.py'
       - 'scripts/test_build_indice_notas.py'
       - 'scripts/build_ficha_piloto.py'
@@ -40,6 +42,7 @@ on:
       - 'scripts/ficha_renderer.py'
       - 'scripts/test_fichas_candidatas.py'
       - 'scripts/test_fichas_sql_local.py'
+      - 'scripts/test_audit_consultas_sensibles_repeticiones.py'
       - 'scripts/test_ficha_piloto_http.py'
       - 'scripts/probar_ejemplos.py'
       - 'scripts/test_contrato.py'
@@ -279,6 +282,11 @@ jobs:
           grep -h -E "Consultas sugeridas|OK|VACIA|ERROR" consultas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Consultas sugeridas::$linea"; done
           exit $n
 
+      - name: 'SQL: detectar consultas sugeridas sensibles a repeticiones exactas (sin deduplicar)'
+        run: |
+          python -m unittest scripts.test_audit_consultas_sensibles_repeticiones -v
+          python scripts/audit_consultas_sensibles_repeticiones.py --check
+
       - name: 'Fichas: las consultas expuestas ejecutan en DuckDB local y respetan filtros'
         run: python scripts/test_fichas_sql_local.py
 
@@ -334,6 +342,9 @@ jobs:
             fi
           done
           exit $(( c | a | d ))
+
+      - name: 'Macro: diccionario, explorador y ERD al día con Parquet y manifiesto'
+        run: python scripts/build_macro_web.py --check
 
       - name: 'Vitrina: metadatos sociales, robots y sitemap derivados del catálogo'
         run: |
@@ -666,6 +677,7 @@ jobs:
           macro.tests.test_series_bcch
           macro.tests.test_build_tablas_tematicas
           seguros.tests.test_formato_1835
+          seguros.tests.test_avisos_repeticiones
       - name: Fondos de inversión · XML original, cotejo, contextos y publicación
         run: python -m unittest discover -s fi/tests -v
       - name: Factoring y leasing · extracción y publicación
@@ -688,6 +700,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Dependencias para verificar filas Parquet
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
       - name: Cada workflow corrió con éxito dentro de su plazo
         run: |
           set +e

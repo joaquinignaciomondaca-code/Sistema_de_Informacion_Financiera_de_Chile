@@ -564,8 +564,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "MACROECONOMÍA Y TASAS (BCCh)",
     badges: [
-      { type: "data", text: "24 tablas", title: "23 tablas por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral), más el catálogo de series; agrupadas en tasas y curvas, tipo de cambio, actividad y precios y expectativas" },
-      { type: "data", text: "Diaria, mensual y trimestral · 2014–2026", title: "Cada serie está en la frecuencia en que la publica el Banco Central. Cobertura: desde 2014 hasta la última publicación" }
+      { type: "data", text: "24 tablas · 4 bloques", title: "23 tablas por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral), más el catálogo de series; agrupadas en tasas y curvas, tipo de cambio, actividad y precios y expectativas" },
+      { type: "data", text: "2014 → 2026", title: "Cobertura de las series: desde 2014 hasta la última publicación del BCCh" }
     ],
     status: "active",
     children: [
@@ -592,12 +592,12 @@ const EXPLORER_TREE = [
               { label: "Tasa de la Fed frente a la TPM de Chile: promedio mensual", query: "SELECT f.periodo, round(avg(f.tasa_fed_funds_pct), 2) AS fed_funds_pct, round(avg(t.tpm_pct), 2) AS tpm_chile_pct FROM macro_tasa_referencia_fed f JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY f.periodo ORDER BY f.periodo DESC LIMIT 24;" }
             ],
             tables: [
-              { id: "macro_tasas_corto_plazo", name: "macro.tasas_corto_plazo", rows: "Una fila por día", file: "outputs/macro/macro_tasas_corto_plazo.parquet" },
-              { id: "macro_swaps_camara", name: "macro.swaps_camara", rows: "Una fila por día", file: "outputs/macro/macro_swaps_camara.parquet" },
-              { id: "macro_curva_bonos_pesos", name: "macro.curva_bonos_pesos", rows: "Una fila por día", file: "outputs/macro/macro_curva_bonos_pesos.parquet" },
-              { id: "macro_curva_bonos_uf", name: "macro.curva_bonos_uf", rows: "Una fila por día", file: "outputs/macro/macro_curva_bonos_uf.parquet" },
-              { id: "macro_inflacion_implicita", name: "macro.inflacion_implicita", rows: "Una fila por día", file: "outputs/macro/macro_inflacion_implicita.parquet" },
-              { id: "macro_tasa_referencia_fed", name: "macro.tasa_referencia_fed", rows: "Una fila por día", file: "outputs/macro/macro_tasa_referencia_fed.parquet" }
+              { id: "macro_tasas_corto_plazo", name: "macro.tasas_corto_plazo", rows: "Frecuencia diaria", file: "outputs/macro/macro_tasas_corto_plazo.parquet" },
+              { id: "macro_swaps_camara", name: "macro.swaps_camara", rows: "Frecuencia diaria", file: "outputs/macro/macro_swaps_camara.parquet" },
+              { id: "macro_curva_bonos_pesos", name: "macro.curva_bonos_pesos", rows: "Frecuencia diaria", file: "outputs/macro/macro_curva_bonos_pesos.parquet" },
+              { id: "macro_curva_bonos_uf", name: "macro.curva_bonos_uf", rows: "Frecuencia diaria", file: "outputs/macro/macro_curva_bonos_uf.parquet" },
+              { id: "macro_inflacion_implicita", name: "macro.inflacion_implicita", rows: "Frecuencia diaria", file: "outputs/macro/macro_inflacion_implicita.parquet" },
+              { id: "macro_tasa_referencia_fed", name: "macro.tasa_referencia_fed", rows: "Frecuencia diaria", file: "outputs/macro/macro_tasa_referencia_fed.parquet" }
             ]
           },
           {
@@ -617,12 +617,12 @@ const EXPLORER_TREE = [
               { label: "UF y UTM vigentes: último valor de cada mes", query: "SELECT u.periodo, arg_max(u.uf_valor_clp, u.fecha) AS uf_cierre_clp, max(t.utm_valor_clp) AS utm_valor_clp FROM macro_uf u LEFT JOIN macro_utm t USING (periodo) GROUP BY u.periodo ORDER BY u.periodo DESC LIMIT 24;" }
             ],
             tables: [
-              { id: "macro_dolar_observado", name: "macro.dolar_observado", rows: "Una fila por día", file: "outputs/macro/macro_dolar_observado.parquet" },
-              { id: "macro_euro_observado", name: "macro.euro_observado", rows: "Una fila por día", file: "outputs/macro/macro_euro_observado.parquet" },
-              { id: "macro_tipo_cambio_multilateral", name: "macro.tipo_cambio_multilateral", rows: "Una fila por día", file: "outputs/macro/macro_tipo_cambio_multilateral.parquet" },
-              { id: "macro_tipo_cambio_real", name: "macro.tipo_cambio_real", rows: "Una fila por mes", file: "outputs/macro/macro_tipo_cambio_real.parquet" },
-              { id: "macro_uf", name: "macro.uf", rows: "Una fila por día", file: "outputs/macro/macro_uf.parquet" },
-              { id: "macro_utm", name: "macro.utm", rows: "Una fila por mes", file: "outputs/macro/macro_utm.parquet" }
+              { id: "macro_dolar_observado", name: "macro.dolar_observado", rows: "Frecuencia diaria", file: "outputs/macro/macro_dolar_observado.parquet" },
+              { id: "macro_euro_observado", name: "macro.euro_observado", rows: "Frecuencia diaria", file: "outputs/macro/macro_euro_observado.parquet" },
+              { id: "macro_tipo_cambio_multilateral", name: "macro.tipo_cambio_multilateral", rows: "Frecuencia diaria", file: "outputs/macro/macro_tipo_cambio_multilateral.parquet" },
+              { id: "macro_tipo_cambio_real", name: "macro.tipo_cambio_real", rows: "Frecuencia mensual", file: "outputs/macro/macro_tipo_cambio_real.parquet" },
+              { id: "macro_uf", name: "macro.uf", rows: "Frecuencia diaria", file: "outputs/macro/macro_uf.parquet" },
+              { id: "macro_utm", name: "macro.utm", rows: "Frecuencia mensual", file: "outputs/macro/macro_utm.parquet" }
             ]
           },
           {
@@ -647,14 +647,14 @@ const EXPLORER_TREE = [
               { label: "Deuda pública sobre PIB: serie trimestral", query: "SELECT periodo, deuda_bruta_gobierno_central_pct_pib FROM macro_deuda_publica_pct_pib ORDER BY periodo DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "macro_inflacion_ipc", name: "macro.inflacion_ipc", rows: "Una fila por mes", file: "outputs/macro/macro_inflacion_ipc.parquet" },
-              { id: "macro_imacec", name: "macro.imacec", rows: "Una fila por mes", file: "outputs/macro/macro_imacec.parquet" },
-              { id: "macro_pib_trimestral", name: "macro.pib_trimestral", rows: "Una fila por trimestre", file: "outputs/macro/macro_pib_trimestral.parquet" },
-              { id: "macro_mercado_laboral", name: "macro.mercado_laboral", rows: "Una fila por mes", file: "outputs/macro/macro_mercado_laboral.parquet" },
-              { id: "macro_cobre", name: "macro.cobre", rows: "Una fila por día", file: "outputs/macro/macro_cobre.parquet" },
-              { id: "macro_metales_preciosos", name: "macro.metales_preciosos", rows: "Una fila por día", file: "outputs/macro/macro_metales_preciosos.parquet" },
-              { id: "macro_reservas_internacionales", name: "macro.reservas_internacionales", rows: "Una fila por mes", file: "outputs/macro/macro_reservas_internacionales.parquet" },
-              { id: "macro_deuda_publica_pct_pib", name: "macro.deuda_publica_pct_pib", rows: "Una fila por trimestre", file: "outputs/macro/macro_deuda_publica_pct_pib.parquet" }
+              { id: "macro_inflacion_ipc", name: "macro.inflacion_ipc", rows: "Frecuencia mensual", file: "outputs/macro/macro_inflacion_ipc.parquet" },
+              { id: "macro_imacec", name: "macro.imacec", rows: "Frecuencia mensual", file: "outputs/macro/macro_imacec.parquet" },
+              { id: "macro_pib_trimestral", name: "macro.pib_trimestral", rows: "Frecuencia trimestral", file: "outputs/macro/macro_pib_trimestral.parquet" },
+              { id: "macro_mercado_laboral", name: "macro.mercado_laboral", rows: "Frecuencia mensual", file: "outputs/macro/macro_mercado_laboral.parquet" },
+              { id: "macro_cobre", name: "macro.cobre", rows: "Frecuencia diaria", file: "outputs/macro/macro_cobre.parquet" },
+              { id: "macro_metales_preciosos", name: "macro.metales_preciosos", rows: "Frecuencia diaria", file: "outputs/macro/macro_metales_preciosos.parquet" },
+              { id: "macro_reservas_internacionales", name: "macro.reservas_internacionales", rows: "Frecuencia mensual", file: "outputs/macro/macro_reservas_internacionales.parquet" },
+              { id: "macro_deuda_publica_pct_pib", name: "macro.deuda_publica_pct_pib", rows: "Frecuencia trimestral", file: "outputs/macro/macro_deuda_publica_pct_pib.parquet" }
             ]
           },
           {
@@ -671,16 +671,16 @@ const EXPLORER_TREE = [
               { label: "Encuesta de Operadores Financieros: últimas 20 encuestas", query: "SELECT fecha, expectativa_inflacion_12_meses_pct, expectativa_tpm_12_meses_pct FROM macro_expectativas_operadores ORDER BY fecha DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "macro_expectativas_inflacion", name: "macro.expectativas_inflacion", rows: "Una fila por mes", file: "outputs/macro/macro_expectativas_inflacion.parquet" },
-              { id: "macro_expectativas_tpm", name: "macro.expectativas_tpm", rows: "Una fila por mes", file: "outputs/macro/macro_expectativas_tpm.parquet" },
-              { id: "macro_expectativas_operadores", name: "macro.expectativas_operadores", rows: "Una fila por día", file: "outputs/macro/macro_expectativas_operadores.parquet" }
+              { id: "macro_expectativas_inflacion", name: "macro.expectativas_inflacion", rows: "Frecuencia mensual", file: "outputs/macro/macro_expectativas_inflacion.parquet" },
+              { id: "macro_expectativas_tpm", name: "macro.expectativas_tpm", rows: "Frecuencia mensual", file: "outputs/macro/macro_expectativas_tpm.parquet" },
+              { id: "macro_expectativas_operadores", name: "macro.expectativas_operadores", rows: "Frecuencia diaria", file: "outputs/macro/macro_expectativas_operadores.parquet" }
             ]
           },
           {
             id: "cat_macro_series_catalogo",
             type: "circular",
             label: "Catálogo de series",
-            badge: "51 series",
+            badge: "51 filas",
             badgeType: "data",
             status: "active",
             sector: "macro",

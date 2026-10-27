@@ -145,7 +145,7 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 | Fondos de Inversión | 9 | 3.187.474 | Carteras 2020-03 → 2026-06; pactos 2012-03 → 2026-06; EEFF 2022-03 → 2026-06 (16 cierres, backfill parcial) | CMF · LUF / Circular 1998 · XML FIEF |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | 24 | 41.471 | diaria / mensual / trimestral | BCCh |
+| Macroeconomía y Tasas | 24 | 41.478 | diaria / mensual / trimestral | BCCh |
 | Factoring y Leasing | 3 | 52.446 | 2009-03 → 2026-09 | CMF · IFRS |
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
@@ -155,9 +155,9 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **89** | **19.777.523** | **2001 → 2026** | |
+| **Total** | **89** | **19.777.530** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son dos vistas y dos conjuntos de archivos **filtrados por separado**: B1/B2 (722.931 filas) y R1 (1.240.061), sin solape; sus filas suman las 1.962.992 de la tabla de origen `bancos_cmf_lineas`. El total sectorial de 1.963.033 incluye además las 41 filas de `bancos_lista_entidades`. Por eso el manifiesto ETL cuenta una tabla fuente y la API/Descargas exponen dos objetos lógicos filtrados más el padrón, sin duplicar filas ni compartir el Parquet combinado. El catálogo API suma 90 objetos y 19.777.523 filas. Esta tabla enumera 89 elementos de Descargas porque excluye `fi_bienes_raices`, retenido con su archivo de esquema de 0 filas pero oculto de la navegación. De esos 89 elementos, 74 están en niveles principales (19.677.258 filas; 99,5 %) y 15 en archivo/registro (100.264; 0,5 %); una variante de corredoras se cuenta como elemento y se muestra junto a su lista base. Las filas son una suma por objeto y no un conteo de registros globalmente únicos: algunas vistas pueden solaparse. El detalle de unidades y la reconciliación por IDs, filas, bytes, particiones y rutas está en [`metricas_publicadas.json`](docs/metricas_publicadas.json).
+† En banca, *balance* y *resultados* son dos vistas y dos conjuntos de archivos **filtrados por separado**: B1/B2 (722.931 filas) y R1 (1.240.061), sin solape; sus filas suman las 1.962.992 de la tabla de origen `bancos_cmf_lineas`. El total sectorial de 1.963.033 incluye además las 41 filas de `bancos_lista_entidades`. Por eso el manifiesto ETL cuenta una tabla fuente y la API/Descargas exponen dos objetos lógicos filtrados más el padrón, sin duplicar filas ni compartir el Parquet combinado. El catálogo API suma 90 objetos y 19.777.530 filas. Esta tabla enumera 89 elementos de Descargas porque excluye `fi_bienes_raices`, retenido con su archivo de esquema de 0 filas pero oculto de la navegación. De esos 89 elementos, 74 están en niveles principales (19.677.266 filas; 99,5 %) y 15 en archivo/registro (100.264; 0,5 %); una variante de corredoras se cuenta como elemento y se muestra junto a su lista base. Las filas son una suma por objeto y no un conteo de registros globalmente únicos: algunas vistas pueden solaparse. El detalle de unidades y la reconciliación por IDs, filas, bytes, particiones y rutas está en [`metricas_publicadas.json`](docs/metricas_publicadas.json).
 
 ### Operaciones REPO (pactos): cobertura vigente
 
