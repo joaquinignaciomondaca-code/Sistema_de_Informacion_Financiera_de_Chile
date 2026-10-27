@@ -1,6 +1,6 @@
 # Recorrido de datos: plan operativo y primera revisión interna
 
-Fecha: 2026-10-27. Estado: primera entrega técnica/documental; propuesta visual pendiente.
+Fecha: 2026-10-27. Estado: segunda entrega implementada como versión revisable; feedback visual pendiente.
 
 ## Acuerdo de trabajo
 
@@ -77,3 +77,32 @@ En esta entrega se protege el reemplazo SQL mediante `setQueryInput`, se tolera 
 ## Siguiente decisión revisable
 
 Preparar entrada por intención y ficha de conjunto como una sola propuesta, aprovechando el renderer y la ficha piloto. Comparar catálogo y Mapa según tarea; no dar por ganador al catálogo. Mantener acceso directo avanzado y observaciones que afecten interpretación. Analítica queda como evaluación separada de privacidad/beneficio, sin instalar servicios ni registrar consultas.
+
+
+## Segunda entrega: entrada y contexto de conjunto (versión revisable)
+
+### Cambios
+
+- `Explorar` desde cualquiera de los siete sectores de portada abre el catálogo existente en Descargas con ese sector, sin búsqueda residual de la selección anterior ni recorte de años arrastrado. No se crea una octava pestaña ni un catálogo paralelo.
+- `Entender relaciones entre tablas` y `Ver relaciones` ofrecen entrada explícita al Mapa. No se elimina el diagrama ni se afirma superioridad empírica del catálogo.
+- Cada tarjeta destaca `detalle` del catálogo y conserva el nombre técnico. La descripción, fuente, filas y cobertura siguen visibles.
+- El apartado `Entender este conjunto antes de usarlo` reutiliza cobertura/fuente del catálogo de Descargas y frecuencia/fecha del Diccionario cuando existen. No deduce unidad de observación a partir de frecuencias o conteos ni inventa moneda/unidad ausente.
+- `Entender las columnas` selecciona el conjunto y abre su Diccionario exacto. Una acción explícita puede volver a seguir la misma selección; navegar entre pestañas por sí solo no reaplica búsquedas ya atendidas.
+- Solo CCAF enlaza a su ficha piloto con URL propia, identificada como piloto. No se generan rutas para las ocho previsualizaciones ni se modifica canonical, sitemap o indexación.
+
+### Prueba interna para el responsable
+
+1. Desde Información, buscar conjuntos de fondos mutuos con Explorar.
+2. Abrir el contexto de un conjunto y comprobar si basta para decidir si sirve.
+3. Consultar sus columnas y volver al catálogo o al Visor.
+4. Usar Ver relaciones por separado y evaluar si los dos destinos resultan claros.
+5. Repetir tras tener otra tabla seleccionada: el acceso explícito a explorar sector debe mostrar ese sector, no resultados vacíos por la tabla anterior.
+
+Feedback pendiente: nombres de acciones, utilidad del contexto, densidad visual y conveniencia de conservar Descargas como nombre del catálogo. No se ha probado con usuarios externos.
+
+### Verificaciones de la segunda entrega
+
+- DOM general 161/162: se añaden regresiones de catálogo por sector sin búsqueda residual, acción Mapa, enlace único a ficha piloto y salto a Diccionario exacto.
+- Se conserva el único fallo de conciliación de métricas heredado descrito anteriormente.
+- `test_table_context.js` amplía cobertura de seguir de nuevo la selección por acción explícita.
+- Auditorías estáticas de interfaz/móvil y regresiones SQL pasan. Revisión visual real y archivos descargados siguen pendientes.

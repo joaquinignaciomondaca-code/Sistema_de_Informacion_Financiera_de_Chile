@@ -80,12 +80,15 @@
     const nav = window.SidebarNav;
     if (tipo === "explorar" && sector) {
       if (nav && typeof nav.revealSector === "function") nav.revealSector(sector, "portada");
+      if (typeof window.switchMainTab === "function") window.switchMainTab("downloads");
+      if (window.DownloadsPanel) window.DownloadsPanel.filtrarSector(sector);
+    } else if (tipo === "mapa") {
       if (typeof window.switchMainTab === "function") window.switchMainTab("erd");
-      if (window.erdInstance) window.erdInstance.focusSector(sector);
+      if (sector && window.erdInstance) window.erdInstance.focusSector(sector);
     } else if (tipo === "descargas") {
       if (typeof window.switchMainTab === "function") window.switchMainTab("downloads");
-      if (sector && window.DownloadsPanel && typeof window.DownloadsPanel.filtrarSector === "function") {
-        window.DownloadsPanel.filtrarSector(sector);
+      if (window.DownloadsPanel && typeof window.DownloadsPanel.filtrarSector === "function") {
+        window.DownloadsPanel.filtrarSector(sector || "todos");
       }
     } else if (tipo === "archivo") {
       if (nav && typeof nav.openArchive === "function") nav.openArchive();
