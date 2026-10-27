@@ -110,6 +110,7 @@ jobs:
           node scripts/test_table_context.js
           node scripts/test_sql_draft.js
           node scripts/test_download_exports.js
+          node scripts/test_download_scope.js
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
 
       - name: Caché del detector de diseño

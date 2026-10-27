@@ -135,3 +135,12 @@ Verificación: DOM general 164/165 (mismo fallo heredado de métricas); DOM móv
 - Entrada vacía: error explícito y ninguna descarga.
 - Son archivos reales generados/reabiertos automáticamente, no apertura manual en Excel, descarga de una tabla financiera completa ni prueba del navegador contra DuckDB. Esos límites continúan pendientes.
 - Se incorporan exportaciones y SQL al workflow. DOM general sigue en 164/165 con la discrepancia de métricas heredada; móvil DOM 15/15. No se declara CI remota aprobada.
+
+
+### Consolidación: alcance verificable de Descargas
+
+- Cada tarjeta distingue el alcance CSV/Excel (serie completa o años elegidos, diaria o cierre mensual por indicador, no suma mensual) del Parquet original, que no aplica esos controles. Las tablas sin período indican que no admiten recorte por años.
+- Rango invertido: aviso visible accesible, controles marcados y exportaciones temporales bloqueadas antes de arrancar el motor. Parquet sigue disponible.
+- La descarga captura años y frecuencia al hacer clic, incluso si cambian durante la preparación del motor. El archivo exportado incorpora los años cuando corresponde.
+- Evidencia automatizada: `test_download_scope.js` verifica SQL, aviso/bloqueo, tablas sin período y cambio de controles durante arranque simulado; añadido al workflow. DOM **167/168**, con los tres nuevos contratos de controles aprobados y la misma discrepancia heredada de métricas como único fallo. Exportaciones reales sintéticas CSV/XLSX y ZIP por partes siguen aprobadas; auditoría estática de interfaz aprobada.
+- Límite: no constituye revisión visual en navegador ni validación de comprensión por usuarios. La prueba de captura usa motor simulado; no se atribuye ejecución DuckDB real.
