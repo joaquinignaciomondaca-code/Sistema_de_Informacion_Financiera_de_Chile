@@ -3,7 +3,7 @@
 <!-- Generado por scripts/build_indice_notas.py. No editar a mano:
      --check falla si no coincide con las notas de la carpeta. -->
 
-Las 65 notas de esta carpeta. Cada una registra una decisión, una
+Las 67 notas de esta carpeta. Cada una registra una decisión, una
 medición o una corrección, con la fecha en que se hizo y el motivo. Se citan
 desde el código, la web y las respuestas a las revisiones externas, así que
 están escritas para poder verificarse: qué se afirmó, contra qué se contrastó
@@ -15,6 +15,8 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 
 ## octubre de 2026
 
+- [Recorrido de datos: plan operativo y primera revisión interna](plan_recorrido_ux_2026-10-27.md) — Fecha: 2026-10-27.
+- [SIF: investigación sobre experiencia de uso y plan de validación](investigacion_ux_2026-10-27.md) — Fecha de revisión: 27 de octubre de 2026.
 - [Sensibilidad de consultas SQL sugeridas a filas exactamente repetidas](sensibilidad_consultas_repeticiones_2026-10-26.md) — consultas sugeridas en el explorador y chips por defecto de SQL; comparación local con los Parquet que consumen las vistas SQL.
 - [Checklist vivo del rediseño del SIF Chile](checklist_rediseno_sif_2026-10-24.md) — Fase 5 en curso; shortlist técnica provisional de nueve fichas para Fase 1.
 - [Auditoría inicial de fuentes y cifras para el rediseño](auditoria_fuentes_cifras_rediseno_2026-10-24.md) — contraste de la afirmación sobre SUSESO, fuentes directas del catálogo, cifras de archivos y unidades de conteo durante la Fase 0.
