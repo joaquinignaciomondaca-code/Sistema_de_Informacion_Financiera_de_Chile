@@ -536,11 +536,12 @@ jobs:
           node scripts/audit_interfaz_dom.js > dom.log 2>&1; n=$?
           node scripts/test_busqueda_dom.js > busqueda_dom.log 2>&1; b=$?
           node scripts/test_sql_draft_dom.js > sql_draft_dom.log 2>&1; s=$?
+          node scripts/test_viewer_states_dom.js > viewer_states_dom.log 2>&1; v=$?
           grep -h -E "^FALLA" dom.log busqueda_dom.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=DOM::$linea"; done
           echo "::notice title=DOM::$(tail -n 1 dom.log)"
           tail -n 2 busqueda_dom.log
-          cat sql_draft_dom.log
-          exit $(( n | b | s ))
+          cat sql_draft_dom.log viewer_states_dom.log
+          exit $(( n | b | s | v ))
 
       - name: 'Aviso de teléfono: flota, se cierra por las tres vías y lo recuerda'
         run: |
