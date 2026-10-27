@@ -120,3 +120,18 @@ Feedback del responsable: el esquema automático al pulsar una caja cubre demasi
 - Quitar selección ya no borra una búsqueda manual diferente en Descargas; limpia únicamente la búsqueda que coincide con el contexto anterior. Regresión hermética añadida.
 
 Verificación: DOM general 164/165 (mismo fallo heredado de métricas); DOM móvil 15/15; contexto, borrador SQL y auditorías estáticas pasan. El DOM verifica clic sin diálogo/cambio de foco/muestra y apertura explícita, no el encuadre visual real. Pendientes de consolidación: comprobar archivos completos/partes, revisar todas las escrituras directas SQL, capturas y feedback visual.
+
+
+## Consolidación: SQL y archivos completos
+
+- `replaceQuery` centraliza la confirmación de reemplazo. Sugerencias iniciales, sugerencias dinámicas, favoritas y acciones `setQueryInput` la utilizan; cancelar no ejecuta ni cierra favoritas. El contexto implícito conserva el borrador sin preguntar.
+- El SQL inicial recibido por hash pasa por esa protección. Su ejecución diferida solo ocurre si el texto no cambió durante la espera.
+- Edición manual, autocompletado y navegación del historial permanecen como operaciones explícitas del editor, no navegación entre tablas. No se afirma que todo reemplazo de texto tenga confirmación.
+- `test_sql_draft_dom.js` comprueba los disparadores reales de chips iniciales/dinámicos y favoritas, con aceptación y cancelación; pasa localmente en jsdom.
+- `test_download_exports.js` utiliza filas sintéticas y las bibliotecas SheetJS/JSZip incluidas en docs, sin red ni modificación de datos publicados. Captura los blobs descargados y vuelve a abrir los archivos.
+- CSV pequeño: BOM UTF-8, separador, comillas, texto acentuado, cero y nulo. Excel pequeño: cabeceras, texto y cero.
+- CSV grande: 250.001 filas → ZIP de dos partes; se verifican cabeceras, cada ID en orden y total íntegro.
+- Excel grande: 150.001 filas → ZIP de dos partes; se reabren los libros y verifican cada ID, total y límite por hoja (incluyendo cabecera).
+- Entrada vacía: error explícito y ninguna descarga.
+- Son archivos reales generados/reabiertos automáticamente, no apertura manual en Excel, descarga de una tabla financiera completa ni prueba del navegador contra DuckDB. Esos límites continúan pendientes.
+- Se incorporan exportaciones y SQL al workflow. DOM general sigue en 164/165 con la discrepancia de métricas heredada; móvil DOM 15/15. No se declara CI remota aprobada.
