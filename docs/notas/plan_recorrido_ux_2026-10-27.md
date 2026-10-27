@@ -1,6 +1,6 @@
 # Recorrido de datos: plan operativo y primera revisión interna
 
-Fecha: 2026-10-27. Estado: entregas 1 y 2 implementadas; entrega 3 avanzada, cierre pendiente.
+Fecha: 2026-10-27. Estado: implementación de las tres entregas terminada; controles técnicos locales ejecutados; cierre manual pendiente.
 
 ## Estado actual resumido
 
@@ -10,7 +10,7 @@ Este bloque es el estado vigente. Las secciones posteriores conservan la evidenc
 |---|---|---|
 | 1 · Diagnóstico y reglas | Completada; defectos e hipótesis separados, reglas de selección/filtros/borrador documentadas | Sin implementación pendiente de esta entrega |
 | 2 · Entrada y contexto | Implementada: explorar sector, contexto con metadatos existentes, columnas y acceso separado al Mapa | Feedback sobre claridad de una tarea completa; no se afirma validación por visitantes nuevos |
-| 3 · Consolidación | Avanzada: selección no interruptiva, protección SQL, exportaciones/partes, rangos, carga recuperable, foco y regresiones | Revisión final visual y de tareas; descarga real fuera de vista previa pendiente; discrepancia heredada de métricas abierta |
+| 3 · Consolidación | Implementada y comprobada localmente: selección no interruptiva, protección SQL, exportaciones/partes, rangos, carga recuperable, foco y regresiones | Revisión final visual y de tareas; descarga real fuera de vista previa pendiente; discrepancia heredada de métricas abierta |
 
 No se asigna porcentaje de esfuerzo restante: las tres entregas no tienen igual tamaño y el cierre depende de la evidencia, no del número de commits. No quedan aprobadas ampliación de fichas, analítica ni una nueva política de URLs.
 
@@ -201,3 +201,32 @@ Se añaden tres comprobaciones al DOM real de la aplicación: se sigue una selec
 - `test_viewer_states_dom.js` carga el módulo real en jsdom y simula respuestas, sin red. Comprueba: falta de publicación no es fallo; aviso cerrable/reabrible con foco y recuerdo por tabla; error escapado; reintento por botón real con misma consulta/límite; valor cero conservado; resultado vacío sin atribuir ausencia de publicación; respuesta antigua ignorada; repeticiones presentadas como nota, no alerta, con porcentaje pequeño no redondeado a cero y fidelidad a fuente.
 - Incorporado al paso DOM del workflow, incluyendo su estado de salida. Aprobado localmente; DOM general 172/173 con único fallo heredado; móvil DOM 15/15; estáticas interfaz y móvil aprobadas (móvil 14/14).
 - Balance: los frentes técnicos previstos de consolidación tienen implementación y regresiones locales. No se propone otra ampliación automática. Quedan la revisión visual y de claridad del responsable, la descarga real fuera de vista previa y el ejercicio real de gran volumen, más la conciliación separada de métricas. PR conserva estado borrador hasta decidir cierre; no se declara validación por usuarios nuevos ni CI remota verde.
+
+
+## Cierre técnico y pendientes de aceptación
+
+La implementación prevista en las tres entregas queda terminada. No se requiere seguir añadiendo cambios de interfaz por inercia. El plan completo **no se declara aceptado ni validado visualmente**: falta evidencia manual descrita abajo.
+
+### Últimos controles adicionales ejecutados
+
+- `build_ficha_piloto.py --check`: aprobado, sin regeneración.
+- `test_ficha_piloto_http.py`: aprobado bajo raíz y prefijo Pages simulado; seis enlaces internos 200 en cada caso y contraste mínimo informado 5,49:1. No prueba despliegue remoto.
+- `test_busqueda_dom.js`: aprobado con `NODE_PATH=/tmp/node_modules`; prueba controles de teclado, estados y ausencia de llamadas fetch/XHR/sendBeacon durante la consulta. El primer intento sin NODE_PATH no encontró jsdom; se corrigió la resolución local, sin cambiar dependencias del proyecto.
+- Contexto, alcance/carga, estados del Visor, borradores SQL (hermético y DOM) y exportaciones CSV/XLSX/ZIP sintéticas: aprobados de nuevo.
+- `build_metricas_publicadas.py --check`: sigue fallando. Totales de filas ETL/API/Descargas: 19.777.542 / 19.777.530 / 19.777.542. Bytes API/Descargas: 487.665.288 / 487.670.867. Incluye objetos macro y fintech y resúmenes del README. No confundir con el subconjunto principal de 74 elementos. No se eligió un artefacto como verdad ni se regeneraron datos.
+- Catálogo de Descargas, métricas publicadas y README sin diferencias respecto de la base `50e9a74`. Esa comparación confirma que no fueron cambiados aquí; no sustituye conciliación contra Parquet. PyArrow no está instalado en este entorno y no se inspeccionaron metadatos Parquet en este cierre.
+
+### Aceptación manual mínima pendiente (sin reclutamiento externo)
+
+El responsable puede revisar estas tareas completas cuando disponga de navegador adecuado; no son instrucciones de navegación ni mediciones con visitantes nuevos:
+
+1. Encontrar una lista de entidades y explicar qué cubre, quién publica la fuente y si sirve para identificar instituciones.
+2. Obtener una lista pequeña en Excel y abrirla; verificar que las filas y columnas esperadas están presentes. La prueba fallida en vista previa sigue aceptada provisionalmente, no confirmada como éxito.
+3. Obtener un conjunto grande y reconocer si corresponde archivo completo, varias partes o Parquet; comprobar que el resultado es utilizable. La prueba automatizada no sustituye este ejercicio real.
+4. Explicar con sus palabras el aviso de ausencia y la observación de repeticiones; distinguir ausencia publicada de falta de reporte y conservación de filas de un error introducido por SIF. Revisar también presentación móvil, esquema y menús sin recorte.
+
+### Qué impide declarar cierre total
+
+- Aceptación visual/de claridad y descargas reales aún pendientes; no requiere participantes externos ni analítica.
+- Discrepancia heredada de métricas abierta y auditoría general no completamente verde. Su corrección requiere trabajo separado de reconciliación de contrato/artefactos, conservando datos financieros y constructores responsables.
+- PR #86 permanece borrador, sin merge ni afirmación de CI remota aprobada. Estos límites son explícitos, no trabajo de implementación UX oculto pendiente.
