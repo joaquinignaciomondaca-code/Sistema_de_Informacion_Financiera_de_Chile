@@ -1,6 +1,32 @@
 # Recorrido de datos: plan operativo y primera revisión interna
 
-Fecha: 2026-10-27. Estado: segunda entrega implementada como versión revisable; feedback visual pendiente.
+Fecha: 2026-10-27. Estado: entregas 1 y 2 implementadas; entrega 3 avanzada, cierre pendiente.
+
+## Estado actual resumido
+
+Este bloque es el estado vigente. Las secciones posteriores conservan la evidencia histórica de cada entrega y pueden mencionar pendientes que ya se atendieron después.
+
+| Entrega | Implementación | Qué falta para cerrar |
+|---|---|---|
+| 1 · Diagnóstico y reglas | Completada; defectos e hipótesis separados, reglas de selección/filtros/borrador documentadas | Sin implementación pendiente de esta entrega |
+| 2 · Entrada y contexto | Implementada: explorar sector, contexto con metadatos existentes, columnas y acceso separado al Mapa | Feedback sobre claridad de una tarea completa; no se afirma validación por visitantes nuevos |
+| 3 · Consolidación | Avanzada: selección no interruptiva, protección SQL, exportaciones/partes, rangos, carga recuperable, foco y regresiones | Revisión final visual y de tareas; descarga real fuera de vista previa pendiente; discrepancia heredada de métricas abierta |
+
+No se asigna porcentaje de esfuerzo restante: las tres entregas no tienen igual tamaño y el cierre depende de la evidencia, no del número de commits. No quedan aprobadas ampliación de fichas, analítica ni una nueva política de URLs.
+
+### Tareas y evidencia vigente
+
+| Tarea | Cubierto | Pendiente / límite |
+|---|---|---|
+| T1 · Encontrar conjunto | Entrada por sector y acceso a contexto/columnas probados en DOM; responsable llegó a lista de fondos mutuos | Feedback sobre elección y claridad, sin interpretar ese intento como prueba de visitante nuevo |
+| T2a · Excel pequeño | Generación/reapertura automática de XLSX sintético; alcance y carga probados | Responsable no recibió archivo en vista previa; aceptado provisionalmente, causa y descarga real no confirmadas |
+| T2b · Gran volumen | CSV 250.001 y XLSX 150.001 en partes ZIP, todos los IDs y totales comprobados automáticamente | Prueba XLSX no supera el límite de una hoja: verifica la partición preventiva. Falta ejercicio real de gran volumen en navegador/Excel; no se afirma probado todo el catálogo |
+| T3 · Contexto y continuidad | Metadatos compartidos, columnas exactas, selección entre pestañas, regreso sin sobrescribir filtros | Revisión de utilidad/explicación financiera por responsable |
+| T4 · Ausencia y repeticiones | Anuncio sin datos cerrable y observación de fidelidad a fuente implementados | Feedback de comprensión; no inferir ausencia de reporte ni cero |
+| T5 · Borrador SQL | Protección de acciones programáticas, cancelar/aceptar, sugerencias/favoritas y navegación DOM | No es prueba visual ni de todos los navegadores |
+| T6 · Filtros y regreso | Recorrido DOM Descargas → Diccionario → SQL → Descargas → Diccionario conserva búsqueda, sector, grupo, años, resultados y borrador | La búsqueda manual del Diccionario abandona la ficha exacta local, pero conserva contexto global: comportamiento intencional |
+
+Última batería DOM: **172/173**, único fallo de métricas heredadas; móvil **15/15**. La discrepancia de métricas requiere conciliación separada, no regeneración ciega de datos. PR #86 permanece abierto como borrador; no se declara CI completamente verde.
 
 ## Acuerdo de trabajo
 
@@ -162,3 +188,8 @@ Verificación: DOM general 164/165 (mismo fallo heredado de métricas); DOM móv
 - Quitar selección desde la barra dirige el foco a la pestaña activa; si se limpia programáticamente desde otro sitio no mueve el foco por ese motivo. No se modifica el borrador SQL.
 - DOM **169/170**: dos regresiones nuevas aprobadas, navegación desde esquema conserva identidad seleccionada y quitar contexto conserva borrador. La prueba del botón Quitar verifica su enlace onclick y llama al método porque jsdom outside-only no ejecuta manejadores inline. Único fallo general: métricas heredadas.
 - También aprobados: móvil DOM 15/15, contexto hermético, SQL DOM, alcance/carga de descargas y auditoría estática de interfaz. Sin afirmación de revisión visual, lector de pantalla real ni CI remota.
+
+
+### Consolidación: recorrido de regresión completo T5/T6
+
+Se añaden tres comprobaciones al DOM real de la aplicación: se sigue una selección, se introducen filtros manuales de grupo/sector/búsqueda/años en Descargas, se busca otra información en Diccionario y se navega por SQL antes de volver. Se verifican resultados visibles no vacíos e idénticos, controles conservados, borrador intacto y búsqueda manual del Diccionario no sustituida por la ficha seleccionada. Las tres pasan. No se modificó comportamiento de producto en esta iteración; se amplió evidencia y se separó estado vigente de la cronología del plan.
