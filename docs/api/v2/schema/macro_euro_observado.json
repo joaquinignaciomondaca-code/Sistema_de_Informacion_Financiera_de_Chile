@@ -6,7 +6,7 @@
    "criterio_contable": "No aplica",
    "nombre": "fecha",
    "rol": "PK",
-   "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+   "significado": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },

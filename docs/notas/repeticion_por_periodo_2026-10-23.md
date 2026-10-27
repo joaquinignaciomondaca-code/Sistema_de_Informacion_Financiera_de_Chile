@@ -75,3 +75,39 @@ períodos» son datos que hoy publique el catálogo, y escribirlos a mano en el
 HTML sería la misma clase de defecto que este repositorio ya corrigió con las
 demás cifras. Si se quiere en pantalla, primero tiene que salir de
 `docs/api/claves.csv`, con una columna medida en el pipeline.
+
+## 4. Addendum — inspección local de `fi_pactos` (2026-10-26)
+
+La relectura de los 15 Parquet anuales confirma **1.698 filas, 1.686 distintas y
+12 filas extra idénticas**, distribuidas en cinco cierres: 2016-09 (6; fondos
+7182: 4 y 9082: 2), 2016-12 (3; 9082), 2017-03 (1; 9082), 2019-03 (1; 9280) y
+2019-06 (1; 9280). Para esos cierres, `historico_control.json` registra,
+respectivamente, 48, 38, 49, 41 y 53 operaciones; esos conteos coinciden con
+las filas publicadas y el control registra cero filas ilegibles y cero
+cuadraturas fallidas.
+
+Reproducción de la distribución (las columnas de `*` forman la identidad de
+fila completa; `copias - 1` cuenta sólo las apariciones extra):
+
+```sql
+WITH duplicadas AS (
+  SELECT *, count(*) AS copias
+  FROM read_parquet('docs/outputs/fi/pactos/*.parquet', union_by_name = true)
+  GROUP BY ALL
+  HAVING count(*) > 1
+)
+SELECT periodo, run_fondo, sum(copias - 1) AS filas_extra_identicas
+FROM duplicadas
+GROUP BY periodo, run_fondo
+ORDER BY periodo, run_fondo;
+-- 2016-09: 7182=4, 9082=2; 2016-12: 9082=3; 2017-03: 9082=1;
+-- 2019-03: 9280=1; 2019-06: 9280=1; total=12.
+```
+
+El control conserva conteos y resúmenes SHA-256 de respuestas, no el HTML ni
+las filas fuente. El repositorio tampoco contiene las páginas de origen de esos
+fondos y cierres. El parser actual conserva filas legibles y excluye plantillas
+sólo bajo condiciones explícitas, pero eso no prueba qué respuesta histórica
+produjo cada Parquet. Por tanto, la causa de las 12 repeticiones sigue sin
+clasificarse como propia de la fuente o introducida por el proceso. No se
+eliminaron ni se etiquetaron como defecto o como legítimas.

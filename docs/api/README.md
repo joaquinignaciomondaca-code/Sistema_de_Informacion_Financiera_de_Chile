@@ -37,8 +37,9 @@ Se regeneran con:
 
 ```bash
 python3 scripts/build_reconciliacion.py   # docs/api/reconciliacion.csv
-python3 scripts/build_esquemas.py         # docs/api/esquemas.json
 python3 scripts/verificar_claves.py       # docs/api/claves.csv
+python3 scripts/build_macro_web.py        # diccionario macro leído por los esquemas
+python3 scripts/build_esquemas.py         # docs/api/esquemas.json
 python3 scripts/build_api.py              # docs/api/v2/datapackage.json
 python3 scripts/auditar_datapackage.py    # valida el descriptor
 python3 scripts/probar_maquina_limpia.py  # consumidor sin el repo
