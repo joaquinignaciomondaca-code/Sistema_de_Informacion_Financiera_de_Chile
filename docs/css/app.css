@@ -7107,3 +7107,8 @@ body {
 .schema-col-name { min-width: 0; overflow-wrap: anywhere; }
 .schema-col-type { color: var(--text-muted); }
 .schema-modal-actions { flex-shrink: 0; }
+
+.dl-export-scope { font-size: 12px; line-height: 1.5; color: var(--text-secondary); margin: 8px 0 0; }
+.dl-range-error { flex-basis: 100%; margin: 0; color: var(--warn-text); font-size: 13px; }
+.dl-range-error[hidden] { display: none; }
+.dl-toolbar select[aria-invalid="true"] { border-color: var(--warn-text); }
