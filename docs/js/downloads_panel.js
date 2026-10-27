@@ -746,7 +746,7 @@ class DownloadsPanelController {
       const bloqueado = !disponible || (item && sinPublicar.includes(item.id));
       boton.classList.toggle("dl-btn-off", bloqueado);
       const rangoInvalido = this.errorRecorte(item);
-      boton.disabled = Boolean(rangoInvalido || (item && sinPublicar.includes(item.id)));
+      boton.disabled = Boolean(boton.classList.contains("dl-btn-busy") || rangoInvalido || (item && sinPublicar.includes(item.id)));
       boton.title = rangoInvalido || (bloqueado
         ? (disponible
           ? "Esta vista no se pudo publicar en el motor de consulta. Baja el Parquet original."
@@ -853,36 +853,36 @@ class DownloadsPanelController {
       this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
       return;
     }
-    // Primera descarga con motor: se levanta aquí y se avisa en el botón.
-    if (!motor.engineAvailable && typeof motor.ensureStarted === "function") {
-      this.avisar("Cargando el motor de consulta en tu navegador…", 6000);
-      await motor.ensureStarted();
-    }
-    if (!motor.engineAvailable) {
-      this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
-      return;
-    }
-    let sql = this.sqlSerie(item, recorte);
-    if (mensual) {
-      try {
-        sql = this.sqlSerieMensual(item, await this.columnasIndicador(item), recorte);
-      } catch (err) {
-        this.avisar("No se pudo preparar la versión mensual: " + (err && err.message ? err.message : err));
+    await this.conBoton(boton, async () => {
+      // Primera descarga con motor: se levanta aquí y se avisa en el botón.
+      if (!motor.engineAvailable && typeof motor.ensureStarted === "function") {
+        this.avisar("Cargando el motor de consulta en tu navegador…", 6000);
+        await motor.ensureStarted();
+      }
+      if (!motor.engineAvailable) {
+        this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
         return;
       }
-    }
-    const sufijoRango = recorte.activo && item.periodo ? `_${recorte.desde}_${recorte.hasta}` : "";
-    const nombreArchivo = (mensual ? `${item.id}_mensual_cierre` : item.id) + sufijoRango;
-    const estimado = mensual ? 0 : (item.filas || 0);
-    if (estimado > 600000) {
-      const seguir = window.confirm(
-        `Vista ${item.id}: ${window.MFCDownload.numero(estimado)} filas.\n\n` +
-        "Generar el archivo en el navegador puede tardar y consumir bastante memoria. " +
-        "El Parquet original es más rápido y pesa menos.\n\n¿Continuar con la descarga?"
-      );
-      if (!seguir) return;
-    }
-    await this.conBoton(boton, async () => {
+      let sql = this.sqlSerie(item, recorte);
+      if (mensual) {
+        try {
+          sql = this.sqlSerieMensual(item, await this.columnasIndicador(item), recorte);
+        } catch (err) {
+          this.avisar("No se pudo preparar la versión mensual: " + (err && err.message ? err.message : err));
+          return;
+        }
+      }
+      const sufijoRango = recorte.activo && item.periodo ? `_${recorte.desde}_${recorte.hasta}` : "";
+      const nombreArchivo = (mensual ? `${item.id}_mensual_cierre` : item.id) + sufijoRango;
+      const estimado = mensual ? 0 : (item.filas || 0);
+      if (estimado > 600000) {
+        const seguir = window.confirm(
+          `Vista ${item.id}: ${window.MFCDownload.numero(estimado)} filas.\n\n` +
+          "Generar el archivo en el navegador puede tardar y consumir bastante memoria. " +
+          "El Parquet original es más rápido y pesa menos.\n\n¿Continuar con la descarga?"
+        );
+        if (!seguir) return;
+      }
       this.avisar(`Consultando ${item.id}…`, 4000);
       const res = await motor.query(sql);
       if (!res || !res.success) {
@@ -919,11 +919,15 @@ class DownloadsPanelController {
   /* ── Apoyo ────────────────────────────────────────────────────────────── */
 
   async conBoton(boton, tarea) {
-    if (this.ocupado) return;
+    if (this.ocupado) {
+      this.avisar("Ya hay una descarga en preparación. Espera a que termine antes de iniciar otra.");
+      return;
+    }
     this.ocupado = true;
     const textoOriginal = boton ? boton.textContent : "";
     if (boton) {
       boton.disabled = true;
+      boton.setAttribute("aria-busy", "true");
       boton.classList.add("dl-btn-busy");
       boton.textContent = "Preparando…";
     }
@@ -936,9 +940,11 @@ class DownloadsPanelController {
       this.ocupado = false;
       if (boton) {
         boton.disabled = false;
+        boton.removeAttribute("aria-busy");
         boton.classList.remove("dl-btn-busy");
         boton.textContent = textoOriginal;
       }
+      this.refrescarEstadoMotor();
     }
   }
 

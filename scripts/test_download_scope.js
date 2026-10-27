@@ -53,5 +53,38 @@ assert.equal(panel.errorRecorte(sinPeriodo), '');
   assert.match(sqls[0], /2024-12/);
   assert.doesNotMatch(sqls[0], /arg_max/);
   assert.equal(descargas.length, 1);
+  panel.frecuencias.set(item.id, 'diaria');
+  let liberar;
+  let arranques = 0;
+  const clases = new Set();
+  const atributos = new Map();
+  const boton = { textContent: 'Excel', disabled: false,
+    classList: { add: c => clases.add(c), remove: c => clases.delete(c) },
+    setAttribute: (k, v) => atributos.set(k, v), removeAttribute: k => atributos.delete(k)
+  };
+  window.DuckDBClient = {
+    engineAvailable: false,
+    ensureStarted: () => { arranques++; return new Promise((resolve, reject) => { liberar = reject; }); },
+    query: async () => { throw new Error('No debe consultar tras fallo de inicio'); }
+  };
+  const pendiente = panel.exportarSerie(item.id, 'xlsx', boton);
+  assert.equal(boton.disabled, true);
+  assert.equal(atributos.get('aria-busy'), 'true');
+  assert.equal(panel.ocupado, true);
+  await panel.exportarSerie(item.id, 'xlsx', null);
+  assert.equal(arranques, 1);
+  assert.match(avisos.at(-1), /Ya hay una descarga/);
+  liberar(new Error('Inicio simulado fallido'));
+  await pendiente;
+  assert.match(avisos.at(-1), /No se pudo completar.*Inicio simulado fallido/);
+  assert.equal(panel.ocupado, false);
+  assert.equal(boton.disabled, false);
+  assert.equal(boton.textContent, 'Excel');
+  assert.equal(atributos.has('aria-busy'), false);
+  assert.equal(clases.size, 0);
+  window.DuckDBClient = motor;
+  await panel.exportarSerie(item.id, 'xlsx', boton);
+  assert.equal(descargas.length, 2);
+  console.log('OK: carga desde el arranque, doble clic bloqueado, error recuperable y reintento.');
   console.log('OK: rango inválido no consulta; sin período no recorta; cierre no suma; exportación conserva años/frecuencia del clic.');
 })().catch(error => { console.error(error); process.exitCode = 1; });
