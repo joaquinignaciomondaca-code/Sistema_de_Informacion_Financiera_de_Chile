@@ -1000,9 +1000,9 @@ setTimeout(async () => {
   window.switchMainTab("info");
   document.querySelector('.info-core-card[data-sector="ffmm"] [data-portada="explorar"]')
     .dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("portada: «Ver tablas» abre el sector en el explorador y en el mapa",
+  check("portada: Explorar abre catálogo del sector y conserva explorador",
     document.querySelector('[data-node-id="sector_ffmm"]').classList.contains("open") &&
-    document.getElementById("erd-canvas").style.display === "block" && window.erdInstance.filter === "ffmm");
+    document.getElementById("downloads-container").style.display === "flex" && window.DownloadsPanel.sector === "ffmm");
   const sectoresPortada = ["seguros", "ffmm", "fi", "bancos", "agf", "corredoras_bolsa", "macro"];
   const accionesPortada = Array.from(document.querySelectorAll('[data-portada="explorar"][data-sector]'));
   let todosLosSectoresAbren = accionesPortada.length === sectoresPortada.length;
@@ -1012,10 +1012,11 @@ setTimeout(async () => {
     window.switchMainTab("info");
     boton.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
     todosLosSectoresAbren = todosLosSectoresAbren
-      && window.erdInstance.filter === sector
-      && document.getElementById("erd-canvas").style.display === "block";
+      && window.DownloadsPanel.sector === sector
+      && document.getElementById("downloads-container").style.display === "flex"
+      && window.DownloadsPanel.busqueda === "";
   }
-  check("portada: los siete enlaces sectoriales abren el sector correcto en el mapa",
+  check("portada: los siete enlaces sectoriales abren catálogo sin búsqueda residual",
     todosLosSectoresAbren, sectoresPortada.join(", "));
   window.switchMainTab("info");
   document.querySelector('.info-hero-btn-secondary[data-portada="descargas"]')
@@ -1023,6 +1024,23 @@ setTimeout(async () => {
   check("portada: la acción principal abre Descargas sin filtrar el catálogo",
     document.getElementById("downloads-container").style.display === "flex" &&
     document.getElementById("dl-sector").value === "todos" && visiblesDl().length > 0);
+  const fichaCcaf = document.querySelector('.dl-item[data-id="ccaf_lista_entidades"]');
+  check("catálogo: la ficha CCAF existente se enlaza sin crear rutas nuevas",
+    Boolean(fichaCcaf.querySelector('a[href="datos/ccaf_lista_entidades/"]')) &&
+    document.querySelectorAll('.dl-dataset-context a[href^="datos/"]').length === 1);
+  const segurosCard = document.querySelector('.dl-item[data-id="seguros_lista_entidades"]');
+  check("catálogo: contexto declara muestra parcial y acceso a definiciones",
+    /no es la tabla completa/.test(segurosCard.textContent) &&
+    Boolean(segurosCard.querySelector('[data-action="diccionario"]')));
+  segurosCard.querySelector('[data-action="diccionario"]').click();
+  check("catálogo: Entender columnas abre ficha exacta y mantiene selección compartida",
+    window.SIFTableContext.selected.id === "seguros_lista_entidades" &&
+    window.DataDictionary.selectedTableId === "seguros_lista_entidades" &&
+    document.getElementById("dict-container").style.display === "block");
+  window.switchMainTab("info");
+  document.querySelector('[data-portada="mapa"][data-sector="seguros"]').click();
+  check("portada: acción explícita de relaciones conserva acceso al mapa",
+    window.erdInstance.filter === "seguros" && document.getElementById("erd-canvas").style.display === "block");
   window.DownloadsPanel.filtrarSector("todos");
   window.switchMainTab("info");
   document.querySelector('[data-portada="archivo"]').dispatchEvent(new window.MouseEvent("click", { bubbles: true }));

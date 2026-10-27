@@ -65,5 +65,5 @@ window.SIFTableContext = (() => {
     }
     paint();
   }
-  return { select, apply, clear, get selected() { return selected; } };
+  return { select, apply, clear, follow(tab) { applied.delete(tab); apply(tab); }, get selected() { return selected; } };
 })();

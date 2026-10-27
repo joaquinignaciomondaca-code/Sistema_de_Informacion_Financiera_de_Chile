@@ -24,6 +24,12 @@ ctx.select('agf_balance', 'AGF');
 ctx.apply('dict');
 assert.equal(window.DataDictionary.selectedTableId, 'agf_balance');
 assert.equal(window.DataDictionary.searchQuery, '');
+// Una acción explícita puede volver a la ficha aunque ya se siguió esa revisión.
+const antesDeSeguir = renders;
+window.DataDictionary.selectedTableId = null;
+ctx.follow('dict');
+assert.equal(renders, antesDeSeguir + 1);
+assert.equal(window.DataDictionary.selectedTableId, 'agf_balance');
 let focused;
 window.erdInstance = { focusTable(id) { focused = id; } };
 ctx.apply('erd');

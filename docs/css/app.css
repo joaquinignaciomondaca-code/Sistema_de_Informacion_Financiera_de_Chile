@@ -7071,3 +7071,14 @@ body {
 }
 .dv-unpublished-summary { margin-top: 22px; }
 .dv-unpublished-summary h3 { overflow-wrap: anywhere; font-size: 16px; color: var(--text-primary); }
+
+/* Contexto del conjunto: mismos metadatos, profundidad opcional. */
+.dl-dataset-context { margin-top: 10px; font-size: 13px; }
+.dl-dataset-context summary { cursor: pointer; color: var(--accent-blue-text); padding: 6px 0; }
+.dl-dataset-context dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 12px 0; }
+.dl-dataset-context dt { font-size: 12px; color: var(--text-muted); }
+.dl-dataset-context dd { margin: 3px 0 0; color: var(--text-primary); overflow-wrap: anywhere; }
+.dl-dataset-context p { line-height: 1.6; color: var(--text-secondary); }
+.dl-item-title strong { font-size: 15px; color: var(--text-primary); }
+.dl-item-title code { font-size: 12px; color: var(--text-secondary); overflow-wrap: anywhere; }
+.info-core-actions { flex-wrap: wrap; gap: 8px; }
