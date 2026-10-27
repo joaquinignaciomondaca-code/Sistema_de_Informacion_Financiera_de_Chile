@@ -144,3 +144,12 @@ Verificación: DOM general 164/165 (mismo fallo heredado de métricas); DOM móv
 - La descarga captura años y frecuencia al hacer clic, incluso si cambian durante la preparación del motor. El archivo exportado incorpora los años cuando corresponde.
 - Evidencia automatizada: `test_download_scope.js` verifica SQL, aviso/bloqueo, tablas sin período y cambio de controles durante arranque simulado; añadido al workflow. DOM **167/168**, con los tres nuevos contratos de controles aprobados y la misma discrepancia heredada de métricas como único fallo. Exportaciones reales sintéticas CSV/XLSX y ZIP por partes siguen aprobadas; auditoría estática de interfaz aprobada.
 - Límite: no constituye revisión visual en navegador ni validación de comprensión por usuarios. La prueba de captura usa motor simulado; no se atribuye ejecución DuckDB real.
+
+
+### Consolidación: preparación recuperable
+
+- Responsable probó Excel de la lista de fondos mutuos: vio aviso, pero no recibió archivo. Acepta provisionalmente continuar; **no se confirma descarga real ni se atribuye causa al entorno**. Pendiente comprobar fuera de vista previa.
+- Hallazgo de código distinto: el bloqueo de operación empezaba después del arranque del motor y de preparar las columnas mensuales. Un fallo de arranque podía escapar del manejo de errores del panel y permitir solicitudes simultáneas.
+- La operación protegida abarca ahora preparación, motor, consulta y generación. El botón muestra Preparando y `aria-busy`; las solicitudes simultáneas reciben explicación sin duplicar operación. La limpieza ocurre también ante error y permite reintentar; al terminar se reaplican restricciones actuales del rango/vista, sin deshabilitar Parquet.
+- Prueba hermética ampliada: arranque pendiente, segunda solicitud bloqueada, rechazo simulado capturado, restauración de etiqueta/estado accesible y reintento exitoso. Pasa; no simula permisos de descarga del navegador.
+- Verificación: alcance/carga y exportaciones sintéticas reales aprobados; DOM general 167/168 (único fallo: métricas heredadas); móvil DOM 15/15. Sin nueva validación visual ni CI remota afirmada.
