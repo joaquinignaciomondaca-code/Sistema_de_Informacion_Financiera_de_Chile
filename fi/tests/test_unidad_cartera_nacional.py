@@ -3,8 +3,8 @@ import unittest
 from fi.scripts.actualizar_carteras import CARTERAS, leer_cartera
 
 
-def _pagina_cartera_nacional():
-    spec = CARTERAS["N"][2]
+def _pagina_cartera(codigo):
+    spec = CARTERAS[codigo][2]
     encabezados = [encabezado for encabezado, _, _ in spec]
     detalle = []
     for _, columna, tipo in spec:
@@ -31,14 +31,18 @@ def _pagina_cartera_nacional():
 
 
 class TestUnidadCarteraNacional(unittest.TestCase):
-    def test_conserva_cada_linea_de_detalle_incluso_si_es_identica(self):
-        filas, ilegibles, descuadres = leer_cartera("N", _pagina_cartera_nacional())
+    def test_parser_conserva_detalles_identicos_y_excluye_total_en_todas_las_carteras(self):
+        for codigo in CARTERAS:
+            with self.subTest(cartera=codigo):
+                spec = CARTERAS[codigo][2]
+                filas, ilegibles, descuadres = leer_cartera(codigo, _pagina_cartera(codigo))
 
-        self.assertEqual(ilegibles, [])
-        self.assertEqual(descuadres, [])
-        self.assertEqual(len(filas), 2)
-        self.assertEqual(filas[0], filas[1])
-        self.assertNotIn("TOTAL", [fila["clasificacion_esf"] for fila in filas])
+                self.assertEqual(ilegibles, [])
+                self.assertEqual(descuadres, [])
+                self.assertEqual(len(filas), 2)
+                self.assertEqual(filas[0], filas[1])
+                primera_columna = spec[0][1]
+                self.assertNotIn("TOTAL", [fila[primera_columna] for fila in filas])
 
 
 if __name__ == "__main__":
