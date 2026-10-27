@@ -56,8 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Dependencias
@@ -68,7 +68,7 @@ jobs:
         run: python -m fi.scripts.validar_fuente_eeff
       - name: Conservar evidencia del cotejo
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: fi-eeff-cotejo-fuente
           path: .local-data/fi_eeff_muestra/
@@ -86,17 +86,17 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 1
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
       - name: Dependencias
         run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0 beautifulsoup4==4.13.5
       - name: Recuperar progreso de esta rama
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: .local-data/fi_eeff
           key: fi-eeff-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -169,7 +169,7 @@ jobs:
           exit 1
       - name: Conservar progreso aunque se detenga la fuente o falle una compuerta
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: .local-data/fi_eeff
           key: fi-eeff-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}

@@ -57,12 +57,12 @@ jobs:
     outputs:
       publicado: ${{ steps.procesar.outputs.publicado }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 1
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -80,7 +80,7 @@ jobs:
           pipelines.auto.tests.test_estable
 
       - name: Recuperar el progreso de corridas anteriores (solo esta rama)
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: .local-data/ffmm_eeff
           key: ffmm-eeff-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
@@ -149,7 +149,7 @@ jobs:
 
       - name: Conservar el progreso para la próxima corrida aun si falló la CMF
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: .local-data/ffmm_eeff
           key: ffmm-eeff-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}

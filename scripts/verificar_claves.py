@@ -28,13 +28,14 @@ Genera `docs/api/claves.csv`.
 
 Uso:
     python3 scripts/verificar_claves.py                 # escribe el CSV
-    python3 scripts/verificar_claves.py --check         # falla si hay invariantes rotos
+    python3 scripts/verificar_claves.py --check         # no escribe; valida invariantes y actualidad del CSV
     python3 scripts/verificar_claves.py --umbral-fk 0.95
 """
 from __future__ import annotations
 
 import argparse
 import csv
+import io
 import json
 import sys
 from pathlib import Path
@@ -56,6 +57,28 @@ CAMPOS = [
     "objeto", "tipo", "columnas", "destino", "filas", "distintas",
     "sobrantes", "tasa", "declarada", "nivel", "estado", "detalle",
 ]
+
+
+def serializar_csv(filas_salida: list[dict]) -> bytes:
+    """Serializa el informe sin tocar el archivo versionado.
+
+    ``newline=""`` conserva el CRLF que ya usa el CSV publicado; así la
+    comprobación compara el artefacto byte a byte y no oculta derivas de formato.
+    """
+    buffer = io.StringIO(newline="")
+    writer = csv.DictWriter(buffer, fieldnames=CAMPOS)
+    writer.writeheader()
+    writer.writerows(filas_salida)
+    return buffer.getvalue().encode("utf-8")
+
+
+def guardar_o_comprobar_csv(destino: Path, contenido: bytes, *, check: bool) -> bool:
+    """En ``--check`` solo compara; en modo normal publica el informe generado."""
+    if check:
+        return destino.is_file() and destino.read_bytes() == contenido
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    destino.write_bytes(contenido)
+    return True
 
 
 def cargar_roles() -> tuple[dict[str, list[str]], dict[str, list[str]]]:
@@ -224,7 +247,10 @@ def excepciones() -> dict[str, str]:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--check", action="store_true", help="falla si una invariante no se cumple")
+    ap.add_argument(
+        "--check", action="store_true",
+        help="no escribe; falla si una invariante se rompe o claves.csv quedó desactualizado",
+    )
     ap.add_argument("--umbral-fk", type=float, default=0.90, help="tasa mínima de coincidencia de una FK")
     args = ap.parse_args()
 
@@ -369,10 +395,10 @@ def main() -> int:
 
     con.close()
 
-    with DESTINO.open("w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=CAMPOS)
-        w.writeheader()
-        w.writerows(filas_salida)
+    contenido_csv = serializar_csv(filas_salida)
+    artefacto_al_dia = guardar_o_comprobar_csv(
+        DESTINO, contenido_csv, check=args.check
+    )
 
     pk = [f for f in filas_salida if f["tipo"] == "pk"]
     fk = [f for f in filas_salida if f["tipo"] == "fk"]
@@ -389,8 +415,18 @@ def main() -> int:
         print(f"  [INVARIANTE] {linea}")
     for linea in expectativas[:10]:
         print(f"  [expectativa] {linea}")
-    print(f"Escrito en {DESTINO.relative_to(RAIZ)}")
+    if args.check:
+        if artefacto_al_dia:
+            print(f"CLAVES: {DESTINO.relative_to(RAIZ)} al día")
+        else:
+            print(
+                f"  [FALLA] {DESTINO.relative_to(RAIZ)} está desactualizado o no existe; "
+                "ejecuta scripts/verificar_claves.py"
+            )
+    else:
+        print(f"Escrito en {DESTINO.relative_to(RAIZ)}")
 
+    nuevas: list[str] = []
     if args.check:
         conocidas = excepciones()
         nuevas = [x for x in invariantes if x.split(":")[0] not in conocidas]
@@ -399,9 +435,11 @@ def main() -> int:
                 print(f"  [excepción declarada] {objeto}: {conocidas[objeto]}")
         if nuevas:
             print(f"CLAVES: {len(nuevas)} invariante(s) nueva(s)")
-            return 1
-    if args.check:
-        print("CLAVES: ninguna invariante rota")
+        elif artefacto_al_dia:
+            print("CLAVES: invariantes y artefacto al día")
+        else:
+            print("CLAVES: no se pudo verificar el artefacto")
+        return 1 if nuevas or not artefacto_al_dia else 0
     return 0
 
 
