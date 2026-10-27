@@ -42,3 +42,32 @@ ctx.clear();
 assert.equal(ctx.selected, null);
 assert.equal(window.DataDictionary.selectedTableId, null);
 console.log('OK: selección compartida, sincronización por revisión, filtros manuales y borrador SQL.');
+// Quitar contexto no equivale a borrar una búsqueda manual independiente.
+const panel = window.DownloadsPanel = {
+  busqueda: 'patrimonio', controles: { search: { value: 'patrimonio' } },
+  aplicarFiltros() {}
+};
+ctx.select('seguros_lista_entidades', 'Seguros');
+ctx.clear();
+assert.equal(panel.busqueda, 'patrimonio');
+assert.equal(panel.controles.search.value, 'patrimonio');
+ctx.select('seguros_lista_entidades', 'Seguros');
+panel.busqueda = panel.controles.search.value = 'seguros_lista_entidades';
+ctx.clear();
+assert.equal(panel.busqueda, '');
+assert.equal(panel.controles.search.value, '');
+console.log('OK: quitar selección conserva búsquedas manuales y limpia solo la búsqueda del contexto.');
+let vistasCargadas = [];
+window.DataViewer = {
+  currentView: 'seguros_lista_entidades', loadRequestId: 0,
+  loadTable(id) { vistasCargadas.push(id); this.currentView = id; this.loadRequestId++; }
+};
+ctx.select('seguros_lista_entidades', 'Seguros');
+ctx.apply('data');
+assert.deepEqual(vistasCargadas, ['seguros_lista_entidades']);
+ctx.apply('data');
+assert.equal(vistasCargadas.length, 1);
+ctx.select('agf_balance', 'AGF');
+ctx.apply('data');
+assert.deepEqual(vistasCargadas, ['seguros_lista_entidades', 'agf_balance']);
+console.log('OK: una selección del mapa carga el Visor al abrirlo, incluso si coincide con su vista inicial.');

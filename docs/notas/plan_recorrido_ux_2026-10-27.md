@@ -40,7 +40,7 @@ No se modificó la checklist anterior del rediseño ni se cerraron sus decisione
 | Selección implícita y SQL con texto | No cambia borrador ni pide confirmación |
 | Acción `setQueryInput` explícita y SQL diferente | Pide confirmación antes de reemplazar; cancelar conserva texto |
 | Misma consulta o editor vacío | No pide confirmación innecesaria |
-| Quitar selección | Quita contexto global y selección exacta del Diccionario; comportamiento de búsqueda manual en Descargas requiere revisión adicional |
+| Quitar selección | Quita contexto global y selección exacta del Diccionario; limpia búsqueda de Descargas solo si coincide con el ID seleccionado, no una búsqueda manual independiente |
 | Seleccionar desde la izquierda | Abre Visor, conforme al acuerdo previo |
 
 Alcance del resguardo SQL: llamadas a `setQueryInput` (incluye abrir SQL desde Descargas). Chips, favoritos y otras escrituras directas del editor aún deben inventariarse antes de afirmar protección universal.
@@ -106,3 +106,17 @@ Feedback pendiente: nombres de acciones, utilidad del contexto, densidad visual 
 - Se conserva el único fallo de conciliación de métricas heredado descrito anteriormente.
 - `test_table_context.js` amplía cobertura de seguir de nuevo la selección por acción explícita.
 - Auditorías estáticas de interfaz/móvil y regresiones SQL pasan. Revisión visual real y archivos descargados siguen pendientes.
+
+
+## Consolidación iniciada: selección ligera en el Mapa
+
+Feedback del responsable: el esquema automático al pulsar una caja cubre demasiadas relaciones y presenta nombres de columnas recortados (captura compartida). Esto es evidencia de un problema concreto de presentación, no una medición con usuarios nuevos.
+
+- Un clic en nodo solo selecciona; no abre diálogo, no mueve foco al terminal y no inicia consulta del Visor/DuckDB. El contexto se aplica al abrir las pestañas correspondientes.
+- `Ver esquema seleccionado` es acción explícita; permanece deshabilitada sin selección válida. La tabla seleccionada conserva borde destacado aunque el puntero salga.
+- El detalle solicitado tiene nombres largos ajustados a líneas, lista desplazable interna y acciones/cierre fuera del área desplazable. Se retira la animación y se usa un borde neutro; Escape y devolución de foco permanecen.
+- El esquema se cierra al abandonar Mapa. No se cambian los datos ni se ocultan campos.
+- Al abrir Visor con contexto no se inicializa primero una tabla anterior: la selección del mapa se carga bajo demanda, incluso si coincide con la vista predeterminada aún no consultada. Regresión hermética añadida.
+- Quitar selección ya no borra una búsqueda manual diferente en Descargas; limpia únicamente la búsqueda que coincide con el contexto anterior. Regresión hermética añadida.
+
+Verificación: DOM general 164/165 (mismo fallo heredado de métricas); DOM móvil 15/15; contexto, borrador SQL y auditorías estáticas pasan. El DOM verifica clic sin diálogo/cambio de foco/muestra y apertura explícita, no el encuadre visual real. Pendientes de consolidación: comprobar archivos completos/partes, revisar todas las escrituras directas SQL, capturas y feedback visual.
