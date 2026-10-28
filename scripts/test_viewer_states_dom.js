@@ -6,6 +6,7 @@ try { ({ JSDOM } = require('jsdom')); }
 catch { ({ JSDOM } = require('/tmp/node_modules/jsdom')); }
 const dom = new JSDOM('<main id="data-viewer-container"></main>', { runScripts: 'outside-only', url: 'https://sif.test/' });
 const { window } = dom;
+window.eval(fs.readFileSync('docs/js/data_dictionary.js', 'utf8'));
 window.eval(fs.readFileSync('docs/js/data_viewer.js', 'utf8'));
 const viewer = window.DataViewer;
 const doc = window.document;
@@ -75,5 +76,52 @@ const sinPublicar = () => ({ success: false, noPublishedData: true, error: 'Sin 
   assert.match(aviso.textContent, /Observación sobre la fuente/);
   assert.match(aviso.textContent, /Se conservan para mantener la fidelidad/);
   assert.match(aviso.textContent, /0,010 %/);
+  window.DuckDBClient.query = async () => ({ success: true,
+    columns: ['codigo_institucion', 'importe_clp'],
+    rows: [{ codigo_institucion: '999', importe_clp: 100 }, { codigo_institucion: '001', importe_clp: 20 }] });
+  await viewer.loadTable('bancos_balance', 'Balance');
+  const ayudaBalance = container.querySelector('.aggregation-help');
+  assert.ok(ayudaBalance);
+  assert.equal(ayudaBalance.getAttribute('role'), 'note');
+  assert.match(ayudaBalance.textContent, /Efectivo y equivalentes/);
+  assert.match(ayudaBalance.textContent, /no son datos reales/);
+  assert.match(ayudaBalance.textContent, /\$100, no \$120/);
+  assert.equal(ayudaBalance.querySelector('details').open, false);
+  ayudaBalance.querySelector('summary').click();
+  assert.equal(ayudaBalance.querySelector('details').open, true);
+  assert.match(ayudaBalance.querySelector('details').textContent, /999/);
+  assert.equal(container.querySelectorAll('.dv-system-total').length, 1);
+  assert.equal(container.querySelector('.dv-system-total').closest('td').dataset.copy, '999');
+  assert.equal(viewer.currentRows.find(r => r.importe_clp === 100).codigo_institucion, '999');
+  viewer.setFilter('999');
+  assert.equal(container.querySelectorAll('.dv-system-total').length, 1);
+  assert.equal(container.querySelector('.dv-system-total').closest('td').dataset.copy, '999');
+  viewer.setFilter('001');
+  assert.equal(container.querySelector('.dv-system-total'), null);
+  assert.equal(viewer.currentRows.length, 2);
+  const tablaBalance = window.SIFDataDictionary.find(t => t.id === 'bancos_balance');
+  assert.doesNotMatch(tablaBalance.columnas.find(c => c.name === 'importe_clp').significado, /Es la columna para sumar/);
+  assert.equal(window.SIFAggregationHelp.render('seguros_lista_entidades'), '');
+  assert.equal(window.SIFAggregationHelp.render('no_existe'), '');
+  await viewer.loadTable('bancos_resultados', 'Resultados');
+  const ayudaResultados = container.querySelector('.aggregation-help');
+  assert.match(ayudaResultados.textContent, /Febrero ya incluye enero/);
+  assert.match(ayudaResultados.textContent, /no le restes diciembre/);
+  assert.match(ayudaResultados.textContent, /no lo supongas igual a cero/);
+  assert.doesNotMatch(ayudaResultados.textContent, /Total activos/);
+  assert.equal(container.querySelectorAll('.dv-system-total').length, 1);
+  // La misma explicación se pinta en el Diccionario, no una copia divergente.
+  const dictContainer = doc.createElement('div');
+  dictContainer.id = 'dict-container';
+  doc.body.appendChild(dictContainer);
+  window.DataDictionary.container = dictContainer;
+  window.DataDictionary.selectedTableId = 'bancos_balance';
+  window.DataDictionary.render();
+  assert.equal(dictContainer.querySelector('.aggregation-help').outerHTML,
+    window.SIFAggregationHelp.render('bancos_balance').trim());
+  await viewer.loadTable('seguros_lista_entidades', 'Aseguradoras');
+  assert.equal(container.querySelector('.aggregation-help'), null);
+  assert.equal(container.querySelector('.dv-system-total'), null);
+  console.log('OK DOM: ayuda bancaria contextual y compartida; ejemplos ilustrativos; detalles accesibles; marca 999 en render y filtro sin alterar datos.');
   console.log('OK DOM: sin publicación ≠ fallo ≠ cero; aviso cerrable por tabla; reintento y carga; respuesta antigua ignorada; repeticiones como observación.');
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(() => dom.window.close());

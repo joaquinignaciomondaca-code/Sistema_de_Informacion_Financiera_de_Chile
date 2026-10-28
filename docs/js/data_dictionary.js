@@ -1871,6 +1871,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "bancos_balance",
+    ayudaAgregacion: {"resumen": "Algunas filas ya están incluidas en otras. «Efectivo y equivalentes» forma parte de «Total activos»: si sumas ambas cifras, contarás el efectivo dos veces.", "ejemplo": "Si el total de activos es $100 y contiene $20 de efectivo, el total sigue siendo $100, no $120.", "cuidados": ["Para consultar el total de activos, selecciona la cuenta oficial de total del banco y período que necesitas; no sumes todas las filas ni todas las filas de detalle.", "B1 (consolidado) y B2 (individual) muestran perímetros diferentes: no son dos partes para sumar. B2 no es un balance individual completo. Elige un modelo y un nivel de consolidación.", "El código 999 representa el total del sistema: no es otro banco para añadir. No lo sumes con los bancos.", "El balance es una fotografía de una fecha: sumar los activos de varios meses no da los activos del último mes."]},
     name: "bancos.balance",
     viewName: "bancos_balance",
     sector: "bancos",
@@ -1890,7 +1891,7 @@ const DATA_DICTIONARY = [
       { name: "codigo_cuenta", type: "VARCHAR", role: "PK parcial", significado: "Código de cuenta tal como aparece en el TXT CMF.", contable: "No aplica" },
       { name: "glosa_cuenta", type: "VARCHAR", role: "Atributo", significado: "Descripción obtenida del modelo CMF incluido en el ZIP del periodo.", contable: "No aplica" },
       { name: "tipo_linea", type: "VARCHAR", role: "Atributo", significado: "Clasificación técnica auxiliar; no sustituye la definición normativa del modelo.", contable: "No aplica" },
-      { name: "importe_clp", type: "BIGINT", role: "Métrica", significado: "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Es la columna para sumar, graficar o comparar; `importes_fuente_raw` sigue ahí para ver el desglose.", contable: "Total de la cuenta; sumar una cuenta padre con sus descendientes duplica el monto." },
+      { name: "importe_clp", type: "BIGINT", role: "Métrica", significado: "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Sirve para comparar la misma cuenta en un contexto definido; no sumes cuentas que ya se incluyen entre sí, B1 con B2, ni el total del sistema (999) con los bancos. `importes_fuente_raw` conserva el desglose.", contable: "Total de la cuenta; sumar una cuenta padre con sus descendientes duplica el monto." },
       { name: "importes_fuente_raw", type: "VARCHAR[]", role: "Dato fuente", significado: "Cuatro importes en pesos, con ceros a la izquierda y sin transformar, en el orden del archivo CMF: [1] moneda chilena no reajustable, [2] reajustable por IPC, [3] reajustable por tipo de cambio, [4] moneda extranjera (Manual del Sistema de Información de la CMF, archivos MB1 y MB2).", contable: "La suma de los cuatro es el total de la cuenta (activos = pasivos + patrimonio al sumarlos, en 989 de 991 balances banco-mes publicados, con diferencia máxima de $1)" },
       { name: "familia_archivo_fuente", type: "VARCHAR", role: "Atributo", significado: "Sólo B1 o B2 en este objeto.", contable: "No aplica" },
       { name: "modelo_cmf", type: "VARCHAR", role: "PK parcial", significado: "MB1 consolidado, MB2 individual o MR1 consolidado.", contable: "No aplica" },
@@ -1900,6 +1901,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "bancos_resultados",
+    ayudaAgregacion: {"resumen": "Los resultados están acumulados desde enero hasta el mes informado. Febrero ya incluye enero: si sumas ambos, contarás enero dos veces.", "ejemplo": "Si enero muestra $10 y febrero acumula $25, el resultado de febrero por sí solo es $15 ($25 − $10), no $35.", "cuidados": ["Para calcular un mes, resta el acumulado del mes anterior del mismo año para la misma institución, cuenta, modelo y nivel de consolidación. Enero inicia un nuevo ejercicio; no le restes diciembre del año anterior.", "Si falta el mes anterior, no lo supongas igual a cero: no puedes obtener el mes por diferencia con esa información.", "No sumes una cuenta con sus subtotales o totales: pueden incluir los mismos importes.", "El código 999 representa el total del sistema: no es otro banco para añadir. No lo sumes con los bancos."]},
     name: "bancos.resultados",
     viewName: "bancos_resultados",
     sector: "bancos",
@@ -1909,7 +1911,7 @@ const DATA_DICTIONARY = [
     frescura: "Publicación automática después del gate mensual",
     modo: "Automático con validación de cobertura y cotejo CMF",
     registros: "Sólo R1 · Parquet filtrado · importe_clp (acumulado del ejercicio)",
-    descripcion: "Sólo filas R1; excluye B1 y B2. Las particiones Parquet descargables de este objeto también contienen exclusivamente R1. Filas fuente del estado de resultados R1 consolidado. Conserva la fila física del TXT en numero_fila_fuente. El importe, en pesos, es el ACUMULADO DEL EJERCICIO (de enero al mes informado; vuelve a empezar en enero): para el resultado de un mes hay que restar el del mes anterior del mismo año. `importe_clp` trae ese importe como número, listo para sumar o graficar. La institución 999 es el total del sistema financiero: no se suma con los bancos.",
+    descripcion: "Sólo filas R1; excluye B1 y B2. Las particiones Parquet descargables de este objeto también contienen exclusivamente R1. Filas fuente del estado de resultados R1 consolidado. Conserva la fila física del TXT en numero_fila_fuente. El importe, en pesos, es el ACUMULADO DEL EJERCICIO (de enero al mes informado; vuelve a empezar en enero): para el resultado de un mes hay que restar el del mes anterior del mismo año. `importe_clp` expresa ese acumulado como número; no sumes los acumulados de distintos meses ni cuentas que ya se incluyen entre sí. La institución 999 es el total del sistema financiero: no se suma con los bancos.",
     origen: "CMF — ZIP TXT mensual y XLSX de reporte mensual. Cada partición registra la URL y el SHA-256 de ambas fuentes en su manifiesto y en su informe de validación; no se repiten fila a fila.",
     columnas: [
       { name: "periodo", type: "VARCHAR", role: "Fecha · PK parcial", significado: "Periodo mensual del archivo CMF en formato YYYY-MM.", contable: "No aplica" },
@@ -1919,7 +1921,7 @@ const DATA_DICTIONARY = [
       { name: "codigo_cuenta", type: "VARCHAR", role: "PK parcial", significado: "Código de cuenta tal como aparece en el TXT CMF.", contable: "No aplica" },
       { name: "glosa_cuenta", type: "VARCHAR", role: "Atributo", significado: "Descripción obtenida del modelo CMF incluido en el ZIP del periodo.", contable: "No aplica" },
       { name: "tipo_linea", type: "VARCHAR", role: "Atributo", significado: "Clasificación técnica auxiliar; no sustituye la definición normativa del modelo.", contable: "No aplica" },
-      { name: "importe_clp", type: "BIGINT", role: "Métrica", significado: "Importe de la línea en pesos, listo para sumar o graficar: el mismo valor de `importes_fuente_decimal` ya convertido a número.", contable: "Acumulado del ejercicio (de enero al mes informado); para el mes suelto se resta el mes anterior del mismo año." },
+      { name: "importe_clp", type: "BIGINT", role: "Métrica", significado: "Importe de la línea en pesos, acumulado desde enero hasta el mes informado. No sumes los acumulados mensuales ni cuentas que ya se incluyen entre sí. No añadas el total del sistema (999) a los bancos.", contable: "Acumulado del ejercicio (de enero al mes informado); para el mes suelto se resta el mes anterior del mismo año." },
       { name: "importes_fuente_raw", type: "VARCHAR[]", role: "Dato fuente", significado: "Un único importe en pesos, con ceros a la izquierda y sin transformar.", contable: "Acumulado del ejercicio (de enero al mes informado)" },
       { name: "familia_archivo_fuente", type: "VARCHAR", role: "Atributo", significado: "Sólo R1 en este objeto.", contable: "No aplica" },
       { name: "modelo_cmf", type: "VARCHAR", role: "PK parcial", significado: "MB1 consolidado, MB2 individual o MR1 consolidado.", contable: "No aplica" },
@@ -2769,6 +2771,25 @@ window.SIFDataMode = {
 };
 window.SIFDataDictionary = DATA_DICTIONARY;
 
+// Una sola explicación de agregación para Diccionario y Visor. No modifica datos.
+window.SIFAggregationHelp = {
+  render(id) {
+    const ayuda = (DATA_DICTIONARY.find(t => t.id === id) || {}).ayudaAgregacion;
+    if (!ayuda) return "";
+    const esc = valor => String(valor).replace(/[&<>"']/g, c => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    }[c]));
+    return `<section class="aggregation-help" role="note" aria-label="Antes de sumar">
+      <strong>Antes de sumar</strong>
+      <p>${esc(ayuda.resumen)}</p>
+      <p class="aggregation-example"><b>Ejemplo ilustrativo — no son datos reales:</b> ${esc(ayuda.ejemplo)}</p>
+      <details><summary>Ver otros cuidados al sumar</summary>
+        <ul>${ayuda.cuidados.map(texto => `<li>${esc(texto)}</li>`).join("")}</ul>
+      </details>
+    </section>`;
+  }
+};
+
 // Filtros del diccionario por nivel editorial (ver docs/js/alcance.js). "principal"
 // muestra núcleo, instituciones y contexto; las industrias archivadas tienen sus
 // propios botones, plegados; "todos" es el catálogo completo, ocultas incluidas.
@@ -3020,6 +3041,7 @@ class DataDictionaryController {
                 </div>
               </div>
               <p class="dict-table-desc">${table.descripcion}</p>
+              ${window.SIFAggregationHelp.render(table.id)}
               ${this.avisoAlcance(table)}
               ${this.avisoClaves(table)}
               ${table.advertencia ? `
