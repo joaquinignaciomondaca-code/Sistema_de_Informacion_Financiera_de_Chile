@@ -8,14 +8,14 @@
 <!-- SEO:INICIO -->
   <!-- Generado por scripts/build_metadatos.py desde el catálogo publicado.
        No editar a mano: --check falla si no coincide. -->
-  <meta name="description" content="Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL, sin registro.">
+  <meta name="description" content="Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL.">
   <link rel="canonical" href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Sistema de Información Financiera de Chile">
   <meta property="og:locale" content="es_CL">
   <meta property="og:title" content="Sistema de Información Financiera de Chile — Inversiones institucionales y mercados">
-  <meta property="og:description" content="Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL, sin registro.">
+  <meta property="og:description" content="Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL.">
   <meta property="og:url" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/">
   <meta property="og:image" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png">
   <meta property="og:image:type" content="image/png">
@@ -27,7 +27,7 @@
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sistema de Información Financiera de Chile — Inversiones institucionales y mercados">
-  <meta name="twitter:description" content="Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL, sin registro.">
+  <meta name="twitter:description" content="Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL.">
   <meta name="twitter:image" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png">
   <meta name="twitter:image:alt" content="SIF — Sistema de Información Financiera de Chile">
 
@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261027-2215-estados-visor">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261027-antes-de-sumar">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -263,7 +263,7 @@
                   <button type="button" class="info-hero-btn info-hero-btn-secondary" data-portada="descargas">Ver descargas <span aria-hidden="true">→</span></button>
                   <button type="button" class="info-core-btn" data-portada="mapa">Entender relaciones entre tablas</button>
                 </div>
-                <p class="info-hero-capabilities"><span>Parquet, CSV y Excel</span><i aria-hidden="true"></i><span>SQL en tu navegador</span><i aria-hidden="true"></i><span>Sin registro</span></p>
+                <p class="info-hero-capabilities"><span>Parquet, CSV y Excel</span><i aria-hidden="true"></i><span>SQL en tu navegador</span></p>
               </div>
               <div class="info-hero-aside" role="group" aria-label="Alcance destacado del catálogo">
                 <div class="info-hero-aside-head"><span>Alcance del catálogo</span><span class="info-hero-source">Fuentes oficiales</span></div>
@@ -769,29 +769,29 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/alcance.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/sidebar.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/creditos.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/table_context.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/download_utils.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/portada.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261027-2215-estados-visor" defer></script>
-  <script src="js/como_usar.js?v=fl-20261027-2215-estados-visor" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/alcance.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/sidebar.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/creditos.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/table_context.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/download_utils.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/portada.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261027-antes-de-sumar" defer></script>
+  <script src="js/como_usar.js?v=fl-20261027-antes-de-sumar" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

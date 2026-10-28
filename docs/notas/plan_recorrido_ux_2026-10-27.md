@@ -230,3 +230,11 @@ El responsable puede revisar estas tareas completas cuando disponga de navegador
 - Aceptación visual/de claridad y descargas reales aún pendientes; no requiere participantes externos ni analítica.
 - Discrepancia heredada de métricas abierta y auditoría general no completamente verde. Su corrección requiere trabajo separado de reconciliación de contrato/artefactos, conservando datos financieros y constructores responsables.
 - PR #86 permanece borrador, sin merge ni afirmación de CI remota aprobada. Estos límites son explícitos, no trabajo de implementación UX oculto pendiente.
+
+## Ajuste posterior: ayuda para sumar sin doble conteo
+
+Aplicado por petición del responsable: nota contextual «Antes de sumar» en Visor y Diccionario de `bancos_balance` y `bancos_resultados`. Balance usa el ejemplo ilustrativo de $100 de activos que ya contienen $20 de efectivo; resultados explica enero incluido en febrero. No se presenta el ejemplo como dato real. Los cuidados sobre cuentas incluidas, perímetros B1/B2, código 999 y acumulados quedan en un `details` nativo. Una sola definición de ayuda en los metadatos del Diccionario alimenta ambos lugares; no se añade un contrato de unidades o agregación a la API en esta iteración.
+
+Se corrigen expresiones que invitaban a sumar `importe_clp` sin condiciones. El Visor identifica 999 como «Total del sistema» en las dos tablas bancarias, también después de filtrar, conservando el valor original al copiar y sin modificar filas ni exportaciones. No se deduplica ni se crean recomendaciones universales para las carteras.
+
+Pruebas: estados DOM ampliados aprobados (contexto, ejemplos, desplegable, marca/copia/filtrado y valores originales); exportaciones reales sintéticas aprobadas; interfaz DOM 172/173 con fallo de conciliación de métricas aún abierto (catálogo principal actual: 19.677.277 filas/485.772.383 bytes); móvil DOM 15/15 y estática 14/14; búsqueda DOM y auditoría estática de interfaz aprobadas. No es validación visual en navegador. Se conserva la retirada aprobada de «Sin registro» y se actualiza su generador SEO; `build_metadatos.py --check` aprobado.
