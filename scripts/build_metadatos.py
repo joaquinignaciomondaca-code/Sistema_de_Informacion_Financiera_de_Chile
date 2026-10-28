@@ -74,7 +74,7 @@ def descripcion(d: dict) -> str:
     aproximada = "más de " if d["filas"] > cifra * 1_000_000 else ""
     texto = ("Datos financieros públicos de Chile —bancos, seguros, fondos, "
              f"cooperativas, fintech y macro—: {aproximada}{legible} millones de filas en "
-             "Parquet y SQL, sin registro.")
+             "Parquet y SQL.")
     if len(texto) > 160:
         raise SystemExit(f"la meta description tiene {len(texto)} caracteres; el tope es 160")
     return texto
