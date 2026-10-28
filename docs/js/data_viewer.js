@@ -716,6 +716,12 @@ class DataViewerController {
     return `Muestra: ${total} ${total === 1 ? "fila" : "filas"}`;
   }
 
+  marcaAgregado(col, raw) {
+    if (!["bancos_balance", "bancos_resultados"].includes(this.currentView) ||
+        col !== "codigo_institucion" || String(raw) !== "999") return "";
+    return ' <span class="dv-system-total" title="No sumar con los bancos">Total del sistema</span>';
+  }
+
   renderRowsOnly() {
     const tbody = this.container ? this.container.querySelector(".dv-table tbody") : null;
     if (!tbody) return;
@@ -729,7 +735,7 @@ class DataViewerController {
         const isNum = typeof raw === "number";
         // El valor va en data-copy (escapado) y no dentro de un string JS en el onclick: así
         // ni comillas, barras invertidas ni entidades del dato pueden salir del atributo.
-        return `<td class="${isNum ? 'cell-num' : ''}" data-copy="${dvEscapar(raw)}" onclick="window.DataViewer.copyCell(this, this.dataset.copy)" title="Clic para copiar">${formatted}</td>`;
+        return `<td class="${isNum ? 'cell-num' : ''}" data-copy="${dvEscapar(raw)}" onclick="window.DataViewer.copyCell(this, this.dataset.copy)" title="Clic para copiar">${formatted}${this.marcaAgregado(col, raw)}</td>`;
       }).join("");
       return `<tr>${cells}</tr>`;
     }).join("");
@@ -911,7 +917,7 @@ class DataViewerController {
         const isNum = typeof raw === "number";
         // El valor va en data-copy (escapado) y no dentro de un string JS en el onclick: así
         // ni comillas, barras invertidas ni entidades del dato pueden salir del atributo.
-        return `<td class="${isNum ? 'cell-num' : ''}" data-copy="${dvEscapar(raw)}" onclick="window.DataViewer.copyCell(this, this.dataset.copy)" title="Clic para copiar">${formatted}</td>`;
+        return `<td class="${isNum ? 'cell-num' : ''}" data-copy="${dvEscapar(raw)}" onclick="window.DataViewer.copyCell(this, this.dataset.copy)" title="Clic para copiar">${formatted}${this.marcaAgregado(col, raw)}</td>`;
       }).join("");
       return `<tr>${cells}</tr>`;
     }).join("");
@@ -974,6 +980,7 @@ class DataViewerController {
 
         ${this.avisoAlcance()}
         ${this.avisoClaves()}
+        ${window.SIFAggregationHelp ? window.SIFAggregationHelp.render(this.currentView) : ""}
 
         <!-- Tabla de datos scrollable -->
         <div class="dv-table-container">

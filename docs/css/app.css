@@ -7112,3 +7112,31 @@ body {
 .dl-range-error { flex-basis: 100%; margin: 0; color: var(--warn-text); font-size: 13px; }
 .dl-range-error[hidden] { display: none; }
 .dl-toolbar select[aria-invalid="true"] { border-color: var(--warn-text); }
+
+/* Criterios de lectura: nota contextual, no alerta ni ventana flotante. */
+.aggregation-help {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.aggregation-help p { margin: 6px 0; }
+.aggregation-help .aggregation-example { color: var(--text-secondary); }
+.aggregation-help summary { cursor: pointer; font-weight: 600; }
+.aggregation-help summary:focus-visible { outline: 2px solid var(--border-focus); outline-offset: 3px; }
+.aggregation-help ul { margin: 8px 0 0; padding-left: 20px; }
+.aggregation-help li + li { margin-top: 6px; }
+.dv-system-total {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
