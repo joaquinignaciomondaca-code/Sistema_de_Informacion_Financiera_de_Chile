@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_mercado_laboral.parquet",
-   "bytes": 10245,
+   "bytes": 10325,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_mercado_laboral.parquet",
    "periodo": "macro_mercado_laboral",
-   "sha256": "8e0ceb9d753a649f1b588f77b4b0776c711572c11fcb7424a474707c2b2d61be"
+   "sha256": "37c82daceef2b6d44bf9d270e8c3591641ea50ddcacc1835c4c921a47f13920e"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 10245,
-  "filas": 152
+  "bytes": 10325,
+  "filas": 153
  },
  "version": "2.3.0"
 }

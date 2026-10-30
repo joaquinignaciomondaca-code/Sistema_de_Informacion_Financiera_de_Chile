@@ -3,8 +3,8 @@
  "id": "estado-de-la-ultima-consulta-al-bcch-por-grupo-b5c6d8",
  "titulo": "Estado de la última consulta al BCCh por grupo",
  "origen": "explorador",
- "data_release": "2026-10-26.b332bba5e1ca",
- "generado": "2026-10-27",
+ "data_release": "2026-10-30.db40671ee177",
+ "generado": "2026-10-30",
  "max_filas": 500,
  "columnas": [
   "grupo",
@@ -21,63 +21,63 @@
    6,
    6,
    "2026-08-01",
-   "2026-10-26T16:42:25+00:00"
+   "2026-10-30T16:39:30+00:00"
   ],
   [
    "Commodities",
    4,
    4,
-   "2026-10-26",
-   "2026-10-26T16:42:25+00:00"
+   "2026-10-30",
+   "2026-10-30T16:39:30+00:00"
   ],
   [
    "Expectativas",
    6,
    6,
    "2026-10-22",
-   "2026-10-26T16:42:25+00:00"
+   "2026-10-30T16:39:30+00:00"
   ],
   [
    "Fiscal",
    1,
    1,
    "2026-04-01",
-   "2026-10-26T16:42:25+00:00"
+   "2026-10-30T16:39:30+00:00"
   ],
   [
    "Mercado laboral",
    4,
    4,
-   "2026-08-01",
-   "2026-10-26T16:42:25+00:00"
+   "2026-09-01",
+   "2026-10-30T16:39:30+00:00"
   ],
   [
    "Precios y reajustes",
    5,
    5,
-   "2026-10-26",
-   "2026-10-26T16:42:25+00:00"
+   "2026-10-30",
+   "2026-10-30T16:39:30+00:00"
   ],
   [
    "Sector externo",
    2,
    2,
-   "2026-10-20",
-   "2026-10-26T16:42:25+00:00"
+   "2026-10-27",
+   "2026-10-30T16:39:30+00:00"
   ],
   [
    "Tasas",
    16,
    16,
-   "2026-10-26",
-   "2026-10-26T16:42:25+00:00"
+   "2026-10-30",
+   "2026-10-30T16:39:30+00:00"
   ],
   [
    "Tipo de cambio",
    7,
    7,
-   "2026-10-26",
-   "2026-10-26T16:42:25+00:00"
+   "2026-10-30",
+   "2026-10-30T16:39:30+00:00"
   ]
  ],
  "sql": "SELECT grupo, count(*) AS series, sum(CASE WHEN estado = 'ok' THEN 1 ELSE 0 END) AS series_ok, max(ultima_fecha) AS dato_mas_reciente, max(ultima_consulta_utc) AS ultima_consulta_utc FROM macro_series_catalogo GROUP BY grupo ORDER BY grupo;",

@@ -11,7 +11,7 @@
  },
  "como_se_genera": "python3 scripts/build_esquemas.py",
  "contrato": "sif-api/esquemas",
- "generado": "2026-10-27",
+ "generado": "2026-10-30",
  "objetos": {
   "afp_lista_entidades": {
    "archivo": "outputs/pensiones/afp_maestro_administradoras.parquet",
@@ -463,7 +463,7 @@
      "criterio_contable": "Total de la cuenta; sumar una cuenta padre con sus descendientes duplica el monto.",
      "nombre": "importe_clp",
      "rol": "Métrica",
-     "significado": "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Es la columna para sumar, graficar o comparar; `importes_fuente_raw` sigue ahí para ver el desglose.",
+     "significado": "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Sirve para comparar la misma cuenta en un contexto definido; no sumes cuentas que ya se incluyen entre sí, B1 con B2, ni el total del sistema (999) con los bancos. `importes_fuente_raw` conserva el desglose.",
      "tipo": "BIGINT"
     },
     {
@@ -632,7 +632,7 @@
      "criterio_contable": "Acumulado del ejercicio (de enero al mes informado); para el mes suelto se resta el mes anterior del mismo año.",
      "nombre": "importe_clp",
      "rol": "Métrica",
-     "significado": "Importe de la línea en pesos, listo para sumar o graficar: el mismo valor de `importes_fuente_decimal` ya convertido a número.",
+     "significado": "Importe de la línea en pesos, acumulado desde enero hasta el mes informado. No sumes los acumulados mensuales ni cuentas que ya se incluyen entre sí. No añadas el total del sistema (999) a los bancos.",
      "tipo": "BIGINT"
     },
     {
@@ -4590,7 +4590,7 @@
    ],
    "corte": "Catálogo Oficial Vigente CMF",
    "estado": "publicado",
-   "filas": 264,
+   "filas": 265,
    "manifest_id": "fintech_rpsf_maestro",
    "nivel": "registro",
    "nombre_visible": "fintech.rpsf_maestro",
@@ -4630,9 +4630,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-26",
+   "corte": "2014-01-01 a 2026-10-30",
    "estado": "publicado",
-   "filas": 3263,
+   "filas": 3267,
    "manifest_id": "macro_cobre",
    "nivel": "contexto",
    "nombre_visible": "macro.cobre",
@@ -4679,9 +4679,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-22",
+   "corte": "2014-01-02 a 2026-10-28",
    "estado": "publicado",
-   "filas": 3174,
+   "filas": 3178,
    "manifest_id": "macro_curva_bonos_pesos",
    "nivel": "contexto",
    "nombre_visible": "macro.curva_bonos_pesos",
@@ -4749,9 +4749,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-22",
+   "corte": "2014-01-02 a 2026-10-28",
    "estado": "publicado",
-   "filas": 3176,
+   "filas": 3180,
    "manifest_id": "macro_curva_bonos_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.curva_bonos_uf",
@@ -4819,9 +4819,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-26",
+   "corte": "2014-01-02 a 2026-10-30",
    "estado": "publicado",
-   "filas": 3191,
+   "filas": 3195,
    "manifest_id": "macro_dolar_observado",
    "nivel": "contexto",
    "nombre_visible": "macro.dolar_observado",
@@ -4854,9 +4854,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-26",
+   "corte": "2014-01-02 a 2026-10-30",
    "estado": "publicado",
-   "filas": 3191,
+   "filas": 3195,
    "manifest_id": "macro_euro_observado",
    "nivel": "contexto",
    "nombre_visible": "macro.euro_observado",
@@ -5085,9 +5085,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-22",
+   "corte": "2014-01-02 a 2026-10-28",
    "estado": "publicado",
-   "filas": 3080,
+   "filas": 3084,
    "manifest_id": "macro_inflacion_implicita",
    "nivel": "contexto",
    "nombre_visible": "macro.inflacion_implicita",
@@ -5190,9 +5190,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-08-01",
+   "corte": "2014-01-01 a 2026-09-01",
    "estado": "publicado",
-   "filas": 152,
+   "filas": 153,
    "manifest_id": "macro_mercado_laboral",
    "nivel": "contexto",
    "nombre_visible": "macro.mercado_laboral",
@@ -5232,9 +5232,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-26",
+   "corte": "2014-01-02 a 2026-10-30",
    "estado": "publicado",
-   "filas": 3191,
+   "filas": 3195,
    "manifest_id": "macro_metales_preciosos",
    "nivel": "contexto",
    "nombre_visible": "macro.metales_preciosos",
@@ -5400,7 +5400,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-26",
+   "corte": "2014-01-01 a 2026-10-30",
    "estado": "publicado",
    "filas": 51,
    "manifest_id": "macro_series_catalogo",
@@ -5463,9 +5463,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-23",
+   "corte": "2014-01-02 a 2026-10-29",
    "estado": "publicado",
-   "filas": 3205,
+   "filas": 3209,
    "manifest_id": "macro_swaps_camara",
    "nivel": "contexto",
    "nombre_visible": "macro.swaps_camara",
@@ -5498,9 +5498,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-20",
+   "corte": "2014-01-01 a 2026-10-27",
    "estado": "publicado",
-   "filas": 3328,
+   "filas": 3333,
    "manifest_id": "macro_tasa_referencia_fed",
    "nivel": "contexto",
    "nombre_visible": "macro.tasa_referencia_fed",
@@ -5540,9 +5540,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-26",
+   "corte": "2014-01-02 a 2026-10-30",
    "estado": "publicado",
-   "filas": 3192,
+   "filas": 3196,
    "manifest_id": "macro_tasas_corto_plazo",
    "nivel": "contexto",
    "nombre_visible": "macro.tasas_corto_plazo",
@@ -5589,9 +5589,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-26",
+   "corte": "2014-01-02 a 2026-10-30",
    "estado": "publicado",
-   "filas": 3191,
+   "filas": 3195,
    "manifest_id": "macro_tipo_cambio_multilateral",
    "nivel": "contexto",
    "nombre_visible": "macro.tipo_cambio_multilateral",
@@ -5666,9 +5666,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-26",
+   "corte": "2014-01-01 a 2026-10-30",
    "estado": "publicado",
-   "filas": 4682,
+   "filas": 4686,
    "manifest_id": "macro_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.uf",
@@ -11588,8 +11588,8 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 19777530,
-  "filas_unicas": 19777530,
+  "filas_por_objeto": 19777581,
+  "filas_unicas": 19777581,
   "objetos": 90,
   "sin_esquema": 4,
   "tablas_manifiesto": 89,

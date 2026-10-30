@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_inflacion_implicita.parquet",
-   "bytes": 36816,
+   "bytes": 36855,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_inflacion_implicita.parquet",
    "periodo": "macro_inflacion_implicita",
-   "sha256": "f17b99909983faa8171300b1fffa2998dee7bc86f88c24c068f0b2aa11745c68"
+   "sha256": "66e518be47d391284a9ede39e5a7d741c965fd37923d4e4bc232df6b08f1cae5"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 36816,
-  "filas": 3080
+  "bytes": 36855,
+  "filas": 3084
  },
  "version": "2.3.0"
 }
