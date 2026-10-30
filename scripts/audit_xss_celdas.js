@@ -101,7 +101,12 @@ async function main() {
       </div>
     `);
     w.__calls = [];
-    w.switchMainTab = (tab) => w.__calls.push(["tab", tab]);
+    w.switchMainTab = (tab) => {
+      w.__calls.push(["tab", tab]);
+      // En producción, salir del panel ERD cierra el modal sin restaurar el
+      // foco dentro de la pestaña que acaba de ocultarse.
+      if (tab !== "erd") w.cerrarEsquema(false);
+    };
     w.DataViewer = { loadTable: (id, name) => w.__calls.push(["table", id, name]) };
     w.cerrarEsquema = () => w.__calls.push(["close"]);
     w.eval(fs.readFileSync(path.join(JS, "erd_graph.js"), "utf8"));
@@ -128,7 +133,7 @@ async function main() {
     if (button) button.click();
     ok(w.__pwn === 0, "mapa: datos del nodo no ejecutan código al abrir la tabla");
     ok(JSON.stringify(w.__calls) === JSON.stringify([
-      ["tab", "data"], ["table", hostileId, hostileName], ["close"]
+      ["table", hostileId, hostileName], ["tab", "data"], ["close"]
     ]), "mapa: la acción conserva ID/nombre y navega en el orden esperado");
   }
 

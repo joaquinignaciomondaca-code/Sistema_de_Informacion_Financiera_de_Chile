@@ -62,7 +62,7 @@
    "criterio_contable": "Total de la cuenta; sumar una cuenta padre con sus descendientes duplica el monto.",
    "nombre": "importe_clp",
    "rol": "Métrica",
-   "significado": "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Es la columna para sumar, graficar o comparar; `importes_fuente_raw` sigue ahí para ver el desglose.",
+   "significado": "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Sirve para comparar la misma cuenta en un contexto definido; no sumes cuentas que ya se incluyen entre sí, B1 con B2, ni el total del sistema (999) con los bancos. `importes_fuente_raw` conserva el desglose.",
    "tipo": "BIGINT",
    "tipo_ts": "integer"
   },
