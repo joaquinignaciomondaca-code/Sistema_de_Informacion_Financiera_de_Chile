@@ -118,6 +118,13 @@ class ContratoDePublicadoresTest(unittest.TestCase):
         self.assertIn("      - 'scripts/build_ficha_piloto.py'", flujo)
         self.assertIn("docs/datos", flujo)
 
+    def test_contrato_derivado_reintenta_con_backoff_ante_publicaciones_concurrentes(self):
+        flujo = (RAIZ / ".github" / "workflows" / "contrato_publicado.yml").read_text(encoding="utf-8")
+        publicar = next(paso for paso in pasos(flujo) if "- name: Publicar el contrato derivado" in paso)
+        self.assertRegex(publicar, r"for i in 1 2 3 4 5 6 7 8; do")
+        self.assertIn("Push rechazado (intento ${i}/8)", publicar)
+        self.assertIn("sleep $(( 15 + RANDOM % 20 ))", publicar)
+
     def test_generador_macro_usa_fecha_de_actualizacion_del_manifiesto(self):
         generador = (RAIZ / "scripts" / "build_macro_web.py").read_text(encoding="utf-8")
         self.assertIn('data_manifest.json', generador)

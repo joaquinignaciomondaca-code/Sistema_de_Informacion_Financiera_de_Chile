@@ -76,7 +76,11 @@ jobs:
           # El 2026-10-23 este flujo dejó fuera `claves.csv` y `esquemas.json`
           # respecto del corte macro y `audit` falló en main. La cadena se corre
           # entera y se comprueba entera antes de publicar.
-          for i in 1 2 3 4 5; do
+          # Varias automatizaciones escriben en main a la vez. Se amplía la
+          # ventana de reintentos y se añade backoff aleatorio (como en el
+          # publicador macro) para absorber contención transitoria; cada intento
+          # regenera sobre la cabeza vigente.
+          for i in 1 2 3 4 5 6 7 8; do
             git fetch origin main
             git reset --hard FETCH_HEAD
             python scripts/build_reconciliacion.py
@@ -123,8 +127,8 @@ jobs:
               echo "::notice title=Contrato derivado::publicado en main"
               exit 0
             fi
-            echo "Push rechazado (intento ${i}/5): se regenera sobre la cabeza nueva."
-            sleep $(( 10 + RANDOM % 20 ))
+            echo "Push rechazado (intento ${i}/8): se regenera sobre la cabeza nueva."
+            sleep $(( 15 + RANDOM % 20 ))
           done
-          echo "::error title=Contrato derivado::no se pudo publicar tras 5 intentos"
+          echo "::error title=Contrato derivado::no se pudo publicar tras 8 intentos"
           exit 1

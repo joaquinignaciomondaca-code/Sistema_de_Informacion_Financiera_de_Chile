@@ -19,7 +19,7 @@ tres conjuntos con datos de personas naturales:
 
 | Conjunto | Personas | Datos | Origen |
 |---|---|---|---|
-| `fintech_rpsf_lista_entidades` | 36 personas naturales (de 264 prestadores) | RUT, nombre o razón social, comuna, región, sitio web, estado de vigencia | Registro de Prestadores de Servicios Financieros de la CMF (Ley 21.521) |
+| `fintech_rpsf_lista_entidades` | 36 personas naturales (de 265 prestadores) | RUT, nombre o razón social, comuna, región, sitio web, estado de vigencia | Registro de Prestadores de Servicios Financieros de la CMF (Ley 21.521) |
 | `corredoras_bolsa_lista_entidades` | 11 corredores inscritos a nombre de persona natural (de 120) | RUT, nombre, estado de vigencia | Registro de corredores de bolsa de la CMF (Ley 18.045) |
 | `seguros_bienes_raices` | 317 nombres de tasadores (233 en la tasación 1 y 263 en la tasación 2) | Nombre del tasador 1 y 2, tal como consta en la Circular 1835; la fuente mezcla personas naturales y sociedades tasadoras | Declaración de cartera de las aseguradoras a la CMF |
 

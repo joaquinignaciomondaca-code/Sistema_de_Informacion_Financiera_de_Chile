@@ -3,8 +3,8 @@
  "id": "participacion-de-asalariados-sobre-ocupados-46b8e7",
  "titulo": "Participación de asalariados sobre ocupados",
  "origen": "explorador",
- "data_release": "2026-10-26.b332bba5e1ca",
- "generado": "2026-10-27",
+ "data_release": "2026-10-30.db40671ee177",
+ "generado": "2026-10-30",
  "max_filas": 500,
  "columnas": [
   "periodo",
@@ -14,11 +14,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2024-09",
-   73.79,
-   8.7423149114593
-  ],
   [
    "2024-10",
    73.74,
@@ -133,6 +128,11 @@
    "2026-08",
    72.81,
    9.64031909353693
+  ],
+  [
+   "2026-09",
+   72.93,
+   9.80262482382071
   ]
  ],
  "sql": "SELECT periodo, round(asalariados_miles_personas / ocupados_miles_personas * 100, 2) AS asalariados_sobre_ocupados_pct, desocupacion_pct FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;",
