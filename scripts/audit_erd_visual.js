@@ -96,7 +96,17 @@ function cargar() {
   const contexto = {
     window: ventana,
     document: {
-      getElementById: () => canvas,
+      // El auditor no renderiza la interfaz de controles; devuelve el canvas
+      // solo para su id y botones inertes para los tres controles de zoom que
+      // initEvents registra sin comprobar si existen. Los selectores deben
+      // quedar ausentes para que syncFilterUi no trate el canvas como un select.
+      getElementById: (id) => {
+        if (id === "erd-canvas") return canvas;
+        if (["btn-zoom-in", "btn-zoom-out", "btn-zoom-reset"].includes(id)) {
+          return { addEventListener() {} };
+        }
+        return null;
+      },
       documentElement: {},
       querySelectorAll: () => [],
       createElement: () => ({ style: {}, classList: { add() {}, remove() {} } }),
