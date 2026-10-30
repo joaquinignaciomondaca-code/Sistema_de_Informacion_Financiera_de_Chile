@@ -8,7 +8,7 @@ no la intención del pipeline.
 
 Comprueba siete cosas:
 
-  1. `fintech_rpsf_lista_entidades`: 36 personas naturales de 264 filas y
+  1. `fintech_rpsf_lista_entidades`: 36 personas naturales de 265 filas y
      ninguna columna de correo.
   2. `corredoras_bolsa_lista_entidades`: 11 nombres de personas entre 120.
   3. `seguros_bienes_raices`: `rol`, `ubicacion` y `arrendatario` vacíos en todas
@@ -116,8 +116,8 @@ def main() -> int:
         "SELECT count(*), count(*) FILTER (WHERE tipo_persona = 'Persona Natural') FROM fintech"
     ).fetchone()
     cols = columnas(con, "fintech")
-    if filas != 264:
-        fallos.append(f"fintech: {filas} filas; el aviso declara 264 prestadores")
+    if filas != 265:
+        fallos.append(f"fintech: {filas} filas; el aviso declara 265 prestadores")
     if naturales != 36:
         fallos.append(f"fintech: {naturales} personas naturales; el aviso declara 36")
     if any("email" in c.lower() or "correo" in c.lower() for c in cols):
