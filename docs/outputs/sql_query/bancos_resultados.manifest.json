@@ -4,7 +4,7 @@
   "description": "Copia compacta SQL de bancos_resultados: solo familia CMF R1; no es un archivo de descarga.",
   "purpose": "SQL-only; no forma parte del catálogo de descargas",
   "source_manifest": "outputs/bancos/resultados_r1/manifest.json",
-  "source_updated_at": "2026-10-01",
+  "source_updated_at": "2026-10-31",
   "source_files": [
     {
       "path": "outputs/bancos/resultados_r1/2022-01/lineas.parquet",
@@ -285,12 +285,17 @@
       "path": "outputs/bancos/resultados_r1/2026-08/lineas.parquet",
       "records": 22122,
       "sha256": "50138833d1b09034f17d4f4d0c0c6f9765f9eb29b379672eb032a7ad3ce52eb0"
+    },
+    {
+      "path": "outputs/bancos/resultados_r1/2026-09/lineas.parquet",
+      "records": 22122,
+      "sha256": "7ade077c216ae22f21113dd329509d48a9c436ccc91565d84bbbb120a32a1983"
     }
   ],
   "file": "outputs/sql_query/bancos_resultados.parquet",
-  "records": 1240061,
-  "bytes": 8148256,
-  "sha256": "e33cd8cd46ab2ddd1bdfda7fee1f6065246744d58e22ae57c8e5eb060de31c31",
+  "records": 1262183,
+  "bytes": 8297206,
+  "sha256": "da32cb8d003317c1ac52df9f1e55c0bac7f7edc329aa5f0841a3f3c432a5fef2",
   "schema": [
     {
       "name": "periodo",

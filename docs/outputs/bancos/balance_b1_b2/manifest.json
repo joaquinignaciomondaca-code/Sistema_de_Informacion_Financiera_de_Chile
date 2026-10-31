@@ -6,7 +6,7 @@
     "B1",
     "B2"
   ],
-  "updated_at": "2026-10-01",
+  "updated_at": "2026-10-31",
   "periods": [
     {
       "period": "2022-01",
@@ -399,6 +399,13 @@
       "records": 12906,
       "bytes": 130541,
       "sha256": "65639b71bf97f7bc922f0136ed223972c883e79344e2d1b681d7fcd464eb7852"
+    },
+    {
+      "period": "2026-09",
+      "file": "outputs/bancos/balance_b1_b2/2026-09/lineas.parquet",
+      "records": 12906,
+      "bytes": 130704,
+      "sha256": "1ea067f70fc21f53aab3c8892880b639fbbad62253327c7ed6c848aaf5b8536e"
     }
   ],
   "files": [
@@ -457,8 +464,9 @@
     "outputs/bancos/balance_b1_b2/2026-05/lineas.parquet",
     "outputs/bancos/balance_b1_b2/2026-06/lineas.parquet",
     "outputs/bancos/balance_b1_b2/2026-07/lineas.parquet",
-    "outputs/bancos/balance_b1_b2/2026-08/lineas.parquet"
+    "outputs/bancos/balance_b1_b2/2026-08/lineas.parquet",
+    "outputs/bancos/balance_b1_b2/2026-09/lineas.parquet"
   ],
-  "total_records": 722931,
-  "total_bytes": 7054110
+  "total_records": 735837,
+  "total_bytes": 7184814
 }
