@@ -4,7 +4,7 @@
   "description": "Copia compacta SQL de bancos_balance: solo familias CMF B1 y B2; no es un archivo de descarga.",
   "purpose": "SQL-only; no forma parte del catálogo de descargas",
   "source_manifest": "outputs/bancos/balance_b1_b2/manifest.json",
-  "source_updated_at": "2026-10-01",
+  "source_updated_at": "2026-10-31",
   "source_files": [
     {
       "path": "outputs/bancos/balance_b1_b2/2022-01/lineas.parquet",
@@ -285,12 +285,17 @@
       "path": "outputs/bancos/balance_b1_b2/2026-08/lineas.parquet",
       "records": 12906,
       "sha256": "65639b71bf97f7bc922f0136ed223972c883e79344e2d1b681d7fcd464eb7852"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-09/lineas.parquet",
+      "records": 12906,
+      "sha256": "1ea067f70fc21f53aab3c8892880b639fbbad62253327c7ed6c848aaf5b8536e"
     }
   ],
   "file": "outputs/sql_query/bancos_balance.parquet",
-  "records": 722931,
-  "bytes": 6969183,
-  "sha256": "f84793879723640e41fb7ba92a50bf2a86583209ac5f6b3943799086ce840f53",
+  "records": 735837,
+  "bytes": 7098347,
+  "sha256": "ae57c4063e42e03502f8e6caa7e13f2bd81e4c5cd31706293d9a5487b81fd400",
   "schema": [
     {
       "name": "periodo",
