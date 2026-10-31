@@ -1,8 +1,8 @@
 {
   "estado": "serie_completa_del_indice_no_cotejo_integral",
   "fuente_indice": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-  "run_actions": "39905485594",
-  "fecha_actualizacion_utc": "2026-10-23T05:24:14.328164+00:00",
+  "run_actions": "41223772938",
+  "fecha_actualizacion_utc": "2026-10-31T17:17:55.366561+00:00",
   "publicado_en_docs": true,
   "primer_periodo": "200903",
   "ultimo_periodo": "202609",
@@ -44,10 +44,10 @@
     "96720830-2",
     "96805850-9"
   ],
-  "filas_balance": 30046,
-  "filas_resultados": 22368,
-  "filas_balance_total": 30046,
-  "filas_resultados_total": 22368,
+  "filas_balance": 30075,
+  "filas_resultados": 22389,
+  "filas_balance_total": 30075,
+  "filas_resultados_total": 22389,
   "ruts_con_datos_total": [
     "76002293-4",
     "76120857-8",
@@ -78,18 +78,18 @@
     "99569200-7",
     "99595990-9"
   ],
-  "importes_no_enteros": 2446,
-  "importes_no_enteros_total": 2446,
-  "cuentas_contexto_repetidas": 950,
-  "cuentas_contexto_repetidas_total": 950,
+  "importes_no_enteros": 2450,
+  "importes_no_enteros_total": 2450,
+  "cuentas_contexto_repetidas": 951,
+  "cuentas_contexto_repetidas_total": 951,
   "cuadratura": {
-    "balances_totales": 949,
-    "balances_verificados": 947,
+    "balances_totales": 950,
+    "balances_verificados": 948,
     "balances_descuadrados": 0,
-    "identidades_resultados": 1863,
+    "identidades_resultados": 1865,
     "identidades_divergentes": 0
   },
   "advertencia": "Extracción literal del TXT IFRS CMF. No es un cotejo integral de estados; no convertir monedas, sumar balances individual/consolidado, deduplicar etiquetas, ni interpretar valores no enteros como cero. Filas y faltantes según fuente disponible.",
-  "sha256_balance_parquet": "2b5c11c70f05d17eb2b595f6ad4b26575c003d47bcedd146f01cda3d610f1568",
-  "sha256_resultados_parquet": "45ff7f0f99e71295d07640597ea31de5acfadf4a5ac208d0e327d581cc63ed29"
+  "sha256_balance_parquet": "ba2296dcd4ba40c9e424bfc889f3b275f01103ddcb94b7417e49cf675bc20368",
+  "sha256_resultados_parquet": "f0f0e7b138dba2b5714bf201449a5e721d5f883b969a136fa86bb8b46cbd224e"
 }
