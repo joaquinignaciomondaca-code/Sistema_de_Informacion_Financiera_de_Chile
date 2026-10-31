@@ -884,11 +884,31 @@
       "corredores_fuera_de_lista": [],
       "avisos": [],
       "sha256_origen": {
-        "corredor de bolsa": "3ef0879546109547d69ca720187e23989ffd84ebc5e6709d19eab2891589042a",
-        "agente de valores": "e030effb15e0be35cdd3c6fe3ca9bf9601541be5ce048dcca1f7c535dc7ac74a"
+        "corredor de bolsa": "5dcb8e1d4c1f39ef4581e73dd80318a543821ab070b05f0b7e1ecbf982561b89",
+        "agente de valores": "336f35fec3ab86ebbee6b827ab006fd5f57930b34589824fe1bd67317424b402"
+      }
+    },
+    "2026-09": {
+      "cerrado": false,
+      "sociedades": 32,
+      "por_tipo": {
+        "corredor de bolsa": 23,
+        "agente de valores": 9
+      },
+      "balances_verificados": 32,
+      "balances_totales": 32,
+      "filas": {
+        "balance": 1329,
+        "resultados": 978
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": [],
+      "sha256_origen": {
+        "corredor de bolsa": "7a5893d70c7a1871782d2d23bca4a9832320fa9739352dfff89ebdbfb89e0a80",
+        "agente de valores": "14fcf806afdf4013ce3330adc8357d8f96bb3865d9230d32916b770c52124012"
       }
     }
   },
   "desde": "2010-12",
-  "updated_at": "2026-10-28T19:06:26+00:00"
+  "updated_at": "2026-10-31T17:55:50+00:00"
 }
