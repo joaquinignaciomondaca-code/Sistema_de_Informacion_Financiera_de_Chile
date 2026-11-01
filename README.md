@@ -16,6 +16,7 @@ Extrae, valida y publica archivos financieros y series que las entidades reporta
 ![SQL local en el navegador](https://img.shields.io/badge/SQL-local%20en%20el%20navegador-2ea44f)
 ![Datos](https://img.shields.io/badge/datos-90%20objetos%20%C2%B7%20m%C3%A1s%20de%2019%20M%20filas-blue)
 ![Serie](https://img.shields.io/badge/serie-2001--01%20%E2%86%92%202026--09-informational)
+![Sitio en GitHub Pages](https://img.shields.io/badge/sitio-GitHub%20Pages-2ea44f?logo=github&logoColor=white)
 
 | En números | |
 |---|---|
