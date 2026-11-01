@@ -9,12 +9,14 @@ mapa del sitio. Aquí se calculan desde el contrato publicado
 Qué escribe:
 
   * un bloque entre `<!-- SEO:INICIO -->` y `<!-- SEO:FIN -->` en
-    `docs/index.html` (meta description, Open Graph, Twitter, canonical y las
-    huellas de la imagen social);
+    `docs/index.html` (meta description, Open Graph, Twitter, canonical,
+    JSON-LD Dataset y las huellas de la imagen social);
  * el canonical de `docs/privacidad.html`;
  * `docs/robots.txt`, que permite todo y apunta al sitemap;
  * `docs/sitemap.xml`, generado escaneando automáticamente todas las
-   páginas HTML bajo `docs/` (no una lista hardcodeada).
+   páginas HTML bajo `docs/` (no una lista hardcodeada), con `lastmod`;
+ * `docs/opensearch.xml`, descriptor para que los navegadores busquen dentro
+   del sitio desde la barra de direcciones.
 
 `--check` falla si algo quedó atrás, igual que el resto del contrato.
 La imagen social la produce `scripts/build_og_image.py`.
@@ -55,6 +57,7 @@ def datos() -> dict:
         "filas": t["filas"],
         "consultas": t["consultas"],
         "release": cat["data_release"],
+        "generado": cat.get("generado", ""),
     }
 
 
@@ -81,7 +84,77 @@ def descripcion(d: dict) -> str:
     return texto
 
 
-def bloque(d: dict, imagen_sha: str) -> str:
+def json_ld_dataset(cat: dict, d: dict) -> str:
+    """Marcado estructurado schema.org/Dataset para la portada."""
+    objetos = cat.get("objetos", [])
+    fuentes = sorted({o.get("fuente", "") for o in objetos if o.get("fuente")})
+    sectores = sorted({o.get("sector", "") for o in objetos if o.get("sector")})
+    distribucion = [
+        {
+            "@type": "DataDownload",
+            "name": "Catálogo API (JSON)",
+            "encodingFormat": "application/json",
+            "contentUrl": f"{BASE}/api/v2/catalog.json",
+        },
+        {
+            "@type": "DataDownload",
+            "name": "Data Package (Frictionless)",
+            "encodingFormat": "application/json",
+            "contentUrl": f"{BASE}/api/v2/datapackage.json",
+        },
+        {
+            "@type": "DataDownload",
+            "name": "Consultas SQL precálculadas",
+            "encodingFormat": "application/json",
+            "contentUrl": f"{BASE}/api/v2/queries.json",
+        },
+    ]
+    dataset = {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": TITULO,
+        "description": descripcion(d),
+        "url": f"{BASE}/",
+        "datePublished": cat.get("generado", ""),
+        "dateModified": cat.get("generado", ""),
+        "version": cat.get("data_release", ""),
+        "publisher": {
+            "@type": "Organization",
+            "name": "Sistema de Información Financiera de Chile",
+            "url": f"{BASE}/",
+        },
+        "provider": {
+            "@type": "Organization",
+            "name": "Sistema de Información Financiera de Chile",
+            "url": f"{BASE}/",
+        },
+        "keywords": ", ".join(sectores),
+        "measurementTechnique": "Parquet y SQL en el navegador (DuckDB-Wasm)",
+        "distribution": distribucion,
+        "includes": [
+            {
+                "@type": "Dataset",
+                "name": f"{len(objetos)} objetos de datos financieros públicos de Chile",
+                "description": (
+                    f"{miles(d['filas'])} filas, {d['objetos']} objetos, "
+                    f"{d['consultas']} consultas SQL precálculadas"
+                ),
+            }
+        ],
+        "isAccessibleForFree": True,
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    }
+    # Fuentes como "about" (categorías del dataset)
+    if fuentes:
+        dataset["about"] = [{"@type": "Thing", "name": f} for f in fuentes]
+    return (
+        '  <script type="application/ld+json">\n'
+        + json.dumps(dataset, ensure_ascii=False, indent=2)
+        + "\n  </script>"
+    )
+
+
+def bloque(d: dict, imagen_sha: str, json_ld: str) -> str:
     desc = descripcion(d)
     img = f"{BASE}/assets/{IMAGEN.name}"
     lineas = [
@@ -114,6 +187,8 @@ def bloque(d: dict, imagen_sha: str) -> str:
         '  <meta name="twitter:image:alt" content="SIF — Sistema de Información Financiera de Chile">',
         "",
         f'  <meta name="sif:data-release" content="{d["release"]}">',
+        "",
+        json_ld,
         FIN,
     ]
     return "\n".join(lineas)
@@ -136,6 +211,21 @@ def robots() -> str:
     )
 
 
+def opensearch() -> str:
+    """Descriptor OpenSearch para búsqueda desde la barra de direcciones del navegador."""
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">\n'
+        '  <ShortName>SIF Chile</ShortName>\n'
+        f'  <Description>Buscar en {TITULO}</Description>\n'
+        '  <InputEncoding>UTF-8</InputEncoding>\n'
+        f'  <Image width="16" height="16">{BASE}/assets/logo_sif_isotipo.svg</Image>\n'
+        f'  <Url type="text/html" template="{BASE}/#q={{searchTerms}}"/>\n'
+        f'  <Url type="application/opensearchdescription+xml" template="{BASE}/opensearch.xml"/>\n'
+        '</OpenSearchDescription>\n'
+    )
+
+
 def _pagina_prioridad(ruta_relativa: Path) -> tuple[str, str, str]:
     """Devuelve (url, prioridad, changefreq) para una página HTML de docs/."""
     url = f"{BASE}/{ruta_relativa.as_posix()}"
@@ -147,7 +237,7 @@ def _pagina_prioridad(ruta_relativa: Path) -> tuple[str, str, str]:
     return url, "0.5", "monthly"
 
 
-def sitemap() -> str:
+def sitemap(d: dict) -> str:
     paginas: list[tuple[str, str, str]] = []
     for html in sorted(DOCS.rglob("*.html")):
         ruta_relativa = html.relative_to(DOCS)
@@ -158,7 +248,8 @@ def sitemap() -> str:
         paginas.append(_pagina_prioridad(ruta_relativa))
 
     filas = "\n".join(
-        f'  <url>\n    <loc>{url}</loc>\n    <changefreq>{freq}</changefreq>\n'
+        f'  <url>\n    <loc>{url}</loc>\n    <lastmod>{d["generado"]}</lastmod>\n'
+        f'    <changefreq>{freq}</changefreq>\n'
         f'    <priority>{prio}</priority>\n  </url>'
         for url, prio, freq in paginas
     )
@@ -191,15 +282,18 @@ def main() -> int:
         return 1
     sha = hashlib.sha256(IMAGEN.read_bytes()).hexdigest()
 
+    cat = json.loads(CATALOGO.read_text(encoding="utf-8"))
     d = datos()
+    json_ld = json_ld_dataset(cat, d)
     actual = INDICE.read_text(encoding="utf-8")
-    nuevo_html = con_bloque(actual, bloque(d, sha))
+    nuevo_html = con_bloque(actual, bloque(d, sha, json_ld))
     privacidad = PRIVACIDAD.read_text(encoding="utf-8")
     nuevos = {
         INDICE: nuevo_html,
         PRIVACIDAD: con_bloque(privacidad, canonical_privacidad()),
         DOCS / "robots.txt": robots(),
-        DOCS / "sitemap.xml": sitemap(),
+        DOCS / "sitemap.xml": sitemap(d),
+        DOCS / "opensearch.xml": opensearch(),
     }
 
     if args.check:
@@ -215,12 +309,12 @@ def main() -> int:
             print("METADATOS: ejecuta scripts/build_metadatos.py")
             return 1
         print(f"METADATOS: al día (description de {len(descripcion(d))} caracteres, "
-              f"og:image {IMAGEN.name}, robots.txt y sitemap.xml)")
+              f"og:image {IMAGEN.name}, robots.txt, sitemap.xml y opensearch.xml)")
         return 0
 
     for ruta, contenido in nuevos.items():
         ruta.write_text(contenido, encoding="utf-8")
-    print(f"Escrito el bloque social de index.html, robots.txt y sitemap.xml · "
+    print(f"Escrito el bloque social de index.html, robots.txt, sitemap.xml y opensearch.xml · "
           f"{d['objetos']} objetos, {miles(d['filas'])} filas, {d['consultas']} consultas · "
           f"data_release {d['release']}")
     return 0
