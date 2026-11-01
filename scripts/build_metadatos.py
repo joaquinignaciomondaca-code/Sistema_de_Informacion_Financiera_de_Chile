@@ -11,9 +11,10 @@ Qué escribe:
   * un bloque entre `<!-- SEO:INICIO -->` y `<!-- SEO:FIN -->` en
     `docs/index.html` (meta description, Open Graph, Twitter, canonical y las
     huellas de la imagen social);
-  * el canonical de `docs/privacidad.html` (la otra página del sitemap);
-  * `docs/robots.txt`, que permite todo y apunta al sitemap;
-  * `docs/sitemap.xml` con las dos páginas del sitio.
+ * el canonical de `docs/privacidad.html`;
+ * `docs/robots.txt`, que permite todo y apunta al sitemap;
+ * `docs/sitemap.xml`, generado escaneando automáticamente todas las
+   páginas HTML bajo `docs/` (no una lista hardcodeada).
 
 `--check` falla si algo quedó atrás, igual que el resto del contrato.
 La imagen social la produce `scripts/build_og_image.py`.
@@ -135,11 +136,27 @@ def robots() -> str:
     )
 
 
+def _pagina_prioridad(ruta_relativa: Path) -> tuple[str, str, str]:
+    """Devuelve (url, prioridad, changefreq) para una página HTML de docs/."""
+    url = f"{BASE}/{ruta_relativa.as_posix()}"
+    if ruta_relativa == Path("index.html"):
+        return url, "1.0", "daily"
+    if ruta_relativa == Path("privacidad.html"):
+        return url, "0.3", "monthly"
+    # Páginas de detalle bajo subdirectorios (ej. docs/datos/.../index.html).
+    return url, "0.5", "monthly"
+
+
 def sitemap() -> str:
-    paginas = [
-        (f"{BASE}/", "1.0", "daily"),
-        (f"{BASE}/privacidad.html", "0.3", "monthly"),
-    ]
+    paginas: list[tuple[str, str, str]] = []
+    for html in sorted(DOCS.rglob("*.html")):
+        ruta_relativa = html.relative_to(DOCS)
+        # Ignora páginas parciales o de plantilla que no son destino de navegación.
+        nombre = html.name.lower()
+        if nombre.startswith("_") or nombre.endswith("_fragment.html"):
+            continue
+        paginas.append(_pagina_prioridad(ruta_relativa))
+
     filas = "\n".join(
         f'  <url>\n    <loc>{url}</loc>\n    <changefreq>{freq}</changefreq>\n'
         f'    <priority>{prio}</priority>\n  </url>'
