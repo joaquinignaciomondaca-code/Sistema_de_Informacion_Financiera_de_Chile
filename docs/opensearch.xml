@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>SIF Chile</ShortName>
+  <Description>Buscar en Sistema de Información Financiera de Chile — Inversiones institucionales y mercados</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16">https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/logo_sif_isotipo.svg</Image>
+  <Url type="text/html" template="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/#q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" template="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/opensearch.xml"/>
+</OpenSearchDescription>

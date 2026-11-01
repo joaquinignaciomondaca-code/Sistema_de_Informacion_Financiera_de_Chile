@@ -33,6 +33,74 @@
   <meta name="twitter:image:alt" content="SIF — Sistema de Información Financiera de Chile">
 
   <meta name="sif:data-release" content="2026-10-30.db40671ee177">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Sistema de Información Financiera de Chile — Inversiones institucionales y mercados",
+  "description": "Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL.",
+  "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/",
+  "datePublished": "2026-10-31",
+  "dateModified": "2026-10-31",
+  "version": "2026-10-30.db40671ee177",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sistema de Información Financiera de Chile",
+    "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Sistema de Información Financiera de Chile",
+    "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/"
+  },
+  "keywords": "agf, bancos, cajas_compensacion, cooperativas, corredoras_bolsa, factoring_leasing, ffmm, fi, fintech, macro, patrimonios_separados, pensiones, securitizadoras, seguros, sistemas_pago",
+  "measurementTechnique": "Parquet y SQL en el navegador (DuckDB-Wasm)",
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "Catálogo API (JSON)",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/catalog.json"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Data Package (Frictionless)",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/datapackage.json"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "Consultas SQL precálculadas",
+      "encodingFormat": "application/json",
+      "contentUrl": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/queries.json"
+    }
+  ],
+  "includes": [
+    {
+      "@type": "Dataset",
+      "name": "90 objetos de datos financieros públicos de Chile",
+      "description": "19.777.581 filas, 90 objetos, 159 consultas SQL precálculadas"
+    }
+  ],
+  "isAccessibleForFree": true,
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "about": [
+    {
+      "@type": "Thing",
+      "name": "BCCh"
+    },
+    {
+      "@type": "Thing",
+      "name": "CMF"
+    },
+    {
+      "@type": "Thing",
+      "name": "SPensiones"
+    }
+  ]
+}
+  </script>
 <!-- SEO:FIN -->
   <link rel="icon" type="image/svg+xml" href="assets/logo_sif_isotipo.svg">
   <link rel="apple-touch-icon" href="assets/logo_sif_isotipo.svg">
@@ -77,6 +145,14 @@
        datos o una descarga con motor); ver ensureStarted(). -->
 </head>
 <body>
+
+  <!-- Última actualización de los datos publicados (visible para usuarios y buscadores) -->
+  <p class="sif-ultima-actualizacion">
+    <strong>Última actualización:</strong> 2026-10-30 · 
+    90 objetos · 19.777.581 filas · 159 consultas SQL ·
+    <a href="/sitemap.xml">Sitemap</a> ·
+    <a href="/opensearch.xml">OpenSearch</a>
+  </p>
 
   <!-- Primer elemento tabulable: con 90 tablas en el explorador, un usuario de
        teclado necesita saltarse la barra y el árbol para llegar al panel. -->
