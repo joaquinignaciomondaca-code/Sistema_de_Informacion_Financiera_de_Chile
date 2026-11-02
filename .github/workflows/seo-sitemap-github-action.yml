@@ -1,0 +1,48 @@
+name: SEO · Sitemap automático (GitHub Action gratuita)
+
+# Usa la acción comunitaria cicirello/generate-sitemap (MIT License) para
+# regenerar el sitemap.xml desde el sitio publicado en GitHub Pages.
+# Se ejecuta diario y bajo demanda (workflow_dispatch). Complementa al script
+# local scripts/build_metadatos.py; si hay cambios, los commitea en main.
+
+on:
+  schedule:
+    - cron: '0 4 * * *'  # diario 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-sitemap-action
+  cancel-in-progress: false
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout de la rama
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Generar sitemap XML con cicirello/generate-sitemap
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url-path: https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/
+          output-path: docs/sitemap.xml
+          exclude: 'docs/.well-known/ docs/notas/'
+
+      - name: Commit y push si hay cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/sitemap.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "SEO: sitemap.xml actualizado automáticamente (cicirello/generate-sitemap)"
+            git push origin HEAD:main
+          else
+            echo "Sitemap sin cambios; no hay nada que commitear."
+          fi
