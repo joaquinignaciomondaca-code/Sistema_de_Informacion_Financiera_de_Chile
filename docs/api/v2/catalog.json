@@ -3,8 +3,8 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-10-30.db40671ee177",
- "generado": "2026-10-31",
+ "data_release": "2026-11-01.4d68fa3eb6f8",
+ "generado": "2026-11-02",
  "objetos": [
   {
    "adaptacion": false,
@@ -140,20 +140,20 @@
     "bancos_cmf_balance"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 7054110,
-   "corte": "2022-01 a 2026-08",
+   "bytes": 7184814,
+   "corte": "2022-01 a 2026-09",
    "deriva_de": "bancos_cmf_lineas",
    "descripcion": "Sólo filas B1 consolidado y B2 individual de la CMF; excluye R1 (estado de resultados). Las descargas Parquet de este objeto también contienen exclusivamente B1/B2. Líneas contables tal como se publican, con el total de cada cuenta en importe_clp.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/bancos_balance.json",
    "estado": "derivado",
-   "filas": 722931,
+   "filas": 735837,
    "frescura": "Actualización mensual validada contra reporte CMF",
    "fuente": "CMF",
    "id": "bancos_balance",
    "licencia_estado": "verificada",
    "nivel": "secundario",
    "nota_adaptacion": null,
-   "particiones": 56,
+   "particiones": 57,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/bancos_balance.json",
    "primaryKey": [
     "periodo",
@@ -164,7 +164,7 @@
    "sector": "bancos",
    "sql_view": "bancos_balance",
    "titulo": "Líneas de balance bancario CMF (B1/B2)",
-   "ultima_actualizacion": "2026-10-01",
+   "ultima_actualizacion": "2026-10-31",
    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
@@ -203,20 +203,20 @@
     "bancos_cmf_resultados"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 8233188,
-   "corte": "2022-01 a 2026-08",
+   "bytes": 8383679,
+   "corte": "2022-01 a 2026-09",
    "deriva_de": "bancos_cmf_lineas",
    "descripcion": "Sólo filas R1 (estado de resultados) de la CMF; excluye B1 y B2. Las descargas Parquet de este objeto también contienen exclusivamente R1. Líneas tal como se publican; importe_clp trae el acumulado del ejercicio.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/bancos_resultados.json",
    "estado": "derivado",
-   "filas": 1240061,
+   "filas": 1262183,
    "frescura": "Actualización mensual validada contra reporte CMF",
    "fuente": "CMF",
    "id": "bancos_resultados",
    "licencia_estado": "verificada",
    "nivel": "secundario",
    "nota_adaptacion": null,
-   "particiones": 56,
+   "particiones": 57,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/bancos_resultados.json",
    "primaryKey": [
     "periodo",
@@ -227,7 +227,7 @@
    "sector": "bancos",
    "sql_view": "bancos_resultados",
    "titulo": "Líneas de resultados bancarios CMF (R1)",
-   "ultima_actualizacion": "2026-10-01",
+   "ultima_actualizacion": "2026-10-31",
    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
@@ -392,14 +392,14 @@
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 649512,
-   "corte": "2010-12 a 2026-06",
+   "bytes": 655063,
+   "corte": "2010-12 a 2026-09",
    "deriva_de": null,
    "descripcion": "Estado de situación financiera de cada corredor de bolsa y agente de valores, cuenta FECU por cuenta, al cierre de cada trimestre. Miles de pesos.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/corredoras_bolsa_balance.json",
    "estado": "publicado",
-   "filas": 107976,
-   "frescura": "Último trimestre publicado: 2026-06",
+   "filas": 109305,
+   "frescura": "Último trimestre publicado: 2026-09",
    "fuente": "CMF",
    "id": "corredoras_bolsa_balance",
    "licencia_estado": "verificada",
@@ -415,7 +415,7 @@
    "sector": "corredoras_bolsa",
    "sql_view": "corredoras_bolsa_balance",
    "titulo": "corredoras.balance",
-   "ultima_actualizacion": "2026-10-28",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
@@ -482,14 +482,14 @@
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 520983,
-   "corte": "2010-12 a 2026-06",
+   "bytes": 524993,
+   "corte": "2010-12 a 2026-09",
    "deriva_de": null,
    "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/corredoras_bolsa_resultados.json",
    "estado": "publicado",
-   "filas": 77705,
-   "frescura": "Último trimestre publicado: 2026-06",
+   "filas": 78683,
+   "frescura": "Último trimestre publicado: 2026-09",
    "fuente": "CMF",
    "id": "corredoras_bolsa_resultados",
    "licencia_estado": "verificada",
@@ -505,7 +505,7 @@
    "sector": "corredoras_bolsa",
    "sql_view": "corredoras_bolsa_resultados",
    "titulo": "corredoras.resultados",
-   "ultima_actualizacion": "2026-10-28",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
@@ -514,13 +514,13 @@
     "factoring_leasing_balance_serie_ifrs_cmf"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 536619,
+   "bytes": 537163,
    "corte": "2009-03 a 2026-09",
    "deriva_de": null,
-   "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+   "descripcion": "30,075 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/factoring_leasing_balance.json",
    "estado": "publicado",
-   "filas": 30046,
+   "filas": 30075,
    "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
    "fuente": "CMF",
    "id": "factoring_leasing_balance",
@@ -541,7 +541,7 @@
    "sector": "factoring_leasing",
    "sql_view": "factoring_leasing_balance",
    "titulo": "factoring_leasing.balance_serie_ifrs_cmf",
-   "ultima_actualizacion": "2026-10-23",
+   "ultima_actualizacion": "2026-10-31",
    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
@@ -580,13 +580,13 @@
     "factoring_leasing_resultados_serie_ifrs_cmf"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 330215,
+   "bytes": 330523,
    "corte": "2009-03 a 2026-09",
    "deriva_de": null,
-   "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+   "descripcion": "22,389 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/factoring_leasing_resultados.json",
    "estado": "publicado",
-   "filas": 22368,
+   "filas": 22389,
    "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
    "fuente": "CMF",
    "id": "factoring_leasing_resultados",
@@ -610,7 +610,7 @@
    "sector": "factoring_leasing",
    "sql_view": "factoring_leasing_resultados",
    "titulo": "factoring_leasing.resultados_serie_ifrs_cmf",
-   "ultima_actualizacion": "2026-10-23",
+   "ultima_actualizacion": "2026-10-31",
    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
@@ -1154,7 +1154,7 @@
    "sector": "macro",
    "sql_view": "macro_cobre",
    "titulo": "macro.cobre",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1162,12 +1162,12 @@
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 61531,
-   "corte": "2014-01-02 a 2026-10-28",
+   "corte": "2014-01-02 a 2026-10-29",
    "deriva_de": null,
    "descripcion": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/macro_curva_bonos_pesos.json",
    "estado": "publicado",
-   "filas": 3178,
+   "filas": 3179,
    "frescura": "Se actualiza sola a diario",
    "fuente": "BCCh",
    "id": "macro_curva_bonos_pesos",
@@ -1182,20 +1182,20 @@
    "sector": "macro",
    "sql_view": "macro_curva_bonos_pesos",
    "titulo": "macro.curva_bonos_pesos",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
-   "bytes": 94235,
-   "corte": "2014-01-02 a 2026-10-28",
+   "bytes": 94237,
+   "corte": "2014-01-02 a 2026-10-29",
    "deriva_de": null,
    "descripcion": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/macro_curva_bonos_uf.json",
    "estado": "publicado",
-   "filas": 3180,
+   "filas": 3181,
    "frescura": "Se actualiza sola a diario",
    "fuente": "BCCh",
    "id": "macro_curva_bonos_uf",
@@ -1210,7 +1210,7 @@
    "sector": "macro",
    "sql_view": "macro_curva_bonos_uf",
    "titulo": "macro.curva_bonos_uf",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1238,7 +1238,7 @@
    "sector": "macro",
    "sql_view": "macro_deuda_publica_pct_pib",
    "titulo": "macro.deuda_publica_pct_pib",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1266,7 +1266,7 @@
    "sector": "macro",
    "sql_view": "macro_dolar_observado",
    "titulo": "macro.dolar_observado",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1294,7 +1294,7 @@
    "sector": "macro",
    "sql_view": "macro_euro_observado",
    "titulo": "macro.euro_observado",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1322,7 +1322,7 @@
    "sector": "macro",
    "sql_view": "macro_expectativas_inflacion",
    "titulo": "macro.expectativas_inflacion",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1350,7 +1350,7 @@
    "sector": "macro",
    "sql_view": "macro_expectativas_operadores",
    "titulo": "macro.expectativas_operadores",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1378,7 +1378,7 @@
    "sector": "macro",
    "sql_view": "macro_expectativas_tpm",
    "titulo": "macro.expectativas_tpm",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1406,20 +1406,20 @@
    "sector": "macro",
    "sql_view": "macro_imacec",
    "titulo": "macro.imacec",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
    "adaptacion": true,
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
-   "bytes": 36855,
-   "corte": "2014-01-02 a 2026-10-28",
+   "bytes": 36856,
+   "corte": "2014-01-02 a 2026-10-29",
    "deriva_de": null,
    "descripcion": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/macro_inflacion_implicita.json",
    "estado": "publicado",
-   "filas": 3084,
+   "filas": 3085,
    "frescura": "Se actualiza sola a diario",
    "fuente": "BCCh",
    "id": "macro_inflacion_implicita",
@@ -1434,7 +1434,7 @@
    "sector": "macro",
    "sql_view": "macro_inflacion_implicita",
    "titulo": "macro.inflacion_implicita",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1462,7 +1462,7 @@
    "sector": "macro",
    "sql_view": "macro_inflacion_ipc",
    "titulo": "macro.inflacion_ipc",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1490,7 +1490,7 @@
    "sector": "macro",
    "sql_view": "macro_mercado_laboral",
    "titulo": "macro.mercado_laboral",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1518,7 +1518,7 @@
    "sector": "macro",
    "sql_view": "macro_metales_preciosos",
    "titulo": "macro.metales_preciosos",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1546,7 +1546,7 @@
    "sector": "macro",
    "sql_view": "macro_pib_trimestral",
    "titulo": "macro.pib_trimestral",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1574,15 +1574,15 @@
    "sector": "macro",
    "sql_view": "macro_reservas_internacionales",
    "titulo": "macro.reservas_internacionales",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
-   "bytes": 10887,
-   "corte": "2014-01-01 a 2026-10-30",
+   "bytes": 10897,
+   "corte": "2014-01-01 a 2026-11-01",
    "deriva_de": null,
    "descripcion": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/macro_series_catalogo.json",
@@ -1602,20 +1602,20 @@
    "sector": "macro",
    "sql_view": "macro_series_catalogo",
    "titulo": "macro.series_catalogo",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
-   "bytes": 79331,
-   "corte": "2014-01-02 a 2026-10-29",
+   "bytes": 79342,
+   "corte": "2014-01-02 a 2026-10-30",
    "deriva_de": null,
    "descripcion": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/macro_swaps_camara.json",
    "estado": "publicado",
-   "filas": 3209,
+   "filas": 3210,
    "frescura": "Se actualiza sola a diario",
    "fuente": "BCCh",
    "id": "macro_swaps_camara",
@@ -1630,7 +1630,7 @@
    "sector": "macro",
    "sql_view": "macro_swaps_camara",
    "titulo": "macro.swaps_camara",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1658,7 +1658,7 @@
    "sector": "macro",
    "sql_view": "macro_tasa_referencia_fed",
    "titulo": "macro.tasa_referencia_fed",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1686,7 +1686,7 @@
    "sector": "macro",
    "sql_view": "macro_tasas_corto_plazo",
    "titulo": "macro.tasas_corto_plazo",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1714,7 +1714,7 @@
    "sector": "macro",
    "sql_view": "macro_tipo_cambio_multilateral",
    "titulo": "macro.tipo_cambio_multilateral",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -1742,20 +1742,20 @@
    "sector": "macro",
    "sql_view": "macro_tipo_cambio_real",
    "titulo": "macro.tipo_cambio_real",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
-   "bytes": 35429,
-   "corte": "2014-01-01 a 2026-10-30",
+   "bytes": 35444,
+   "corte": "2014-01-01 a 2026-11-01",
    "deriva_de": null,
    "descripcion": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/macro_uf.json",
    "estado": "publicado",
-   "filas": 4686,
+   "filas": 4688,
    "frescura": "Se actualiza sola a diario",
    "fuente": "BCCh",
    "id": "macro_uf",
@@ -1770,20 +1770,20 @@
    "sector": "macro",
    "sql_view": "macro_uf",
    "titulo": "macro.uf",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
-   "bytes": 3359,
-   "corte": "2014-01-01 a 2026-10-01",
+   "bytes": 3362,
+   "corte": "2014-01-01 a 2026-11-01",
    "deriva_de": null,
    "descripcion": "Valor mensual de la Unidad Tributaria Mensual (UTM) en pesos chilenos, según el Banco Central.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/macro_utm.json",
    "estado": "publicado",
-   "filas": 154,
+   "filas": 155,
    "frescura": "Se actualiza sola a diario",
    "fuente": "BCCh",
    "id": "macro_utm",
@@ -1798,7 +1798,7 @@
    "sector": "macro",
    "sql_view": "macro_utm",
    "titulo": "macro.utm",
-   "ultima_actualizacion": "2026-10-30",
+   "ultima_actualizacion": "2026-11-01",
    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
@@ -2692,12 +2692,12 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 487671328,
+  "bytes": 487962978,
   "con_datos": 86,
   "con_filas": 85,
   "consultas": 159,
   "derivados": 7,
-  "filas": 19777581,
+  "filas": 19814973,
   "objetos": 90,
   "vacios": 4
  },

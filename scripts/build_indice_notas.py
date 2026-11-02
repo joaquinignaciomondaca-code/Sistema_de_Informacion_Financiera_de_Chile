@@ -21,7 +21,7 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
-NOTAS = RAIZ / "docs" / "notas"
+NOTAS = RAIZ / "archive" / "notas"
 INDICE = NOTAS / "README.md"
 
 FECHA = re.compile(r"(\d{4})-(\d{2})-(\d{2})")

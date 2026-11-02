@@ -5048,6 +5048,10 @@ kbd {
 .dl-btn-primary:hover { color: var(--accent-contrast, #132D46); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
 
 .dl-btn-ghost { background: transparent; color: var(--text-secondary); }
+/* Descargas pre-construidas (CSV/JSON publicados como archivos estáticos):
+   no dependen del motor del navegador, así que se distinguen visualmente. */
+.dl-btn-directo { border-style: dashed; color: var(--text-secondary); }
+.dl-btn-directo:hover { border-style: solid; color: var(--text-bright); }
 .dl-btn-off { opacity: 0.5; }
 .dl-btn-busy { opacity: 0.75; cursor: progress; }
 .dl-btn:disabled { cursor: default; }

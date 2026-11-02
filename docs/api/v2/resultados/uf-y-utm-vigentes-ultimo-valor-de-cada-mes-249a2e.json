@@ -3,8 +3,8 @@
  "id": "uf-y-utm-vigentes-ultimo-valor-de-cada-mes-249a2e",
  "titulo": "UF y UTM vigentes: último valor de cada mes",
  "origen": "explorador",
- "data_release": "2026-10-30.db40671ee177",
- "generado": "2026-10-31",
+ "data_release": "2026-11-01.4d68fa3eb6f8",
+ "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
   "periodo",
@@ -14,11 +14,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2024-11",
-   38247.92,
-   66628.0
-  ],
   [
    "2024-12",
    38416.69,
@@ -131,8 +126,13 @@
   ],
   [
    "2026-10",
-   41242.32,
+   41247.63,
    72151.0
+  ],
+  [
+   "2026-11",
+   41252.94,
+   72440.0
   ]
  ],
  "sql": "SELECT u.periodo, arg_max(u.uf_valor_clp, u.fecha) AS uf_cierre_clp, max(t.utm_valor_clp) AS utm_valor_clp FROM macro_uf u LEFT JOIN macro_utm t USING (periodo) GROUP BY u.periodo ORDER BY u.periodo DESC LIMIT 24;",
