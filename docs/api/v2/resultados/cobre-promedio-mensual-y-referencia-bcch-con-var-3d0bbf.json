@@ -3,7 +3,7 @@
  "id": "cobre-promedio-mensual-y-referencia-bcch-con-var-3d0bbf",
  "titulo": "Cobre: promedio mensual y referencia BCCh con variación anual",
  "origen": "explorador",
- "data_release": "2026-11-01.f78c10c895e1",
+ "data_release": "2026-11-02.6a08302803cc",
  "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
@@ -15,12 +15,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2024-11",
-   4.1323,
-   4.11626039861745,
-   11.02
-  ],
   [
    "2024-12",
    4.0513,
@@ -156,6 +150,12 @@
   [
    "2026-10",
    6.5776,
+   null,
+   null
+  ],
+  [
+   "2026-11",
+   6.6131,
    null,
    null
   ]
