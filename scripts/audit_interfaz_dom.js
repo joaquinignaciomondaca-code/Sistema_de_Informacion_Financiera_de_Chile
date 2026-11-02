@@ -117,7 +117,15 @@ for (const tag of scripts) {
   if (!fs.existsSync(file)) throw new Error("script local ausente: " + src);
   window.eval(fs.readFileSync(file, "utf8"));
 }
-window.eval(scripts.filter((tag) => !tag.getAttribute("src")).map((tag) => tag.textContent).join("\n"));
+// Los <script type="application/ld+json"> (JSON-LD del <head>) y otros tipos
+// no-JavaScript no se evalúan como código: evaluarlos levanta un SyntaxError
+// y el test no podría ni siquiera arrancar.
+const inlineJs = scripts.filter((tag) => {
+  if (tag.getAttribute("src")) return false;
+  const tipo = tag.getAttribute("type");
+  return !tipo || tipo.includes("javascript");
+});
+window.eval(inlineJs.map((tag) => tag.textContent).join("\n"));
 document.dispatchEvent(new window.Event("DOMContentLoaded", { bubbles: true }));
 
 const results = [];
@@ -620,7 +628,9 @@ setTimeout(async () => {
   const descargasMotor = document.getElementById("btn-engine-downloads");
   check("el fallo de DuckDB ofrece una alternativa y aclara los formatos",
     Boolean(descargasMotor && /Abrir Descargas/.test(descargasMotor.textContent) &&
-      /Parquet original/.test(alert.textContent) && /CSV y Excel requieren el motor/.test(alert.textContent)));
+      /Parquet original/.test(alert.textContent) &&
+      /CSV\/JSON combinados ya se generan en el servidor/.test(alert.textContent) &&
+      /el Excel se genera en el navegador/.test(alert.textContent)));
   if (descargasMotor) descargasMotor.click();
   check("la alternativa abre Descargas, enfoca su pestaña y conserva el Parquet directo",
     document.getElementById("downloads-container").style.display === "flex" &&
