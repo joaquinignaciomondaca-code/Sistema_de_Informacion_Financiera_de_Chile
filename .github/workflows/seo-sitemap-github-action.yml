@@ -45,7 +45,7 @@ jobs:
       # web_audit). El sitemap que produce la acción es validado antes de
       # escribir: bien formado, namespace oficial, locs del sitio publicado
       # y sin duplicados o carpetas excluidas.
-      - name: Compuerta: el sitemap generado es XML válido y coherente
+      - name: 'Compuerta: el sitemap generado es XML válido y coherente'
         run: python -m unittest -v scripts.test_sitemap_workflow
 
       - name: Commit y push si hay cambios
