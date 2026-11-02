@@ -255,8 +255,11 @@ def main() -> int:
         elif id_api == "fi_cartera_nacional" and parser.descargas != 26:
             raise SystemExit("La ficha FI debe listar sus 26 particiones")
         elif id_api == "bancos_balance":
-            if parser.descargas != 56 or not all("balance_b1_b2" in href for href in parser.href_descargas):
-                raise SystemExit("El balance debe ofrecer sus 56 archivos B1+B2, sin mezclar los archivos R1")
+            # El conteo se deriva del manifiesto de particiones, no se fija: la
+            # serie crece cada mes y un número duro se queda atrás el día que
+            # se publique un nuevo período.
+            if parser.descargas != cantidad_particiones or not all("balance_b1_b2" in href for href in parser.href_descargas):
+                raise SystemExit(f"El balance debe ofrecer sus {cantidad_particiones} archivos B1+B2, sin mezclar los archivos R1")
             if "excluye R1" not in documento or "exclusivamente B1/B2" not in documento:
                 raise SystemExit("La descripción de balance debe declarar explícitamente su alcance B1+B2 y la exclusión de R1")
             consultas = [unquote(href.split("#sql=", 1)[1]) for href in parser.enlaces if "#sql=" in href]

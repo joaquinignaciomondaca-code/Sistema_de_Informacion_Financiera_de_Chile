@@ -28,12 +28,25 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
+      - name: Python (stdlib del test, sin dependencias)
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
       - name: Generar sitemap XML con cicirello/generate-sitemap
         uses: cicirello/generate-sitemap@v1
         with:
           base-url-path: https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/
           output-path: docs/sitemap.xml
           exclude: 'docs/.well-known/ docs/notas/'
+
+      # Compuerta de la guardia test_contrato_publicadores: un workflow que
+      # commitea en la rama debe probarse a sí mismo (en schedule no corre
+      # web_audit). El sitemap que produce la acción es validado antes de
+      # escribir: bien formado, namespace oficial, locs del sitio publicado
+      # y sin duplicados o carpetas excluidas.
+      - name: Compuerta: el sitemap generado es XML válido y coherente
+        run: python -m unittest -v scripts.test_sitemap_workflow
 
       - name: Commit y push si hay cambios
         run: |
