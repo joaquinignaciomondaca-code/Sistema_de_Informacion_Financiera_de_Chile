@@ -3,8 +3,8 @@
  "id": "catalogo-de-cuentas-fecu-de-resultados-472c9e",
  "titulo": "Catálogo de cuentas FECU de resultados",
  "origen": "explorador",
- "data_release": "2026-10-30.db40671ee177",
- "generado": "2026-10-31",
+ "data_release": "2026-11-01.4d68fa3eb6f8",
+ "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
   "codigo_fecu",
@@ -19,217 +19,217 @@
    "30.00.00",
    "Utilidad (pérdida) del ejercicio",
    "Otros resultados",
-   2861
+   2893
   ],
   [
    "30.10.00",
    "Total resultado por intermediación",
    "Resultado por intermediación",
-   2861
+   2893
   ],
   [
    "30.10.01",
    "Comisiones por operaciones bursátiles",
    "Resultado por intermediación",
-   2236
+   2262
   ],
   [
    "30.10.02",
    "Comisiones por operaciones extra bursátiles",
    "Resultado por intermediación",
-   1657
+   1679
   ],
   [
    "30.10.03",
    "Gastos por comisiones y servicios",
    "Resultado por intermediación",
-   2242
+   2269
   ],
   [
    "30.10.04",
    "Otras comisiones",
    "Resultado por intermediación",
-   1566
+   1590
   ],
   [
    "30.20.00",
    "Total ingresos por servicios",
    "Ingresos por servicios",
-   2857
+   2889
   ],
   [
    "30.20.01",
    "Ingresos por administración de cartera",
    "Ingresos por servicios",
-   1565
+   1589
   ],
   [
    "30.20.02",
    "Ingresos por custodia de valores",
    "Ingresos por servicios",
-   1253
+   1273
   ],
   [
    "30.20.03",
    "Ingresos por asesorías financieras",
    "Ingresos por servicios",
-   1797
+   1823
   ],
   [
    "30.20.04",
    "Otros ingresos por servicios",
    "Ingresos por servicios",
-   1904
+   1934
   ],
   [
    "30.30.00",
    "Total resultado por instrumentos financieros",
    "Resultado por instrumentos financieros",
-   2861
+   2893
   ],
   [
    "30.30.01",
    "A valor razonable",
    "Resultado por instrumentos financieros",
-   2571
+   2600
   ],
   [
    "30.30.02",
    "A valor razonable - Instrumentos financieros derivados",
    "Resultado por instrumentos financieros",
-   1921
+   1947
   ],
   [
    "30.30.03",
    "A costo amortizado",
    "Resultado por instrumentos financieros",
-   1539
+   1563
   ],
   [
    "30.30.04",
    "A costo amortizado - Operaciones de financiamiento",
    "Resultado por instrumentos financieros",
-   1749
+   1772
   ],
   [
    "30.40.00",
    "Total resultado por operaciones de financiamiento",
    "Resultado por operaciones de financiamiento",
-   2857
+   2889
   ],
   [
    "30.40.01",
    "Gastos por financiamiento",
    "Resultado por operaciones de financiamiento",
-   1927
+   1950
   ],
   [
    "30.40.02",
    "Otros gastos financieros",
    "Resultado por operaciones de financiamiento",
-   2043
+   2068
   ],
   [
    "30.50.00",
    "Total gastos de administración y comercialización",
    "Gastos de administración y comercialización",
-   2861
+   2893
   ],
   [
    "30.50.01",
    "Remuneraciones y gastos de personal",
    "Gastos de administración y comercialización",
-   2828
+   2860
   ],
   [
    "30.50.02",
    "Gastos de comercialización",
    "Gastos de administración y comercialización",
-   2304
+   2331
   ],
   [
    "30.50.03",
    "Otros gastos de administración",
    "Gastos de administración y comercialización",
-   2800
+   2832
   ],
   [
    "30.60.00",
    "Total otros resultados",
    "Otros resultados",
-   2861
+   2893
   ],
   [
    "30.60.01",
    "Reajuste y diferencia de cambio",
    "Otros resultados",
-   2687
+   2718
   ],
   [
    "30.60.02",
    "Resultado de inversiones en sociedades",
    "Otros resultados",
-   1804
+   1828
   ],
   [
    "30.60.03",
    "Otros ingresos (gastos)",
    "Otros resultados",
-   2444
+   2475
   ],
   [
    "30.70.00",
    "Resultado antes de impuesto a la renta",
    "Otros resultados",
-   2861
+   2893
   ],
   [
    "30.80.00",
    "Impuesto a la renta",
    "Otros resultados",
-   2669
+   2700
   ],
   [
    "31.00.00",
    "Total ingresos (gastos) registrados con abono (cargo) a patrimonio",
    "Ingresos (gastos) registrados con abono (cargo) a patrimonio",
-   2849
+   2881
   ],
   [
    "31.10.00",
    "Revalorización de propiedades, planta y equipo",
    "Ingresos (gastos) registrados con abono (cargo) a patrimonio",
-   864
+   880
   ],
   [
    "31.20.00",
    "Activos financieros a valor razonable por patrimonio",
    "Ingresos (gastos) registrados con abono (cargo) a patrimonio",
-   1384
+   1408
   ],
   [
    "31.30.00",
    "Participación de otros resultados integrales de inversiones en sociedades",
    "Ingresos (gastos) registrados con abono (cargo) a patrimonio",
-   1146
+   1166
   ],
   [
    "31.40.00",
    "Otros ingresos (gastos) registrados con abono (cargo) a patrimonio",
    "Ingresos (gastos) registrados con abono (cargo) a patrimonio",
-   999
+   1018
   ],
   [
    "31.50.00",
    "Impuesto a la renta de otros resultados integrales",
    "Ingresos (gastos) registrados con abono (cargo) a patrimonio",
-   1216
+   1238
   ],
   [
    "32.00.00",
    "Total resultados integrales reconocidos del ejercicio",
    "Ingresos (gastos) registrados con abono (cargo) a patrimonio",
-   2861
+   2893
   ]
  ],
  "sql": "SELECT codigo_fecu, any_value(cuenta) AS cuenta, any_value(seccion) AS seccion, count(*) AS filas FROM corredoras_bolsa_resultados GROUP BY codigo_fecu ORDER BY codigo_fecu;",

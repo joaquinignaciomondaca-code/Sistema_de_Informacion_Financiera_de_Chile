@@ -3,8 +3,8 @@
  "id": "uf-valor-de-cierre-de-cada-mes-y-variacion-mensu-73d97c",
  "titulo": "UF: valor de cierre de cada mes y variación mensual",
  "origen": "explorador",
- "data_release": "2026-10-30.db40671ee177",
- "generado": "2026-10-31",
+ "data_release": "2026-11-01.4d68fa3eb6f8",
+ "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
   "periodo",
@@ -14,11 +14,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2024-11",
-   38247.92,
-   0.73
-  ],
   [
    "2024-12",
    38416.69,
@@ -131,8 +126,13 @@
   ],
   [
    "2026-10",
-   41242.32,
-   0.45
+   41247.63,
+   0.46
+  ],
+  [
+   "2026-11",
+   41252.94,
+   0.01
   ]
  ],
  "sql": "SELECT periodo, uf_cierre_clp, round((uf_cierre_clp / lag(uf_cierre_clp) OVER (ORDER BY periodo) - 1) * 100, 2) AS uf_var_mensual_pct FROM (SELECT periodo, arg_max(uf_valor_clp, fecha) AS uf_cierre_clp FROM macro_uf GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;",
