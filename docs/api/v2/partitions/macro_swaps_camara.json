@@ -6,15 +6,15 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_swaps_camara.parquet",
-   "bytes": 79342,
+   "bytes": 79343,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_swaps_camara.parquet",
    "periodo": "macro_swaps_camara",
-   "sha256": "72187fcd5a48028d250459a97d1639765e02864f38ec2ff0924701fb150a4d53"
+   "sha256": "be9012b8061584c7730ffa13451ff5cf85a5fc57efb77c7bec7687af8aecefea"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 79342,
+  "bytes": 79343,
   "filas": 3210
  },
  "version": "2.3.0"

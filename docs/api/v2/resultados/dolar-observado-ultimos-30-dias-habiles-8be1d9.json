@@ -3,7 +3,7 @@
  "id": "dolar-observado-ultimos-30-dias-habiles-8be1d9",
  "titulo": "Dólar observado: últimos 30 días hábiles",
  "origen": "explorador",
- "data_release": "2026-11-01.4d68fa3eb6f8",
+ "data_release": "2026-11-02.6a08302803cc",
  "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
@@ -13,10 +13,6 @@
  "filas": 30,
  "truncado": false,
  "datos": [
-  [
-   "2026-09-17",
-   954.85
-  ],
   [
    "2026-09-21",
    958.42
@@ -132,6 +128,10 @@
   [
    "2026-10-30",
    993.22
+  ],
+  [
+   "2026-11-02",
+   992.66
   ]
  ],
  "sql": "SELECT fecha, dolar_observado_clp_por_usd FROM macro_dolar_observado ORDER BY fecha DESC LIMIT 30;",
