@@ -19,6 +19,11 @@ assert.match(panel.resumenExportacion(item), /Parquet: archivos originales/);
 assert.match(panel.sqlSerie(item), /periodo >= '2022-01' AND periodo <= '2024-12'/);
 assert.equal(panel.sqlSerie(sinPeriodo), 'SELECT * FROM entidades_prueba');
 assert.match(panel.resumenExportacion(sinPeriodo), /no admite recorte/);
+// Descargas pre-construidas: el resumen del card lo anuncia y no depende del motor.
+const conExportes = { ...item, csv: { ruta: 'outputs/macro_prueba.completo.csv', bytes: 1024 },
+  json: { ruta: 'outputs/macro_prueba.completo.json', bytes: 512 } };
+assert.match(panel.resumenExportacion(conExportes), /CSV y JSON ya generados y publicados/);
+assert.match(panel.resumenExportacion(conExportes), /Excel: se genera en el navegador/);
 panel.frecuencias = new Map([[item.id, 'mensual']]);
 assert.match(panel.resumenExportacion(item), /cierre mensual, no suma mensual/);
 const mensual = panel.sqlSerieMensual(item, ['valor']);

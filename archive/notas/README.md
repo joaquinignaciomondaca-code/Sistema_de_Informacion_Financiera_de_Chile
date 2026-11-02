@@ -3,7 +3,7 @@
 <!-- Generado por scripts/build_indice_notas.py. No editar a mano:
      --check falla si no coincide con las notas de la carpeta. -->
 
-Las 67 notas de esta carpeta. Cada una registra una decisión, una
+Las 68 notas de esta carpeta. Cada una registra una decisión, una
 medición o una corrección, con la fecha en que se hizo y el motivo. Se citan
 desde el código, la web y las respuestas a las revisiones externas, así que
 están escritas para poder verificarse: qué se afirmó, contra qué se contrastó
@@ -84,6 +84,7 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 
 ## Sin fecha en el nombre
 
+- [Informe de Auditoría de Visibilidad IA — SIF Chile](auditoria_visibilidad_ia.md) — Generado aplicando el skill comunitario ai-visibility-audit (wakqasahmed/ai-visibility-skills) — modelo de 6 pilares.
 - [Capacidad y tráfico del sitio](capacidad_trafico.md) — - El sitio y la API son archivos estáticos; DuckDB-Wasm procesa SQL en la pestaña del visitante.
 - [Borrador de consulta técnica a CMF: tipo de registro 6 en B.11/B.14](consulta_cmf_registro_tipo6_1835.md) — en pausa; no se requiere una consulta para incorporar los registros tipo 6 como datos de origen conservados y normalizados.
 - [Fuentes XML/XBRL por industria (auditoría y oportunidades)](fuentes_xml_por_industria.md) — Fecha de revisión: 2026-09-27

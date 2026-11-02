@@ -16,6 +16,12 @@ class PublicationTests(unittest.TestCase):
         self.assertGreaterEqual(n, 28)
         self.assertEqual(run_audit(), n)
         files = {p.name for p in OUTPUT.iterdir() if p.is_file()}
+        # Los CSV/JSON completos son descargas derivadas que publica
+        # scripts/build_download_exports.py (no este publicador): se
+        # aceptan en la carpeta pero no forman parte del conjunto publicado
+        # que audita esta prueba.
+        descargas = {f for f in files if f.endswith('.completo.csv') or f.endswith('.completo.json')}
+        publicados = files - descargas
         # El backfill completo se publica como dos Parquets separados y con
         # metadata/advertencia, sin reemplazar las muestras previamente cotejadas.
         expected = {'factoring_leasing_maestro.json', 'factoring_leasing_maestro.parquet',
@@ -26,7 +32,7 @@ class PublicationTests(unittest.TestCase):
                   'factoring_leasing_balance_serie_ifrs_cmf_metadata.json'}
         if (OUTPUT / 'factoring_leasing_balance_serie_ifrs_cmf.parquet').exists():
             expected |= series
-        self.assertEqual(files, expected)
+        self.assertEqual(publicados, expected)
         self.assertFalse(files.intersection({f'{name}.{ext}' for name in RETIRED for ext in ('json', 'parquet')}))
 
     def test_old_files_cannot_pass_audit(self):

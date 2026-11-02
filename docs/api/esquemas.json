@@ -11,7 +11,7 @@
  },
  "como_se_genera": "python3 scripts/build_esquemas.py",
  "contrato": "sif-api/esquemas",
- "generado": "2026-10-31",
+ "generado": "2026-11-02",
  "objetos": {
   "afp_lista_entidades": {
    "archivo": "outputs/pensiones/afp_maestro_administradoras.parquet",
@@ -502,14 +502,14 @@
      "tipo": "BIGINT"
     }
    ],
-   "corte": "2022-01 a 2026-08",
+   "corte": "2022-01 a 2026-09",
    "estado": "derivado",
-   "filas": 722931,
+   "filas": 735837,
    "filtro": "familia_archivo_fuente IN ('B1', 'B2')",
    "manifest_id": "bancos_cmf_lineas",
    "nivel": "secundario",
    "nombre_visible": "bancos.cmf_lineas_b1_b2_r1",
-   "particiones": 56,
+   "particiones": 57,
    "puente": "origen_compartido",
    "sector": "bancos"
   },
@@ -671,14 +671,14 @@
      "tipo": "BIGINT"
     }
    ],
-   "corte": "2022-01 a 2026-08",
+   "corte": "2022-01 a 2026-09",
    "estado": "derivado",
-   "filas": 1240061,
+   "filas": 1262183,
    "filtro": "familia_archivo_fuente = 'R1'",
    "manifest_id": "bancos_cmf_lineas",
    "nivel": "secundario",
    "nombre_visible": "bancos.cmf_lineas_b1_b2_r1",
-   "particiones": 56,
+   "particiones": 57,
    "puente": "origen_compartido",
    "sector": "bancos"
   },
@@ -1260,9 +1260,9 @@
      "tipo": "BOOLEAN"
     }
    ],
-   "corte": "2010-12 a 2026-06",
+   "corte": "2010-12 a 2026-09",
    "estado": "publicado",
-   "filas": 107976,
+   "filas": 109305,
    "manifest_id": "corredoras_bolsa_balance",
    "nivel": "secundario",
    "nombre_visible": "corredoras.balance",
@@ -1512,9 +1512,9 @@
      "tipo": "BOOLEAN"
     }
    ],
-   "corte": "2010-12 a 2026-06",
+   "corte": "2010-12 a 2026-09",
    "estado": "publicado",
-   "filas": 77705,
+   "filas": 78683,
    "manifest_id": "corredoras_bolsa_resultados",
    "nivel": "secundario",
    "nombre_visible": "corredoras.resultados",
@@ -1654,7 +1654,7 @@
    ],
    "corte": "2009-03 a 2026-09",
    "estado": "publicado",
-   "filas": 30046,
+   "filas": 30075,
    "manifest_id": "factoring_leasing_balance_serie_ifrs_cmf",
    "nivel": "archivo",
    "nombre_visible": "factoring_leasing.balance_serie_ifrs_cmf",
@@ -1988,7 +1988,7 @@
    ],
    "corte": "2009-03 a 2026-09",
    "estado": "publicado",
-   "filas": 22368,
+   "filas": 22389,
    "manifest_id": "factoring_leasing_resultados_serie_ifrs_cmf",
    "nivel": "archivo",
    "nombre_visible": "factoring_leasing.resultados_serie_ifrs_cmf",
@@ -4679,9 +4679,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-28",
+   "corte": "2014-01-02 a 2026-10-29",
    "estado": "publicado",
-   "filas": 3178,
+   "filas": 3179,
    "manifest_id": "macro_curva_bonos_pesos",
    "nivel": "contexto",
    "nombre_visible": "macro.curva_bonos_pesos",
@@ -4749,9 +4749,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-28",
+   "corte": "2014-01-02 a 2026-10-29",
    "estado": "publicado",
-   "filas": 3180,
+   "filas": 3181,
    "manifest_id": "macro_curva_bonos_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.curva_bonos_uf",
@@ -5085,9 +5085,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-28",
+   "corte": "2014-01-02 a 2026-10-29",
    "estado": "publicado",
-   "filas": 3084,
+   "filas": 3085,
    "manifest_id": "macro_inflacion_implicita",
    "nivel": "contexto",
    "nombre_visible": "macro.inflacion_implicita",
@@ -5400,7 +5400,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-30",
+   "corte": "2014-01-01 a 2026-11-01",
    "estado": "publicado",
    "filas": 51,
    "manifest_id": "macro_series_catalogo",
@@ -5463,9 +5463,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-29",
+   "corte": "2014-01-02 a 2026-10-30",
    "estado": "publicado",
-   "filas": 3209,
+   "filas": 3210,
    "manifest_id": "macro_swaps_camara",
    "nivel": "contexto",
    "nombre_visible": "macro.swaps_camara",
@@ -5666,9 +5666,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-30",
+   "corte": "2014-01-01 a 2026-11-01",
    "estado": "publicado",
-   "filas": 4686,
+   "filas": 4688,
    "manifest_id": "macro_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.uf",
@@ -5701,9 +5701,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-01",
+   "corte": "2014-01-01 a 2026-11-01",
    "estado": "publicado",
-   "filas": 154,
+   "filas": 155,
    "manifest_id": "macro_utm",
    "nivel": "contexto",
    "nombre_visible": "macro.utm",
@@ -11588,8 +11588,8 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 19777581,
-  "filas_unicas": 19777581,
+  "filas_por_objeto": 19814973,
+  "filas_unicas": 19814973,
   "objetos": 90,
   "sin_esquema": 4,
   "tablas_manifiesto": 89,

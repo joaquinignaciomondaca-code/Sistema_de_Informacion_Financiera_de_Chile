@@ -118,16 +118,16 @@
   },
   {
    "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2026.parquet",
-   "bytes": 22012,
+   "bytes": 27563,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2026.parquet",
    "periodo": "2026",
-   "sha256": "9d808ab366a6e2468352a6fc027e0025e9455b80085f12cd56014420ed797166"
+   "sha256": "73140b31b9db92c4b4bfe63283c2fbcddeeff22c6e0fded35da7ca261ba39fb5"
   }
  ],
  "total": {
   "archivos": 17,
-  "bytes": 649512,
-  "filas": 107976
+  "bytes": 655063,
+  "filas": 109305
  },
  "version": "2.3.0"
 }
