@@ -3,7 +3,7 @@
  "id": "dolar-observado-por-mes-promedio-minimo-maximo-y-d9a9c1",
  "titulo": "Dólar observado por mes: promedio, mínimo, máximo y cierre",
  "origen": "explorador",
- "data_release": "2026-11-01.4d68fa3eb6f8",
+ "data_release": "2026-11-02.6a08302803cc",
  "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
@@ -16,13 +16,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2024-11",
-   971.6,
-   950.99,
-   983.76,
-   977.32
-  ],
   [
    "2024-12",
    982.3,
@@ -183,6 +176,13 @@
    967.79,
    994.29,
    993.22
+  ],
+  [
+   "2026-11",
+   992.66,
+   992.66,
+   992.66,
+   992.66
   ]
  ],
  "sql": "SELECT periodo, round(avg(dolar_observado_clp_por_usd), 2) AS promedio_clp, min(dolar_observado_clp_por_usd) AS minimo_clp, max(dolar_observado_clp_por_usd) AS maximo_clp, arg_max(dolar_observado_clp_por_usd, fecha) AS cierre_clp FROM macro_dolar_observado GROUP BY periodo ORDER BY periodo DESC LIMIT 24;",
