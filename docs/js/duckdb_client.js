@@ -223,7 +223,7 @@ window.SIF_QUICK_QUERY_VIEW_NAMES = QUICK_QUERY_VIEWS.map((view) => view.name);
 
 // Tiempo máximo por intento de arranque. Sin límite, un worker o un .wasm que no
 // responde deja el motor "cargando" para siempre sin ningún mensaje (ver
-// docs/notas/diagnostico_motor_sql_2026-10-20.md).
+// archive/notas/diagnostico_motor_sql_2026-10-20.md).
 const DUCKDB_INIT_TIMEOUT_MS = 15000;
 // Cap por pestaña para evitar ráfagas de HEAD/Range al preparar consultas que
 // abarcan muchas particiones o vistas; los chips de una sola vista apenas cambian.

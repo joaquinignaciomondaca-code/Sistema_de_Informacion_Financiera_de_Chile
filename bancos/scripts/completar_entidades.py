@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Completa `rut` y `razon_social` en las particiones de banca ya publicadas.
 
-Hallazgo 16 de `docs/notas/ruta_api_v1_2026-10-22.md`: el extractor escribía las
+Hallazgo 16 de `archive/notas/ruta_api_v1_2026-10-22.md`: el extractor escribía las
 dos columnas a `None` en todas las filas desde 2022-01. Las columnas existían, el
 esquema las declaraba VARCHAR y la base las tipaba `NULL`, así que un
 `WHERE rut = '97004000'` devolvía **0 filas sin error** habiendo 1.945 líneas de

@@ -31,4 +31,4 @@ Pruebas locales offline (sin secretos): `python -m unittest discover -s macro/te
 
 ## Historial
 
-- 2026-09-30: retiradas `macro.tasas_rendimientos`, `macro.divisas_mercado`, `macro.precios_actividad` (resúmenes mensuales que mezclaban temas) y `macro.series` (formato largo con claves opacas), junto con `pipeline_stream_macro_bcch.py`, `daily_macro.py` y `publish_macro.py`. Las sustituyen las 23 tablas temáticas. Propuesta y motivación en `docs/notas/rediseno_seccion_macro_2026-09-30.md`.
+- 2026-09-30: retiradas `macro.tasas_rendimientos`, `macro.divisas_mercado`, `macro.precios_actividad` (resúmenes mensuales que mezclaban temas) y `macro.series` (formato largo con claves opacas), junto con `pipeline_stream_macro_bcch.py`, `daily_macro.py` y `publish_macro.py`. Las sustituyen las 23 tablas temáticas. Propuesta y motivación en `archive/notas/rediseno_seccion_macro_2026-09-30.md`.

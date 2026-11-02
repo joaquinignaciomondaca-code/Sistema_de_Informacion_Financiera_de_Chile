@@ -1,6 +1,6 @@
 """Pruebas de `ffmm/scripts/eeff_xml.py`: lectura del XML IFRS de fondos mutuos y de la ficha que lo enlaza.
 
-Cada caso reproduce una rareza **medida** en 278 fondo-años reales de la CMF (docs/notas/
+Cada caso reproduce una rareza **medida** en 278 fondo-años reales de la CMF (archive/notas/
 ffmm_estados_financieros_xml_2026-10-01.md): declaraciones de codificación falsas, ausentes o inventadas,
 códigos con espacio final, páginas de desafío en lugar de la ficha. Los importes son los reales del fondo 8011-K.
 """
