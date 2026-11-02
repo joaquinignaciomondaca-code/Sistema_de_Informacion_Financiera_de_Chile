@@ -6,15 +6,15 @@
  "particiones": [
   {
    "archivo": "outputs/agf/agf_maestro.parquet",
-   "bytes": 17065,
+   "bytes": 15213,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_maestro.parquet",
    "periodo": "agf_maestro",
-   "sha256": "5628ac8d8bfddcf04f3be01f37ea3e3548081b900aa8e6bbb02ac547195a3fa2"
+   "sha256": "3c9758daa6bfac5f932ab096419bd9e88dc86b911fc793b6790d36e5826d745a"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 17065,
+  "bytes": 15213,
   "filas": 72
  },
  "version": "2.3.0"

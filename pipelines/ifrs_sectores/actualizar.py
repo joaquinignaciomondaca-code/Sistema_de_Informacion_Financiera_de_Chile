@@ -633,7 +633,8 @@ def guardar_lista(rel: str, filas: list[dict]) -> None:
                 df[campo.name] = pd.to_numeric(df[campo.name], errors="coerce").astype("Int64")
             elif pa.types.is_boolean(campo.type):
                 df[campo.name] = df[campo.name].fillna(False).astype(bool)
-        pq.write_table(pa.Table.from_pandas(df, schema=esquema.remove_metadata(), preserve_index=False), pqt)
+        pq.write_table(pa.Table.from_pandas(df, schema=esquema.remove_metadata(), preserve_index=False), pqt,
+                   compression="zstd", compression_level=9)
 
 
 def agregar_altas(fuera: dict[str, list[dict]], periodo: str) -> int:

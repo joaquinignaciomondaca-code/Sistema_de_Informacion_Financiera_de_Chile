@@ -5657,7 +5657,7 @@
    "archivos": [
     {
      "ruta": "outputs/agf/agf_maestro.parquet",
-     "bytes": 17065
+     "bytes": 15213
     }
    ],
    "where": "",
@@ -5676,7 +5676,7 @@
     "archivos": [
      {
       "ruta": "outputs/agf/agf_maestro.parquet",
-      "bytes": 17065
+      "bytes": 15213
      }
     ],
     "where": "",
@@ -7012,7 +7012,7 @@
    }
   }
  },
- "generado": "2026-11-02T19:32:27+00:00",
+ "generado": "2026-11-02T21:01:09+00:00",
  "parametros": {
   "csv_max_mb": 35,
   "json_max_mb": 5,
