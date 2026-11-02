@@ -24,7 +24,7 @@ Extrae, valida y publica archivos financieros y series que las entidades reporta
 | Sectores del catálogo | **15**; fuentes directas: CMF, Banco Central y SPensiones. El padrón CCAF conserva procedencia histórica de SUSESO |
 | Objetos publicados | **90** (86 con archivo, 85 con filas) · más de 19 millones de filas · **≈488 MB** en 728 archivos referenciados por el catálogo |
 | Consultas sugeridas listas para usar | **159** |
-| Actualización | **18 workflows** en GitHub Actions (17 con horario; 1 sin `schedule`) |
+| Actualización | **20 workflows** en GitHub Actions (18 con horario; 2 sin `schedule`) |
 | Verificación | Auditorías de datos, interfaz, privacidad, automatización y pruebas unitarias en CI |
 
 Las auditorías de CI comprueban reglas concretas; no constituyen una certificación
@@ -144,21 +144,21 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 | Seguros de Vida y Generales | 24 | 10.553.271 | 2016-11 → 2026-09 | CMF · Circular 1835 |
 | Fondos Mutuos | 7 | 3.616.378 | Carteras 2001-01 → 2026-09; EEFF 2010-12 → 2025-12 | CMF · Circulares 1333 y 1997 |
 | Fondos de Inversión | 9 | 3.187.474 | Carteras 2020-03 → 2026-06; pactos 2012-03 → 2026-06; EEFF 2022-03 → 2026-06 (16 cierres, backfill parcial) | CMF · LUF / Circular 1998 · XML FIEF |
-| Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
+| Corredoras de Bolsa | 4 | 188.228 | 2010-12 → 2026-09 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | 24 | 41.528 | diaria / mensual / trimestral | BCCh |
-| Factoring y Leasing | 3 | 52.446 | 2009-03 → 2026-09 | CMF · IFRS |
+| Macroeconomía y Tasas | 24 | 41.535 | diaria / mensual / trimestral | BCCh |
+| Factoring y Leasing | 3 | 52.496 | 2009-03 → 2026-09 | CMF · IFRS |
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
 | Patrimonios Separados | 2 | 7.981 | 2014-12 → 2025-12 | CMF · PDF de estados financieros |
-| Banca | 3 | 1.963.033 † | 2022-01 → 2026-08 | CMF · B1/B2/R1 |
+| Banca | 3 | 1.998.061 † | 2022-01 → 2026-09 | CMF · B1/B2/R1 |
 | FinTech | 1 | 265 | registro vigente | CMF · Ley 21.521 (RPSF) |
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **89** | **19.777.581** | **2001 → 2026** | |
+| **Total** | **89** | **19.814.973** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son dos vistas y dos conjuntos de archivos **filtrados por separado**: B1/B2 (722.931 filas) y R1 (1.240.061), sin solape; sus filas suman las 1.962.992 de la tabla de origen `bancos_cmf_lineas`. El total sectorial de 1.963.033 incluye además las 41 filas de `bancos_lista_entidades`. Por eso el manifiesto ETL cuenta una tabla fuente y la API/Descargas exponen dos objetos lógicos filtrados más el padrón, sin duplicar filas ni compartir el Parquet combinado. El catálogo API suma 90 objetos y 19.777.581 filas. Esta tabla enumera 89 elementos de Descargas porque excluye `fi_bienes_raices`, retenido con su archivo de esquema de 0 filas pero oculto de la navegación. De esos 89 elementos, 74 están en niveles principales (19.677.316 filas; 99,5 %) y 15 en archivo/registro (100.265; 0,5 %); una variante de corredoras se cuenta como elemento y se muestra junto a su lista base. Las filas son una suma por objeto y no un conteo de registros globalmente únicos: algunas vistas pueden solaparse. El detalle de unidades y la reconciliación por IDs, filas, bytes, particiones y rutas está en [`metricas_publicadas.json`](docs/metricas_publicadas.json).
+† En banca, *balance* y *resultados* son dos vistas y dos conjuntos de archivos **filtrados por separado**: B1/B2 (735.837 filas) y R1 (1.262.183), sin solape; sus filas suman las 1.998.020 de la tabla de origen `bancos_cmf_lineas`. El total sectorial de 1.998.061 incluye además las 41 filas de `bancos_lista_entidades`. Por eso el manifiesto ETL cuenta una tabla fuente y la API/Descargas exponen dos objetos lógicos filtrados más el padrón, sin duplicar filas ni compartir el Parquet combinado. El catálogo API suma 90 objetos y 19.814.973 filas. Esta tabla enumera 89 elementos de Descargas porque excluye `fi_bienes_raices`, retenido con su archivo de esquema de 0 filas pero oculto de la navegación. De esos 89 elementos, 74 están en niveles principales (19.714.658 filas; 99,5 %) y 15 en archivo/registro (100.315; 0,5 %); una variante de corredoras se cuenta como elemento y se muestra junto a su lista base. Las filas son una suma por objeto y no un conteo de registros globalmente únicos: algunas vistas pueden solaparse. El detalle de unidades y la reconciliación por IDs, filas, bytes, particiones y rutas está en [`metricas_publicadas.json`](docs/metricas_publicadas.json).
 
 ### Operaciones REPO (pactos): cobertura vigente
 
@@ -204,7 +204,7 @@ Aplicación estática de siete pestañas, sin framework y sin build:
 | **Diccionario** | Campo por campo: rol (PK, FK, dimensión, métrica), definición y criterio contable. |
 | **Visor de datos** | Consulta tabular con filtro, orden y copia de celdas. |
 | **Consultas SQL** | Terminal con autocompletado, historial, favoritos y enlaces compartibles. |
-| **Descargas** | Todos los conjuntos publicados, con filas, período y peso, en Parquet, CSV y Excel; el núcleo primero y el archivo al final, plegado. |
+| **Descargas** | Todos los conjuntos publicados, con filas, período y peso. Los Parquet, y para Power BI y Data Studio un CSV y JSON ya generados en el servidor (combinados, sin bloquear el navegador); el Excel sigue generandose en el navegador. El núcleo primero y el archivo al final, plegado. |
 | **Normativa CMF** | Seguimiento de la normativa publicada por la CMF (ver §7.6). |
 
 El **explorador jerárquico** organiza 15 sectores → carpetas temáticas → 90 objetos del catálogo. Hay 89 elementos de Descargas no ocultos (74 en niveles principales y 15 en archivo/registro); `fi_bienes_raices` conserva esquema y archivo vacío, pero no se muestra en la navegación. Una variante del registro de corredoras se presenta junto a su lista base. Las consultas sugeridas aparecen en cada carpeta, ordenadas por nivel. El nivel de cada sector es una bandera en `docs/vocabulario.json` (`alcance`): cambiarla y regenerar el catálogo revierte o ajusta el recorte sin tocar datos. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos. La preparación de datos remotos por pestaña está limitada y el control preventivo de tamaño del sitio está en [`archive/notas/capacidad_trafico.md`](archive/notas/capacidad_trafico.md).
@@ -245,12 +245,12 @@ Hay ejemplos ejecutables en Python, R y JavaScript, y una guía para agentes con
 
 ## 6. Se mantiene solo
 
-Hay **18 workflows** en GitHub Actions: **17 tienen horario (`schedule`)** y `fi_cobertura_eeff.yml` es el único sin horario; varios flujos también corren en `push`, `pull_request` o `workflow_dispatch`. La existencia de un cron no implica que un paso protegido publique datos: `pensiones_carteras.yml` depende de runner privado y gates. Un **guardián de automatización** cruza el manifiesto de datos, el inventario de flujos y las vistas del sitio: cada tabla publicada tiene un responsable declarado, y si una fuente se atrasa más allá de su plazo, se abre un issue automáticamente.
+Hay **20 workflows** en GitHub Actions: **18 tienen horario (`schedule`)** y `fi_cobertura_eeff.yml` y `seo_indexnow.yml` son los dos sin horario; varios flujos también corren en `push`, `pull_request` o `workflow_dispatch`. La existencia de un cron no implica que un paso protegido publique datos: `pensiones_carteras.yml` depende de runner privado y gates. Un **guardián de automatización** cruza el manifiesto de datos, el inventario de flujos y las vistas del sitio: cada tabla publicada tiene un responsable declarado, y si una fuente se atrasa más allá de su plazo, se abre un issue automáticamente.
 
 La ausencia de un workflow no implica ausencia de procesamiento automático. El catálogo distingue tres modalidades: **Automático** (extracción, validación y publicación programadas), **Híbrido** (extracción o curación inicial local desde fuentes no estructuradas, seguida de validación y compilación reproducibles) y **Manual** (intervención todavía no respaldada por un compilador reproducible). El balance de patrimonios separados es actualmente híbrido: la CMF publica los estados como PDF, la consolidación inicial se hace fuera de Actions y `05_publicar_balance_patrimonios.py` ejecuta las validaciones y genera el Parquet.
 
 <details>
-<summary>Calendario de los 18 flujos (17 con horario)</summary>
+<summary>Calendario de los 20 flujos (18 con horario)</summary>
 
 | Flujo | Frecuencia (UTC) | Publica |
 |---|---|---|
@@ -272,6 +272,8 @@ La ausencia de un workflow no implica ausencia de procesamiento automático. El 
 | `pensiones_carteras.yml` | día 10, 10:25 | Revisión de estado; ingesta BDP solo con runner privado habilitado y gates aprobados |
 | `fi_cobertura_eeff.yml` | sin horario (push) | nada: revisión de cobertura de FI (solo lectura) |
 | `pages.yml` | cada 6 h (03:15, 09:15, 15:15, 21:15) y push a `main` | Despliegue de `docs/` en GitHub Pages |
+| `seo-sitemap-github-action.yml` | diario 04:00 | nada: regenera `docs/sitemap.xml` desde el sitio publicado |
+| `seo_indexnow.yml` | push en `main` con datos nuevos | nada: avisa IndexNow (Bing, Yandex, Naver) para indexar el sitemap |
 
 Cada publicador deja su rastro en la cabecera del archivo de datos y en `data_manifest.json`; los horarios
 son los `cron` reales de `.github/workflows/*.yml`.

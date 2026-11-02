@@ -5,7 +5,11 @@
  * Un solo lugar para armar los archivos que el visitante se lleva: CSV con
  * separador ";" y BOM (para que Excel en Chile lo abra sin pasos extra), Excel
  * nativo (.xlsx) y empaquetado .ZIP cuando el volumen no cabe cómodo en una
- * planilla. Lo usan la pestaña Descargas y el visor de datos.
+ * planilla. Para las series largas también se publican CSV/JSON ya generados
+ * en el servidor (scripts/build_download_exports.py): el navegador prefiere
+ * esos archivos estáticos, y el CSV por bloques que se genera aquí es el
+ * camino de respaldo —armado con yields, sin trabar la página. Lo usan la
+ * pestaña Descargas y el visor de datos.
  */
 window.MFCDownload = (function () {
   const LIMITE_ZIP_CSV = 250000;
@@ -72,6 +76,34 @@ window.MFCDownload = (function () {
     return `"${String(valor === null || valor === undefined ? "" : valor).replace(/"/g, '""')}"`;
   }
 
+  /* Un giro del event loop sin esperar: deja que la página responda mientras
+     se arma el archivo. */
+  function esperarGiro() {
+    return new Promise((resolver) => setTimeout(resolver, 0));
+  }
+
+  /* CSV en bloques. Construir el string completo de una vez colapsa la página
+     para series largas (un millón de filas → decenas de segundos sin respuesta):
+     se arma bloque a bloque, yieldando entre ellos, y se pueden informar
+     progreso y particionar sin trabar la interfaz. La estructura final del
+     archivo es idéntica a textoCsv. */
+  async function textoCsvChunks(rows, cols, opciones) {
+    const op = opciones || {};
+    const tamano = Math.max(1, op.bloque || 20000);
+    const cabecera = cols.map(celdaCsv).join(";");
+    const partes = [`\ufeff${cabecera}`];
+    const total = rows.length;
+    for (let i = 0; i < total; i += 1) {
+      partes.push(cols.map((col) => celdaCsv(rows[i][col])).join(";"));
+      if ((i + 1) % tamano === 0) {
+        if (op.onProgress) op.onProgress({ filas: i + 1, total });
+        await esperarGiro();
+      }
+    }
+    if (op.onProgress) op.onProgress({ filas: total, total });
+    return partes.join("\n");
+  }
+
   function textoCsv(rows, cols) {
     const cabecera = cols.map(celdaCsv).join(";");
     const lineas = rows.map((fila) => cols.map((col) => celdaCsv(fila[col])).join(";"));
@@ -119,7 +151,7 @@ window.MFCDownload = (function () {
     setTimeout(() => URL.revokeObjectURL(url), 4000);
   }
 
-  async function empaquetar(filas, cols, { formato, nombre, limite, tamano, tabla }) {
+  async function empaquetar(filas, cols, { formato, nombre, limite, tamano, tabla, onProgress }) {
     await cargarLibreria("zip");
     if (formato !== "csv") await cargarLibreria("excel");
     const zip = new window.JSZip();
@@ -128,7 +160,8 @@ window.MFCDownload = (function () {
       const bloque = filas.slice(parte * tamano, (parte + 1) * tamano);
       const sufijo = `parte_${parte + 1}_de_${total}`;
       if (formato === "csv") {
-        zip.file(`${nombre}_${sufijo}.csv`, textoCsv(bloque, cols));
+        const texto = await textoCsvChunks(bloque, cols, { bloque: 20000, onProgress });
+        zip.file(`${nombre}_${sufijo}.csv`, texto);
       } else {
         const hoja = window.XLSX.utils.json_to_sheet(bloque, { header: cols });
         const libro = window.XLSX.utils.book_new();
@@ -160,23 +193,26 @@ window.MFCDownload = (function () {
     const tabla = op.diccionario || null;
     if (formato === "xlsx" && !window.XLSX) await cargarLibreria("excel");
     if (formato === "csv" && filas.length > LIMITE_ZIP_CSV && op.particionar !== false) {
-      return empaquetar(filas, columnas, { formato, nombre, tamano: 150000, tabla });
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 150000, tabla, onProgress: op.onProgress });
     }
     if (formato === "xlsx" && filas.length > LIMITE_EXCEL) {
-      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000, tabla });
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000, tabla, onProgress: op.onProgress });
     }
     if (formato === "xlsx" && filas.length > LIMITE_ZIP_XLSX && op.particionar !== false) {
-      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000, tabla });
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000, tabla, onProgress: op.onProgress });
     }
 
     if (formato === "csv") {
-      descargar(blobCsv(filas, columnas), `${nombre}_${marcaTiempo()}.csv`);
+      // CSV: armado por bloques con yields (ver textoCsvChunks). Excel: SheetJS
+      // transforma en bloque y no construye un string mano a mano.
+      const texto = await textoCsvChunks(filas, columnas, { bloque: 20000, onProgress: op.onProgress });
+      descargar(new Blob([texto], { type: "text/csv;charset=utf-8;" }), `${nombre}_${marcaTiempo()}.csv`);
     } else {
       descargar(libroXlsx(filas, columnas, nombre, tabla), `${nombre}_${marcaTiempo()}.xlsx`);
     }
     return { filas: filas.length, archivos: 1, comprimido: false };
   }
 
-  return { numero, bytes, textoCsv, blobCsv, hojaDiccionario, libroXlsx, descargar,
+  return { numero, bytes, textoCsv, textoCsvChunks, blobCsv, hojaDiccionario, libroXlsx, descargar,
            exportarFilas, marcaTiempo, cargarLibreria };
 })();

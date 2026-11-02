@@ -696,7 +696,7 @@ const ERD_TABLES = [
     y: 110,
     w: 250,
     h: 170,
-    rows: "3.209 filas",
+    rows: "3.210 filas",
     file: "outputs/macro/macro_swaps_camara.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -717,7 +717,7 @@ const ERD_TABLES = [
     y: 256,
     w: 250,
     h: 134,
-    rows: "3.178 filas",
+    rows: "3.179 filas",
     file: "outputs/macro/macro_curva_bonos_pesos.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -736,7 +736,7 @@ const ERD_TABLES = [
     y: 310,
     w: 250,
     h: 188,
-    rows: "3.180 filas",
+    rows: "3.181 filas",
     file: "outputs/macro/macro_curva_bonos_uf.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -758,7 +758,7 @@ const ERD_TABLES = [
     y: 420,
     w: 250,
     h: 116,
-    rows: "3.084 filas",
+    rows: "3.085 filas",
     file: "outputs/macro/macro_inflacion_implicita.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -847,7 +847,7 @@ const ERD_TABLES = [
     y: 820,
     w: 250,
     h: 98,
-    rows: "4.686 filas",
+    rows: "4.688 filas",
     file: "outputs/macro/macro_uf.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -864,7 +864,7 @@ const ERD_TABLES = [
     y: 840,
     w: 250,
     h: 98,
-    rows: "154 filas",
+    rows: "155 filas",
     file: "outputs/macro/macro_utm.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },

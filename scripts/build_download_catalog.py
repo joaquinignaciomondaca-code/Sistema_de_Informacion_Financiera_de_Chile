@@ -280,6 +280,21 @@ def resumen_alcance(alcance: dict, vocab: dict, bloques: list[dict]) -> dict:
     }
 
 
+def exportes_publicados() -> dict:
+    """Índice de descargas pre-construidas (scripts/build_download_exports.py):
+    CSV/JSON combinados que se sirven como archivos estáticos. La pestaña
+    Descargas enlaza directo a ellos; sin el índice, la exportación se genera
+    en el navegador del visitante."""
+    path = os.path.join(DOCS, "outputs", "_exportes.json")
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            return json.load(fh).get("conjuntos", {})
+    except Exception:
+        return {}
+
+
 def build() -> dict:
     views = parse_views()
     vocab = load_vocabulario()
@@ -287,6 +302,7 @@ def build() -> dict:
     previo = catalogo_vigente() if pq is None else {}
     fichas = {t["id"]: t for t in vocab["tablas"]}
     sectores = vocab["sectores"]
+    exportes = exportes_publicados()
 
     por_sector: dict[str, list] = {}
     total_filas = 0
@@ -369,6 +385,15 @@ def build() -> dict:
             "filasFuente": int(manifest_total) if manifest_total is not None else None,
             "actualizado": updated,
         }
+        # Descargas pre-construidas (CSV/JSON combinados): la pestaña Descargas
+        # enlaza directo al archivo estático; el conjunto que no trae exporte
+        # sigue exportándose en el navegador con el motor DuckDB-Wasm.
+        exp = exportes.get(vid)
+        if exp:
+            if exp.get("csv"):
+                item["csv"] = exp["csv"]
+            if exp.get("json"):
+                item["json"] = exp["json"]
         if alcance:
             item["clave"] = sector_clave
             item["nivel"] = alcance["sectores"][sector_clave]

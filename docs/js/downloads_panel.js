@@ -406,6 +406,21 @@ class DownloadsPanelController {
            Archivos · ${window.MFCDownload.bytes(item.bytes)}
          </button>`;
 
+    // Descargas pre-construidas (scripts/build_download_exports.py): CSV/JSON
+    // combinados publicados junto al Parquet. El visitante baja un archivo
+    // estático —sin cargar el motor ni bloquear la página— y lo lee Power BI o
+    // Data Studio directamente. Los conjuntos sin exporte pre-generada (muchísimas
+    // filas o con filtro SQL) se generan en el navegador con el motor.
+    const csvDirecto = item.csv
+      ? `<a class="dl-btn dl-btn-directo" href="${item.csv.ruta}" download="${item.id}.completo.csv" title="CSV ya generado (${window.MFCDownload.bytes(item.csv.bytes)}): lo lee Power BI y Data Studio directamente, sin bloqueo">CSV · ${window.MFCDownload.bytes(item.csv.bytes)}</a>`
+      : `<button type="button" class="dl-btn dl-btn-motor" data-action="csv" data-id="${item.id}" title="Genera el CSV completo con el motor DuckDB del navegador">CSV</button>`;
+    const jsonDirecto = item.json
+      ? `<a class="dl-btn dl-btn-directo" href="${item.json.ruta}" download="${item.id}.completo.json" title="JSON ya generado (${window.MFCDownload.bytes(item.json.bytes)}): lo lee el conector JSON de Power BI">JSON · ${window.MFCDownload.bytes(item.json.bytes)}</a>`
+      : "";
+    const botonZip = item.archivosN > 1 && (item.bytes || 0) <= 40 * 1024 * 1024
+      ? `<button type="button" class="dl-btn dl-btn-motor" data-action="zip" data-id="${item.id}" title="Empaqueta todos los Parquet de la serie en un único .zip">ZIP · ${window.MFCDownload.bytes(item.bytes)}</button>`
+      : "";
+
     return `
       <article class="dl-item${variante ? " dl-item-variante" : ""}" data-id="${item.id}" data-sector="${this.escapar(item.sector)}"
                data-bloque="${this.escapar(item.bloque || item.sector)}" data-fuera="${fuera ? "1" : "0"}"
@@ -428,7 +443,9 @@ class DownloadsPanelController {
           <details class="dl-format-menu"><summary class="dl-btn dl-btn-primary">Descargar ▾</summary>
           <div class="dl-format-options">
           ${botonParquet}
-          <button type="button" class="dl-btn dl-btn-motor" data-action="csv" data-id="${item.id}" title="Genera el CSV completo con el motor DuckDB del navegador">CSV</button>
+          ${botonZip}
+          ${csvDirecto}
+          ${jsonDirecto}
           <button type="button" class="dl-btn dl-btn-motor" data-action="xlsx" data-id="${item.id}" title="Genera un Excel (.xlsx) con el motor DuckDB del navegador">Excel</button>
           </div></details>
           <button type="button" class="dl-btn dl-btn-ghost" data-action="visor" data-id="${item.id}">Ver en el Visor</button>
@@ -576,6 +593,8 @@ class DownloadsPanelController {
         this.descargarPantalla(boton.dataset.fmt, boton);
       } else if (accion === "csv" || accion === "xlsx") {
         this.exportarSerie(id, accion, boton);
+      } else if (accion === "zip") {
+        this.descargarZip(id, boton);
       } else if (accion === "diccionario") {
         const item = this.item(id);
         if (item && window.SIFTableContext) {
@@ -635,6 +654,12 @@ class DownloadsPanelController {
     const frecuencia = this.esDiaria(item)
       ? (this.frecuenciaDe(item.id) === "mensual" ? " · cierre mensual, no suma mensual" : " · frecuencia diaria") : "";
     const sinRecorte = this.recorte.activo && !item.periodo ? " Esta tabla no admite recorte por años." : "";
+    if (item.csv || item.json) {
+      const formatos = [];
+      if (item.csv) formatos.push("CSV");
+      if (item.json) formatos.push("JSON");
+      return `${formatos.join(" y ")} ya generados y publicados (${rango}${frecuencia}). Excel: se genera en el navegador. Parquet: archivos originales, sin aplicar estos controles.${sinRecorte}`;
+    }
     return `CSV/Excel: ${rango}${frecuencia}. Parquet: archivos originales, sin aplicar estos controles.${sinRecorte}`;
   }
 
@@ -894,12 +919,43 @@ class DownloadsPanelController {
         formato,
         nombre: nombreArchivo,
         particionar: true,
-        diccionario: this.tablaConDiccionario(item.id)
+        diccionario: this.tablaConDiccionario(item.id),
+        onProgress: (e) => this.avisar(`Generando ${formato.toUpperCase()}… ${window.MFCDownload.numero(e.filas)} de ${window.MFCDownload.numero(e.total)} filas`, 2500),
       });
       this.avisar(
         `Listo: ${window.MFCDownload.numero(resumen.filas)} ${mensual ? "meses (cierre)" : "filas"} en ` +
         (resumen.comprimido ? `${resumen.archivos} partes .ZIP` : formato === "csv" ? "CSV" : "Excel") + "."
       );
+    });
+  }
+
+  /* Empaqueta todos los Parquet de la serie en un único .zip. Los conjuntos
+     multi-partición bajan archivos sueltos; un .zip único simplifica la
+     importación a Power BI o Data Studio cuando la serie tiene muchas
+     particiones. Se desactiva por encima del tope de peso (el Parquet total
+     se exceede fácilmente y el navegador colapsa). */
+  async descargarZip(id, boton) {
+    const item = this.item(id);
+    if (!item || item.archivosN <= 1) return;
+    const total = item.bytes || 0;
+    if (total > 40 * 1024 * 1024) {
+      this.avisar("El conjunto supera los 40 MB de Parquet: empaquetar en el navegador puede colapsar la página. Baja los archivos sueltos o usa el CSV pre-generado.", 6000);
+      return;
+    }
+    await this.conBoton(boton, async () => {
+      await window.MFCDownload.cargarLibreria("zip");
+      const zip = new window.JSZip();
+      const archivos = item.archivos;
+      for (let i = 0; i < archivos.length; i += 1) {
+        const a = archivos[i];
+        this.avisar(`Descargando Parquet ${i + 1}/${archivos.length}…`, 4000);
+        const res = await fetch(a.ruta, { cache: "no-store" });
+        if (!res.ok) throw new Error(`No se pudo descargar ${a.ruta} (HTTP ${res.status}).`);
+        zip.file(a.ruta.replace(/^outputs\//, ""), await res.arrayBuffer());
+      }
+      const blob = await zip.generateAsync({ type: "blob" });
+      window.MFCDownload.descargar(blob, `${item.id}_parquet_${window.MFCDownload.marcaTiempo()}.zip`);
+      this.avisar(`ZIP listo: ${archivos.length} Parquet de ${window.MFCDownload.bytes(total)}.`);
     });
   }
 

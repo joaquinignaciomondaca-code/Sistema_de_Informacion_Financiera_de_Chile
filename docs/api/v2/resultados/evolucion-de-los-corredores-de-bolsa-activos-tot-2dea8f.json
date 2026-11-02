@@ -3,15 +3,15 @@
  "id": "evolucion-de-los-corredores-de-bolsa-activos-tot-2dea8f",
  "titulo": "Evolución de los corredores de bolsa: activos totales por trimestre (MM$)",
  "origen": "explorador",
- "data_release": "2026-10-30.db40671ee177",
- "generado": "2026-10-31",
+ "data_release": "2026-11-01.4d68fa3eb6f8",
+ "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
   "periodo",
   "corredores",
   "activos_mm"
  ],
- "filas": 63,
+ "filas": 64,
  "truncado": false,
  "datos": [
   [
@@ -328,6 +328,11 @@
    "2026-06",
    24,
    7481509.3
+  ],
+  [
+   "2026-09",
+   23,
+   7418366.0
   ]
  ],
  "sql": "SELECT periodo, count(DISTINCT rut) AS corredores, round(sum(valor_miles_clp) / 1e3, 1) AS activos_mm FROM corredoras_bolsa_balance WHERE codigo_fecu = '10.00.00' AND tipo_intermediario = 'corredor de bolsa' GROUP BY periodo ORDER BY periodo;",

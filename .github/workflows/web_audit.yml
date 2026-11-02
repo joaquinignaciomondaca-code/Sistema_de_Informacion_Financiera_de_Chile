@@ -51,6 +51,8 @@ on:
       - 'examples/**'
       - 'scripts/normalizar_vocabulario.py'
       - 'scripts/build_download_catalog.py'
+      - 'scripts/build_download_exports.py'
+      - 'scripts/test_build_download_exports.py'
       - 'scripts/build_bancos_vistas.py'
       - 'scripts/build_sql_compact_parquets.py'
       - 'scripts/test_sql_compact_parquets.py'
@@ -274,6 +276,24 @@ jobs:
 
       - name: 'Banca: Parquet de descarga coinciden con filtros y manifiestos'
         run: python scripts/build_bancos_vistas.py --check
+
+      # Descargas pre-construidas: el CSV/JSON publicado debe reflejar la fuente
+      # actual. El script regenera en el servidor (duckdb); --check recalcula el
+      # estado esperado y compara con el índice sin escribir archivos.
+      - name: 'Descargas pre-construidas: CSV/JSON al día con los Parquet publicados'
+        run: |
+          set +e
+          python -m pip install --disable-pip-version-check duckdb pyarrow==21.0.0 >/dev/null 2>&1
+          python scripts/build_download_exports.py --check > exportes.log 2>&1; n=$?
+          if [ "$n" -ne 0 ]; then
+            grep -h -E "^(INDICE|FALLA)" exportes.log | head -5 | sed 's/%/%25/g' \
+              | while IFS= read -r l; do echo "::error title=Descargas::$l"; done
+          fi
+          echo "::notice title=Descargas::$(tail -n 1 exportes.log)"
+          exit $n
+
+      - name: 'Descargas: generador de CSV/JSON (test unitario)'
+        run: python -m unittest scripts.test_build_download_exports -v
 
       - name: 'SQL: pruebas y Parquet compactos sincronizados con las particiones'
         run: |
