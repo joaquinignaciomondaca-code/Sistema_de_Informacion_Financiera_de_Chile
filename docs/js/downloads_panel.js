@@ -658,7 +658,8 @@ class DownloadsPanelController {
       const formatos = [];
       if (item.csv) formatos.push("CSV");
       if (item.json) formatos.push("JSON");
-      return `${formatos.join(" y ")} ya generados y publicados (${rango}${frecuencia}). Excel: se genera en el navegador. Parquet: archivos originales, sin aplicar estos controles.${sinRecorte}`;
+      const generado = formatos.length > 1 ? "ya generados y publicados" : "ya generado y publicado";
+      return `${formatos.join(" y ")} ${generado} (${rango}${frecuencia}). Excel: se genera en el navegador. Parquet: archivos originales, sin aplicar estos controles.${sinRecorte}`;
     }
     return `CSV/Excel: ${rango}${frecuencia}. Parquet: archivos originales, sin aplicar estos controles.${sinRecorte}`;
   }
