@@ -1,0 +1,50 @@
+name: SEO · IndexNow (indexación instantánea en Bing, Yandex, Naver)
+
+# Cuando se publican datos nuevos bajo docs/outputs/ o data_manifest.json,
+# notifica a IndexNow para que los buscadores participantes indexen el sitemap
+# casi de inmediato, en lugar de esperar al próximo rastreo programado.
+#
+# IndexNow es gratuito y de código abierto. Soportado por Bing, Yandex, Naver y Seznam.
+# Google no participa (usa su propio sistema vía Search Console, ya configurado).
+#
+# Requiere un secret del repositorio llamado INDEXNOW_KEY con la clave generada
+# para este sitio. El archivo de verificación <clave>.txt debe estar en docs/.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/outputs/**'
+      - 'data_manifest.json'
+      - 'docs/sitemap.xml'
+      - '.github/workflows/seo_indexnow.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: seo-indexnow
+  cancel-in-progress: false
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout de la rama
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Preparar Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+
+      - name: Enviar sitemap a IndexNow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        run: |
+          python scripts/seo_indexnow_push.py
