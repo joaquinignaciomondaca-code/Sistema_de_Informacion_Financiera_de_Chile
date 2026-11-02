@@ -4,7 +4,7 @@
 El entorno de integración no tiene navegador, así que esta compuerta no mide
 pixeles: comprueba las decisiones de diseño que hacen usable la interfaz en una
 pantalla de 360–430 px y que se pueden afirmar leyendo el CSS, el marcado y los
-eventos. Es la lista de la ruta (`docs/notas/ruta_movil_2026-10-22.md`)
+eventos. Es la lista de la ruta (`archive/notas/ruta_movil_2026-10-22.md`)
 convertida en reglas para que no se pierdan en el siguiente rediseño.
 
 Qué comprueba:

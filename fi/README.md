@@ -62,8 +62,8 @@ pertinente. En la muestra revisada esto corrige la identificación de la ficha, 
 importes ni recupera nuevos estados de junio**. Los datos ya publicados se mantienen.
 
 Informe y evidencia por RUN, URL, fecha y SHA-256:
-[`revisión de cobertura`](../docs/notas/revision_cobertura_fi_2026-10-01.md) y
-[`JSON de evidencia`](../docs/notas/revision_cobertura_fi_2026-10-01.json).
+[`revisión de cobertura`](../archive/notas/revision_cobertura_fi_2026-10-01.md) y
+[`JSON de evidencia`](../archive/notas/revision_cobertura_fi_2026-10-01.json).
 Las cuatro listas originales comprimidas y sus hashes quedan como fixtures de regresión.
 
 ```bash
@@ -266,7 +266,7 @@ en el XML y rechaza las faltantes. En las carteras también se conservan ceros r
 fuente, incluso si otras columnas identifican un instrumento real. En `fi_pactos` solo se eliminan
 plantillas cuando coinciden varias señales a la vez (contraparte/RUT ficticios, rótulos de columna
 en lugar de datos y todos los importes y la tasa en cero); nunca se filtra una operación solo por
-sus montos cero. Véase la [auditoría de calidad FI](../docs/notas/auditoria_calidad_fi_2026-10-07.md).
+sus montos cero. Véase la [auditoría de calidad FI](../archive/notas/auditoria_calidad_fi_2026-10-07.md).
 
 **Texto y celdas vacías (pactos):** el nombre de la contraparte se publica con la grafía canónica
 del padrón CMF cuando su RUT está en el padrón, reconociendo las grafías alternativas del mismo RUT
@@ -280,4 +280,4 @@ el trimestre lo anota en los avisos en vez de sustituirlo a ciegas.
 Los extractores/REPO antiguos (`cartera_inversiones/`, `repos/`, scripts 01–04) se retiraron el
 2026-09-28; la cartera actual y `fi_pactos` se alimentan del flujo IFRS vigente. Para comparar
 con seguros y ver por qué FFMM no tiene una tabla específica, consulta
-[la nota de cobertura REPO](../docs/notas/cobertura_repos_pactos_2026-10-07.md).
+[la nota de cobertura REPO](../archive/notas/cobertura_repos_pactos_2026-10-07.md).
