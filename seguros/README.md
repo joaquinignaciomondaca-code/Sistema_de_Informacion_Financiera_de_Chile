@@ -48,7 +48,7 @@ Las columnas de la ficha oficial se mantienen en el esquema para preservar compa
 - B.13: rol del inmueble y datos identificadores de arrendatarios/deudores personas naturales; se conserva `property_id`.
 - B.14: RUT y nombre de contrapartes que probablemente sean personas naturales; se añade `contraparte_tipo` para dejar constancia de la clasificación de privacidad.
 
-La fuente y los nombres de los campos corresponden al [anexo técnico oficial de la Circular 1835 (CMF)](https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf). La lista exacta de campos, posición, tipo, unidad y etiqueta CMF está en `seguros/fuentes/inventario_1835.json` y en el Diccionario de Datos del sitio. La cobertura real, los registros B.12–B.14 sin filas y las alertas de tipos no documentados están anotados en [la prueba de extensión del 2026-10-21](../docs/notas/circular_1835_extendida_2026-10-21.md).
+La fuente y los nombres de los campos corresponden al [anexo técnico oficial de la Circular 1835 (CMF)](https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf). La lista exacta de campos, posición, tipo, unidad y etiqueta CMF está en `seguros/fuentes/inventario_1835.json` y en el Diccionario de Datos del sitio. La cobertura real, los registros B.12–B.14 sin filas y las alertas de tipos no documentados están anotados en [la prueba de extensión del 2026-10-21](../archive/notas/circular_1835_extendida_2026-10-21.md).
 
 ### Formato de publicación
 
@@ -83,4 +83,4 @@ ORDER BY periodo DESC
 LIMIT 12;
 ```
 
-Para el estado comparado con fondos de inversión y la aclaración sobre fondos mutuos, ver [cobertura de REPO/pactos](../docs/notas/cobertura_repos_pactos_2026-10-07.md). Para la auditoría profunda de estos datos (cobertura, esquemas, RUT, fechas, cuadraturas, duplicados y maestro de entidades), ver [auditoría 2026-10-07](../docs/notas/auditoria_seguros_2026-10-07.md).
+Para el estado comparado con fondos de inversión y la aclaración sobre fondos mutuos, ver [cobertura de REPO/pactos](../archive/notas/cobertura_repos_pactos_2026-10-07.md). Para la auditoría profunda de estos datos (cobertura, esquemas, RUT, fechas, cuadraturas, duplicados y maestro de entidades), ver [auditoría 2026-10-07](../archive/notas/auditoria_seguros_2026-10-07.md).

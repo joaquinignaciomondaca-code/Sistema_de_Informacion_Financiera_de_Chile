@@ -14,7 +14,7 @@
 // Los CDN externos se bloquean en todos los escenarios para que la prueba sea determinista.
 //
 // Nota: en algunos hosts Linux sin librerías del sistema, @sparticuz/chromium necesita
-// LD_LIBRARY_PATH apuntando a sus propias librerías; ver docs/notas/diagnostico_motor_sql_2026-10-20.md.
+// LD_LIBRARY_PATH apuntando a sus propias librerías; ver archive/notas/diagnostico_motor_sql_2026-10-20.md.
 
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";

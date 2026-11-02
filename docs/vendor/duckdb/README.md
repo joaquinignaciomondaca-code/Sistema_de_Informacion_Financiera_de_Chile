@@ -94,7 +94,7 @@ Al cambiar de versión hay que actualizar también `DUCKDB_VERSION` en
   (ver `vercel.json`): Chrome/Edge en Windows reutiliza mal la caché HTTP en las
   lecturas de rango y el parser Thrift de Parquet muere con
   `TProtocolException: Invalid data` (ver
-  `docs/notas/diagnostico_tprotocol_exception_2026-09-30.md`).
+  `archive/notas/diagnostico_tprotocol_exception_2026-09-30.md`).
 * El total son ~17,7 MB en el repositorio (el `.wasm` es el 99% del peso). No se
   publican variantes `mvp` ni `coi`: la primera sólo se necesita en navegadores sin
   soporte de exception handling —y se toma del CDN— y la segunda requiere
