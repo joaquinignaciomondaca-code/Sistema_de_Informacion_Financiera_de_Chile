@@ -1,0 +1,23 @@
+{
+  "timeZone": "America/Santiago",
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "dependencies": {},
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/script.external_request"
+  ],
+  "dataStudio": {
+    "name": "SIF Chile · marts",
+    "logoUrl": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png",
+    "company": "Sistema de Información Financiera de Chile",
+    "companyUrl": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/",
+    "addonUrl": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/tree/main/docs/looker",
+    "supportUrl": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/issues",
+    "description": "Tablas agregadas del sistema financiero chileno: seguros, fondos mutuos, fondos de inversión, bancos y series del Banco Central. Fuente: CMF, Banco Central de Chile y Superintendencia de Pensiones.",
+    "sources": [
+      "CMF",
+      "Banco Central de Chile",
+      "Superintendencia de Pensiones"
+    ]
+  }
+}

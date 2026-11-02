@@ -12,6 +12,8 @@ env/
 !docs/reproducibilidad/*.csv
 # Excepción: el contrato de la API (tabla de reconciliación) se versiona con el código
 !docs/api/*.csv
+# Excepción: los marts de Looker Studio se sirven por HTTP y se regeneran en CI
+!docs/looker/marts/*.csv
 docs/outputs/**/*.csv
 seguros/circular_1835_cartera/outputs/**/*.csv
 

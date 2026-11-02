@@ -47,6 +47,7 @@ python3 scripts/build_contrato.py         # catálogo, esquemas, particiones, co
 python3 scripts/build_download_catalog.py # catálogo de descargas de la web
 python3 scripts/build_metricas_publicadas.py # reconciliación ETL/API/Descargas
 python3 scripts/build_resultados.py       # resultados de las 159 consultas
+python3 scripts/build_marts_looker.py     # docs/looker/ (marts para Looker Studio)
 python3 scripts/auditar_contrato.py       # audita el contrato
 python3 scripts/probar_ejemplos.py        # ejemplos de Python y JS
 python3 scripts/test_contrato.py --autoprueba  # test del consumidor (~7 s)

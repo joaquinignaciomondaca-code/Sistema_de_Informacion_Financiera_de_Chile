@@ -1,0 +1,693 @@
+{
+ "contrato": "sif-looker/marts",
+ "version": "1.0.0",
+ "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
+ "data_release": "2026-10-30.db40671ee177",
+ "generado": "2026-10-31",
+ "total": 10,
+ "filas": 94085,
+ "bytes": 6881846,
+ "nota": "Tablas agregadas para Looker Studio, calculadas en el build sobre el mismo Parquet que publica el sitio. No son el detalle instrumento por instrumento: para eso está el catálogo API v2. Cada mart declara grano y unidad; los montos de seguros están en miles de pesos (M$) y los de fondos, en miles de la moneda funcional del fondo.",
+ "como_se_genera": "python3 scripts/build_marts_looker.py",
+ "documentacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/looker/",
+ "marts": [
+  {
+   "id": "directorio_entidades",
+   "titulo": "Directorio de entidades",
+   "descripcion": "Una fila por entidad de cada sector del catálogo, para usar como dimensión y como filtro de los demás marts.",
+   "sector": "transversal",
+   "nivel": "nucleo",
+   "periodicidad": "Vigente",
+   "grano": "entidad",
+   "unidad": "Sin cifras",
+   "objetos": [
+    "bancos_lista_entidades",
+    "seguros_lista_entidades",
+    "ffmm_lista_entidades",
+    "fi_lista_entidades",
+    "agf_lista_entidades",
+    "afp_lista_entidades",
+    "ccaf_lista_entidades",
+    "cooperativas_lista_entidades",
+    "corredoras_bolsa_lista_entidades",
+    "factoring_leasing_lista_entidades",
+    "fintech_rpsf_lista_entidades",
+    "patrimonios_separados_lista_entidades",
+    "securitizadoras_lista_entidades",
+    "sistemas_pago_lista_entidades"
+   ],
+   "filas": 3701,
+   "bytes": 462167,
+   "sha256": "c1b72297bfc90f9295b953ccda2216b530ceab4aadda326172ebf799ca7c44f3",
+   "url": "/looker/marts/directorio_entidades.csv",
+   "columnas": [
+    {
+     "nombre": "sector",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "sector_label",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "tipo_entidad",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "id",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "nombre",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "nombre_fantasia",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "estado_vigencia",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "primer_periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "ultimo_periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "reporta_ultimo_periodo",
+     "tipo": "BOOLEAN",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "objeto_origen",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    }
+   ]
+  },
+  {
+   "id": "seguros_inversiones_clase",
+   "titulo": "Seguros: inversiones por clase de activo",
+   "descripcion": "Cartera de cada compañía de seguros agrupada en cuatro clases de activo, al cierre de cada mes.",
+   "sector": "seguros",
+   "nivel": "nucleo",
+   "periodicidad": "Mensual",
+   "grano": "periodo × aseguradora × clase de activo",
+   "unidad": "Miles de pesos (M$)",
+   "objetos": [
+    "seguros_renta_fija",
+    "seguros_acciones",
+    "seguros_fondos_mutuos",
+    "seguros_extranjeros"
+   ],
+   "filas": 14226,
+   "bytes": 1449942,
+   "sha256": "81a864ea04f30f8559be554f928e457aa230747454446b7cc051e078b285ca83",
+   "url": "/looker/marts/seguros_inversiones_clase.csv",
+   "columnas": [
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "rut_aseguradora",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "nombre_aseguradora",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "clase_activo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "posiciones",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "valor_final_m_clp",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    }
+   ]
+  },
+  {
+   "id": "seguros_renta_fija_tipo",
+   "titulo": "Seguros: renta fija por tipo de instrumento y país",
+   "descripcion": "Composición de la renta fija de las aseguradoras por tipo de instrumento y país del emisor.",
+   "sector": "seguros",
+   "nivel": "contexto",
+   "periodicidad": "Mensual",
+   "grano": "periodo × tipo de instrumento × país",
+   "unidad": "Miles de pesos (M$)",
+   "objetos": [
+    "seguros_renta_fija"
+   ],
+   "filas": 994,
+   "bytes": 43922,
+   "sha256": "8dbd20d92985933ef4f570cf0137e891f4e80f3efb37477a1dff19e10618373b",
+   "url": "/looker/marts/seguros_renta_fija_tipo.csv",
+   "columnas": [
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "tipo_instrumento",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "pais",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "aseguradoras",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "posiciones",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "valor_final_m_clp",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    }
+   ]
+  },
+  {
+   "id": "ffmm_cartera_nacional_fondo",
+   "titulo": "Fondos mutuos: cartera nacional por fondo",
+   "descripcion": "Tamaño y diversificación de la cartera nacional de cada fondo mutuo al cierre de cada mes.",
+   "sector": "ffmm",
+   "nivel": "nucleo",
+   "periodicidad": "Mensual",
+   "grano": "periodo × fondo",
+   "unidad": "Miles de la moneda funcional del fondo (mayoritariamente CLP)",
+   "objetos": [
+    "ffmm_cartera_nacional"
+   ],
+   "filas": 24611,
+   "bytes": 1413272,
+   "sha256": "208395048a8d51e1ce56cbf177aaa73e133d336a85e5106af35f0e223bce0889",
+   "url": "/looker/marts/ffmm_cartera_nacional_fondo.csv",
+   "columnas": [
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "run_fondo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "nombre_fondo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "posiciones",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "emisores",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "valorizacion_miles_mf",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    }
+   ]
+  },
+  {
+   "id": "ffmm_cartera_nacional_tipo",
+   "titulo": "Fondos mutuos: cartera nacional por tipo de instrumento",
+   "descripcion": "Composición agregada de la cartera nacional de los fondos mutuos por tipo de instrumento.",
+   "sector": "ffmm",
+   "nivel": "nucleo",
+   "periodicidad": "Mensual",
+   "grano": "periodo × tipo de instrumento",
+   "unidad": "Miles de la moneda funcional del fondo (mayoritariamente CLP)",
+   "objetos": [
+    "ffmm_cartera_nacional"
+   ],
+   "filas": 1293,
+   "bytes": 63215,
+   "sha256": "877b5540644764b377b164a7d7efb98c963ab640d9419998491d2f476e228267",
+   "url": "/looker/marts/ffmm_cartera_nacional_tipo.csv",
+   "columnas": [
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "tipo_instrumento",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fondos",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "posiciones",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "valorizacion_miles_mf",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "participacion_pct",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "avg"
+    }
+   ]
+  },
+  {
+   "id": "ffmm_cartera_extranjera_pais",
+   "titulo": "Fondos mutuos: cartera extranjera por país",
+   "descripcion": "Dónde están invertidos fuera de Chile los fondos mutuos: posiciones y monto por país del emisor.",
+   "sector": "ffmm",
+   "nivel": "nucleo",
+   "periodicidad": "Mensual",
+   "grano": "periodo × país del emisor",
+   "unidad": "Miles de la moneda funcional del fondo (mayoritariamente CLP)",
+   "objetos": [
+    "ffmm_cartera_extranjera"
+   ],
+   "filas": 13915,
+   "bytes": 612125,
+   "sha256": "045018d1fe469c3607bc1b9e016273ef59e57389e1e44b0cdc2d87f744e7ac6b",
+   "url": "/looker/marts/ffmm_cartera_extranjera_pais.csv",
+   "columnas": [
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "pais_emisor",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fondos",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "posiciones",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "valorizacion_miles_mf",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "participacion_pct",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "avg"
+    }
+   ]
+  },
+  {
+   "id": "fi_cartera_nacional_tipo",
+   "titulo": "Fondos de inversión: cartera nacional por tipo de instrumento",
+   "descripcion": "Composición trimestral de la cartera nacional de los fondos de inversión por tipo de instrumento.",
+   "sector": "fi",
+   "nivel": "nucleo",
+   "periodicidad": "Trimestral",
+   "grano": "trimestre × tipo de instrumento",
+   "unidad": "Miles de la moneda funcional del fondo",
+   "objetos": [
+    "fi_cartera_nacional"
+   ],
+   "filas": 809,
+   "bytes": 39499,
+   "sha256": "0aebedfebcce695e101b85d49d9582420ac3b87a85132d46ee58eb2629f83bcb",
+   "url": "/looker/marts/fi_cartera_nacional_tipo.csv",
+   "columnas": [
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "tipo_instrumento",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fondos",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "posiciones",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "valorizacion_miles_mf",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "participacion_pct",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "avg"
+    }
+   ]
+  },
+  {
+   "id": "bancos_totales",
+   "titulo": "Bancos: activos, pasivos y colocaciones",
+   "descripcion": "Totales del balance de cada banco y del sistema, en pesos, al cierre de cada mes.",
+   "sector": "bancos",
+   "nivel": "instituciones",
+   "periodicidad": "Mensual",
+   "grano": "periodo × institución",
+   "unidad": "Pesos (CLP)",
+   "objetos": [
+    "bancos_balance"
+   ],
+   "filas": 1027,
+   "bytes": 117874,
+   "sha256": "b2fd4da19b178bc0e1293d0a464c20eb6963bd842c9127acef2abfa93259eb34",
+   "url": "/looker/marts/bancos_totales.csv",
+   "columnas": [
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "codigo_institucion",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "rut",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "razon_social",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "es_total_sistema",
+     "tipo": "BOOLEAN",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "activos_clp",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "pasivos_clp",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "patrimonio_clp",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    },
+    {
+     "nombre": "colocaciones_clp",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "sum"
+    }
+   ]
+  },
+  {
+   "id": "macro_series_mensual",
+   "titulo": "Macro: series del Banco Central, cierre de mes",
+   "descripcion": "Series macro en formato largo, con el último dato disponible de cada mes. Sirve como contexto de los marts sectoriales.",
+   "sector": "macro",
+   "nivel": "contexto",
+   "periodicidad": "Mensual",
+   "grano": "periodo × serie",
+   "unidad": "La unidad de cada serie está en la columna `unidad`",
+   "objetos": [
+    "macro_imacec",
+    "macro_imacec",
+    "macro_imacec",
+    "macro_imacec",
+    "macro_imacec",
+    "macro_pib_trimestral",
+    "macro_cobre",
+    "macro_cobre",
+    "macro_metales_preciosos",
+    "macro_metales_preciosos",
+    "macro_expectativas_inflacion",
+    "macro_expectativas_inflacion",
+    "macro_expectativas_tpm",
+    "macro_expectativas_tpm",
+    "macro_expectativas_operadores",
+    "macro_expectativas_operadores",
+    "macro_deuda_publica_pct_pib",
+    "macro_mercado_laboral",
+    "macro_mercado_laboral",
+    "macro_mercado_laboral",
+    "macro_mercado_laboral",
+    "macro_inflacion_ipc",
+    "macro_inflacion_ipc",
+    "macro_inflacion_ipc",
+    "macro_uf",
+    "macro_utm",
+    "macro_tasa_referencia_fed",
+    "macro_reservas_internacionales",
+    "macro_curva_bonos_pesos",
+    "macro_curva_bonos_pesos",
+    "macro_curva_bonos_pesos",
+    "macro_curva_bonos_uf",
+    "macro_curva_bonos_uf",
+    "macro_curva_bonos_uf",
+    "macro_curva_bonos_uf",
+    "macro_curva_bonos_uf",
+    "macro_curva_bonos_uf",
+    "macro_swaps_camara",
+    "macro_swaps_camara",
+    "macro_swaps_camara",
+    "macro_swaps_camara",
+    "macro_swaps_camara",
+    "macro_tasas_corto_plazo",
+    "macro_tasas_corto_plazo",
+    "macro_euro_observado",
+    "macro_tipo_cambio_multilateral",
+    "macro_tipo_cambio_multilateral",
+    "macro_tipo_cambio_multilateral",
+    "macro_tipo_cambio_real",
+    "macro_tipo_cambio_real",
+    "macro_dolar_observado"
+   ],
+   "filas": 7510,
+   "bytes": 692672,
+   "sha256": "a01aee608d878ecf558f77798c2099f7a7ae40390ad4a10236cbeb74f6bb38bd",
+   "url": "/looker/marts/macro_series_mensual.csv",
+   "columnas": [
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "serie",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "nombre",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "grupo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "unidad",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "frecuencia",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "valor",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "avg"
+    }
+   ]
+  },
+  {
+   "id": "macro_series_diaria",
+   "titulo": "Macro: series diarias del Banco Central",
+   "descripcion": "Las ocho series diarias que un dashboard de mercado usa de verdad, día por día.",
+   "sector": "macro",
+   "nivel": "contexto",
+   "periodicidad": "Diaria",
+   "grano": "fecha × serie",
+   "unidad": "La unidad de cada serie está en la columna `unidad`",
+   "objetos": [
+    "macro_cobre",
+    "macro_curva_bonos_pesos",
+    "macro_curva_bonos_uf",
+    "macro_dolar_observado",
+    "macro_euro_observado",
+    "macro_tasas_corto_plazo",
+    "macro_uf"
+   ],
+   "filas": 25999,
+   "bytes": 1987158,
+   "sha256": "e36590045279c965a4fc9cba1a6d79be8a1a7de5a4bc04b0a841043663984288",
+   "url": "/looker/marts/macro_series_diaria.csv",
+   "columnas": [
+    {
+     "nombre": "fecha",
+     "tipo": "DATE",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "periodo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "serie",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "nombre",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "grupo",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "unidad",
+     "tipo": "TEXT",
+     "rol": "dimension"
+    },
+    {
+     "nombre": "valor",
+     "tipo": "NUMBER",
+     "rol": "metric",
+     "agregacion": "avg"
+    }
+   ]
+  }
+ ]
+}

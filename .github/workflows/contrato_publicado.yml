@@ -23,6 +23,7 @@ on:
       - 'scripts/build_macro_web.py'
       - 'macro/scripts/build_tablas_tematicas.py'
       - 'scripts/build_ficha_piloto.py'
+      - 'scripts/build_marts_looker.py'
       - 'scripts/construir_reproducibilidad.py'
   workflow_dispatch:
   # Los flujos de datos empujan con el GITHUB_TOKEN del propio Actions, y esos
@@ -92,13 +93,16 @@ jobs:
             python scripts/build_contrato.py
             python scripts/build_ficha_piloto.py
             python scripts/build_resultados.py
+            # Los marts de Looker Studio se derivan de las mismas vistas que los
+            # resultados: si cambia el corte, cambian los CSV que sirve el sitio.
+            python scripts/build_marts_looker.py
             python scripts/build_download_catalog.py
             python scripts/build_metricas_publicadas.py
             python scripts/build_estado_claves.py
             python scripts/build_metadatos.py
             python scripts/construir_reproducibilidad.py
             python scripts/generar_indice_busqueda.py
-            git add docs/api docs/js/download_catalog.js docs/js/estado_claves.js \
+            git add docs/api docs/looker docs/js/download_catalog.js docs/js/estado_claves.js \
                     docs/js/sidebar.js docs/js/data_dictionary.js docs/js/erd_graph.js \
                     docs/vocabulario.json docs/metricas_publicadas.json docs/datos \
                     docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml \
@@ -115,6 +119,7 @@ jobs:
             python scripts/build_reconciliacion.py --check
             python scripts/build_api.py --check
             python scripts/build_contrato.py --check
+            python scripts/build_marts_looker.py --check
             python scripts/build_ficha_piloto.py --check
             python scripts/build_download_catalog.py --check
             python scripts/build_metricas_publicadas.py --check
