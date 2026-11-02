@@ -88,6 +88,12 @@ tabla. No hay backend ni credenciales: sólo descarga archivos estáticos del si
 4. Elige la tabla en la lista y **Conectar**. Para publicarlo con versión fija, crea una
    implementación versionada y usa el ID de esa implementación en lugar del Head.
 
+**El conector no aparece en la galería «Añadir datos al informe».** Esa galería lista los
+conectores de Google y de socios; uno comunitario se abre sólo por su enlace
+(`datasources/create?connectorId=…`) o desde **Crear conector**, al final de la galería. Si
+todavía no lo implementaste, no hay nada que buscar ahí: usa el camino A o B para la primera
+maqueta.
+
 Qué hace y qué no:
 
 * Devuelve las filas del mart tal cual, con `fecha` como eje temporal.
