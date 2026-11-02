@@ -117,7 +117,15 @@ for (const tag of scripts) {
   if (!fs.existsSync(file)) throw new Error("script local ausente: " + src);
   window.eval(fs.readFileSync(file, "utf8"));
 }
-window.eval(scripts.filter((tag) => !tag.getAttribute("src")).map((tag) => tag.textContent).join("\n"));
+// Los <script type="application/ld+json"> (JSON-LD del <head>) y otros tipos
+// no-JavaScript no se evalúan como código: evaluarlos levanta un SyntaxError
+// y el test no podría ni siquiera arrancar.
+const inlineJs = scripts.filter((tag) => {
+  if (tag.getAttribute("src")) return false;
+  const tipo = tag.getAttribute("type");
+  return !tipo || tipo.includes("javascript");
+});
+window.eval(inlineJs.map((tag) => tag.textContent).join("\n"));
 // No se dispara DOMContentLoaded a mano: jsdom lo emite solo al terminar de
 // cargar. Dispararlo además del nativo construía dos veces el explorador y la
 // segunda instancia volvía a cerrar el cajón que la primera acababa de abrir.
