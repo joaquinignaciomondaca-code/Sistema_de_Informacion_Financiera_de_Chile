@@ -210,7 +210,7 @@ entre ellas, con 160.564 filas repetidas). Un error de
 `scripts/verificar_claves.py` marcaba las repeticiones con una comparación de
 tuplas que DuckDB no evalúa fila a fila, y el vacío se leía como «no hay
 duplicados». Esto describe la corrección de aquel corte, no el número de fallos
-vigentes. Ver [`docs/notas/claves_duplicados_2026-10-23.md`](../notas/claves_duplicados_2026-10-23.md).
+vigentes. Ver [`archive/notas/claves_duplicados_2026-10-23.md`](../notas/claves_duplicados_2026-10-23.md).
 
 El `hash` de cada recurso es el SHA-256 de la concatenación de los SHA-256 de
 sus particiones, y el conjunto de todos ellos produce el `data_release`: no es
