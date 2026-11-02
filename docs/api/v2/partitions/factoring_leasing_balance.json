@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-   "bytes": 536619,
+   "bytes": 537163,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
    "periodo": "factoring_leasing_balance_serie_ifrs_cmf",
-   "sha256": "2b5c11c70f05d17eb2b595f6ad4b26575c003d47bcedd146f01cda3d610f1568"
+   "sha256": "ba2296dcd4ba40c9e424bfc889f3b275f01103ddcb94b7417e49cf675bc20368"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 536619,
-  "filas": 30046
+  "bytes": 537163,
+  "filas": 30075
  },
  "version": "2.3.0"
 }

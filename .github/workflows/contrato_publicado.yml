@@ -23,6 +23,7 @@ on:
       - 'scripts/build_macro_web.py'
       - 'macro/scripts/build_tablas_tematicas.py'
       - 'scripts/build_ficha_piloto.py'
+      - 'scripts/build_download_exports.py'
       - 'scripts/construir_reproducibilidad.py'
   workflow_dispatch:
   # Los flujos de datos empujan con el GITHUB_TOKEN del propio Actions, y esos
@@ -92,6 +93,9 @@ jobs:
             python scripts/build_contrato.py
             python scripts/build_ficha_piloto.py
             python scripts/build_resultados.py
+            # Descargas pre-construidas (CSV/JSON combinados): se generan antes
+            # del catálogo de descargas, que enlaza a los archivos estáticos.
+            python scripts/build_download_exports.py
             python scripts/build_download_catalog.py
             python scripts/build_metricas_publicadas.py
             python scripts/build_estado_claves.py
@@ -102,7 +106,9 @@ jobs:
                     docs/js/sidebar.js docs/js/data_dictionary.js docs/js/erd_graph.js \
                     docs/vocabulario.json docs/metricas_publicadas.json docs/datos \
                     docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml \
-                    docs/reproducibilidad docs/outputs/indice_busqueda.json
+                    docs/reproducibilidad docs/outputs/indice_busqueda.json \
+                    docs/outputs/_exportes.json \
+                    'docs/outputs/**/*.completo.csv' 'docs/outputs/**/*.completo.json'
             if git diff --cached --quiet; then
               echo "::notice title=Contrato derivado::sin cambios; los artefactos ya reflejaban los datos publicados"
               exit 0
@@ -116,6 +122,7 @@ jobs:
             python scripts/build_api.py --check
             python scripts/build_contrato.py --check
             python scripts/build_ficha_piloto.py --check
+            python scripts/build_download_exports.py --check
             python scripts/build_download_catalog.py --check
             python scripts/build_metricas_publicadas.py --check
             python scripts/build_estado_claves.py --check

@@ -5,24 +5,24 @@ agf_balance,fk,rut,agf_lista_entidades,71423,,0,1.0000,si,invariante,ok,"tipos d
 agf_lista_entidades,pk,rut,,72,72,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 agf_resultados,pk,valor + valor_no_numerico + cuenta + razon_social + rut + rut_dv + periodo + orden,,58216,58216,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
 agf_resultados,fk,rut,agf_lista_entidades,58216,,0,1.0000,si,invariante,ok,"tipos distintos en la columna (VARCHAR aquí, BIGINT en el destino): el join exige cast"
-bancos_balance,pk,periodo + codigo_institucion + codigo_cuenta + modelo_cmf,,722931,722931,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-bancos_balance,fk,codigo_institucion,bancos_lista_entidades,722931,,0,1.0000,si,invariante,ok,
+bancos_balance,pk,periodo + codigo_institucion + codigo_cuenta + modelo_cmf,,735837,735837,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+bancos_balance,fk,codigo_institucion,bancos_lista_entidades,735837,,0,1.0000,si,invariante,ok,
 bancos_lista_entidades,pk,codigo_institucion,,41,41,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-bancos_resultados,pk,periodo + codigo_institucion + codigo_cuenta + modelo_cmf,,1240061,1240061,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-bancos_resultados,fk,codigo_institucion,bancos_lista_entidades,1240061,,0,1.0000,si,invariante,ok,
+bancos_resultados,pk,periodo + codigo_institucion + codigo_cuenta + modelo_cmf,,1262183,1262183,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+bancos_resultados,fk,codigo_institucion,bancos_lista_entidades,1262183,,0,1.0000,si,invariante,ok,
 ccaf_balance,pk,valor + cuenta + periodo + orden + rut,,8043,8043,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
 ccaf_balance,fk,rut,,8043,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
 ccaf_lista_entidades,pk,rut,,6,6,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 ccaf_resultados,pk,valor + periodo + cuenta + orden + rut,,5506,5506,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
 ccaf_resultados,fk,rut,,5506,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
 cooperativas_lista_entidades,pk,rut,,7,7,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-corredoras_bolsa_balance,pk,periodo + rut + codigo_fecu,,107976,107976,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+corredoras_bolsa_balance,pk,periodo + rut + codigo_fecu,,109305,109305,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 corredoras_bolsa_lista_entidades,pk,rut,,120,120,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 corredoras_bolsa_lista_entidades_registro,pk,rut,,120,120,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-corredoras_bolsa_resultados,pk,periodo + rut + codigo_fecu,,77705,77705,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-factoring_leasing_balance,pk,valor_archivo + valor_texto_original + cuenta + periodo + fuente_archivo + orden + nombre_reportado,,30046,30046,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+corredoras_bolsa_resultados,pk,periodo + rut + codigo_fecu,,78683,78683,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+factoring_leasing_balance,pk,valor_archivo + valor_texto_original + cuenta + periodo + fuente_archivo + orden + nombre_reportado,,30075,30075,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
 factoring_leasing_lista_entidades,pk,rut,,32,32,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-factoring_leasing_resultados,pk,valor_texto_original + valor_archivo + cuenta + periodo + fuente_archivo + nombre_reportado + rut + nombre_catalogo + rut_dv + orden,,22368,22368,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+factoring_leasing_resultados,pk,valor_texto_original + valor_archivo + cuenta + periodo + fuente_archivo + nombre_reportado + rut + nombre_catalogo + rut_dv + orden,,22389,22389,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
 ffmm_balance,pk,periodo + run_fondo + codigo_cuenta,,126256,126256,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 ffmm_balance,fk,rut_agf,,126256,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
 ffmm_cartera_extranjera,pk,,,1461253,1445843,15410,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
@@ -57,8 +57,8 @@ fi_resultados,pk,periodo + run_fondo + contexto + codigo_cuenta,,1164000,1164000
 fi_resultados,fk,rut_agf,,1164000,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
 fintech_rpsf_lista_entidades,pk,rut,,265,265,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_cobre,pk,fecha,,3267,3267,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_curva_bonos_pesos,pk,fecha,,3178,3178,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_curva_bonos_uf,pk,fecha,,3180,3180,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_curva_bonos_pesos,pk,fecha,,3179,3179,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_curva_bonos_uf,pk,fecha,,3181,3181,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_deuda_publica_pct_pib,pk,fecha,,50,50,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_dolar_observado,pk,fecha,,3195,3195,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_euro_observado,pk,fecha,,3195,3195,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
@@ -66,20 +66,20 @@ macro_expectativas_inflacion,pk,fecha,,154,154,0,,si,invariante,ok,la clave decl
 macro_expectativas_operadores,pk,fecha,,238,238,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_expectativas_tpm,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_imacec,pk,fecha,,152,152,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_inflacion_implicita,pk,fecha,,3084,3084,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_inflacion_implicita,pk,fecha,,3085,3085,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_inflacion_ipc,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_mercado_laboral,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_metales_preciosos,pk,fecha,,3195,3195,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_pib_trimestral,pk,fecha,,50,50,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_reservas_internacionales,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_series_catalogo,pk,clave,,51,51,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_swaps_camara,pk,fecha,,3209,3209,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_swaps_camara,pk,fecha,,3210,3210,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_tasa_referencia_fed,pk,fecha,,3333,3333,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_tasas_corto_plazo,pk,fecha,,3196,3196,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_tipo_cambio_multilateral,pk,fecha,,3195,3195,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_tipo_cambio_real,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_uf,pk,fecha,,4686,4686,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_utm,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_uf,pk,fecha,,4688,4688,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_utm,pk,fecha,,155,155,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 patrimonios_separados_balance,pk,archivo + codigo_patrimonio + periodo + orden_en_balance + cuenta,,7962,7962,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 patrimonios_separados_balance,fk,rut_administradora,patrimonios_separados_lista_entidades,7962,,3604,0.5473,si,expectativa,huerfanas,3604 valores sin pareja en el destino
 patrimonios_separados_lista_entidades,pk,numero_inscripcion,,19,19,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
