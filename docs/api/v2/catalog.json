@@ -3,7 +3,7 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-11-01.4d68fa3eb6f8",
+ "data_release": "2026-11-01.f78c10c895e1",
  "generado": "2026-11-02",
  "objetos": [
   {
@@ -75,7 +75,7 @@
     "agf_maestro"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 17065,
+   "bytes": 15213,
    "corte": "Oficial CMF 2026",
    "deriva_de": null,
    "descripcion": "Catálogo oficial de Administradoras Generales de Fondos (AGF) autorizadas por la Comisión para el Mercado Financiero (CMF) bajo la Ley N° 20.712. Incluye 52 gestoras vigentes y 16 no vigentes/canceladas, junto con su grupo financiero controlador y el número de fondos de inversión administrados.",
@@ -2692,7 +2692,7 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 487962978,
+  "bytes": 487961126,
   "con_datos": 86,
   "con_filas": 85,
   "consultas": 159,
