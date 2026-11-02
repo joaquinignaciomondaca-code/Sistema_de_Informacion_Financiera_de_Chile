@@ -365,10 +365,10 @@
    "title": "agf.balance"
   },
   {
-   "bytes": 17065,
+   "bytes": 15213,
    "description": "Catálogo oficial de Administradoras Generales de Fondos (AGF) autorizadas por la Comisión para el Mercado Financiero (CMF) bajo la Ley N° 20.712. Incluye 52 gestoras vigentes y 16 no vigentes/canceladas, junto con su grupo financiero controlador y el número de fondos de inversión administrados.",
    "format": "parquet",
-   "hash": "eb8595fe5c3e87687f4767d008de5ca9fe09253d7649f08946306ae44bb02653",
+   "hash": "2200a074745f550ac2d68cb2f5784ccd24f2660676566b869a67bca1719dfd89",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -512,10 +512,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 17065,
+      "bytes": 15213,
       "filas": 72,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_maestro.parquet",
-      "sha256": "5628ac8d8bfddcf04f3be01f37ea3e3548081b900aa8e6bbb02ac547195a3fa2"
+      "sha256": "3c9758daa6bfac5f932ab096419bd9e88dc86b911fc793b6790d36e5826d745a"
      }
     ],
     "puente": "alias",
@@ -19205,7 +19205,7 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-11-01.4d68fa3eb6f8",
+  "data_release": "2026-11-01.f78c10c895e1",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
   "filas_unicas": 19814973,
   "identificador": {

@@ -1,4 +1,4 @@
-# Prueba de máquina limpia · 2026-11-02T19:06:42
+# Prueba de máquina limpia · 2026-11-02T21:11:12
 
 $ python3 -m venv /tmp/sif-maquina-limpia/venv
 $ /tmp/sif-maquina-limpia/venv/bin/pip install --quiet duckdb   # el cliente sólo necesita un motor

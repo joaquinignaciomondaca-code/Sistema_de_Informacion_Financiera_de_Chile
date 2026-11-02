@@ -8,7 +8,7 @@
     "particiones_rutas_y_conteos_iguales_por_objeto": true
   },
   "contrato": "sif/metricas-publicadas",
-  "data_release": "2026-11-01.4d68fa3eb6f8",
+  "data_release": "2026-11-01.f78c10c895e1",
   "definiciones": {
     "alcance_principal": "Elementos en niveles visibles (núcleo, instituciones y contexto), según el alcance editorial de docs/vocabulario.json.",
     "auxiliares_sql": "Parquet compactos que DuckDB usa para algunas consultas; son copias de lectura, no objetos adicionales ni filas únicas de cobertura.",
@@ -29,12 +29,12 @@
     "api_v2": {
       "archivos_unicos": 730,
       "artefacto": "api/v2/catalog.json",
-      "bytes": 487962978,
+      "bytes": 487961126,
       "con_archivo": 86,
       "con_archivo_sin_filas": 1,
       "con_filas": 85,
       "consultas": 159,
-      "data_release": "2026-11-01.4d68fa3eb6f8",
+      "data_release": "2026-11-01.f78c10c895e1",
       "filas": 19814973,
       "objetos": 90,
       "particiones": 730,
@@ -55,7 +55,7 @@
     "descargas": {
       "archivos_unicos": 730,
       "artefacto": "js/download_catalog.js",
-      "bytes_total": 487962978,
+      "bytes_total": 487961126,
       "elementos": 90,
       "filas_total": 19814973,
       "fuera_de_foco": {
@@ -73,7 +73,7 @@
       },
       "por_sector": {
         "agf": {
-          "bytes": 1024692,
+          "bytes": 1022840,
           "elementos": 3,
           "etiqueta": "Administradoras Generales de Fondos",
           "filas": 129711,
@@ -272,7 +272,7 @@
         }
       },
       "principal": {
-        "bytes": 486063669,
+        "bytes": 486061817,
         "elementos": 74,
         "filas": 19714658
       },
@@ -286,7 +286,7 @@
   },
   "lecturas_duckdb": {
     "archivos_unicos": 734,
-    "bytes": 532157635,
+    "bytes": 532155783,
     "filas_almacenadas": 23512208,
     "nota": "Suma archivos del contrato y copias compactas de consulta; contiene filas repetidas entre recursos y no representa cobertura única."
   },
