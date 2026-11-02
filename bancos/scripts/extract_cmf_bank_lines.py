@@ -186,7 +186,7 @@ def extract_archive(
     social del maestro de bancos (`codigo_institucion -> {rut, razon_social}`).
     Sin ese cruce las columnas `rut` y `razon_social` se publicaban a NULL en
     todas las filas: filtrar o unir por RUT devolvía 0 filas **sin error**
-    (hallazgo 16 de `docs/notas/ruta_api_v1_2026-10-22.md`).
+    (hallazgo 16 de `archive/notas/ruta_api_v1_2026-10-22.md`).
     """
     period_label(period)
     if len(blob) > MAX_FILE:

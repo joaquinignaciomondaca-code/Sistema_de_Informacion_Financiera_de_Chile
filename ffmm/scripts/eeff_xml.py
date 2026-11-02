@@ -10,7 +10,7 @@ ejercicio y el anterior, en **miles de la moneda funcional**, sin decimales. Par
 no llevan serie; el estado de cambios del activo neto sí (no se publica). El XML lista las cuentas en orden
 alfabético, no en el de presentación: el `orden` sale del catálogo `CATALOGO` (el de la ficha de la CMF).
 
-Lo que se midió con 278 fondo-años reales (docs/notas/ffmm_estados_financieros_xml_2026-10-01.md) y este módulo
+Lo que se midió con 278 fondo-años reales (archive/notas/ffmm_estados_financieros_xml_2026-10-01.md) y este módulo
 maneja a propósito:
 
   * la declaración de codificación no es fiable (UTF-8 falso, ausente o inventada: `iso-8011-K`): se descarta y el

@@ -3,7 +3,7 @@
 
 Fuente: la ficha de cada fondo (`entidad.php … pestania=3&mm=12&aa=AAAA&tipo_norma=IFRS`) enlaza el XML con los
 estados financieros del cierre de diciembre. No hay descarga masiva: una ficha y un XML por fondo y año.
-Formato, cuentas y mediciones: ffmm/scripts/eeff_xml.py y docs/notas/ffmm_estados_financieros_xml_2026-10-01.md.
+Formato, cuentas y mediciones: ffmm/scripts/eeff_xml.py y archive/notas/ffmm_estados_financieros_xml_2026-10-01.md.
 
 Qué procesa
 -----------

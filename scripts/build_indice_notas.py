@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Genera el índice de `docs/notas/`, la puerta de entrada a las decisiones.
+"""Genera el índice de `archive/notas/`, la puerta de entrada a las decisiones.
 
 Hay más de sesenta notas —auditorías, decisiones de publicación, mediciones,
 correcciones— y hasta ahora no había forma de encontrarlas sin abrir la carpeta.
@@ -10,7 +10,7 @@ El índice se genera, no se escribe: cada nota aporta su título (el primer `# `
 su fecha (el `AAAA-MM-DD` del nombre del archivo) y la línea que sigue al título
 si es una frase de resumen (`**Motivo:**`, `**Qué:**` o texto suelto).
 
-    python3 scripts/build_indice_notas.py            # reescribe docs/notas/README.md
+    python3 scripts/build_indice_notas.py            # reescribe archive/notas/README.md
     python3 scripts/build_indice_notas.py --check    # falla si está atrasado
 """
 from __future__ import annotations
@@ -143,7 +143,7 @@ def main() -> int:
     actual = INDICE.read_text(encoding="utf-8") if INDICE.exists() else ""
     if args.check:
         if actual != nuevo:
-            print("INDICE-NOTAS: docs/notas/README.md no coincide con las notas; "
+            print("INDICE-NOTAS: archive/notas/README.md no coincide con las notas; "
                   "ejecuta scripts/build_indice_notas.py")
             return 1
         print(f"INDICE-NOTAS: al día ({len(entradas())} notas)")
@@ -152,7 +152,7 @@ def main() -> int:
         print(f"INDICE-NOTAS: sin cambios ({len(entradas())} notas)")
         return 0
     INDICE.write_text(nuevo, encoding="utf-8")
-    print(f"INDICE-NOTAS: escrito docs/notas/README.md con {len(entradas())} notas")
+    print(f"INDICE-NOTAS: escrito archive/notas/README.md con {len(entradas())} notas")
     return 0
 
 
