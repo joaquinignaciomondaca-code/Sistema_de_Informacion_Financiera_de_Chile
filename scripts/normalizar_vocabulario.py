@@ -28,7 +28,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VOCAB_PATH = os.path.join(ROOT, "docs", "vocabulario.json")
 
-# Archivos con vocabulario visible. Las notas datadas (docs/notas/), los
+# Archivos con vocabulario visible. Las notas datadas (archive/notas/), los
 # directorios de datos publicados y docs/vendor/ quedan fuera a propósito.
 TARGETS = [
     "docs/index.html",

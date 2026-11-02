@@ -481,7 +481,7 @@
                     <span class="info-note-mark" aria-hidden="true">i</span>
                     <p>Herramienta de exploración; no constituye recomendación de inversión. Verifica fuente, periodo, unidad y cobertura: la publicación es automática y puede contener errores.</p>
                   </section>
-                  <a class="info-foot" href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/README.md" rel="noopener">
+                  <a class="info-foot" href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/archive/notas/README.md" rel="noopener">
                     <span class="info-foot-copy"><strong>Decisiones y auditorías</strong><small>Notas técnicas, criterios de publicación y auditorías de calidad.</small></span>
                     <span class="info-foot-arrow" aria-hidden="true">↗</span>
                   </a>
@@ -780,7 +780,7 @@ sif-mcp                       # stdio
                 <div class="uso-card uso-card-wide">
                   <h3>Cómo sumar sin sobreestimar</h3>
                   <p>Algunas tablas publican la misma fila más de una vez. Sumar una columna sin agrupar cuenta esas filas dos veces y sobreestima el total. El sitio mide la repetición objeto por objeto: <b data-calidad="repetidas">230.288</b> filas repetidas de <b data-alcance="visible.filas">más de 19 millones</b> (más de <b data-calidad="pct-repetidas">1,1 %</b>), en <b data-calidad="objetos">22 de 90</b> objetos; el caso más grave es <b data-calidad="peor-objeto">ffmm_cartera_nacional</b> con <b data-calidad="peor">160.564</b> (<b data-calidad="peor-pct">10,1 %</b>). En <span data-calidad="ejemplo-periodo">2026-09</span>, sumar sin agrupar sobreestima <b data-calidad="sobreestima">9,7 %</b>.</p>
-                  <p>El criterio y las decisiones de publicación están en <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/claves_duplicados_2026-10-23.md" rel="noopener">la nota de claves duplicadas</a>.</p>
+                  <p>El criterio y las decisiones de publicación están en <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/archive/notas/claves_duplicados_2026-10-23.md" rel="noopener">la nota de claves duplicadas</a>.</p>
                   <p>La medición es reproducible: esta consulta se ejecuta sobre los datos publicados, sin ningún cálculo previo de la página.</p>
                   <pre class="uso-code"><code data-calidad-sql>-- ffmm_cartera_nacional, 2026-09: filas publicadas frente a filas distintas
 WITH crudo AS (SELECT * FROM ffmm_cartera_nacional WHERE periodo = '2026-09'),

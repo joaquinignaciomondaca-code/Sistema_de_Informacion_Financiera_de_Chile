@@ -265,7 +265,6 @@ def parse_and_cleanup_worker(zip_path: str, periodo: str):
     except Exception as e:
         print(f"Error procesando {zip_path}: {e}", flush=True)
     finally:
-        # ELIMINAR EL ARCHIVO ZIP INMEDIATAMENTE TRAS PROCESAR
         if os.path.exists(zip_path):
             try:
                 os.remove(zip_path)
