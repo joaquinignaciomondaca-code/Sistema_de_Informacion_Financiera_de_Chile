@@ -54,7 +54,7 @@ subir el archivo.
 
 ---
 
-## 3. Camino B: Google Sheets + `IMPORTDATA` (se refresca solo)
+## 3. Camino B: Google Sheets + `IMPORTDATA` (se refresca al abrir la hoja)
 
 La hoja se actualiza cada vez que se abre y Looker Studio lee la hoja, así que el informe
 sigue al dato publicado sin que nadie suba nada.
@@ -97,6 +97,9 @@ Qué hace y qué no:
 * **No** agrega del lado del servidor y **no** sustituye a BigQuery: Apps Script tiene
   límites de tiempo y de tamaño de respuesta. Por eso el conector está pensado para los
   marts (máximo ≈26.000 filas), no para los 2,3 millones de filas de `seguros_renta_fija`.
+
+**Actualización:** no hay nada que programar. El conector baja el CSV vigente en cada
+refresco y Looker Studio aplica su intervalo de actualización de datos (ver §9).
 
 ---
 
@@ -196,7 +199,67 @@ Controles útiles: selector de `periodo`, filtro de `clase_activo` y —si cruza
 
 ---
 
-## 9. Advertencias que conviene leer antes de publicar
+## 9. Cómo se mantiene solo (y qué parte te toca a ti)
+
+Hay dos relojes, y conviene no confundirlos: **cuándo cambia el archivo** y **cuándo Looker
+Studio vuelve a leerlo**.
+
+### El dato ya se actualiza solo
+
+No hay nada que programar de nuestro lado. Los publicadores escriben en `docs/outputs/`, y el
+flujo **«Contrato derivado»** (`contrato_publicado.yml`) recalcula los marts después de cada
+publicación —y además cada dos horas, porque los push del bot no disparan otros workflows—.
+Los CSV que sirve el sitio son siempre los del último corte; el `data_release` de
+`catalogo.json` lo delata.
+
+### Looker Studio: la caché
+
+Looker Studio no consulta la fuente en cada visita: guarda una copia y la refresca según el
+intervalo de **actualización de datos** del origen.
+
+* Con el **conector comunitario** cada refresco vuelve a bajar el CSV, es decir, toma el corte
+  vigente. El intervalo no siempre se puede bajar (en los conectores comunitarios suele quedar
+  en 12 horas). Para datos que se publican tres veces al mes, 12 horas no cambian nada.
+* Con **Google Sheets**, el intervalo se puede fijar en 15 minutos; `IMPORTDATA` refresca al
+  abrir la hoja y la hoja necesita abrirse cada tanto.
+* En ambos casos, el botón **⋮ → Actualizar datos** fuerza una lectura nueva; y el editor del
+  informe puede activar la actualización para quien lo mira (Configuración del informe).
+
+Si el informe muestra un corte viejo, casi siempre es este reloj, no el dato: compara el
+`data_release` de `catalogo.json` con lo que dice el dashboard.
+
+### Si necesitas el detalle y también quieres que se cargue solo
+
+Los marts se autoactualizan porque viven en el repositorio. Las **86 tablas de BigQuery** se
+cargan cuando alguien corre el script, así que para que eso también sea automático hay que
+programarlo en GitHub Actions. La plantilla está en
+[`plantillas/cargar_bigquery.yml`](plantillas/cargar_bigquery.yml):
+
+1. En Google Cloud, crea una cuenta de servicio con **BigQuery Data Editor** y **BigQuery Job
+   User**, y descarga su clave JSON.
+2. En GitHub: **Settings → Secrets and variables → Actions**. Agrega el secreto `GCP_SA_KEY`
+   con el JSON y la variable `GCP_PROJECT` con el ID del proyecto.
+3. Copia la plantilla a `.github/workflows/cargar_bigquery.yml`.
+4. Listo: corre cada seis horas y al lanzarlo a mano. Looker Studio consulta BigQuery en vivo,
+   así que sólo queda su propia caché (12 horas por defecto, configurable).
+
+Si activas ese flujo, súmalo al calendario de workflows del README y al inventario de
+`scripts/audit_automatizacion.py`; esa auditoría conoce los flujos declarados y falla con uno
+que no lo esté. Con MotherDuck el equivalente es una Action con el token como secreto que
+ejecute el `CREATE TABLE ... AS SELECT` de la sección 6.
+
+### Lo que no se actualiza solo
+
+* **Camino A** (CSV subido a mano): es una foto; hay que volver a subir el archivo.
+* **Camino B**: la hoja se refresca cuando se abre, y la caché de Sheets/Looker agrega su
+  propio retraso.
+* Un **conector comunitario copiado** en otra cuenta no se actualiza si el dueño de esa copia
+  no vuelve a implementar: sólo lee el catálogo y los CSV publicados, así que en la práctica
+  sigue al dato sin intervención.
+
+---
+
+## 10. Advertencias que conviene leer antes de publicar
 
 * **Los marts agregan.** No permiten auditar una posición ni reconstruir un instrumento. Si
   el informe necesita ese nivel, el camino es BigQuery o MotherDuck sobre el Parquet.
@@ -215,7 +278,7 @@ Controles útiles: selector de `periodo`, filtro de `clase_activo` y —si cruza
 
 ---
 
-## 10. Mantenimiento
+## 11. Mantenimiento
 
 ```bash
 python3 scripts/build_marts_looker.py          # regenera marts y catálogo
