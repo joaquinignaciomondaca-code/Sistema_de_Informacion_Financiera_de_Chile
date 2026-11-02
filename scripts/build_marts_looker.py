@@ -519,6 +519,93 @@ ORDER BY periodo, es_total_sistema, razon_social
 """,
     },
     {
+        "id": "ffmm_balance_fondo",
+        "titulo": "Fondos mutuos: balance anual por fondo",
+        "descripcion": "Activo, pasivo y activo neto de cada fondo mutuo al 31 de diciembre de cada año, tal como lo reporta la CMF.",
+        "sector": "ffmm",
+        "nivel": "nucleo",
+        "periodicidad": "Anual",
+        "grano": "año × fondo",
+        "unidad": "Miles de la moneda del fondo (CLP, USD o EUR; no sumar monedas distintas)",
+        "objetos": ["ffmm_balance"],
+        "columnas": [
+            ("periodo", "TEXT", "dimension"),
+            ("fecha", "DATE", "dimension"),
+            ("run_fondo", "TEXT", "dimension"),
+            ("nombre_fondo", "TEXT", "dimension"),
+            ("rut_agf", "TEXT", "dimension"),
+            ("razon_social_agf", "TEXT", "dimension"),
+            ("moneda", "TEXT", "dimension"),
+            ("activo_miles_mf", "NUMBER", "metric"),
+            ("pasivo_miles_mf", "NUMBER", "metric"),
+            ("activo_neto_miles_mf", "NUMBER", "metric"),
+            ("pasivo_sobre_activo_pct", "NUMBER", "metric", "avg"),
+        ],
+        "sql": f"""
+WITH totales AS (
+  SELECT periodo, run_fondo,
+         max(nombre_fondo) AS nombre_fondo,
+         max(rut_agf) AS rut_agf,
+         max(razon_social_agf) AS razon_social_agf,
+         max(moneda) AS moneda,
+         max(CASE WHEN seccion = 'ACTIVO' AND tipo_linea = 'total' THEN valor_miles_mf END) AS activo,
+         max(CASE WHEN seccion = 'PASIVO' AND tipo_linea = 'total' THEN valor_miles_mf END) AS pasivo,
+         max(CASE WHEN seccion = 'ACTIVO NETO' AND tipo_linea = 'total' THEN valor_miles_mf END) AS activo_neto
+  FROM ffmm_balance
+  WHERE periodo IS NOT NULL AND length(periodo) = 7
+  GROUP BY periodo, run_fondo
+)
+SELECT periodo, {FECHA_DESDE_PERIODO} AS fecha, run_fondo, nombre_fondo, rut_agf,
+       razon_social_agf, moneda,
+       activo AS activo_miles_mf,
+       pasivo AS pasivo_miles_mf,
+       activo_neto AS activo_neto_miles_mf,
+       CAST(round(100.0 * pasivo / activo, 2) AS DOUBLE) AS pasivo_sobre_activo_pct
+FROM totales
+ORDER BY periodo, run_fondo
+""",
+    },
+    {
+        "id": "ffmm_balance_cuentas",
+        "titulo": "Fondos mutuos: composición del balance por cuenta",
+        "descripcion": "Detalle de las líneas de activo y pasivo sumadas por moneda, con la participación de cada cuenta. Los totales del balance no se incluyen: ya suman sus detalles.",
+        "sector": "ffmm",
+        "nivel": "nucleo",
+        "periodicidad": "Anual",
+        "grano": "año × moneda × sección × cuenta",
+        "unidad": "Miles de la moneda del fondo (CLP, USD o EUR; no sumar monedas distintas)",
+        "objetos": ["ffmm_balance"],
+        "columnas": [
+            ("periodo", "TEXT", "dimension"),
+            ("fecha", "DATE", "dimension"),
+            ("moneda", "TEXT", "dimension"),
+            ("seccion", "TEXT", "dimension"),
+            ("codigo_cuenta", "TEXT", "dimension"),
+            ("cuenta", "TEXT", "dimension"),
+            ("fondos", "NUMBER", "metric"),
+            ("monto_miles_mf", "NUMBER", "metric"),
+            ("participacion_pct", "NUMBER", "metric", "avg"),
+        ],
+        "sql": f"""
+WITH base AS (
+  SELECT periodo, moneda, seccion, codigo_cuenta,
+         max(cuenta) AS cuenta,
+         count(DISTINCT run_fondo) AS fondos,
+         sum(valor_miles_mf) AS monto
+  FROM ffmm_balance
+  WHERE tipo_linea = 'detalle'
+    AND seccion IN ('ACTIVO', 'PASIVO')
+    AND periodo IS NOT NULL AND length(periodo) = 7
+  GROUP BY periodo, moneda, seccion, codigo_cuenta
+)
+SELECT periodo, {FECHA_DESDE_PERIODO} AS fecha, moneda, seccion, codigo_cuenta, cuenta, fondos,
+       CAST(round(CAST(monto AS DOUBLE), 2) AS DECIMAL(20, 2)) AS monto_miles_mf,
+       CAST(round(100.0 * monto / sum(monto) OVER (PARTITION BY periodo, moneda, seccion), 4) AS DOUBLE) AS participacion_pct
+FROM base
+ORDER BY periodo, moneda, seccion, monto DESC
+""",
+    },
+    {
         "id": "macro_series_mensual",
         "titulo": "Macro: series del Banco Central, cierre de mes",
         "descripcion": "Series macro en formato largo, con el último dato disponible de cada mes. Sirve como contexto de los marts sectoriales.",

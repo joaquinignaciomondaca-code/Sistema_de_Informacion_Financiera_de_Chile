@@ -11,7 +11,7 @@ Parquet que publica el sitio.
 
 | Pieza | Qué es |
 |---|---|
-| `marts/{id}.csv` | 10 tablas agregadas (≈6,7 MB, ≈94.000 filas) listas para graficar. |
+| `marts/{id}.csv` | 12 tablas agregadas (≈7,9 MB, ≈102.000 filas) listas para graficar. |
 | `catalogo.json` | Qué mart existe, qué columnas tiene, cuál es su grano, su unidad y su `sha256`. |
 | `conector/` | Conector comunitario de Looker Studio (Apps Script) que sirve esos marts como fuente de datos. |
 
@@ -175,6 +175,12 @@ Es la ruta más corta para un equipo que ya usa DuckDB, pero agrega una dependen
 | `bancos_totales` | mes × banco | CLP | activos, pasivos, patrimonio y colocaciones |
 | `macro_series_mensual` | mes × serie | según `unidad` | contexto macro de cualquier informe |
 | `macro_series_diaria` | día × serie | según `unidad` | TPM, dólar, UF, cobre, bonos |
+| `ffmm_balance_fondo` | año × fondo | miles de la moneda del fondo | activo, pasivo y activo neto anual |
+| `ffmm_balance_cuentas` | año × moneda × sección × cuenta | miles de la moneda del fondo | composición del balance |
+
+**Recetas paso a paso:** [`recetas/fondos_mutuos_balance.md`](recetas/fondos_mutuos_balance.md)
+arma el dashboard de fondos mutuos con estos dos marts, con las cifras de control para
+verificar que quedó bien configurado.
 
 Todas traen `periodo` (`AAAA-MM`) y `fecha` (primer día del período, tipo fecha). Las claves
 de entidad son las mismas del catálogo API: `rut_aseguradora`, `run_fondo`, `rut`,

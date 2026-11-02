@@ -245,7 +245,7 @@ Hay ejemplos ejecutables en Python, R y JavaScript, y una guía para agentes con
 
 Looker Studio no abre Parquet y el sitio no tiene un motor SQL remoto, así que el repositorio
 publica **marts** —tablas agregadas en CSV, con grano y unidad declarados— en
-[`docs/looker/`](docs/looker/): 10 tablas, ≈6,7 MB, más un conector comunitario de Apps Script
+[`docs/looker/`](docs/looker/): 12 tablas, ≈7,9 MB, más un conector comunitario de Apps Script
 que las sirve como fuente de datos. Para el detalle de los 19 millones de filas hay un cargador
 a BigQuery (`scripts/cargar_bigquery.py`) y la conexión nativa de Looker Studio. Los cinco
 caminos, con sus límites, están en [`docs/looker/README.md`](docs/looker/README.md).
