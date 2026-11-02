@@ -33,7 +33,6 @@ with sync_playwright() as p:
             if zipfile.is_zipfile(dest):
                 with zipfile.ZipFile(dest, 'r') as z:
                     print(f"Contenido ZIP: {z.namelist()[:5]}")
-            # Eliminar inmediatamente como pidió el usuario
             os.remove(dest)
             print("Archivo ZIP eliminado tras prueba.")
         else:
