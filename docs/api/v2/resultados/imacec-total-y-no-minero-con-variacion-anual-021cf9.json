@@ -3,7 +3,7 @@
  "id": "imacec-total-y-no-minero-con-variacion-anual-021cf9",
  "titulo": "Imacec total y no minero con variación anual",
  "origen": "explorador",
- "data_release": "2026-11-01.f78c10c895e1",
+ "data_release": "2026-11-02.6a08302803cc",
  "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
@@ -16,13 +16,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2024-09",
-   106.76004032031,
-   0.82,
-   108.31479200756,
-   94.014458023205
-  ],
   [
    "2024-10",
    113.36873265565,
@@ -183,6 +176,13 @@
    -1.15,
    115.914071613751,
    69.9308987316024
+  ],
+  [
+   "2026-09",
+   110.006179845796,
+   0.09,
+   115.235000525191,
+   79.20702661556
   ]
  ],
  "sql": "SELECT periodo, imacec_empalmado_indice, round((imacec_empalmado_indice / lag(imacec_empalmado_indice, 12) OVER (ORDER BY periodo) - 1) * 100, 2) AS imacec_var_anual_pct, imacec_no_minero_indice, imacec_minero_indice FROM macro_imacec ORDER BY periodo DESC LIMIT 24;",

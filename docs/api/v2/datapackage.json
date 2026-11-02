@@ -1,5 +1,5 @@
 {
- "created": "2026-11-01T00:00:00",
+ "created": "2026-11-02T00:00:00",
  "description": "Datos financieros chilenos normalizados a Parquet desde fuentes públicas (CMF y Banco Central de Chile, entre otras), con esquema verificado y claves comprobadas sobre todas las filas publicadas.",
  "homepage": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile",
  "licenses": [
@@ -9232,10 +9232,10 @@
    "title": "fintech.rpsf_maestro"
   },
   {
-   "bytes": 33195,
+   "bytes": 33207,
    "description": "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes).",
    "format": "parquet",
-   "hash": "e56e0b6a9c7d8097819873bd6cb45267f8a72f69a52cb955d18ecb6bead1fe28",
+   "hash": "e59128861776b93754fa6d134403ccd63d5b02a8cfe65cfc53be54fc673c1278",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9286,11 +9286,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-10-30",
+    "corte": "2014-01-01 a 2026-11-02",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3267,
+    "filas": 3268,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_cobre",
@@ -9298,16 +9298,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 33195,
-      "filas": 3267,
+      "bytes": 33207,
+      "filas": 3268,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_cobre.parquet",
-      "sha256": "3322b2236f62eac128498566addbb94494d7294ec0b1b23d8c3a0ae3c65fab3e"
+      "sha256": "f93069d610b8d10cff5b8b8c4a05af4bed50fa2ba138a757ff7d69c0a886baf0"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_cobre",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9403,7 +9403,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_curva_bonos_pesos",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9517,7 +9517,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_curva_bonos_uf",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9601,7 +9601,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_deuda_publica_pct_pib",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9616,10 +9616,10 @@
    "title": "macro.deuda_publica_pct_pib"
   },
   {
-   "bytes": 24749,
+   "bytes": 24756,
    "description": "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central.",
    "format": "parquet",
-   "hash": "fd1b93589fea4d58bf5510b507eb79b351c7ed3dd22d385379e6134da896507d",
+   "hash": "d8e7f09cf7482b0f0641356597484f6cf0064710fa5bbdcda5a3c26a520376f2",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9664,11 +9664,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-30",
+    "corte": "2014-01-02 a 2026-11-02",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3195,
+    "filas": 3196,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_dolar_observado",
@@ -9676,16 +9676,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 24749,
-      "filas": 3195,
+      "bytes": 24756,
+      "filas": 3196,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_dolar_observado.parquet",
-      "sha256": "f88131e7102a84ff3c301d473c0ac67c9cb896044a015f2373d622fb4c00b75d"
+      "sha256": "6217064b6112e0aac77849ec481620add656807e7d0f6e9aa592753613b61659"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_dolar_observado",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9700,10 +9700,10 @@
    "title": "macro.dolar_observado"
   },
   {
-   "bytes": 24571,
+   "bytes": 24578,
    "description": "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central.",
    "format": "parquet",
-   "hash": "10fd7152b74ed0cc9a13d3f045434b16f6dc89a8a2ab04282b8ba5be021a4165",
+   "hash": "9b71ecf613f1ea09bb49bcf798ec19954dc5829f29f7bd0bd05c9fa4685ffad1",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9748,11 +9748,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-30",
+    "corte": "2014-01-02 a 2026-11-02",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3195,
+    "filas": 3196,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_euro_observado",
@@ -9760,16 +9760,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 24571,
-      "filas": 3195,
+      "bytes": 24578,
+      "filas": 3196,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_euro_observado.parquet",
-      "sha256": "5ced945ec467b1a513a72de023b88be329f184f7570f909631c4f1a944b03172"
+      "sha256": "206d633a6ee4c00b75c09540d143037b7a5e913c266cdc59a825bd8773db7ac2"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_euro_observado",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9859,7 +9859,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_inflacion",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9949,7 +9949,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_operadores",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10039,7 +10039,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_tpm",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10054,10 +10054,10 @@
    "title": "macro.expectativas_tpm"
   },
   {
-   "bytes": 12252,
+   "bytes": 12346,
    "description": "Imacec a costo de factores, series empalmadas del BCCh (índice 2018=100): total, no minero, minero, comercio y servicios.",
    "format": "parquet",
-   "hash": "e0e58c4689cf16e73b362a0ec7cbc837c6767931704a601641ad2e2f6c3940af",
+   "hash": "8a1a13c23f0a55db946858112d6ea8e07a09a6c1ab2994c0e1c1351a7d16d5d7",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10126,11 +10126,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-08-01",
+    "corte": "2014-01-01 a 2026-09-01",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 152,
+    "filas": 153,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_imacec",
@@ -10138,16 +10138,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 12252,
-      "filas": 152,
+      "bytes": 12346,
+      "filas": 153,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_imacec.parquet",
-      "sha256": "ac58ff721884ca7ed556ed05b66249ffd6ffd5d6527bc4aaf6d4e06aa45a6f53"
+      "sha256": "0a1f0a40c93a13759d24495bbd4674f443670031ff636d57d9c1bf015877a100"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_imacec",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10237,7 +10237,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_inflacion_implicita",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10333,7 +10333,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_inflacion_ipc",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10435,7 +10435,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_mercado_laboral",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10450,10 +10450,10 @@
    "title": "macro.mercado_laboral"
   },
   {
-   "bytes": 46957,
+   "bytes": 46972,
    "description": "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central.",
    "format": "parquet",
-   "hash": "09ed7743a195c423d749c02fddd54c94c01f510760b07444cafcef0913a1937d",
+   "hash": "66c77af4c82fd1b7741a471a8e0bcefe54f3106f4319c8f4ae4f3eda90f39adb",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10504,11 +10504,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-30",
+    "corte": "2014-01-02 a 2026-11-02",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3195,
+    "filas": 3196,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_metales_preciosos",
@@ -10516,16 +10516,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 46957,
-      "filas": 3195,
+      "bytes": 46972,
+      "filas": 3196,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_metales_preciosos.parquet",
-      "sha256": "60f79785f59faf9f9e6964b65da18f886d1e4306c8ebf338c60da93f3f4a7a55"
+      "sha256": "8e45ffadd54ec943a3f938ffe2a11b8e2b1d1e204d61c5dce1912e614f093d08"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_metales_preciosos",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10609,7 +10609,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_pib_trimestral",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10693,7 +10693,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_reservas_internacionales",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10711,7 +10711,7 @@
    "bytes": 10897,
    "description": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
    "format": "parquet",
-   "hash": "b8d2604f1ecc70f3a155bc979ba2cdeae2cb3bc120397133bb7d531a84fae532",
+   "hash": "c4e8f95799b5614bd5612a4888c37e3f1fe7922a0b9224dc48d7c8a1bb84eac3",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10810,7 +10810,7 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-11-01",
+    "corte": "2014-01-01 a 2026-11-02",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": "2026-10-21",
@@ -10825,13 +10825,13 @@
       "bytes": 10897,
       "filas": 51,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_series_catalogo.parquet",
-      "sha256": "15838f4af80323c6a997b2ffe69aa86ddf620658f0109e2407c32489acc244b3"
+      "sha256": "0e5cb46b2f62cecef07eed321101d5f7618ab5466b4434d2d23ef324563d5f81"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_series_catalogo",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10846,10 +10846,10 @@
    "title": "macro.series_catalogo"
   },
   {
-   "bytes": 79342,
+   "bytes": 79343,
    "description": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
    "format": "parquet",
-   "hash": "d6f639ce63a4ee5a3e172389b1755bf8953c3e61816a3f3b6c7ec8dd8d14c8f6",
+   "hash": "a6181ad345e26e92086fd80abc28076081933f6a78e0945f12b0d174a09a7aa4",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10930,16 +10930,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 79342,
+      "bytes": 79343,
       "filas": 3210,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_swaps_camara.parquet",
-      "sha256": "72187fcd5a48028d250459a97d1639765e02864f38ec2ff0924701fb150a4d53"
+      "sha256": "be9012b8061584c7730ffa13451ff5cf85a5fc57efb77c7bec7687af8aecefea"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_swaps_camara",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11023,7 +11023,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tasa_referencia_fed",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11038,10 +11038,10 @@
    "title": "macro.tasa_referencia_fed"
   },
   {
-   "bytes": 13701,
+   "bytes": 13709,
    "description": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje.",
    "format": "parquet",
-   "hash": "55be80c3611cd6a20e8785233289facd61b31e97127469593ade9372436d291d",
+   "hash": "edeb54de6f6964c50f1cefb01861bd945f29f284b23dd79372bbe157545b83eb",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11092,11 +11092,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-30",
+    "corte": "2014-01-02 a 2026-11-02",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3196,
+    "filas": 3197,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_tasas_corto_plazo",
@@ -11104,16 +11104,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 13701,
-      "filas": 3196,
+      "bytes": 13709,
+      "filas": 3197,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tasas_corto_plazo.parquet",
-      "sha256": "50cf58b34bcf1439bf4e0a7b3efffbaf47c941102c89ae848b64e2f7eb858f22"
+      "sha256": "2a5cb225e7a4f1ed1130dab18afe38b3dde7132cdf92819e2c24653a28f32368"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tasas_corto_plazo",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11128,10 +11128,10 @@
    "title": "macro.tasas_corto_plazo"
   },
   {
-   "bytes": 42541,
+   "bytes": 42553,
    "description": "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X.",
    "format": "parquet",
-   "hash": "6dfde0039ebf55cec9c91703b2be403de620f7d4bd23fa707b8fec978e7eaef8",
+   "hash": "33b4be4acffe7b468686e2172bbaa31c61777dc3ced5cc8e76eb35591522b371",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11188,11 +11188,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-30",
+    "corte": "2014-01-02 a 2026-11-02",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3195,
+    "filas": 3196,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_tipo_cambio_multilateral",
@@ -11200,16 +11200,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 42541,
-      "filas": 3195,
+      "bytes": 42553,
+      "filas": 3196,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tipo_cambio_multilateral.parquet",
-      "sha256": "980a83539a07c05738439c4b16e11c4d861745bff5941c020435131f54c02928"
+      "sha256": "9f3a7afbc7511e1824f1df22ca3826c92dab8d56913d8a6ee965ecd027877e24"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tipo_cambio_multilateral",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11299,7 +11299,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tipo_cambio_real",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11314,10 +11314,10 @@
    "title": "macro.tipo_cambio_real"
   },
   {
-   "bytes": 35444,
+   "bytes": 35464,
    "description": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
    "format": "parquet",
-   "hash": "c16bc162ac9646613c73af290d2333b9bffcdd5a76e6dacfe6b4cecfcb6b737d",
+   "hash": "5b7c0bd5aa5ad8ab59bcdae8aa1b59a5fa7e8fcac4177c83cbdf79ba46606aad",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11362,11 +11362,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-11-01",
+    "corte": "2014-01-01 a 2026-11-02",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 4688,
+    "filas": 4689,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_uf",
@@ -11374,16 +11374,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 35444,
-      "filas": 4688,
+      "bytes": 35464,
+      "filas": 4689,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_uf.parquet",
-      "sha256": "9553129216fc309861225438853b0422b1c707ca15e1176bf294d3a3951436e0"
+      "sha256": "adca0be8fab730c4152581ada7dced5091b3624d60e8305f8575c3c8c6a20584"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_uf",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11467,7 +11467,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_utm",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-02",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -19205,9 +19205,9 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-11-01.f78c10c895e1",
+  "data_release": "2026-11-02.6a08302803cc",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
-  "filas_unicas": 19814973,
+  "filas_unicas": 19814981,
   "identificador": {
    "aliases": "los nombres heredados se publican por recurso en sif.aliases y no son identificadores",
    "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",
