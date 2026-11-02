@@ -3,8 +3,8 @@
  "id": "curva-de-bonos-en-uf-ultimo-dato-disponible-por--bce2e5",
  "titulo": "Curva de bonos en UF: último dato disponible por plazo",
  "origen": "explorador",
- "data_release": "2026-10-30.db40671ee177",
- "generado": "2026-10-31",
+ "data_release": "2026-11-01.4d68fa3eb6f8",
+ "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
   "fecha",
@@ -18,15 +18,6 @@
  "filas": 20,
  "truncado": false,
  "datos": [
-  [
-   "2026-09-30",
-   null,
-   1.8,
-   2.49,
-   2.82,
-   null,
-   null
-  ],
   [
    "2026-10-01",
    null,
@@ -197,6 +188,15 @@
    2.62,
    null,
    2.78
+  ],
+  [
+   "2026-10-29",
+   null,
+   1.53,
+   2.25,
+   2.6,
+   null,
+   null
   ]
  ],
  "sql": "SELECT fecha, rendimiento_bono_uf_1_ano_pct, rendimiento_bono_uf_2_anos_pct, rendimiento_bono_uf_5_anos_pct, rendimiento_bono_uf_10_anos_pct, rendimiento_bono_uf_20_anos_pct, rendimiento_bono_uf_30_anos_pct FROM macro_curva_bonos_uf ORDER BY fecha DESC LIMIT 20;",

@@ -395,12 +395,19 @@
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/balance_b1_b2/2026-08/lineas.parquet",
    "periodo": "2026-08",
    "sha256": "65639b71bf97f7bc922f0136ed223972c883e79344e2d1b681d7fcd464eb7852"
+  },
+  {
+   "archivo": "outputs/bancos/balance_b1_b2/2026-09/lineas.parquet",
+   "bytes": 130704,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/balance_b1_b2/2026-09/lineas.parquet",
+   "periodo": "2026-09",
+   "sha256": "1ea067f70fc21f53aab3c8892880b639fbbad62253327c7ed6c848aaf5b8536e"
   }
  ],
  "total": {
-  "archivos": 56,
-  "bytes": 7054110,
-  "filas": 722931
+  "archivos": 57,
+  "bytes": 7184814,
+  "filas": 735837
  },
  "version": "2.3.0"
 }

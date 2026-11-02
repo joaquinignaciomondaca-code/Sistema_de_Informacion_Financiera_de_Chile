@@ -50,6 +50,11 @@ snapshot/
 # Evidencia de la prueba de máquina limpia (tarea 1a.8).
 !docs/api/prueba_maquina_limpia.log
 
+# Descargas pre-construidas (CSV/JSON combinados por scripts/build_download_exports.py):
+# se publican junto al Parquet para que Power BI y Data Studio los lean directamente,
+# sin que el visitante tenga que generar nada en el navegador.
+!docs/outputs/**/*.completo.csv
+
 # Paquete de Python: lo generado al instalar en modo editable
 *.egg-info/
 build/

@@ -22,7 +22,12 @@ CATALOG = DOCS / "api" / "v2" / "catalog.json"
 MIB = 1024**2
 GIB = 1024**3
 LIMITE_GH_PAGES = 900 * MIB
-AVISO = 750 * MIB
+# El AVISO se mueve con la nueva política de descargas: además del Parquet, el
+# sitio publica CSV y JSON ya generados (scripts/build_download_exports.py) para
+# que Power BI y Data Studio consuman series largas sin generar nada en el
+# navegador. Eso sitúa al sitio cerca de 830 MiB; el AVISO deja margen para un
+# mes de crecimiento antes del límite preventivo de 900 MiB.
+AVISO = 870 * MIB
 
 # Los cuatro Parquet sin contrato/manifest propio se conservan como muestras o
 # registros de proceso citados por su módulo. Mantener la lista explícita impide
@@ -186,9 +191,32 @@ def main() -> int:
         print("FALLA: docs/ llegó al umbral preventivo; reducir o externalizar archivos antes de publicar.")
         return 1
     if total >= AVISO:
-        print("AVISO: el sitio está sobre 750 MiB; revisar el crecimiento antes del próximo despliegue.")
+        print(f"AVISO: el sitio está sobre {AVISO / MIB:.0f} MiB; revisar el crecimiento antes del próximo despliegue.")
     else:
         print("OK: el tamaño publicado conserva margen bajo el umbral preventivo.")
+
+    # Peso de las descargas pre-construidas (CSV/JSON): no son Parquet y no
+    # entran en el inventario de arriba, pero sí en el presupuesto de la
+    # página. Se reportan para que el crecimiento de este bloque sea visible.
+    exportes_path = DOCS / "outputs" / "_exportes.json"
+    if exportes_path.exists():
+        try:
+            exportes = json_leer(exportes_path)
+            peso_csv = sum(
+                int(e["csv"]["bytes"]) for e in exportes.get("conjuntos", {}).values() if e.get("csv")
+            )
+            peso_json = sum(
+                int(e["json"]["bytes"]) for e in exportes.get("conjuntos", {}).values() if e.get("json")
+            )
+            conteo_csv = sum(1 for e in exportes.get("conjuntos", {}).values() if e.get("csv"))
+            conteo_json = sum(1 for e in exportes.get("conjuntos", {}).values() if e.get("json"))
+            print(
+                f"Descargas pre-construidas (CSV/JSON): {conteo_csv} CSV · {conteo_json} JSON · "
+                f"{(peso_csv + peso_json) / MIB:.1f} MiB en total (límite por archivo: 100 MB)."
+            )
+        except (KeyError, TypeError, ValueError, json.JSONDecodeError) as exc:
+            print(f"FALLA: no se pudo leer el índice de exportaciones ({exc})")
+            return 1
     return 0
 
 

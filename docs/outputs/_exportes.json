@@ -1,0 +1,7021 @@
+{
+ "conjuntos": {
+  "seguros_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/aseguradoras.parquet",
+     "bytes": 6746
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/aseguradoras.completo.csv",
+    "bytes": 6487,
+    "filas": 84
+   },
+   "json": {
+    "ruta": "outputs/seguros/aseguradoras.completo.json",
+    "bytes": 17625
+   },
+   "nota": null,
+   "filas": 84,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/aseguradoras.parquet",
+      "bytes": 6746
+     }
+    ],
+    "where": "",
+    "filas": 84
+   }
+  },
+  "seguros_renta_fija": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/renta_fija/2024-12.parquet",
+     "bytes": 10256294
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-01.parquet",
+     "bytes": 10263047
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-02.parquet",
+     "bytes": 10295460
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-03.parquet",
+     "bytes": 10420648
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-04.parquet",
+     "bytes": 10404709
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-05.parquet",
+     "bytes": 10416424
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-06.parquet",
+     "bytes": 10477835
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-07.parquet",
+     "bytes": 10484982
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-08.parquet",
+     "bytes": 10536141
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-09.parquet",
+     "bytes": 10549040
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-10.parquet",
+     "bytes": 10549703
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-11.parquet",
+     "bytes": 10609004
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2025-12.parquet",
+     "bytes": 10641306
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-01.parquet",
+     "bytes": 10691034
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-02.parquet",
+     "bytes": 10695002
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-03.parquet",
+     "bytes": 10693658
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-04.parquet",
+     "bytes": 10685738
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-05.parquet",
+     "bytes": 10692110
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-06.parquet",
+     "bytes": 10670771
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-07.parquet",
+     "bytes": 10668436
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-08.parquet",
+     "bytes": 10641047
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-09.parquet",
+     "bytes": 10621493
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": "Parquet por encima del tope de generación",
+   "filas": 2321911
+  },
+  "seguros_acciones": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/acciones/2016.parquet",
+     "bytes": 93032
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2017.parquet",
+     "bytes": 296118
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2018.parquet",
+     "bytes": 273273
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2019.parquet",
+     "bytes": 273749
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2020.parquet",
+     "bytes": 277825
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2021.parquet",
+     "bytes": 283598
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2022.parquet",
+     "bytes": 300807
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2023.parquet",
+     "bytes": 280228
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2024.parquet",
+     "bytes": 286669
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2025.parquet",
+     "bytes": 287342
+    },
+    {
+     "ruta": "outputs/seguros/acciones/2026.parquet",
+     "bytes": 239918
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/acciones/acciones.completo.csv",
+    "bytes": 26904209,
+    "filas": 109019
+   },
+   "json": null,
+   "nota": null,
+   "filas": 109019,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/acciones/2016.parquet",
+      "bytes": 93032
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2017.parquet",
+      "bytes": 296118
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2018.parquet",
+      "bytes": 273273
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2019.parquet",
+      "bytes": 273749
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2020.parquet",
+      "bytes": 277825
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2021.parquet",
+      "bytes": 283598
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2022.parquet",
+      "bytes": 300807
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2023.parquet",
+      "bytes": 280228
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2024.parquet",
+      "bytes": 286669
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2025.parquet",
+      "bytes": 287342
+     },
+     {
+      "ruta": "outputs/seguros/acciones/2026.parquet",
+      "bytes": 239918
+     }
+    ],
+    "where": "",
+    "filas": 109019
+   }
+  },
+  "seguros_fondos_mutuos": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2016.parquet",
+     "bytes": 76395
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2017.parquet",
+     "bytes": 313803
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2018.parquet",
+     "bytes": 349961
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2019.parquet",
+     "bytes": 322295
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2020.parquet",
+     "bytes": 346013
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2021.parquet",
+     "bytes": 326685
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2022.parquet",
+     "bytes": 311962
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2023.parquet",
+     "bytes": 285500
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2024.parquet",
+     "bytes": 279814
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2025.parquet",
+     "bytes": 266714
+    },
+    {
+     "ruta": "outputs/seguros/fondos_mutuos/2026.parquet",
+     "bytes": 179101
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/fondos_mutuos/fondos_mutuos.completo.csv",
+    "bytes": 21772819,
+    "filas": 100472
+   },
+   "json": null,
+   "nota": null,
+   "filas": 100472,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2016.parquet",
+      "bytes": 76395
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2017.parquet",
+      "bytes": 313803
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2018.parquet",
+      "bytes": 349961
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2019.parquet",
+      "bytes": 322295
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2020.parquet",
+      "bytes": 346013
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2021.parquet",
+      "bytes": 326685
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2022.parquet",
+      "bytes": 311962
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2023.parquet",
+      "bytes": 285500
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2024.parquet",
+      "bytes": 279814
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2025.parquet",
+      "bytes": 266714
+     },
+     {
+      "ruta": "outputs/seguros/fondos_mutuos/2026.parquet",
+      "bytes": 179101
+     }
+    ],
+    "where": "",
+    "filas": 100472
+   }
+  },
+  "seguros_bienes_raices": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/bienes_raices/2024-12.parquet",
+     "bytes": 1361045
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-01.parquet",
+     "bytes": 1444758
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-02.parquet",
+     "bytes": 1464705
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-03.parquet",
+     "bytes": 1489671
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-04.parquet",
+     "bytes": 1497634
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-05.parquet",
+     "bytes": 1540935
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-06.parquet",
+     "bytes": 1516505
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-07.parquet",
+     "bytes": 1518410
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-08.parquet",
+     "bytes": 1557725
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-09.parquet",
+     "bytes": 1527494
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-10.parquet",
+     "bytes": 1519005
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-11.parquet",
+     "bytes": 1514695
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2025-12.parquet",
+     "bytes": 1514873
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-01.parquet",
+     "bytes": 1535469
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-02.parquet",
+     "bytes": 1538990
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-03.parquet",
+     "bytes": 1564171
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-04.parquet",
+     "bytes": 1562349
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-05.parquet",
+     "bytes": 1564289
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-06.parquet",
+     "bytes": 1561556
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-07.parquet",
+     "bytes": 1597640
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-08.parquet",
+     "bytes": 1591774
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-09.parquet",
+     "bytes": 1588246
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 760152,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/bienes_raices/2024-12.parquet",
+      "bytes": 1361045
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-01.parquet",
+      "bytes": 1444758
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-02.parquet",
+      "bytes": 1464705
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-03.parquet",
+      "bytes": 1489671
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-04.parquet",
+      "bytes": 1497634
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-05.parquet",
+      "bytes": 1540935
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-06.parquet",
+      "bytes": 1516505
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-07.parquet",
+      "bytes": 1518410
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-08.parquet",
+      "bytes": 1557725
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-09.parquet",
+      "bytes": 1527494
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-10.parquet",
+      "bytes": 1519005
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-11.parquet",
+      "bytes": 1514695
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2025-12.parquet",
+      "bytes": 1514873
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-01.parquet",
+      "bytes": 1535469
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-02.parquet",
+      "bytes": 1538990
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-03.parquet",
+      "bytes": 1564171
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-04.parquet",
+      "bytes": 1562349
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-05.parquet",
+      "bytes": 1564289
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-06.parquet",
+      "bytes": 1561556
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-07.parquet",
+      "bytes": 1597640
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-08.parquet",
+      "bytes": 1591774
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-09.parquet",
+      "bytes": 1588246
+     }
+    ],
+    "where": "",
+    "filas": 760152
+   }
+  },
+  "seguros_extranjeros": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/extranjeros/2016.parquet",
+     "bytes": 276865
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2017.parquet",
+     "bytes": 903160
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2018.parquet",
+     "bytes": 985945
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2019.parquet",
+     "bytes": 1035622
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2020.parquet",
+     "bytes": 1007865
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2021.parquet",
+     "bytes": 1006684
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2022.parquet",
+     "bytes": 1104769
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2023.parquet",
+     "bytes": 1363296
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2024.parquet",
+     "bytes": 1501546
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2025.parquet",
+     "bytes": 1739755
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros/2026.parquet",
+     "bytes": 1563494
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 471942,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/extranjeros/2016.parquet",
+      "bytes": 276865
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2017.parquet",
+      "bytes": 903160
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2018.parquet",
+      "bytes": 985945
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2019.parquet",
+      "bytes": 1035622
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2020.parquet",
+      "bytes": 1007865
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2021.parquet",
+      "bytes": 1006684
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2022.parquet",
+      "bytes": 1104769
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2023.parquet",
+      "bytes": 1363296
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2024.parquet",
+      "bytes": 1501546
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2025.parquet",
+      "bytes": 1739755
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros/2026.parquet",
+      "bytes": 1563494
+     }
+    ],
+    "where": "",
+    "filas": 471942
+   }
+  },
+  "seguros_derivados": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/derivados/2016.parquet",
+     "bytes": 277106
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2017.parquet",
+     "bytes": 1035246
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2018.parquet",
+     "bytes": 1120448
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2019.parquet",
+     "bytes": 1053564
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2020.parquet",
+     "bytes": 1083612
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2021.parquet",
+     "bytes": 1113190
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2022.parquet",
+     "bytes": 1079244
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2023.parquet",
+     "bytes": 1131558
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2024.parquet",
+     "bytes": 1461231
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2025.parquet",
+     "bytes": 2458706
+    },
+    {
+     "ruta": "outputs/seguros/derivados/2026.parquet",
+     "bytes": 2086193
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 373469,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/derivados/2016.parquet",
+      "bytes": 277106
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2017.parquet",
+      "bytes": 1035246
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2018.parquet",
+      "bytes": 1120448
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2019.parquet",
+      "bytes": 1053564
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2020.parquet",
+      "bytes": 1083612
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2021.parquet",
+      "bytes": 1113190
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2022.parquet",
+      "bytes": 1079244
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2023.parquet",
+      "bytes": 1131558
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2024.parquet",
+      "bytes": 1461231
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2025.parquet",
+      "bytes": 2458706
+     },
+     {
+      "ruta": "outputs/seguros/derivados/2026.parquet",
+      "bytes": 2086193
+     }
+    ],
+    "where": "",
+    "filas": 373469
+   }
+  },
+  "seguros_pactos": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/pactos/2016.parquet",
+     "bytes": 28234
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2017.parquet",
+     "bytes": 60021
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2018.parquet",
+     "bytes": 50584
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2019.parquet",
+     "bytes": 36104
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2020.parquet",
+     "bytes": 39653
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2021.parquet",
+     "bytes": 50587
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2022.parquet",
+     "bytes": 56719
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2023.parquet",
+     "bytes": 58043
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2024.parquet",
+     "bytes": 90148
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2025.parquet",
+     "bytes": 79279
+    },
+    {
+     "ruta": "outputs/seguros/pactos/2026.parquet",
+     "bytes": 79081
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/pactos/pactos.completo.csv",
+    "bytes": 2703591,
+    "filas": 11371
+   },
+   "json": null,
+   "nota": null,
+   "filas": 11371,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/pactos/2016.parquet",
+      "bytes": 28234
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2017.parquet",
+      "bytes": 60021
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2018.parquet",
+      "bytes": 50584
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2019.parquet",
+      "bytes": 36104
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2020.parquet",
+      "bytes": 39653
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2021.parquet",
+      "bytes": 50587
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2022.parquet",
+      "bytes": 56719
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2023.parquet",
+      "bytes": 58043
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2024.parquet",
+      "bytes": 90148
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2025.parquet",
+      "bytes": 79279
+     },
+     {
+      "ruta": "outputs/seguros/pactos/2026.parquet",
+      "bytes": 79081
+     }
+    ],
+    "where": "",
+    "filas": 11371
+   }
+  },
+  "seguros_control_inversiones": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/control_inversiones/2016.parquet",
+     "bytes": 46189
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2017.parquet",
+     "bytes": 191009
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2018.parquet",
+     "bytes": 194689
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2019.parquet",
+     "bytes": 187449
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2020.parquet",
+     "bytes": 189864
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2021.parquet",
+     "bytes": 191533
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2022.parquet",
+     "bytes": 189913
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2023.parquet",
+     "bytes": 188546
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2024.parquet",
+     "bytes": 188072
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2025.parquet",
+     "bytes": 188804
+    },
+    {
+     "ruta": "outputs/seguros/control_inversiones/2026.parquet",
+     "bytes": 141038
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/control_inversiones/control_inversiones.completo.csv",
+    "bytes": 11074651,
+    "filas": 111410
+   },
+   "json": null,
+   "nota": null,
+   "filas": 111410,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/control_inversiones/2016.parquet",
+      "bytes": 46189
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2017.parquet",
+      "bytes": 191009
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2018.parquet",
+      "bytes": 194689
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2019.parquet",
+      "bytes": 187449
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2020.parquet",
+      "bytes": 189864
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2021.parquet",
+      "bytes": 191533
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2022.parquet",
+      "bytes": 189913
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2023.parquet",
+      "bytes": 188546
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2024.parquet",
+      "bytes": 188072
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2025.parquet",
+      "bytes": 188804
+     },
+     {
+      "ruta": "outputs/seguros/control_inversiones/2026.parquet",
+      "bytes": 141038
+     }
+    ],
+    "where": "",
+    "filas": 111410
+   }
+  },
+  "seguros_otras_inversiones": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/otras_inversiones/2024.parquet",
+     "bytes": 68897
+    },
+    {
+     "ruta": "outputs/seguros/otras_inversiones/2025.parquet",
+     "bytes": 357035
+    },
+    {
+     "ruta": "outputs/seguros/otras_inversiones/2026.parquet",
+     "bytes": 280254
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/otras_inversiones/otras_inversiones.completo.csv",
+    "bytes": 10791358,
+    "filas": 42494
+   },
+   "json": null,
+   "nota": null,
+   "filas": 42494,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/otras_inversiones/2024.parquet",
+      "bytes": 68897
+     },
+     {
+      "ruta": "outputs/seguros/otras_inversiones/2025.parquet",
+      "bytes": 357035
+     },
+     {
+      "ruta": "outputs/seguros/otras_inversiones/2026.parquet",
+      "bytes": 280254
+     }
+    ],
+    "where": "",
+    "filas": 42494
+   }
+  },
+  "seguros_tablas_descriptores": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/tablas_descriptores/2024.parquet",
+     "bytes": 15851
+    },
+    {
+     "ruta": "outputs/seguros/tablas_descriptores/2025.parquet",
+     "bytes": 66371
+    },
+    {
+     "ruta": "outputs/seguros/tablas_descriptores/2026.parquet",
+     "bytes": 58967
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/tablas_descriptores/tablas_descriptores.completo.csv",
+    "bytes": 1290968,
+    "filas": 9792
+   },
+   "json": {
+    "ruta": "outputs/seguros/tablas_descriptores/tablas_descriptores.completo.json",
+    "bytes": 4860174
+   },
+   "nota": null,
+   "filas": 9792,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/tablas_descriptores/2024.parquet",
+      "bytes": 15851
+     },
+     {
+      "ruta": "outputs/seguros/tablas_descriptores/2025.parquet",
+      "bytes": 66371
+     },
+     {
+      "ruta": "outputs/seguros/tablas_descriptores/2026.parquet",
+      "bytes": 58967
+     }
+    ],
+    "where": "",
+    "filas": 9792
+   }
+  },
+  "seguros_tablas_desarrollo": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/tablas_desarrollo/2024.parquet",
+     "bytes": 533876
+    },
+    {
+     "ruta": "outputs/seguros/tablas_desarrollo/2025.parquet",
+     "bytes": 12229117
+    },
+    {
+     "ruta": "outputs/seguros/tablas_desarrollo/2026.parquet",
+     "bytes": 2184145
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 2193981,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/tablas_desarrollo/2024.parquet",
+      "bytes": 533876
+     },
+     {
+      "ruta": "outputs/seguros/tablas_desarrollo/2025.parquet",
+      "bytes": 12229117
+     },
+     {
+      "ruta": "outputs/seguros/tablas_desarrollo/2026.parquet",
+      "bytes": 2184145
+     }
+    ],
+    "where": "",
+    "filas": 2193981
+   }
+  },
+  "seguros_flujos_activos_elegibles": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/flujos_activos_elegibles/2024.parquet",
+     "bytes": 22600
+    },
+    {
+     "ruta": "outputs/seguros/flujos_activos_elegibles/2025.parquet",
+     "bytes": 90080
+    },
+    {
+     "ruta": "outputs/seguros/flujos_activos_elegibles/2026.parquet",
+     "bytes": 64287
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/flujos_activos_elegibles/flujos_activos_elegibles.completo.csv",
+    "bytes": 636891,
+    "filas": 4369
+   },
+   "json": {
+    "ruta": "outputs/seguros/flujos_activos_elegibles/flujos_activos_elegibles.completo.json",
+    "bytes": 1790091
+   },
+   "nota": null,
+   "filas": 4369,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/flujos_activos_elegibles/2024.parquet",
+      "bytes": 22600
+     },
+     {
+      "ruta": "outputs/seguros/flujos_activos_elegibles/2025.parquet",
+      "bytes": 90080
+     },
+     {
+      "ruta": "outputs/seguros/flujos_activos_elegibles/2026.parquet",
+      "bytes": 64287
+     }
+    ],
+    "where": "",
+    "filas": 4369
+   }
+  },
+  "seguros_prestamos": {
+   "archivos": [],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": "sin archivos publicados"
+  },
+  "seguros_bienes_raices_arriendo_morosidad": {
+   "archivos": [],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": "sin archivos publicados"
+  },
+  "seguros_garantias_derivados": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/garantias_derivados/2024.parquet",
+     "bytes": 27139
+    },
+    {
+     "ruta": "outputs/seguros/garantias_derivados/2025.parquet",
+     "bytes": 89143
+    },
+    {
+     "ruta": "outputs/seguros/garantias_derivados/2026.parquet",
+     "bytes": 65354
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/garantias_derivados/garantias_derivados.completo.csv",
+    "bytes": 1431929,
+    "filas": 6518
+   },
+   "json": null,
+   "nota": null,
+   "filas": 6518,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/garantias_derivados/2024.parquet",
+      "bytes": 27139
+     },
+     {
+      "ruta": "outputs/seguros/garantias_derivados/2025.parquet",
+      "bytes": 89143
+     },
+     {
+      "ruta": "outputs/seguros/garantias_derivados/2026.parquet",
+      "bytes": 65354
+     }
+    ],
+    "where": "",
+    "filas": 6518
+   }
+  },
+  "seguros_registros_tipo6": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/registros_tipo6/2024.parquet",
+     "bytes": 7029
+    },
+    {
+     "ruta": "outputs/seguros/registros_tipo6/2025.parquet",
+     "bytes": 7215
+    },
+    {
+     "ruta": "outputs/seguros/registros_tipo6/2026.parquet",
+     "bytes": 7167
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/registros_tipo6/registros_tipo6.completo.csv",
+    "bytes": 23332,
+    "filas": 66
+   },
+   "json": {
+    "ruta": "outputs/seguros/registros_tipo6/registros_tipo6.completo.json",
+    "bytes": 33833
+   },
+   "nota": null,
+   "filas": 66,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/registros_tipo6/2024.parquet",
+      "bytes": 7029
+     },
+     {
+      "ruta": "outputs/seguros/registros_tipo6/2025.parquet",
+      "bytes": 7215
+     },
+     {
+      "ruta": "outputs/seguros/registros_tipo6/2026.parquet",
+      "bytes": 7167
+     }
+    ],
+    "where": "",
+    "filas": 66
+   }
+  },
+  "seguros_renta_fija_relevante": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/renta_fija_relevante/2024.parquet",
+     "bytes": 3653673
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija_relevante/2025.parquet",
+     "bytes": 22823879
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija_relevante/2026.parquet",
+     "bytes": 17336453
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 2321911,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/renta_fija_relevante/2024.parquet",
+      "bytes": 3653673
+     },
+     {
+      "ruta": "outputs/seguros/renta_fija_relevante/2025.parquet",
+      "bytes": 22823879
+     },
+     {
+      "ruta": "outputs/seguros/renta_fija_relevante/2026.parquet",
+      "bytes": 17336453
+     }
+    ],
+    "where": "",
+    "filas": 2321911
+   }
+  },
+  "seguros_acciones_relevantes": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2016.parquet",
+     "bytes": 56522
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2017.parquet",
+     "bytes": 231320
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2018.parquet",
+     "bytes": 209496
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2019.parquet",
+     "bytes": 186003
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2020.parquet",
+     "bytes": 190191
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2021.parquet",
+     "bytes": 206790
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2022.parquet",
+     "bytes": 204295
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2023.parquet",
+     "bytes": 184882
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2024.parquet",
+     "bytes": 192935
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2025.parquet",
+     "bytes": 224636
+    },
+    {
+     "ruta": "outputs/seguros/acciones_relevantes/2026.parquet",
+     "bytes": 180069
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/seguros/acciones_relevantes/acciones_relevantes.completo.csv",
+    "bytes": 13196970,
+    "filas": 109019
+   },
+   "json": null,
+   "nota": null,
+   "filas": 109019,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2016.parquet",
+      "bytes": 56522
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2017.parquet",
+      "bytes": 231320
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2018.parquet",
+      "bytes": 209496
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2019.parquet",
+      "bytes": 186003
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2020.parquet",
+      "bytes": 190191
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2021.parquet",
+      "bytes": 206790
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2022.parquet",
+      "bytes": 204295
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2023.parquet",
+      "bytes": 184882
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2024.parquet",
+      "bytes": 192935
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2025.parquet",
+      "bytes": 224636
+     },
+     {
+      "ruta": "outputs/seguros/acciones_relevantes/2026.parquet",
+      "bytes": 180069
+     }
+    ],
+    "where": "",
+    "filas": 109019
+   }
+  },
+  "seguros_bienes_raices_relevantes": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/bienes_raices_relevantes/2024.parquet",
+     "bytes": 882060
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices_relevantes/2025.parquet",
+     "bytes": 4998006
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices_relevantes/2026.parquet",
+     "bytes": 4128252
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 760152,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/bienes_raices_relevantes/2024.parquet",
+      "bytes": 882060
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices_relevantes/2025.parquet",
+      "bytes": 4998006
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices_relevantes/2026.parquet",
+      "bytes": 4128252
+     }
+    ],
+    "where": "",
+    "filas": 760152
+   }
+  },
+  "seguros_extranjeros_relevantes": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2016.parquet",
+     "bytes": 46696
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2017.parquet",
+     "bytes": 221998
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2018.parquet",
+     "bytes": 240360
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2019.parquet",
+     "bytes": 251088
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2020.parquet",
+     "bytes": 230750
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2021.parquet",
+     "bytes": 225915
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2022.parquet",
+     "bytes": 249468
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2023.parquet",
+     "bytes": 315520
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2024.parquet",
+     "bytes": 429339
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2025.parquet",
+     "bytes": 892769
+    },
+    {
+     "ruta": "outputs/seguros/extranjeros_relevantes/2026.parquet",
+     "bytes": 759652
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 471670,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2016.parquet",
+      "bytes": 46696
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2017.parquet",
+      "bytes": 221998
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2018.parquet",
+      "bytes": 240360
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2019.parquet",
+      "bytes": 251088
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2020.parquet",
+      "bytes": 230750
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2021.parquet",
+      "bytes": 225915
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2022.parquet",
+      "bytes": 249468
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2023.parquet",
+      "bytes": 315520
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2024.parquet",
+      "bytes": 429339
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2025.parquet",
+      "bytes": 892769
+     },
+     {
+      "ruta": "outputs/seguros/extranjeros_relevantes/2026.parquet",
+      "bytes": 759652
+     }
+    ],
+    "where": "",
+    "filas": 471670
+   }
+  },
+  "seguros_derivados_relevantes": {
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2016.parquet",
+     "bytes": 39471
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2017.parquet",
+     "bytes": 162084
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2018.parquet",
+     "bytes": 169520
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2019.parquet",
+     "bytes": 176515
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2020.parquet",
+     "bytes": 166926
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2021.parquet",
+     "bytes": 166408
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2022.parquet",
+     "bytes": 171120
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2023.parquet",
+     "bytes": 190353
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2024.parquet",
+     "bytes": 318201
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2025.parquet",
+     "bytes": 866075
+    },
+    {
+     "ruta": "outputs/seguros/derivados_relevantes/2026.parquet",
+     "bytes": 758631
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 373469,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2016.parquet",
+      "bytes": 39471
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2017.parquet",
+      "bytes": 162084
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2018.parquet",
+      "bytes": 169520
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2019.parquet",
+      "bytes": 176515
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2020.parquet",
+      "bytes": 166926
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2021.parquet",
+      "bytes": 166408
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2022.parquet",
+      "bytes": 171120
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2023.parquet",
+      "bytes": 190353
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2024.parquet",
+      "bytes": 318201
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2025.parquet",
+      "bytes": 866075
+     },
+     {
+      "ruta": "outputs/seguros/derivados_relevantes/2026.parquet",
+      "bytes": 758631
+     }
+    ],
+    "where": "",
+    "filas": 373469
+   }
+  },
+  "seguros_prestamos_relevantes": {
+   "archivos": [],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": "sin archivos publicados"
+  },
+  "seguros_bienes_raices_arriendo_morosidad_relevantes": {
+   "archivos": [],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": "sin archivos publicados"
+  },
+  "fi_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/maestro_fondos_inversion.parquet",
+     "bytes": 44790
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/fi/maestro_fondos_inversion.completo.csv",
+    "bytes": 254527,
+    "filas": 1679
+   },
+   "json": {
+    "ruta": "outputs/fi/maestro_fondos_inversion.completo.json",
+    "bytes": 644271
+   },
+   "nota": null,
+   "filas": 1679,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/maestro_fondos_inversion.parquet",
+      "bytes": 44790
+     }
+    ],
+    "where": "",
+    "filas": 1679
+   }
+  },
+  "fi_cartera_nacional": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/cartera_nacional/2020-03.parquet",
+     "bytes": 306842
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2020-06.parquet",
+     "bytes": 298496
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2020-09.parquet",
+     "bytes": 316315
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2020-12.parquet",
+     "bytes": 401586
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2021-03.parquet",
+     "bytes": 484670
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2021-06.parquet",
+     "bytes": 619277
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2021-09.parquet",
+     "bytes": 705569
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2021-12.parquet",
+     "bytes": 790449
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2022-03.parquet",
+     "bytes": 883145
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2022-06.parquet",
+     "bytes": 914345
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2022-09.parquet",
+     "bytes": 863133
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2022-12.parquet",
+     "bytes": 871386
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2023-03.parquet",
+     "bytes": 968549
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2023-06.parquet",
+     "bytes": 966680
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2023-09.parquet",
+     "bytes": 951433
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2023-12.parquet",
+     "bytes": 1000752
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2024-03.parquet",
+     "bytes": 945833
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2024-06.parquet",
+     "bytes": 996666
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2024-09.parquet",
+     "bytes": 927637
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2024-12.parquet",
+     "bytes": 944522
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2025-03.parquet",
+     "bytes": 1013082
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2025-06.parquet",
+     "bytes": 1023748
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2025-09.parquet",
+     "bytes": 1126763
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2025-12.parquet",
+     "bytes": 1125528
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2026-03.parquet",
+     "bytes": 1019272
+    },
+    {
+     "ruta": "outputs/fi/cartera_nacional/2026-06.parquet",
+     "bytes": 1020180
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 933532,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/cartera_nacional/2020-03.parquet",
+      "bytes": 306842
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2020-06.parquet",
+      "bytes": 298496
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2020-09.parquet",
+      "bytes": 316315
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2020-12.parquet",
+      "bytes": 401586
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2021-03.parquet",
+      "bytes": 484670
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2021-06.parquet",
+      "bytes": 619277
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2021-09.parquet",
+      "bytes": 705569
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2021-12.parquet",
+      "bytes": 790449
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2022-03.parquet",
+      "bytes": 883145
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2022-06.parquet",
+      "bytes": 914345
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2022-09.parquet",
+      "bytes": 863133
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2022-12.parquet",
+      "bytes": 871386
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2023-03.parquet",
+      "bytes": 968549
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2023-06.parquet",
+      "bytes": 966680
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2023-09.parquet",
+      "bytes": 951433
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2023-12.parquet",
+      "bytes": 1000752
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2024-03.parquet",
+      "bytes": 945833
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2024-06.parquet",
+      "bytes": 996666
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2024-09.parquet",
+      "bytes": 927637
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2024-12.parquet",
+      "bytes": 944522
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2025-03.parquet",
+      "bytes": 1013082
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2025-06.parquet",
+      "bytes": 1023748
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2025-09.parquet",
+      "bytes": 1126763
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2025-12.parquet",
+      "bytes": 1125528
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2026-03.parquet",
+      "bytes": 1019272
+     },
+     {
+      "ruta": "outputs/fi/cartera_nacional/2026-06.parquet",
+      "bytes": 1020180
+     }
+    ],
+    "where": "",
+    "filas": 933532
+   }
+  },
+  "fi_cartera_extranjera": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/cartera_extranjera/2020.parquet",
+     "bytes": 444925
+    },
+    {
+     "ruta": "outputs/fi/cartera_extranjera/2021.parquet",
+     "bytes": 489527
+    },
+    {
+     "ruta": "outputs/fi/cartera_extranjera/2022.parquet",
+     "bytes": 401088
+    },
+    {
+     "ruta": "outputs/fi/cartera_extranjera/2023.parquet",
+     "bytes": 353785
+    },
+    {
+     "ruta": "outputs/fi/cartera_extranjera/2024.parquet",
+     "bytes": 303376
+    },
+    {
+     "ruta": "outputs/fi/cartera_extranjera/2025.parquet",
+     "bytes": 261574
+    },
+    {
+     "ruta": "outputs/fi/cartera_extranjera/2026.parquet",
+     "bytes": 171369
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/fi/cartera_extranjera/cartera_extranjera.completo.csv",
+    "bytes": 10931996,
+    "filas": 76849
+   },
+   "json": null,
+   "nota": null,
+   "filas": 76849,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/cartera_extranjera/2020.parquet",
+      "bytes": 444925
+     },
+     {
+      "ruta": "outputs/fi/cartera_extranjera/2021.parquet",
+      "bytes": 489527
+     },
+     {
+      "ruta": "outputs/fi/cartera_extranjera/2022.parquet",
+      "bytes": 401088
+     },
+     {
+      "ruta": "outputs/fi/cartera_extranjera/2023.parquet",
+      "bytes": 353785
+     },
+     {
+      "ruta": "outputs/fi/cartera_extranjera/2024.parquet",
+      "bytes": 303376
+     },
+     {
+      "ruta": "outputs/fi/cartera_extranjera/2025.parquet",
+      "bytes": 261574
+     },
+     {
+      "ruta": "outputs/fi/cartera_extranjera/2026.parquet",
+      "bytes": 171369
+     }
+    ],
+    "where": "",
+    "filas": 76849
+   }
+  },
+  "fi_metodo_participacion": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/metodo_participacion/2020.parquet",
+     "bytes": 38458
+    },
+    {
+     "ruta": "outputs/fi/metodo_participacion/2021.parquet",
+     "bytes": 44600
+    },
+    {
+     "ruta": "outputs/fi/metodo_participacion/2022.parquet",
+     "bytes": 47756
+    },
+    {
+     "ruta": "outputs/fi/metodo_participacion/2023.parquet",
+     "bytes": 50064
+    },
+    {
+     "ruta": "outputs/fi/metodo_participacion/2024.parquet",
+     "bytes": 53847
+    },
+    {
+     "ruta": "outputs/fi/metodo_participacion/2025.parquet",
+     "bytes": 54690
+    },
+    {
+     "ruta": "outputs/fi/metodo_participacion/2026.parquet",
+     "bytes": 35700
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/fi/metodo_participacion/metodo_participacion.completo.csv",
+    "bytes": 1149944,
+    "filas": 10038
+   },
+   "json": {
+    "ruta": "outputs/fi/metodo_participacion/metodo_participacion.completo.json",
+    "bytes": 4589790
+   },
+   "nota": null,
+   "filas": 10038,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/metodo_participacion/2020.parquet",
+      "bytes": 38458
+     },
+     {
+      "ruta": "outputs/fi/metodo_participacion/2021.parquet",
+      "bytes": 44600
+     },
+     {
+      "ruta": "outputs/fi/metodo_participacion/2022.parquet",
+      "bytes": 47756
+     },
+     {
+      "ruta": "outputs/fi/metodo_participacion/2023.parquet",
+      "bytes": 50064
+     },
+     {
+      "ruta": "outputs/fi/metodo_participacion/2024.parquet",
+      "bytes": 53847
+     },
+     {
+      "ruta": "outputs/fi/metodo_participacion/2025.parquet",
+      "bytes": 54690
+     },
+     {
+      "ruta": "outputs/fi/metodo_participacion/2026.parquet",
+      "bytes": 35700
+     }
+    ],
+    "where": "",
+    "filas": 10038
+   }
+  },
+  "fi_bienes_raices": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/bienes_raices/vacio.parquet",
+     "bytes": 2589
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": "sin filas publicados",
+   "filas": 0
+  },
+  "fi_futuros": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/futuros_forwards/2020.parquet",
+     "bytes": 57911
+    },
+    {
+     "ruta": "outputs/fi/futuros_forwards/2021.parquet",
+     "bytes": 62347
+    },
+    {
+     "ruta": "outputs/fi/futuros_forwards/2022.parquet",
+     "bytes": 50466
+    },
+    {
+     "ruta": "outputs/fi/futuros_forwards/2023.parquet",
+     "bytes": 49768
+    },
+    {
+     "ruta": "outputs/fi/futuros_forwards/2024.parquet",
+     "bytes": 49767
+    },
+    {
+     "ruta": "outputs/fi/futuros_forwards/2025.parquet",
+     "bytes": 52804
+    },
+    {
+     "ruta": "outputs/fi/futuros_forwards/2026.parquet",
+     "bytes": 33495
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/fi/futuros_forwards/futuros_forwards.completo.csv",
+    "bytes": 1491511,
+    "filas": 13463
+   },
+   "json": null,
+   "nota": null,
+   "filas": 13463,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/futuros_forwards/2020.parquet",
+      "bytes": 57911
+     },
+     {
+      "ruta": "outputs/fi/futuros_forwards/2021.parquet",
+      "bytes": 62347
+     },
+     {
+      "ruta": "outputs/fi/futuros_forwards/2022.parquet",
+      "bytes": 50466
+     },
+     {
+      "ruta": "outputs/fi/futuros_forwards/2023.parquet",
+      "bytes": 49768
+     },
+     {
+      "ruta": "outputs/fi/futuros_forwards/2024.parquet",
+      "bytes": 49767
+     },
+     {
+      "ruta": "outputs/fi/futuros_forwards/2025.parquet",
+      "bytes": 52804
+     },
+     {
+      "ruta": "outputs/fi/futuros_forwards/2026.parquet",
+      "bytes": 33495
+     }
+    ],
+    "where": "",
+    "filas": 13463
+   }
+  },
+  "fi_opciones": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/opciones/2020.parquet",
+     "bytes": 21883
+    },
+    {
+     "ruta": "outputs/fi/opciones/2021.parquet",
+     "bytes": 20901
+    },
+    {
+     "ruta": "outputs/fi/opciones/2022.parquet",
+     "bytes": 15781
+    },
+    {
+     "ruta": "outputs/fi/opciones/2023.parquet",
+     "bytes": 14301
+    },
+    {
+     "ruta": "outputs/fi/opciones/2024.parquet",
+     "bytes": 14394
+    },
+    {
+     "ruta": "outputs/fi/opciones/2025.parquet",
+     "bytes": 14023
+    },
+    {
+     "ruta": "outputs/fi/opciones/2026.parquet",
+     "bytes": 14366
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/fi/opciones/opciones.completo.csv",
+    "bytes": 55888,
+    "filas": 307
+   },
+   "json": {
+    "ruta": "outputs/fi/opciones/opciones.completo.json",
+    "bytes": 196104
+   },
+   "nota": null,
+   "filas": 307,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/opciones/2020.parquet",
+      "bytes": 21883
+     },
+     {
+      "ruta": "outputs/fi/opciones/2021.parquet",
+      "bytes": 20901
+     },
+     {
+      "ruta": "outputs/fi/opciones/2022.parquet",
+      "bytes": 15781
+     },
+     {
+      "ruta": "outputs/fi/opciones/2023.parquet",
+      "bytes": 14301
+     },
+     {
+      "ruta": "outputs/fi/opciones/2024.parquet",
+      "bytes": 14394
+     },
+     {
+      "ruta": "outputs/fi/opciones/2025.parquet",
+      "bytes": 14023
+     },
+     {
+      "ruta": "outputs/fi/opciones/2026.parquet",
+      "bytes": 14366
+     }
+    ],
+    "where": "",
+    "filas": 307
+   }
+  },
+  "fi_pactos": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/pactos/2012.parquet",
+     "bytes": 5596
+    },
+    {
+     "ruta": "outputs/fi/pactos/2013.parquet",
+     "bytes": 6862
+    },
+    {
+     "ruta": "outputs/fi/pactos/2014.parquet",
+     "bytes": 9973
+    },
+    {
+     "ruta": "outputs/fi/pactos/2015.parquet",
+     "bytes": 17942
+    },
+    {
+     "ruta": "outputs/fi/pactos/2016.parquet",
+     "bytes": 15160
+    },
+    {
+     "ruta": "outputs/fi/pactos/2017.parquet",
+     "bytes": 14633
+    },
+    {
+     "ruta": "outputs/fi/pactos/2018.parquet",
+     "bytes": 13789
+    },
+    {
+     "ruta": "outputs/fi/pactos/2019.parquet",
+     "bytes": 15720
+    },
+    {
+     "ruta": "outputs/fi/pactos/2020.parquet",
+     "bytes": 14610
+    },
+    {
+     "ruta": "outputs/fi/pactos/2021.parquet",
+     "bytes": 15371
+    },
+    {
+     "ruta": "outputs/fi/pactos/2022.parquet",
+     "bytes": 14597
+    },
+    {
+     "ruta": "outputs/fi/pactos/2023.parquet",
+     "bytes": 15300
+    },
+    {
+     "ruta": "outputs/fi/pactos/2024.parquet",
+     "bytes": 15107
+    },
+    {
+     "ruta": "outputs/fi/pactos/2025.parquet",
+     "bytes": 15858
+    },
+    {
+     "ruta": "outputs/fi/pactos/2026.parquet",
+     "bytes": 14131
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/fi/pactos/pactos.completo.csv",
+    "bytes": 264478,
+    "filas": 1698
+   },
+   "json": {
+    "ruta": "outputs/fi/pactos/pactos.completo.json",
+    "bytes": 818789
+   },
+   "nota": null,
+   "filas": 1698,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/pactos/2012.parquet",
+      "bytes": 5596
+     },
+     {
+      "ruta": "outputs/fi/pactos/2013.parquet",
+      "bytes": 6862
+     },
+     {
+      "ruta": "outputs/fi/pactos/2014.parquet",
+      "bytes": 9973
+     },
+     {
+      "ruta": "outputs/fi/pactos/2015.parquet",
+      "bytes": 17942
+     },
+     {
+      "ruta": "outputs/fi/pactos/2016.parquet",
+      "bytes": 15160
+     },
+     {
+      "ruta": "outputs/fi/pactos/2017.parquet",
+      "bytes": 14633
+     },
+     {
+      "ruta": "outputs/fi/pactos/2018.parquet",
+      "bytes": 13789
+     },
+     {
+      "ruta": "outputs/fi/pactos/2019.parquet",
+      "bytes": 15720
+     },
+     {
+      "ruta": "outputs/fi/pactos/2020.parquet",
+      "bytes": 14610
+     },
+     {
+      "ruta": "outputs/fi/pactos/2021.parquet",
+      "bytes": 15371
+     },
+     {
+      "ruta": "outputs/fi/pactos/2022.parquet",
+      "bytes": 14597
+     },
+     {
+      "ruta": "outputs/fi/pactos/2023.parquet",
+      "bytes": 15300
+     },
+     {
+      "ruta": "outputs/fi/pactos/2024.parquet",
+      "bytes": 15107
+     },
+     {
+      "ruta": "outputs/fi/pactos/2025.parquet",
+      "bytes": 15858
+     },
+     {
+      "ruta": "outputs/fi/pactos/2026.parquet",
+      "bytes": 14131
+     }
+    ],
+    "where": "",
+    "filas": 1698
+   }
+  },
+  "fi_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/fi_balance/2022-03.parquet",
+     "bytes": 134904
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2022-06.parquet",
+     "bytes": 136957
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2022-09.parquet",
+     "bytes": 141421
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2022-12.parquet",
+     "bytes": 137767
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2023-03.parquet",
+     "bytes": 144625
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2023-09.parquet",
+     "bytes": 144702
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2023-12.parquet",
+     "bytes": 144490
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2024-03.parquet",
+     "bytes": 151134
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2024-06.parquet",
+     "bytes": 153356
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2024-09.parquet",
+     "bytes": 155044
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2024-12.parquet",
+     "bytes": 152093
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2025-06.parquet",
+     "bytes": 159637
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2025-09.parquet",
+     "bytes": 160857
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2025-12.parquet",
+     "bytes": 156099
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2026-03.parquet",
+     "bytes": 164509
+    },
+    {
+     "ruta": "outputs/fi/fi_balance/2026-06.parquet",
+     "bytes": 164890
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 985908,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/fi_balance/2022-03.parquet",
+      "bytes": 134904
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2022-06.parquet",
+      "bytes": 136957
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2022-09.parquet",
+      "bytes": 141421
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2022-12.parquet",
+      "bytes": 137767
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2023-03.parquet",
+      "bytes": 144625
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2023-09.parquet",
+      "bytes": 144702
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2023-12.parquet",
+      "bytes": 144490
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2024-03.parquet",
+      "bytes": 151134
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2024-06.parquet",
+      "bytes": 153356
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2024-09.parquet",
+      "bytes": 155044
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2024-12.parquet",
+      "bytes": 152093
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2025-06.parquet",
+      "bytes": 159637
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2025-09.parquet",
+      "bytes": 160857
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2025-12.parquet",
+      "bytes": 156099
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2026-03.parquet",
+      "bytes": 164509
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2026-06.parquet",
+      "bytes": 164890
+     }
+    ],
+    "where": "",
+    "filas": 985908
+   }
+  },
+  "fi_resultados": {
+   "archivos": [
+    {
+     "ruta": "outputs/fi/fi_resultados/2022-03.parquet",
+     "bytes": 104080
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2022-06.parquet",
+     "bytes": 162859
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2022-09.parquet",
+     "bytes": 173652
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2022-12.parquet",
+     "bytes": 127568
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2023-03.parquet",
+     "bytes": 113658
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2023-09.parquet",
+     "bytes": 185519
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2023-12.parquet",
+     "bytes": 142678
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2024-03.parquet",
+     "bytes": 117367
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2024-06.parquet",
+     "bytes": 188637
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2024-09.parquet",
+     "bytes": 195419
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2024-12.parquet",
+     "bytes": 144334
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2025-06.parquet",
+     "bytes": 196803
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2025-09.parquet",
+     "bytes": 204211
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2025-12.parquet",
+     "bytes": 148287
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2026-03.parquet",
+     "bytes": 127519
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2026-06.parquet",
+     "bytes": 203777
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 1164000,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fi/fi_resultados/2022-03.parquet",
+      "bytes": 104080
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2022-06.parquet",
+      "bytes": 162859
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2022-09.parquet",
+      "bytes": 173652
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2022-12.parquet",
+      "bytes": 127568
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2023-03.parquet",
+      "bytes": 113658
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2023-09.parquet",
+      "bytes": 185519
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2023-12.parquet",
+      "bytes": 142678
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2024-03.parquet",
+      "bytes": 117367
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2024-06.parquet",
+      "bytes": 188637
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2024-09.parquet",
+      "bytes": 195419
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2024-12.parquet",
+      "bytes": 144334
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2025-06.parquet",
+      "bytes": 196803
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2025-09.parquet",
+      "bytes": 204211
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2025-12.parquet",
+      "bytes": 148287
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2026-03.parquet",
+      "bytes": 127519
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2026-06.parquet",
+      "bytes": 203777
+     }
+    ],
+    "where": "",
+    "filas": 1164000
+   }
+  },
+  "ffmm_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/ffmm/maestro_fondos_mutuos.parquet",
+     "bytes": 23962
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/ffmm/maestro_fondos_mutuos.completo.csv",
+    "bytes": 61891,
+    "filas": 1334
+   },
+   "json": {
+    "ruta": "outputs/ffmm/maestro_fondos_mutuos.completo.json",
+    "bytes": 209876
+   },
+   "nota": null,
+   "filas": 1334,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/ffmm/maestro_fondos_mutuos.parquet",
+      "bytes": 23962
+     }
+    ],
+    "where": "",
+    "filas": 1334
+   }
+  },
+  "ffmm_cartera_nacional": {
+   "archivos": [
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-01.parquet",
+     "bytes": 385849
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-02.parquet",
+     "bytes": 381037
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-03.parquet",
+     "bytes": 391321
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-04.parquet",
+     "bytes": 397777
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-05.parquet",
+     "bytes": 401556
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-06.parquet",
+     "bytes": 411872
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-07.parquet",
+     "bytes": 422248
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-08.parquet",
+     "bytes": 432742
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-09.parquet",
+     "bytes": 436172
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-10.parquet",
+     "bytes": 446972
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-11.parquet",
+     "bytes": 458943
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2022-12.parquet",
+     "bytes": 461635
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-01.parquet",
+     "bytes": 469736
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-02.parquet",
+     "bytes": 469459
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-03.parquet",
+     "bytes": 466789
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-04.parquet",
+     "bytes": 475096
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-05.parquet",
+     "bytes": 463635
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-06.parquet",
+     "bytes": 471312
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-07.parquet",
+     "bytes": 477855
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-08.parquet",
+     "bytes": 473610
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-09.parquet",
+     "bytes": 477212
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-10.parquet",
+     "bytes": 464480
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-11.parquet",
+     "bytes": 454776
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2023-12.parquet",
+     "bytes": 463064
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-01.parquet",
+     "bytes": 463677
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-02.parquet",
+     "bytes": 472276
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-03.parquet",
+     "bytes": 478640
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-04.parquet",
+     "bytes": 471140
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-05.parquet",
+     "bytes": 465475
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-06.parquet",
+     "bytes": 469548
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-07.parquet",
+     "bytes": 476287
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-08.parquet",
+     "bytes": 479827
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-09.parquet",
+     "bytes": 477766
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-10.parquet",
+     "bytes": 475669
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-11.parquet",
+     "bytes": 464788
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2024-12.parquet",
+     "bytes": 471374
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-01.parquet",
+     "bytes": 476472
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-02.parquet",
+     "bytes": 473442
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-03.parquet",
+     "bytes": 473542
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-04.parquet",
+     "bytes": 476549
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-05.parquet",
+     "bytes": 481524
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-06.parquet",
+     "bytes": 470253
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-07.parquet",
+     "bytes": 459828
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-08.parquet",
+     "bytes": 467766
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-09.parquet",
+     "bytes": 463757
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-10.parquet",
+     "bytes": 461090
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-11.parquet",
+     "bytes": 456157
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2025-12.parquet",
+     "bytes": 460920
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-01.parquet",
+     "bytes": 465253
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-02.parquet",
+     "bytes": 466240
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-03.parquet",
+     "bytes": 461633
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-04.parquet",
+     "bytes": 460550
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-05.parquet",
+     "bytes": 459848
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-06.parquet",
+     "bytes": 461250
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-07.parquet",
+     "bytes": 463999
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-08.parquet",
+     "bytes": 466598
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_nacional/2026-09.parquet",
+     "bytes": 445799
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 1590196,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-01.parquet",
+      "bytes": 385849
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-02.parquet",
+      "bytes": 381037
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-03.parquet",
+      "bytes": 391321
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-04.parquet",
+      "bytes": 397777
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-05.parquet",
+      "bytes": 401556
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-06.parquet",
+      "bytes": 411872
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-07.parquet",
+      "bytes": 422248
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-08.parquet",
+      "bytes": 432742
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-09.parquet",
+      "bytes": 436172
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-10.parquet",
+      "bytes": 446972
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-11.parquet",
+      "bytes": 458943
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2022-12.parquet",
+      "bytes": 461635
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-01.parquet",
+      "bytes": 469736
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-02.parquet",
+      "bytes": 469459
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-03.parquet",
+      "bytes": 466789
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-04.parquet",
+      "bytes": 475096
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-05.parquet",
+      "bytes": 463635
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-06.parquet",
+      "bytes": 471312
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-07.parquet",
+      "bytes": 477855
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-08.parquet",
+      "bytes": 473610
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-09.parquet",
+      "bytes": 477212
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-10.parquet",
+      "bytes": 464480
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-11.parquet",
+      "bytes": 454776
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2023-12.parquet",
+      "bytes": 463064
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-01.parquet",
+      "bytes": 463677
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-02.parquet",
+      "bytes": 472276
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-03.parquet",
+      "bytes": 478640
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-04.parquet",
+      "bytes": 471140
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-05.parquet",
+      "bytes": 465475
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-06.parquet",
+      "bytes": 469548
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-07.parquet",
+      "bytes": 476287
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-08.parquet",
+      "bytes": 479827
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-09.parquet",
+      "bytes": 477766
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-10.parquet",
+      "bytes": 475669
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-11.parquet",
+      "bytes": 464788
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2024-12.parquet",
+      "bytes": 471374
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-01.parquet",
+      "bytes": 476472
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-02.parquet",
+      "bytes": 473442
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-03.parquet",
+      "bytes": 473542
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-04.parquet",
+      "bytes": 476549
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-05.parquet",
+      "bytes": 481524
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-06.parquet",
+      "bytes": 470253
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-07.parquet",
+      "bytes": 459828
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-08.parquet",
+      "bytes": 467766
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-09.parquet",
+      "bytes": 463757
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-10.parquet",
+      "bytes": 461090
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-11.parquet",
+      "bytes": 456157
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2025-12.parquet",
+      "bytes": 460920
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-01.parquet",
+      "bytes": 465253
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-02.parquet",
+      "bytes": 466240
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-03.parquet",
+      "bytes": 461633
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-04.parquet",
+      "bytes": 460550
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-05.parquet",
+      "bytes": 459848
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-06.parquet",
+      "bytes": 461250
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-07.parquet",
+      "bytes": 463999
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-08.parquet",
+      "bytes": 466598
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_nacional/2026-09.parquet",
+      "bytes": 445799
+     }
+    ],
+    "where": "",
+    "filas": 1590196
+   }
+  },
+  "ffmm_cartera_extranjera": {
+   "archivos": [
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2001.parquet",
+     "bytes": 491606
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2002.parquet",
+     "bytes": 463508
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2003.parquet",
+     "bytes": 499885
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2004.parquet",
+     "bytes": 573344
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2005.parquet",
+     "bytes": 673064
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2006.parquet",
+     "bytes": 862170
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2007.parquet",
+     "bytes": 1149480
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2008.parquet",
+     "bytes": 1131986
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2009.parquet",
+     "bytes": 1051343
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2010.parquet",
+     "bytes": 1166557
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2011.parquet",
+     "bytes": 1322978
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2012.parquet",
+     "bytes": 1248947
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2013.parquet",
+     "bytes": 1325865
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2014.parquet",
+     "bytes": 1231904
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2015.parquet",
+     "bytes": 1222711
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2016.parquet",
+     "bytes": 1272361
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2017.parquet",
+     "bytes": 1279912
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2018.parquet",
+     "bytes": 1168512
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2019.parquet",
+     "bytes": 1188118
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2020.parquet",
+     "bytes": 1104164
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2021.parquet",
+     "bytes": 1146838
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2022.parquet",
+     "bytes": 1012867
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2023.parquet",
+     "bytes": 909850
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2024.parquet",
+     "bytes": 820562
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2025.parquet",
+     "bytes": 796930
+    },
+    {
+     "ruta": "outputs/ffmm/cartera_extranjera/2026.parquet",
+     "bytes": 533820
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 1461253,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2001.parquet",
+      "bytes": 491606
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2002.parquet",
+      "bytes": 463508
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2003.parquet",
+      "bytes": 499885
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2004.parquet",
+      "bytes": 573344
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2005.parquet",
+      "bytes": 673064
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2006.parquet",
+      "bytes": 862170
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2007.parquet",
+      "bytes": 1149480
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2008.parquet",
+      "bytes": 1131986
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2009.parquet",
+      "bytes": 1051343
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2010.parquet",
+      "bytes": 1166557
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2011.parquet",
+      "bytes": 1322978
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2012.parquet",
+      "bytes": 1248947
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2013.parquet",
+      "bytes": 1325865
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2014.parquet",
+      "bytes": 1231904
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2015.parquet",
+      "bytes": 1222711
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2016.parquet",
+      "bytes": 1272361
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2017.parquet",
+      "bytes": 1279912
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2018.parquet",
+      "bytes": 1168512
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2019.parquet",
+      "bytes": 1188118
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2020.parquet",
+      "bytes": 1104164
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2021.parquet",
+      "bytes": 1146838
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2022.parquet",
+      "bytes": 1012867
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2023.parquet",
+      "bytes": 909850
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2024.parquet",
+      "bytes": 820562
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2025.parquet",
+      "bytes": 796930
+     },
+     {
+      "ruta": "outputs/ffmm/cartera_extranjera/2026.parquet",
+      "bytes": 533820
+     }
+    ],
+    "where": "",
+    "filas": 1461253
+   }
+  },
+  "ffmm_futuros": {
+   "archivos": [
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2001.parquet",
+     "bytes": 36882
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2002.parquet",
+     "bytes": 26774
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2003.parquet",
+     "bytes": 30323
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2004.parquet",
+     "bytes": 31814
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2005.parquet",
+     "bytes": 51580
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2006.parquet",
+     "bytes": 73158
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2007.parquet",
+     "bytes": 75098
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2008.parquet",
+     "bytes": 73699
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2009.parquet",
+     "bytes": 64549
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2010.parquet",
+     "bytes": 78859
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2011.parquet",
+     "bytes": 76900
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2012.parquet",
+     "bytes": 93808
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2013.parquet",
+     "bytes": 131306
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2014.parquet",
+     "bytes": 158539
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2015.parquet",
+     "bytes": 180440
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2016.parquet",
+     "bytes": 174569
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2017.parquet",
+     "bytes": 201040
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2018.parquet",
+     "bytes": 204481
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2019.parquet",
+     "bytes": 185006
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2020.parquet",
+     "bytes": 197937
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2021.parquet",
+     "bytes": 246823
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2022.parquet",
+     "bytes": 231212
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2023.parquet",
+     "bytes": 244721
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2024.parquet",
+     "bytes": 287856
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2025.parquet",
+     "bytes": 289946
+    },
+    {
+     "ruta": "outputs/ffmm/futuros_forwards/2026.parquet",
+     "bytes": 201795
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/ffmm/futuros_forwards/futuros_forwards.completo.csv",
+    "bytes": 27738208,
+    "filas": 282045
+   },
+   "json": null,
+   "nota": null,
+   "filas": 282045,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2001.parquet",
+      "bytes": 36882
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2002.parquet",
+      "bytes": 26774
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2003.parquet",
+      "bytes": 30323
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2004.parquet",
+      "bytes": 31814
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2005.parquet",
+      "bytes": 51580
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2006.parquet",
+      "bytes": 73158
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2007.parquet",
+      "bytes": 75098
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2008.parquet",
+      "bytes": 73699
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2009.parquet",
+      "bytes": 64549
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2010.parquet",
+      "bytes": 78859
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2011.parquet",
+      "bytes": 76900
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2012.parquet",
+      "bytes": 93808
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2013.parquet",
+      "bytes": 131306
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2014.parquet",
+      "bytes": 158539
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2015.parquet",
+      "bytes": 180440
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2016.parquet",
+      "bytes": 174569
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2017.parquet",
+      "bytes": 201040
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2018.parquet",
+      "bytes": 204481
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2019.parquet",
+      "bytes": 185006
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2020.parquet",
+      "bytes": 197937
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2021.parquet",
+      "bytes": 246823
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2022.parquet",
+      "bytes": 231212
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2023.parquet",
+      "bytes": 244721
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2024.parquet",
+      "bytes": 287856
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2025.parquet",
+      "bytes": 289946
+     },
+     {
+      "ruta": "outputs/ffmm/futuros_forwards/2026.parquet",
+      "bytes": 201795
+     }
+    ],
+    "where": "",
+    "filas": 282045
+   }
+  },
+  "ffmm_opciones": {
+   "archivos": [
+    {
+     "ruta": "outputs/ffmm/opciones/2001.parquet",
+     "bytes": 18995
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2002.parquet",
+     "bytes": 27721
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2003.parquet",
+     "bytes": 14006
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2004.parquet",
+     "bytes": 14174
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2005.parquet",
+     "bytes": 17599
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2006.parquet",
+     "bytes": 24092
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2007.parquet",
+     "bytes": 28136
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2008.parquet",
+     "bytes": 32887
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2009.parquet",
+     "bytes": 30073
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2010.parquet",
+     "bytes": 29118
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2011.parquet",
+     "bytes": 26332
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2012.parquet",
+     "bytes": 20964
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2013.parquet",
+     "bytes": 24859
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2014.parquet",
+     "bytes": 26750
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2015.parquet",
+     "bytes": 26757
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2016.parquet",
+     "bytes": 22894
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2017.parquet",
+     "bytes": 19577
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2018.parquet",
+     "bytes": 15944
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2019.parquet",
+     "bytes": 15229
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2020.parquet",
+     "bytes": 14694
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2021.parquet",
+     "bytes": 14504
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2022.parquet",
+     "bytes": 14060
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2023.parquet",
+     "bytes": 14444
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2024.parquet",
+     "bytes": 13384
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2025.parquet",
+     "bytes": 13163
+    },
+    {
+     "ruta": "outputs/ffmm/opciones/2026.parquet",
+     "bytes": 15460
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/ffmm/opciones/opciones.completo.csv",
+    "bytes": 765460,
+    "filas": 5365
+   },
+   "json": {
+    "ruta": "outputs/ffmm/opciones/opciones.completo.json",
+    "bytes": 3013038
+   },
+   "nota": null,
+   "filas": 5365,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/ffmm/opciones/2001.parquet",
+      "bytes": 18995
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2002.parquet",
+      "bytes": 27721
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2003.parquet",
+      "bytes": 14006
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2004.parquet",
+      "bytes": 14174
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2005.parquet",
+      "bytes": 17599
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2006.parquet",
+      "bytes": 24092
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2007.parquet",
+      "bytes": 28136
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2008.parquet",
+      "bytes": 32887
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2009.parquet",
+      "bytes": 30073
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2010.parquet",
+      "bytes": 29118
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2011.parquet",
+      "bytes": 26332
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2012.parquet",
+      "bytes": 20964
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2013.parquet",
+      "bytes": 24859
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2014.parquet",
+      "bytes": 26750
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2015.parquet",
+      "bytes": 26757
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2016.parquet",
+      "bytes": 22894
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2017.parquet",
+      "bytes": 19577
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2018.parquet",
+      "bytes": 15944
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2019.parquet",
+      "bytes": 15229
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2020.parquet",
+      "bytes": 14694
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2021.parquet",
+      "bytes": 14504
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2022.parquet",
+      "bytes": 14060
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2023.parquet",
+      "bytes": 14444
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2024.parquet",
+      "bytes": 13384
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2025.parquet",
+      "bytes": 13163
+     },
+     {
+      "ruta": "outputs/ffmm/opciones/2026.parquet",
+      "bytes": 15460
+     }
+    ],
+    "where": "",
+    "filas": 5365
+   }
+  },
+  "ffmm_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2010.parquet",
+     "bytes": 45286
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2011.parquet",
+     "bytes": 64811
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2012.parquet",
+     "bytes": 66568
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2013.parquet",
+     "bytes": 67885
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2014.parquet",
+     "bytes": 70143
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2015.parquet",
+     "bytes": 70143
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2016.parquet",
+     "bytes": 68902
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2017.parquet",
+     "bytes": 68436
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2018.parquet",
+     "bytes": 66686
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2019.parquet",
+     "bytes": 68001
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2020.parquet",
+     "bytes": 66725
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2021.parquet",
+     "bytes": 67880
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2022.parquet",
+     "bytes": 73354
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2023.parquet",
+     "bytes": 76799
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2024.parquet",
+     "bytes": 71254
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_balance/2025.parquet",
+     "bytes": 66467
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/ffmm/ffmm_balance/ffmm_balance.completo.csv",
+    "bytes": 34887680,
+    "filas": 126256
+   },
+   "json": null,
+   "nota": null,
+   "filas": 126256,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2010.parquet",
+      "bytes": 45286
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2011.parquet",
+      "bytes": 64811
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2012.parquet",
+      "bytes": 66568
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2013.parquet",
+      "bytes": 67885
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2014.parquet",
+      "bytes": 70143
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2015.parquet",
+      "bytes": 70143
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2016.parquet",
+      "bytes": 68902
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2017.parquet",
+      "bytes": 68436
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2018.parquet",
+      "bytes": 66686
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2019.parquet",
+      "bytes": 68001
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2020.parquet",
+      "bytes": 66725
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2021.parquet",
+      "bytes": 67880
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2022.parquet",
+      "bytes": 73354
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2023.parquet",
+      "bytes": 76799
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2024.parquet",
+      "bytes": 71254
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_balance/2025.parquet",
+      "bytes": 66467
+     }
+    ],
+    "where": "",
+    "filas": 126256
+   }
+  },
+  "ffmm_resultados": {
+   "archivos": [
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2010.parquet",
+     "bytes": 49562
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2011.parquet",
+     "bytes": 73438
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2012.parquet",
+     "bytes": 76637
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2013.parquet",
+     "bytes": 77211
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2014.parquet",
+     "bytes": 79754
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2015.parquet",
+     "bytes": 79814
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2016.parquet",
+     "bytes": 78796
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2017.parquet",
+     "bytes": 78827
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2018.parquet",
+     "bytes": 75586
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2019.parquet",
+     "bytes": 77198
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2020.parquet",
+     "bytes": 75409
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2021.parquet",
+     "bytes": 75234
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2022.parquet",
+     "bytes": 83744
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2023.parquet",
+     "bytes": 88653
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2024.parquet",
+     "bytes": 83217
+    },
+    {
+     "ruta": "outputs/ffmm/ffmm_resultados/2025.parquet",
+     "bytes": 76409
+    }
+   ],
+   "where": "",
+   "csv": null,
+   "json": null,
+   "nota": null,
+   "filas": 149929,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2010.parquet",
+      "bytes": 49562
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2011.parquet",
+      "bytes": 73438
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2012.parquet",
+      "bytes": 76637
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2013.parquet",
+      "bytes": 77211
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2014.parquet",
+      "bytes": 79754
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2015.parquet",
+      "bytes": 79814
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2016.parquet",
+      "bytes": 78796
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2017.parquet",
+      "bytes": 78827
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2018.parquet",
+      "bytes": 75586
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2019.parquet",
+      "bytes": 77198
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2020.parquet",
+      "bytes": 75409
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2021.parquet",
+      "bytes": 75234
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2022.parquet",
+      "bytes": 83744
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2023.parquet",
+      "bytes": 88653
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2024.parquet",
+      "bytes": 83217
+     },
+     {
+      "ruta": "outputs/ffmm/ffmm_resultados/2025.parquet",
+      "bytes": 76409
+     }
+    ],
+    "where": "",
+    "filas": 149929
+   }
+  },
+  "afp_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/pensiones/afp_maestro_administradoras.parquet",
+     "bytes": 2880
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/pensiones/afp_maestro_administradoras.completo.csv",
+    "bytes": 553,
+    "filas": 7
+   },
+   "json": {
+    "ruta": "outputs/pensiones/afp_maestro_administradoras.completo.json",
+    "bytes": 993
+   },
+   "nota": null,
+   "filas": 7,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/pensiones/afp_maestro_administradoras.parquet",
+      "bytes": 2880
+     }
+    ],
+    "where": "",
+    "filas": 7
+   }
+  },
+  "bancos_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/bancos/bancos_maestro.parquet",
+     "bytes": 6501
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/bancos/bancos_maestro.completo.csv",
+    "bytes": 3755,
+    "filas": 41
+   },
+   "json": {
+    "ruta": "outputs/bancos/bancos_maestro.completo.json",
+    "bytes": 8183
+   },
+   "nota": null,
+   "filas": 41,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/bancos/bancos_maestro.parquet",
+      "bytes": 6501
+     }
+    ],
+    "where": "",
+    "filas": 41
+   }
+  },
+  "bancos_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-01/lineas.parquet",
+     "bytes": 116487
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-02/lineas.parquet",
+     "bytes": 116295
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-03/lineas.parquet",
+     "bytes": 118291
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-04/lineas.parquet",
+     "bytes": 118586
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-05/lineas.parquet",
+     "bytes": 118715
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-06/lineas.parquet",
+     "bytes": 119192
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-07/lineas.parquet",
+     "bytes": 119927
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-08/lineas.parquet",
+     "bytes": 119801
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-09/lineas.parquet",
+     "bytes": 119859
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-10/lineas.parquet",
+     "bytes": 120626
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-11/lineas.parquet",
+     "bytes": 120313
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2022-12/lineas.parquet",
+     "bytes": 120263
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-01/lineas.parquet",
+     "bytes": 120903
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-02/lineas.parquet",
+     "bytes": 120699
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-03/lineas.parquet",
+     "bytes": 120792
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-04/lineas.parquet",
+     "bytes": 120468
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-05/lineas.parquet",
+     "bytes": 120834
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-06/lineas.parquet",
+     "bytes": 120973
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-07/lineas.parquet",
+     "bytes": 120741
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-08/lineas.parquet",
+     "bytes": 122005
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-09/lineas.parquet",
+     "bytes": 122003
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-10/lineas.parquet",
+     "bytes": 121826
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-11/lineas.parquet",
+     "bytes": 122270
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2023-12/lineas.parquet",
+     "bytes": 122046
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-01/lineas.parquet",
+     "bytes": 122696
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-02/lineas.parquet",
+     "bytes": 122959
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-03/lineas.parquet",
+     "bytes": 123052
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-04/lineas.parquet",
+     "bytes": 122778
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-05/lineas.parquet",
+     "bytes": 122650
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-06/lineas.parquet",
+     "bytes": 132062
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-07/lineas.parquet",
+     "bytes": 131728
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-08/lineas.parquet",
+     "bytes": 131553
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-09/lineas.parquet",
+     "bytes": 131327
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-10/lineas.parquet",
+     "bytes": 132785
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-11/lineas.parquet",
+     "bytes": 131639
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2024-12/lineas.parquet",
+     "bytes": 131772
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-01/lineas.parquet",
+     "bytes": 132495
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-02/lineas.parquet",
+     "bytes": 132727
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-03/lineas.parquet",
+     "bytes": 133032
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-04/lineas.parquet",
+     "bytes": 133261
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-05/lineas.parquet",
+     "bytes": 133020
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-06/lineas.parquet",
+     "bytes": 132455
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-07/lineas.parquet",
+     "bytes": 132977
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-08/lineas.parquet",
+     "bytes": 133132
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-09/lineas.parquet",
+     "bytes": 133131
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-10/lineas.parquet",
+     "bytes": 134951
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-11/lineas.parquet",
+     "bytes": 129530
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2025-12/lineas.parquet",
+     "bytes": 129789
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-01/lineas.parquet",
+     "bytes": 130049
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-02/lineas.parquet",
+     "bytes": 130273
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-03/lineas.parquet",
+     "bytes": 130459
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-04/lineas.parquet",
+     "bytes": 130224
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-05/lineas.parquet",
+     "bytes": 130197
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-06/lineas.parquet",
+     "bytes": 130369
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-07/lineas.parquet",
+     "bytes": 130582
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-08/lineas.parquet",
+     "bytes": 130541
+    },
+    {
+     "ruta": "outputs/bancos/balance_b1_b2/2026-09/lineas.parquet",
+     "bytes": 130704
+    }
+   ],
+   "where": "familia_archivo_fuente IN ('B1', 'B2')",
+   "csv": null,
+   "json": null,
+   "nota": "vista con filtro SQL: el CSV supera el tope; se exporta en el navegador con el filtro",
+   "filas": 735837
+  },
+  "bancos_resultados": {
+   "archivos": [
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-01/lineas.parquet",
+     "bytes": 135025
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-02/lineas.parquet",
+     "bytes": 138754
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-03/lineas.parquet",
+     "bytes": 141470
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-04/lineas.parquet",
+     "bytes": 142790
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-05/lineas.parquet",
+     "bytes": 143963
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-06/lineas.parquet",
+     "bytes": 144920
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-07/lineas.parquet",
+     "bytes": 146371
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-08/lineas.parquet",
+     "bytes": 146720
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-09/lineas.parquet",
+     "bytes": 147904
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-10/lineas.parquet",
+     "bytes": 148389
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-11/lineas.parquet",
+     "bytes": 149071
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2022-12/lineas.parquet",
+     "bytes": 149990
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-01/lineas.parquet",
+     "bytes": 138298
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-02/lineas.parquet",
+     "bytes": 141314
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-03/lineas.parquet",
+     "bytes": 143469
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-04/lineas.parquet",
+     "bytes": 144904
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-05/lineas.parquet",
+     "bytes": 146170
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-06/lineas.parquet",
+     "bytes": 147409
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-07/lineas.parquet",
+     "bytes": 148167
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-08/lineas.parquet",
+     "bytes": 149399
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-09/lineas.parquet",
+     "bytes": 149937
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-10/lineas.parquet",
+     "bytes": 150231
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-11/lineas.parquet",
+     "bytes": 151133
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2023-12/lineas.parquet",
+     "bytes": 152139
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-01/lineas.parquet",
+     "bytes": 139910
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-02/lineas.parquet",
+     "bytes": 143243
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-03/lineas.parquet",
+     "bytes": 145352
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-04/lineas.parquet",
+     "bytes": 147017
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-05/lineas.parquet",
+     "bytes": 147760
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-06/lineas.parquet",
+     "bytes": 149729
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-07/lineas.parquet",
+     "bytes": 150480
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-08/lineas.parquet",
+     "bytes": 150948
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-09/lineas.parquet",
+     "bytes": 151477
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-10/lineas.parquet",
+     "bytes": 152285
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-11/lineas.parquet",
+     "bytes": 153083
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2024-12/lineas.parquet",
+     "bytes": 153555
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-01/lineas.parquet",
+     "bytes": 140480
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-02/lineas.parquet",
+     "bytes": 144192
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-03/lineas.parquet",
+     "bytes": 146441
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-04/lineas.parquet",
+     "bytes": 147869
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-05/lineas.parquet",
+     "bytes": 148863
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-06/lineas.parquet",
+     "bytes": 149826
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-07/lineas.parquet",
+     "bytes": 150838
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-08/lineas.parquet",
+     "bytes": 151605
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-09/lineas.parquet",
+     "bytes": 152029
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-10/lineas.parquet",
+     "bytes": 154214
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-11/lineas.parquet",
+     "bytes": 149370
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2025-12/lineas.parquet",
+     "bytes": 150283
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-01/lineas.parquet",
+     "bytes": 138377
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-02/lineas.parquet",
+     "bytes": 141633
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-03/lineas.parquet",
+     "bytes": 143939
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-04/lineas.parquet",
+     "bytes": 146124
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-05/lineas.parquet",
+     "bytes": 147192
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-06/lineas.parquet",
+     "bytes": 148125
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-07/lineas.parquet",
+     "bytes": 149175
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-08/lineas.parquet",
+     "bytes": 149837
+    },
+    {
+     "ruta": "outputs/bancos/resultados_r1/2026-09/lineas.parquet",
+     "bytes": 150491
+    }
+   ],
+   "where": "familia_archivo_fuente = 'R1'",
+   "csv": null,
+   "json": null,
+   "nota": "vista con filtro SQL: el CSV supera el tope; se exporta en el navegador con el filtro",
+   "filas": 1262183
+  },
+  "macro_tasas_corto_plazo": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_tasas_corto_plazo.parquet",
+     "bytes": 13701
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_tasas_corto_plazo.completo.csv",
+    "bytes": 87176,
+    "filas": 3196
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_tasas_corto_plazo.completo.json",
+    "bytes": 258429
+   },
+   "nota": null,
+   "filas": 3196,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_tasas_corto_plazo.parquet",
+      "bytes": 13701
+     }
+    ],
+    "where": "",
+    "filas": 3196
+   }
+  },
+  "macro_swaps_camara": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_swaps_camara.parquet",
+     "bytes": 79342
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_swaps_camara.completo.csv",
+    "bytes": 298438,
+    "filas": 3210
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_swaps_camara.completo.json",
+    "bytes": 876314
+   },
+   "nota": null,
+   "filas": 3210,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_swaps_camara.parquet",
+      "bytes": 79342
+     }
+    ],
+    "where": "",
+    "filas": 3210
+   }
+  },
+  "macro_curva_bonos_pesos": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
+     "bytes": 61531
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.csv",
+    "bytes": 151117,
+    "filas": 3179
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.json",
+    "bytes": 580459
+   },
+   "nota": null,
+   "filas": 3179,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
+      "bytes": 61531
+     }
+    ],
+    "where": "",
+    "filas": 3179
+   }
+  },
+  "macro_curva_bonos_uf": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
+     "bytes": 94237
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_curva_bonos_uf.completo.csv",
+    "bytes": 214864,
+    "filas": 3181
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_curva_bonos_uf.completo.json",
+    "bytes": 950494
+   },
+   "nota": null,
+   "filas": 3181,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
+      "bytes": 94237
+     }
+    ],
+    "where": "",
+    "filas": 3181
+   }
+  },
+  "macro_inflacion_implicita": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_inflacion_implicita.parquet",
+     "bytes": 36856
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_inflacion_implicita.completo.csv",
+    "bytes": 93297,
+    "filas": 3085
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_inflacion_implicita.completo.json",
+    "bytes": 377391
+   },
+   "nota": null,
+   "filas": 3085,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_inflacion_implicita.parquet",
+      "bytes": 36856
+     }
+    ],
+    "where": "",
+    "filas": 3085
+   }
+  },
+  "macro_dolar_observado": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_dolar_observado.parquet",
+     "bytes": 24749
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_dolar_observado.completo.csv",
+    "bytes": 82859,
+    "filas": 3195
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_dolar_observado.completo.json",
+    "bytes": 255347
+   },
+   "nota": null,
+   "filas": 3195,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_dolar_observado.parquet",
+      "bytes": 24749
+     }
+    ],
+    "where": "",
+    "filas": 3195
+   }
+  },
+  "macro_euro_observado": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_euro_observado.parquet",
+     "bytes": 24571
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_euro_observado.completo.csv",
+    "bytes": 83431,
+    "filas": 3195
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_euro_observado.completo.json",
+    "bytes": 252725
+   },
+   "nota": null,
+   "filas": 3195,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_euro_observado.parquet",
+      "bytes": 24571
+     }
+    ],
+    "where": "",
+    "filas": 3195
+   }
+  },
+  "macro_tipo_cambio_multilateral": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
+     "bytes": 42541
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_tipo_cambio_multilateral.completo.csv",
+    "bytes": 124999,
+    "filas": 3195
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_tipo_cambio_multilateral.completo.json",
+    "bytes": 642443
+   },
+   "nota": null,
+   "filas": 3195,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
+      "bytes": 42541
+     }
+    ],
+    "where": "",
+    "filas": 3195
+   }
+  },
+  "macro_tipo_cambio_real": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_tipo_cambio_real.parquet",
+     "bytes": 6441
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_tipo_cambio_real.completo.csv",
+    "bytes": 8133,
+    "filas": 153
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_tipo_cambio_real.completo.json",
+    "bytes": 22435
+   },
+   "nota": null,
+   "filas": 153,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_tipo_cambio_real.parquet",
+      "bytes": 6441
+     }
+    ],
+    "where": "",
+    "filas": 153
+   }
+  },
+  "macro_uf": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_uf.parquet",
+     "bytes": 35444
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_uf.completo.csv",
+    "bytes": 130819,
+    "filas": 4688
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_uf.completo.json",
+    "bytes": 313624
+   },
+   "nota": null,
+   "filas": 4688,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_uf.parquet",
+      "bytes": 35444
+     }
+    ],
+    "where": "",
+    "filas": 4688
+   }
+  },
+  "macro_utm": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_utm.parquet",
+     "bytes": 3362
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_utm.completo.csv",
+    "bytes": 4213,
+    "filas": 155
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_utm.completo.json",
+    "bytes": 10385
+   },
+   "nota": null,
+   "filas": 155,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_utm.parquet",
+      "bytes": 3362
+     }
+    ],
+    "where": "",
+    "filas": 155
+   }
+  },
+  "macro_inflacion_ipc": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_inflacion_ipc.parquet",
+     "bytes": 8220
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_inflacion_ipc.completo.csv",
+    "bytes": 8747,
+    "filas": 153
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_inflacion_ipc.completo.json",
+    "bytes": 20771
+   },
+   "nota": null,
+   "filas": 153,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_inflacion_ipc.parquet",
+      "bytes": 8220
+     }
+    ],
+    "where": "",
+    "filas": 153
+   }
+  },
+  "macro_imacec": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_imacec.parquet",
+     "bytes": 12252
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_imacec.completo.csv",
+    "bytes": 15101,
+    "filas": 152
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_imacec.completo.json",
+    "bytes": 37771
+   },
+   "nota": null,
+   "filas": 152,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_imacec.parquet",
+      "bytes": 12252
+     }
+    ],
+    "where": "",
+    "filas": 152
+   }
+  },
+  "macro_pib_trimestral": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_pib_trimestral.parquet",
+     "bytes": 3112
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_pib_trimestral.completo.csv",
+    "bytes": 1783,
+    "filas": 50
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_pib_trimestral.completo.json",
+    "bytes": 4441
+   },
+   "nota": null,
+   "filas": 50,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_pib_trimestral.parquet",
+      "bytes": 3112
+     }
+    ],
+    "where": "",
+    "filas": 50
+   }
+  },
+  "macro_mercado_laboral": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_mercado_laboral.parquet",
+     "bytes": 10325
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_mercado_laboral.completo.csv",
+    "bytes": 12761,
+    "filas": 153
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_mercado_laboral.completo.json",
+    "bytes": 32539
+   },
+   "nota": null,
+   "filas": 153,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_mercado_laboral.parquet",
+      "bytes": 10325
+     }
+    ],
+    "where": "",
+    "filas": 153
+   }
+  },
+  "macro_cobre": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_cobre.parquet",
+     "bytes": 33195
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_cobre.completo.csv",
+    "bytes": 89976,
+    "filas": 3267
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_cobre.completo.json",
+    "bytes": 419536
+   },
+   "nota": null,
+   "filas": 3267,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_cobre.parquet",
+      "bytes": 33195
+     }
+    ],
+    "where": "",
+    "filas": 3267
+   }
+  },
+  "macro_metales_preciosos": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_metales_preciosos.parquet",
+     "bytes": 46957
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_metales_preciosos.completo.csv",
+    "bytes": 110708,
+    "filas": 3195
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_metales_preciosos.completo.json",
+    "bytes": 347078
+   },
+   "nota": null,
+   "filas": 3195,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_metales_preciosos.parquet",
+      "bytes": 46957
+     }
+    ],
+    "where": "",
+    "filas": 3195
+   }
+  },
+  "macro_reservas_internacionales": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_reservas_internacionales.parquet",
+     "bytes": 4379
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_reservas_internacionales.completo.csv",
+    "bytes": 5171,
+    "filas": 153
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_reservas_internacionales.completo.json",
+    "bytes": 14911
+   },
+   "nota": null,
+   "filas": 153,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_reservas_internacionales.parquet",
+      "bytes": 4379
+     }
+    ],
+    "where": "",
+    "filas": 153
+   }
+  },
+  "macro_tasa_referencia_fed": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_tasa_referencia_fed.parquet",
+     "bytes": 12229
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_tasa_referencia_fed.completo.csv",
+    "bytes": 78586,
+    "filas": 3333
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_tasa_referencia_fed.completo.json",
+    "bytes": 228538
+   },
+   "nota": null,
+   "filas": 3333,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_tasa_referencia_fed.parquet",
+      "bytes": 12229
+     }
+    ],
+    "where": "",
+    "filas": 3333
+   }
+  },
+  "macro_deuda_publica_pct_pib": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_deuda_publica_pct_pib.parquet",
+     "bytes": 3180
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_deuda_publica_pct_pib.completo.csv",
+    "bytes": 1802,
+    "filas": 50
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_deuda_publica_pct_pib.completo.json",
+    "bytes": 4901
+   },
+   "nota": null,
+   "filas": 50,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_deuda_publica_pct_pib.parquet",
+      "bytes": 3180
+     }
+    ],
+    "where": "",
+    "filas": 50
+   }
+  },
+  "macro_expectativas_inflacion": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_expectativas_inflacion.parquet",
+     "bytes": 4156
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_expectativas_inflacion.completo.csv",
+    "bytes": 4251,
+    "filas": 154
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_expectativas_inflacion.completo.json",
+    "bytes": 20483
+   },
+   "nota": null,
+   "filas": 154,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_expectativas_inflacion.parquet",
+      "bytes": 4156
+     }
+    ],
+    "where": "",
+    "filas": 154
+   }
+  },
+  "macro_expectativas_tpm": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_expectativas_tpm.parquet",
+     "bytes": 4075
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_expectativas_tpm.completo.csv",
+    "bytes": 4355,
+    "filas": 154
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_expectativas_tpm.completo.json",
+    "bytes": 17527
+   },
+   "nota": null,
+   "filas": 154,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_expectativas_tpm.parquet",
+      "bytes": 4075
+     }
+    ],
+    "where": "",
+    "filas": 154
+   }
+  },
+  "macro_expectativas_operadores": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_expectativas_operadores.parquet",
+     "bytes": 5253
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_expectativas_operadores.completo.csv",
+    "bytes": 6632,
+    "filas": 238
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_expectativas_operadores.completo.json",
+    "bytes": 28450
+   },
+   "nota": null,
+   "filas": 238,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_expectativas_operadores.parquet",
+      "bytes": 5253
+     }
+    ],
+    "where": "",
+    "filas": 238
+   }
+  },
+  "macro_series_catalogo": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_series_catalogo.parquet",
+     "bytes": 10897
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_series_catalogo.completo.csv",
+    "bytes": 11060,
+    "filas": 51
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_series_catalogo.completo.json",
+    "bytes": 19744
+   },
+   "nota": null,
+   "filas": 51,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_series_catalogo.parquet",
+      "bytes": 10897
+     }
+    ],
+    "where": "",
+    "filas": 51
+   }
+  },
+  "factoring_leasing_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
+     "bytes": 537163
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.completo.csv",
+    "bytes": 8790874,
+    "filas": 30075
+   },
+   "json": null,
+   "nota": null,
+   "filas": 30075,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
+      "bytes": 537163
+     }
+    ],
+    "where": "",
+    "filas": 30075
+   }
+  },
+  "factoring_leasing_resultados": {
+   "archivos": [
+    {
+     "ruta": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
+     "bytes": 330523
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.completo.csv",
+    "bytes": 6365826,
+    "filas": 22389
+   },
+   "json": null,
+   "nota": null,
+   "filas": 22389,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
+      "bytes": 330523
+     }
+    ],
+    "where": "",
+    "filas": 22389
+   }
+  },
+  "factoring_leasing_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
+     "bytes": 13989
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/factoring_leasing/factoring_leasing_maestro.completo.csv",
+    "bytes": 11758,
+    "filas": 32
+   },
+   "json": {
+    "ruta": "outputs/factoring_leasing/factoring_leasing_maestro.completo.json",
+    "bytes": 26025
+   },
+   "nota": null,
+   "filas": 32,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
+      "bytes": 13989
+     }
+    ],
+    "where": "",
+    "filas": 32
+   }
+  },
+  "corredoras_bolsa_lista_entidades_registro": {
+   "archivos": [
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet",
+     "bytes": 14484
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.completo.csv",
+    "bytes": 40318,
+    "filas": 120
+   },
+   "json": {
+    "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.completo.json",
+    "bytes": 61343
+   },
+   "nota": null,
+   "filas": 120,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet",
+      "bytes": 14484
+     }
+    ],
+    "where": "",
+    "filas": 120
+   }
+  },
+  "corredoras_bolsa_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
+     "bytes": 9358
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_maestro.completo.csv",
+    "bytes": 16417,
+    "filas": 120
+   },
+   "json": {
+    "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_maestro.completo.json",
+    "bytes": 31119
+   },
+   "nota": null,
+   "filas": 120,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
+      "bytes": 9358
+     }
+    ],
+    "where": "",
+    "filas": 120
+   }
+  },
+  "securitizadoras_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_maestro.parquet",
+     "bytes": 4346
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/securitizadoras/securitizadoras_maestro.completo.csv",
+    "bytes": 4178,
+    "filas": 16
+   },
+   "json": {
+    "ruta": "outputs/securitizadoras/securitizadoras_maestro.completo.json",
+    "bytes": 6175
+   },
+   "nota": null,
+   "filas": 16,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_maestro.parquet",
+      "bytes": 4346
+     }
+    ],
+    "where": "",
+    "filas": 16
+   }
+  },
+  "patrimonios_separados_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
+     "bytes": 7945
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/securitizadoras/patrimonios_separados_maestro.completo.csv",
+    "bytes": 3201,
+    "filas": 19
+   },
+   "json": {
+    "ruta": "outputs/securitizadoras/patrimonios_separados_maestro.completo.json",
+    "bytes": 7325
+   },
+   "nota": null,
+   "filas": 19,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
+      "bytes": 7945
+     }
+    ],
+    "where": "",
+    "filas": 19
+   }
+  },
+  "patrimonios_separados_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/securitizadoras/patrimonios_separados_balance.parquet",
+     "bytes": 57297
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/securitizadoras/patrimonios_separados_balance.completo.csv",
+    "bytes": 1678100,
+    "filas": 7962
+   },
+   "json": {
+    "ruta": "outputs/securitizadoras/patrimonios_separados_balance.completo.json",
+    "bytes": 3103157
+   },
+   "nota": null,
+   "filas": 7962,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/securitizadoras/patrimonios_separados_balance.parquet",
+      "bytes": 57297
+     }
+    ],
+    "where": "",
+    "filas": 7962
+   }
+  },
+  "cooperativas_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/cooperativas/cooperativas_maestro.parquet",
+     "bytes": 4324
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/cooperativas/cooperativas_maestro.completo.csv",
+    "bytes": 1452,
+    "filas": 7
+   },
+   "json": {
+    "ruta": "outputs/cooperativas/cooperativas_maestro.completo.json",
+    "bytes": 2662
+   },
+   "nota": null,
+   "filas": 7,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/cooperativas/cooperativas_maestro.parquet",
+      "bytes": 4324
+     }
+    ],
+    "where": "",
+    "filas": 7
+   }
+  },
+  "ccaf_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_maestro.parquet",
+     "bytes": 17300
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/cajas_compensacion/ccaf_maestro.completo.csv",
+    "bytes": 4067,
+    "filas": 6
+   },
+   "json": {
+    "ruta": "outputs/cajas_compensacion/ccaf_maestro.completo.json",
+    "bytes": 6088
+   },
+   "nota": null,
+   "filas": 6,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_maestro.parquet",
+      "bytes": 17300
+     }
+    ],
+    "where": "",
+    "filas": 6
+   }
+  },
+  "agf_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/agf/agf_maestro.parquet",
+     "bytes": 17065
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/agf/agf_maestro.completo.csv",
+    "bytes": 30476,
+    "filas": 72
+   },
+   "json": {
+    "ruta": "outputs/agf/agf_maestro.completo.json",
+    "bytes": 51312
+   },
+   "nota": null,
+   "filas": 72,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/agf/agf_maestro.parquet",
+      "bytes": 17065
+     }
+    ],
+    "where": "",
+    "filas": 72
+   }
+  },
+  "agf_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/agf/agf_balance/2010.parquet",
+     "bytes": 15283
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2011.parquet",
+     "bytes": 28526
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2012.parquet",
+     "bytes": 28563
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2013.parquet",
+     "bytes": 27471
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2014.parquet",
+     "bytes": 28453
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2015.parquet",
+     "bytes": 30520
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2016.parquet",
+     "bytes": 33192
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2017.parquet",
+     "bytes": 34570
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2018.parquet",
+     "bytes": 34754
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2019.parquet",
+     "bytes": 37396
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2020.parquet",
+     "bytes": 37933
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2021.parquet",
+     "bytes": 39164
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2022.parquet",
+     "bytes": 39716
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2023.parquet",
+     "bytes": 40836
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2024.parquet",
+     "bytes": 40978
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2025.parquet",
+     "bytes": 40201
+    },
+    {
+     "ruta": "outputs/agf/agf_balance/2026.parquet",
+     "bytes": 25807
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/agf/agf_balance/agf_balance.completo.csv",
+    "bytes": 12540047,
+    "filas": 71423
+   },
+   "json": null,
+   "nota": null,
+   "filas": 71423,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/agf/agf_balance/2010.parquet",
+      "bytes": 15283
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2011.parquet",
+      "bytes": 28526
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2012.parquet",
+      "bytes": 28563
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2013.parquet",
+      "bytes": 27471
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2014.parquet",
+      "bytes": 28453
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2015.parquet",
+      "bytes": 30520
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2016.parquet",
+      "bytes": 33192
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2017.parquet",
+      "bytes": 34570
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2018.parquet",
+      "bytes": 34754
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2019.parquet",
+      "bytes": 37396
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2020.parquet",
+      "bytes": 37933
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2021.parquet",
+      "bytes": 39164
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2022.parquet",
+      "bytes": 39716
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2023.parquet",
+      "bytes": 40836
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2024.parquet",
+      "bytes": 40978
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2025.parquet",
+      "bytes": 40201
+     },
+     {
+      "ruta": "outputs/agf/agf_balance/2026.parquet",
+      "bytes": 25807
+     }
+    ],
+    "where": "",
+    "filas": 71423
+   }
+  },
+  "agf_resultados": {
+   "archivos": [
+    {
+     "ruta": "outputs/agf/agf_resultados/2010.parquet",
+     "bytes": 14420
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2011.parquet",
+     "bytes": 23341
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2012.parquet",
+     "bytes": 24069
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2013.parquet",
+     "bytes": 22327
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2014.parquet",
+     "bytes": 22716
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2015.parquet",
+     "bytes": 24608
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2016.parquet",
+     "bytes": 26915
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2017.parquet",
+     "bytes": 27306
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2018.parquet",
+     "bytes": 28081
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2019.parquet",
+     "bytes": 28621
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2020.parquet",
+     "bytes": 28800
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2021.parquet",
+     "bytes": 29481
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2022.parquet",
+     "bytes": 30233
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2023.parquet",
+     "bytes": 31010
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2024.parquet",
+     "bytes": 30717
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2025.parquet",
+     "bytes": 30375
+    },
+    {
+     "ruta": "outputs/agf/agf_resultados/2026.parquet",
+     "bytes": 21244
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/agf/agf_resultados/agf_resultados.completo.csv",
+    "bytes": 9641575,
+    "filas": 58216
+   },
+   "json": null,
+   "nota": null,
+   "filas": 58216,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/agf/agf_resultados/2010.parquet",
+      "bytes": 14420
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2011.parquet",
+      "bytes": 23341
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2012.parquet",
+      "bytes": 24069
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2013.parquet",
+      "bytes": 22327
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2014.parquet",
+      "bytes": 22716
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2015.parquet",
+      "bytes": 24608
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2016.parquet",
+      "bytes": 26915
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2017.parquet",
+      "bytes": 27306
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2018.parquet",
+      "bytes": 28081
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2019.parquet",
+      "bytes": 28621
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2020.parquet",
+      "bytes": 28800
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2021.parquet",
+      "bytes": 29481
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2022.parquet",
+      "bytes": 30233
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2023.parquet",
+      "bytes": 31010
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2024.parquet",
+      "bytes": 30717
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2025.parquet",
+      "bytes": 30375
+     },
+     {
+      "ruta": "outputs/agf/agf_resultados/2026.parquet",
+      "bytes": 21244
+     }
+    ],
+    "where": "",
+    "filas": 58216
+   }
+  },
+  "securitizadoras_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2009.parquet",
+     "bytes": 9312
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2010.parquet",
+     "bytes": 13882
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2011.parquet",
+     "bytes": 14265
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2012.parquet",
+     "bytes": 13752
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2013.parquet",
+     "bytes": 13508
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2014.parquet",
+     "bytes": 13501
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2015.parquet",
+     "bytes": 13513
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2016.parquet",
+     "bytes": 13743
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2017.parquet",
+     "bytes": 13622
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2018.parquet",
+     "bytes": 13229
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2019.parquet",
+     "bytes": 13769
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2020.parquet",
+     "bytes": 14118
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2021.parquet",
+     "bytes": 13881
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2022.parquet",
+     "bytes": 13860
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2023.parquet",
+     "bytes": 13764
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2024.parquet",
+     "bytes": 13907
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2025.parquet",
+     "bytes": 13578
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_balance/2026.parquet",
+     "bytes": 11514
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/securitizadoras/securitizadoras_balance/securitizadoras_balance.completo.csv",
+    "bytes": 2071656,
+    "filas": 13679
+   },
+   "json": {
+    "ruta": "outputs/securitizadoras/securitizadoras_balance/securitizadoras_balance.completo.json",
+    "bytes": 4790906
+   },
+   "nota": null,
+   "filas": 13679,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2009.parquet",
+      "bytes": 9312
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2010.parquet",
+      "bytes": 13882
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2011.parquet",
+      "bytes": 14265
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2012.parquet",
+      "bytes": 13752
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2013.parquet",
+      "bytes": 13508
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2014.parquet",
+      "bytes": 13501
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2015.parquet",
+      "bytes": 13513
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2016.parquet",
+      "bytes": 13743
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2017.parquet",
+      "bytes": 13622
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2018.parquet",
+      "bytes": 13229
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2019.parquet",
+      "bytes": 13769
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2020.parquet",
+      "bytes": 14118
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2021.parquet",
+      "bytes": 13881
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2022.parquet",
+      "bytes": 13860
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2023.parquet",
+      "bytes": 13764
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2024.parquet",
+      "bytes": 13907
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2025.parquet",
+      "bytes": 13578
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_balance/2026.parquet",
+      "bytes": 11514
+     }
+    ],
+    "where": "",
+    "filas": 13679
+   }
+  },
+  "securitizadoras_resultados": {
+   "archivos": [
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2009.parquet",
+     "bytes": 8984
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2010.parquet",
+     "bytes": 13339
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2011.parquet",
+     "bytes": 13470
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2012.parquet",
+     "bytes": 12937
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2013.parquet",
+     "bytes": 12640
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2014.parquet",
+     "bytes": 12722
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2015.parquet",
+     "bytes": 12705
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2016.parquet",
+     "bytes": 12692
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2017.parquet",
+     "bytes": 12560
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2018.parquet",
+     "bytes": 12516
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2019.parquet",
+     "bytes": 12918
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2020.parquet",
+     "bytes": 13005
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2021.parquet",
+     "bytes": 12862
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2022.parquet",
+     "bytes": 12862
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2023.parquet",
+     "bytes": 12766
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2024.parquet",
+     "bytes": 13048
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2025.parquet",
+     "bytes": 12653
+    },
+    {
+     "ruta": "outputs/securitizadoras/securitizadoras_resultados/2026.parquet",
+     "bytes": 11174
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/securitizadoras/securitizadoras_resultados/securitizadoras_resultados.completo.csv",
+    "bytes": 1779049,
+    "filas": 12290
+   },
+   "json": {
+    "ruta": "outputs/securitizadoras/securitizadoras_resultados/securitizadoras_resultados.completo.json",
+    "bytes": 4222220
+   },
+   "nota": null,
+   "filas": 12290,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2009.parquet",
+      "bytes": 8984
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2010.parquet",
+      "bytes": 13339
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2011.parquet",
+      "bytes": 13470
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2012.parquet",
+      "bytes": 12937
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2013.parquet",
+      "bytes": 12640
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2014.parquet",
+      "bytes": 12722
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2015.parquet",
+      "bytes": 12705
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2016.parquet",
+      "bytes": 12692
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2017.parquet",
+      "bytes": 12560
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2018.parquet",
+      "bytes": 12516
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2019.parquet",
+      "bytes": 12918
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2020.parquet",
+      "bytes": 13005
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2021.parquet",
+      "bytes": 12862
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2022.parquet",
+      "bytes": 12862
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2023.parquet",
+      "bytes": 12766
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2024.parquet",
+      "bytes": 13048
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2025.parquet",
+      "bytes": 12653
+     },
+     {
+      "ruta": "outputs/securitizadoras/securitizadoras_resultados/2026.parquet",
+      "bytes": 11174
+     }
+    ],
+    "where": "",
+    "filas": 12290
+   }
+  },
+  "ccaf_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2010.parquet",
+     "bytes": 11918
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2011.parquet",
+     "bytes": 12623
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2012.parquet",
+     "bytes": 12258
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2013.parquet",
+     "bytes": 12175
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2014.parquet",
+     "bytes": 12232
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2015.parquet",
+     "bytes": 12305
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2016.parquet",
+     "bytes": 12368
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2017.parquet",
+     "bytes": 12258
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2018.parquet",
+     "bytes": 12323
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2019.parquet",
+     "bytes": 12804
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2020.parquet",
+     "bytes": 13333
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2021.parquet",
+     "bytes": 13452
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2022.parquet",
+     "bytes": 13466
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2023.parquet",
+     "bytes": 13470
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2024.parquet",
+     "bytes": 13309
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2025.parquet",
+     "bytes": 13289
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_balance/2026.parquet",
+     "bytes": 11516
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/cajas_compensacion/ccaf_balance/ccaf_balance.completo.csv",
+    "bytes": 1495367,
+    "filas": 8043
+   },
+   "json": {
+    "ruta": "outputs/cajas_compensacion/ccaf_balance/ccaf_balance.completo.json",
+    "bytes": 3094265
+   },
+   "nota": null,
+   "filas": 8043,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2010.parquet",
+      "bytes": 11918
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2011.parquet",
+      "bytes": 12623
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2012.parquet",
+      "bytes": 12258
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2013.parquet",
+      "bytes": 12175
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2014.parquet",
+      "bytes": 12232
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2015.parquet",
+      "bytes": 12305
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2016.parquet",
+      "bytes": 12368
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2017.parquet",
+      "bytes": 12258
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2018.parquet",
+      "bytes": 12323
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2019.parquet",
+      "bytes": 12804
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2020.parquet",
+      "bytes": 13333
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2021.parquet",
+      "bytes": 13452
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2022.parquet",
+      "bytes": 13466
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2023.parquet",
+      "bytes": 13470
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2024.parquet",
+      "bytes": 13309
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2025.parquet",
+      "bytes": 13289
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_balance/2026.parquet",
+      "bytes": 11516
+     }
+    ],
+    "where": "",
+    "filas": 8043
+   }
+  },
+  "ccaf_resultados": {
+   "archivos": [
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2010.parquet",
+     "bytes": 11103
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2011.parquet",
+     "bytes": 11381
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2012.parquet",
+     "bytes": 10935
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2013.parquet",
+     "bytes": 10808
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2014.parquet",
+     "bytes": 11251
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2015.parquet",
+     "bytes": 11024
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2016.parquet",
+     "bytes": 11316
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2017.parquet",
+     "bytes": 11088
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2018.parquet",
+     "bytes": 11105
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2019.parquet",
+     "bytes": 11667
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2020.parquet",
+     "bytes": 11516
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2021.parquet",
+     "bytes": 11662
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2022.parquet",
+     "bytes": 11714
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2023.parquet",
+     "bytes": 11632
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2024.parquet",
+     "bytes": 11577
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2025.parquet",
+     "bytes": 11864
+    },
+    {
+     "ruta": "outputs/cajas_compensacion/ccaf_resultados/2026.parquet",
+     "bytes": 10520
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/cajas_compensacion/ccaf_resultados/ccaf_resultados.completo.csv",
+    "bytes": 990667,
+    "filas": 5506
+   },
+   "json": {
+    "ruta": "outputs/cajas_compensacion/ccaf_resultados/ccaf_resultados.completo.json",
+    "bytes": 2083702
+   },
+   "nota": null,
+   "filas": 5506,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2010.parquet",
+      "bytes": 11103
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2011.parquet",
+      "bytes": 11381
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2012.parquet",
+      "bytes": 10935
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2013.parquet",
+      "bytes": 10808
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2014.parquet",
+      "bytes": 11251
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2015.parquet",
+      "bytes": 11024
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2016.parquet",
+      "bytes": 11316
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2017.parquet",
+      "bytes": 11088
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2018.parquet",
+      "bytes": 11105
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2019.parquet",
+      "bytes": 11667
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2020.parquet",
+      "bytes": 11516
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2021.parquet",
+      "bytes": 11662
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2022.parquet",
+      "bytes": 11714
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2023.parquet",
+      "bytes": 11632
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2024.parquet",
+      "bytes": 11577
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2025.parquet",
+      "bytes": 11864
+     },
+     {
+      "ruta": "outputs/cajas_compensacion/ccaf_resultados/2026.parquet",
+      "bytes": 10520
+     }
+    ],
+    "where": "",
+    "filas": 5506
+   }
+  },
+  "corredoras_bolsa_balance": {
+   "archivos": [
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2010.parquet",
+     "bytes": 20504
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2011.parquet",
+     "bytes": 50061
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2012.parquet",
+     "bytes": 49636
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2013.parquet",
+     "bytes": 48801
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2014.parquet",
+     "bytes": 46946
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2015.parquet",
+     "bytes": 43985
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2016.parquet",
+     "bytes": 42306
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2017.parquet",
+     "bytes": 40171
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2018.parquet",
+     "bytes": 38969
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2019.parquet",
+     "bytes": 37082
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2020.parquet",
+     "bytes": 35914
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2021.parquet",
+     "bytes": 35837
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2022.parquet",
+     "bytes": 35269
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2023.parquet",
+     "bytes": 34611
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2024.parquet",
+     "bytes": 33743
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2025.parquet",
+     "bytes": 33665
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2026.parquet",
+     "bytes": 27563
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/corredoras_bolsa_balance.completo.csv",
+    "bytes": 19182549,
+    "filas": 109305
+   },
+   "json": null,
+   "nota": null,
+   "filas": 109305,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2010.parquet",
+      "bytes": 20504
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2011.parquet",
+      "bytes": 50061
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2012.parquet",
+      "bytes": 49636
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2013.parquet",
+      "bytes": 48801
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2014.parquet",
+      "bytes": 46946
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2015.parquet",
+      "bytes": 43985
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2016.parquet",
+      "bytes": 42306
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2017.parquet",
+      "bytes": 40171
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2018.parquet",
+      "bytes": 38969
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2019.parquet",
+      "bytes": 37082
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2020.parquet",
+      "bytes": 35914
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2021.parquet",
+      "bytes": 35837
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2022.parquet",
+      "bytes": 35269
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2023.parquet",
+      "bytes": 34611
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2024.parquet",
+      "bytes": 33743
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2025.parquet",
+      "bytes": 33665
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2026.parquet",
+      "bytes": 27563
+     }
+    ],
+    "where": "",
+    "filas": 109305
+   }
+  },
+  "corredoras_bolsa_resultados": {
+   "archivos": [
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2010.parquet",
+     "bytes": 17746
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2011.parquet",
+     "bytes": 38064
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2012.parquet",
+     "bytes": 38904
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2013.parquet",
+     "bytes": 37174
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2014.parquet",
+     "bytes": 36204
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2015.parquet",
+     "bytes": 34656
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2016.parquet",
+     "bytes": 34005
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2017.parquet",
+     "bytes": 32437
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2018.parquet",
+     "bytes": 31107
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2019.parquet",
+     "bytes": 30142
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2020.parquet",
+     "bytes": 29323
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2021.parquet",
+     "bytes": 29524
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2022.parquet",
+     "bytes": 29308
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2023.parquet",
+     "bytes": 28513
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2024.parquet",
+     "bytes": 27615
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2025.parquet",
+     "bytes": 27615
+    },
+    {
+     "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2026.parquet",
+     "bytes": 22656
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/corredoras_bolsa_resultados.completo.csv",
+    "bytes": 15889677,
+    "filas": 78683
+   },
+   "json": null,
+   "nota": null,
+   "filas": 78683,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2010.parquet",
+      "bytes": 17746
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2011.parquet",
+      "bytes": 38064
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2012.parquet",
+      "bytes": 38904
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2013.parquet",
+      "bytes": 37174
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2014.parquet",
+      "bytes": 36204
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2015.parquet",
+      "bytes": 34656
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2016.parquet",
+      "bytes": 34005
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2017.parquet",
+      "bytes": 32437
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2018.parquet",
+      "bytes": 31107
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2019.parquet",
+      "bytes": 30142
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2020.parquet",
+      "bytes": 29323
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2021.parquet",
+      "bytes": 29524
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2022.parquet",
+      "bytes": 29308
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2023.parquet",
+      "bytes": 28513
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2024.parquet",
+      "bytes": 27615
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2025.parquet",
+      "bytes": 27615
+     },
+     {
+      "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/2026.parquet",
+      "bytes": 22656
+     }
+    ],
+    "where": "",
+    "filas": 78683
+   }
+  },
+  "sistemas_pago_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
+     "bytes": 12781
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/sistemas_pago/sistemas_pago_maestro.completo.csv",
+    "bytes": 7815,
+    "filas": 19
+   },
+   "json": {
+    "ruta": "outputs/sistemas_pago/sistemas_pago_maestro.completo.json",
+    "bytes": 11773
+   },
+   "nota": null,
+   "filas": 19,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
+      "bytes": 12781
+     }
+    ],
+    "where": "",
+    "filas": 19
+   }
+  },
+  "fintech_rpsf_lista_entidades": {
+   "archivos": [
+    {
+     "ruta": "outputs/fintech/fintech_rpsf_maestro.parquet",
+     "bytes": 34339
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/fintech/fintech_rpsf_maestro.completo.csv",
+    "bytes": 75242,
+    "filas": 265
+   },
+   "json": {
+    "ruta": "outputs/fintech/fintech_rpsf_maestro.completo.json",
+    "bytes": 153038
+   },
+   "nota": null,
+   "filas": 265,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/fintech/fintech_rpsf_maestro.parquet",
+      "bytes": 34339
+     }
+    ],
+    "where": "",
+    "filas": 265
+   }
+  }
+ },
+ "generado": "2026-11-02T07:11:03+00:00",
+ "parametros": {
+  "csv_max_mb": 35,
+  "json_max_mb": 5,
+  "parquet_max_mb": 60
+ }
+}

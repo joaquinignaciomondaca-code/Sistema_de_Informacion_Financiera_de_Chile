@@ -32,7 +32,7 @@
   <meta name="twitter:image" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png">
   <meta name="twitter:image:alt" content="SIF — Sistema de Información Financiera de Chile">
 
-  <meta name="sif:data-release" content="2026-10-30.db40671ee177">
+  <meta name="sif:data-release" content="2026-11-01.4d68fa3eb6f8">
 
   <script type="application/ld+json">
 {
@@ -41,9 +41,9 @@
   "name": "Sistema de Información Financiera de Chile — Inversiones institucionales y mercados",
   "description": "Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL.",
   "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/",
-  "datePublished": "2026-10-31",
-  "dateModified": "2026-10-31",
-  "version": "2026-10-30.db40671ee177",
+  "datePublished": "2026-11-02",
+  "dateModified": "2026-11-02",
+  "version": "2026-11-01.4d68fa3eb6f8",
   "publisher": {
     "@type": "Organization",
     "name": "Sistema de Información Financiera de Chile",
@@ -80,7 +80,7 @@
     {
       "@type": "Dataset",
       "name": "90 objetos de datos financieros públicos de Chile",
-      "description": "19.777.581 filas, 90 objetos, 159 consultas SQL precálculadas"
+      "description": "19.814.973 filas, 90 objetos, 159 consultas SQL precálculadas"
     }
   ],
   "isAccessibleForFree": true,
@@ -276,7 +276,7 @@
             <button type="button" role="tab" aria-selected="false" aria-controls="sql-container" class="panel-tab-btn" id="tab-btn-sql" title="Consultas SQL sobre las vistas publicadas, ejecutadas en tu navegador">
               Consultas SQL
             </button>
-            <button type="button" role="tab" aria-selected="false" aria-controls="downloads-container" class="panel-tab-btn" id="tab-btn-downloads" title="Descargas: catálogo publicado con filas, peso y periodo; Parquet original, CSV o Excel">
+            <button type="button" role="tab" aria-selected="false" aria-controls="downloads-container" class="panel-tab-btn" id="tab-btn-downloads" title="Descargas: catálogo publicado con filas, peso y periodo; Parquet, CSV y JSON ya generados, Excel desde el navegador">
               Descargas
             </button>
             <button type="button" role="tab" aria-selected="false" aria-controls="guia-container" class="panel-tab-btn" id="tab-btn-guia" title="Guía: cómo usar los datos desde el navegador, con código y desde un agente de IA; manuales y archivos auditables">
@@ -332,7 +332,7 @@
                   <button type="button" class="info-hero-btn info-hero-btn-secondary" data-portada="descargas">Ver descargas <span aria-hidden="true">→</span></button>
                   <button type="button" class="info-core-btn" data-portada="mapa">Entender relaciones entre tablas</button>
                 </div>
-                <p class="info-hero-capabilities"><span>Parquet, CSV y Excel</span><i aria-hidden="true"></i><span>SQL en tu navegador</span></p>
+                <p class="info-hero-capabilities"><span>Parquet, CSV y JSON</span><i aria-hidden="true"></i><span>SQL en tu navegador</span></p>
               </div>
               <div class="info-hero-aside" role="group" aria-label="Alcance destacado del catálogo">
                 <div class="info-hero-aside-head"><span>Alcance del catálogo</span><span class="info-hero-source">Fuentes oficiales</span></div>
@@ -513,7 +513,7 @@
               <strong>El motor SQL no pudo iniciarse en este navegador.</strong>
               <div id="sql-engine-error">Motivo no informado.</div>
               <div class="engine-alert-env" id="sql-engine-env"></div>
-              <div class="engine-alert-hint">Para seguir sin SQL, abre Descargas y baja el Parquet original del conjunto. CSV y Excel requieren el motor. Si el problema persiste, copia el diagnóstico y compártelo para revisarlo.</div>
+              <div class="engine-alert-hint">Para seguir sin SQL, abre Descargas y baja el Parquet original del conjunto. Los CSV/JSON combinados ya se generan en el servidor (Power BI y Data Studio los leen directamente); el Excel se genera en el navegador. Si el problema persiste, copia el diagnóstico y compártelo para revisarlo.</div>
             </div>
             <div class="engine-alert-actions">
               <button class="engine-retry-btn engine-downloads-btn" id="btn-engine-downloads" type="button" title="Abrir el catálogo y descargar el Parquet original">Abrir Descargas</button>
@@ -597,7 +597,7 @@
               <tbody>
                 <tr><td data-label="">Ver una tabla y sus filas</td><td data-label="Usa"><strong>Visor de datos</strong>: elige el conjunto en el explorador.</td></tr>
                 <tr><td data-label="">Escribir una consulta SQL</td><td data-label="Usa"><strong>Consultas SQL</strong>: el motor corre en tu navegador sobre los Parquet publicados.</td></tr>
-                <tr><td data-label="">Descargar los datos</td><td data-label="Usa"><strong>Descargas</strong>: Parquet, CSV o Excel, con filas, periodo y peso a la vista.</td></tr>
+                <tr><td data-label="">Descargar los datos</td><td data-label="Usa"><strong>Descargas</strong>: Parquet, CSV o JSON (ya generados para Power BI y Data Studio), Excel desde el navegador; con filas, periodo y peso a la vista.</td></tr>
                 <tr><td data-label="">Una cifra sin descargar el conjunto</td><td data-label="Usa"><code>api/v2/resultados/{id}.json</code>, con las 159 consultas ya ejecutadas.</td></tr>
                 <tr><td data-label="">Programar en Python o R</td><td data-label="Usa">SDK de Python, o <code>views.sql</code> y DuckDB sobre los Parquet.</td></tr>
                 <tr><td data-label="">Consultar desde un agente de IA</td><td data-label="Usa"><code>llms.txt</code> para el contrato y el servidor MCP para las consultas.</td></tr>
@@ -640,7 +640,7 @@
                   <h3>Descargar un conjunto</h3>
                   <ol class="uso-steps">
                     <li>Abre <strong>Descargas</strong>: cada fila indica filas, periodo y peso antes de bajar nada.</li>
-                    <li>Elige el formato: Parquet para analizar, CSV para una planilla, Excel para revisión manual.</li>
+                    <li>Elige el formato: Parquet para analizar, CSV o JSON (ya generados, para Power BI y Data Studio) para una planilla, Excel para revisión manual.</li>
                     <li>Verifica el archivo con el <code>sha256</code> de <code>partitions/{id}.json</code> si lo vas a citar o a republicar.</li>
                     <li>Los Parquet admiten peticiones HTTP <code>Range</code>: puedes leer una muestra sin descargar el archivo completo.</li>
                   </ol>

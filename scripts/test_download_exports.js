@@ -1,5 +1,10 @@
 // Exportaciones reales con filas sintéticas y las bibliotecas ya incluidas en docs/.
 // Sin red, DuckDB, archivos privados ni cambios en los datos publicados.
+//
+// El setTimeout del contexto debe ser real: exportarFilas ya no traba el
+// navegador armando el CSV de una vez. Ahora arma bloques y yieldea con
+// setTimeout(0) entre ellos (docs/js/download_utils.js, textoCsvChunks); con el
+// no-op anterior la promesa nunca se resolvía y el test colapsa.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
@@ -17,7 +22,7 @@ const document = {
 vm.runInNewContext(fs.readFileSync('docs/js/download_utils.js', 'utf8'), {
   window, document, Blob,
   URL: { createObjectURL(blob) { blobActual = blob; return 'blob:prueba'; }, revokeObjectURL() {} },
-  setTimeout() {}
+  setTimeout: (fn, ms) => setTimeout(fn, ms)
 });
 const utils = window.MFCDownload;
 async function ultima() { return descargas[descargas.length - 1]; }
@@ -69,8 +74,22 @@ async function filasExcel(bytes) {
     for (const fila of datos) assert.equal(fila[0], total++);
   }
   assert.equal(total, 150001);
+  // CSV por bloques: el resultado debe ser idéntico al armado síncrono
+  // (textoCsv) y el progreso debe informar filas y total.
+  const onProgress = [];
+  const texto = await utils.textoCsvChunks(grandes.slice(0, 40001), ['id'], { bloque: 10000, onProgress: (e) => onProgress.push(e) });
+  assert.equal(texto, utils.textoCsv(grandes.slice(0, 40001), ['id']));
+  assert.deepEqual(onProgress.map((e) => ({ filas: e.filas, total: e.total })), [
+    { filas: 10000, total: 40001 }, { filas: 20000, total: 40001 },
+    { filas: 30000, total: 40001 }, { filas: 40000, total: 40001 },
+    { filas: 40001, total: 40001 }
+  ]);
+  // El progreso viaja a exportarFilas.
+  const vistos = [];
+  await utils.exportarFilas(filas, cols, { formato: 'csv', nombre: 'progreso', onProgress: (e) => vistos.push(e) });
+  assert.deepEqual(vistos.map((e) => ({ filas: e.filas, total: e.total })), [{ filas: 2, total: 2 }]);
   const antes = descargas.length;
   await assert.rejects(utils.exportarFilas([], ['id'], { formato: 'csv' }), /No hay filas/);
   assert.equal(descargas.length, antes);
-  console.log('OK: CSV y XLSX reales; 250.001 filas CSV/ZIP y 150.001 XLSX/ZIP íntegros, ordenados y sin truncamiento; vacío no descarga.');
+  console.log('OK: CSV y XLSX reales; 250.001 filas CSV/ZIP y 150.001 XLSX/ZIP íntegros, ordenados y sin truncamiento; CSV por bloques igual al síncrono con progreso; vacío no descarga.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -3,8 +3,8 @@
  "id": "cobertura-de-balance-por-periodo-y-modelo-764c5a",
  "titulo": "Cobertura de balance por periodo y modelo",
  "origen": "explorador",
- "data_release": "2026-10-30.db40671ee177",
- "generado": "2026-10-31",
+ "data_release": "2026-11-01.4d68fa3eb6f8",
+ "generado": "2026-11-02",
  "max_filas": 500,
  "columnas": [
   "periodo",
@@ -13,7 +13,7 @@
   "filas",
   "instituciones"
  ],
- "filas": 112,
+ "filas": 114,
  "truncado": false,
  "datos": [
   [
@@ -795,6 +795,20 @@
   ],
   [
    "2026-08",
+   "B2",
+   "MB2",
+   144,
+   18
+  ],
+  [
+   "2026-09",
+   "B1",
+   "MB1",
+   12762,
+   18
+  ],
+  [
+   "2026-09",
    "B2",
    "MB2",
    144,
