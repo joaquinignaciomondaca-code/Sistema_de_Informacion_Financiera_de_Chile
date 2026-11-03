@@ -1,0 +1,46 @@
+# Despliegue de referencia del servidor de consultas (fase 3).
+#   docker compose -f servidor/compose.yaml up --build
+#
+# Por defecto lee los Parquet del sitio publicado (modo remoto, httpfs). Para
+# leer una copia local, monta docs/ y cambia SIF_CHILE_BASE a /datos.
+# El TLS lo termina Caddy; la API sólo escucha en loopback dentro de la red.
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: servidor/Dockerfile
+    restart: unless-stopped
+    environment:
+      SIF_CHILE_BASE: ${SIF_CHILE_BASE:-https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile}
+      SIF_API_TOKEN: ${SIF_API_TOKEN:-}
+      SIF_API_MAX_FILAS: ${SIF_API_MAX_FILAS:-1000}
+      SIF_API_TIMEOUT_S: ${SIF_API_TIMEOUT_S:-10}
+      SIF_API_POOL: ${SIF_API_POOL:-4}
+      SIF_API_RATE_BURST: ${SIF_API_RATE_BURST:-20}
+      SIF_API_RATE_MIN: ${SIF_API_RATE_MIN:-60}
+      SIF_CORS_ORIGINS: ${SIF_CORS_ORIGINS:-*}
+      SIF_LOG_SQL: ${SIF_LOG_SQL:-0}
+    # Modo local (opcional): monta la copia de docs/ y usa SIF_CHILE_BASE=/datos.
+    # volumes:
+    #   - ../docs:/datos:ro
+    read_only: true
+    tmpfs: [/tmp]
+    mem_limit: 2g
+    expose:
+      - "8000"
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on: [api]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

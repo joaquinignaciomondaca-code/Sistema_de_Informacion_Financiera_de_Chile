@@ -24,8 +24,10 @@ from __future__ import annotations
 import decimal
 import datetime as dt
 import json
+import os
 import re
 import threading
+import time
 from typing import Any
 
 from .cliente import Sif, connect
@@ -36,6 +38,10 @@ MAX_FILAS = 200
 MAX_CELDA = 160
 # Columnas que se listan en la ficha de `buscar`.
 MAX_COLUMNAS = 30
+# Timeout por consulta (segundos). El contexto del modelo también se protege de
+# una consulta que no termina: DuckDB se interrumpe y el agente recibe una pista
+# para acotarla, no un cuelgue. 0 lo desactiva.
+TIMEOUT_S = float(os.environ.get("SIF_AGENTE_TIMEOUT_S", "10"))
 
 _cliente: Sif | None = None
 _candado = threading.Lock()
@@ -177,6 +183,17 @@ def buscar(texto: str, sector: str | None = None, limite: int = 5) -> str:
     return json.dumps(salida, ensure_ascii=False)
 
 
+def _error(motivo: str, pista: str, clase: str = "input",
+           reintento: str = "after_fix") -> str:
+    """Sobre de error additive: mantiene `error`+`pista` y añade el vocabulario
+    de api-anything (`clase`, `reintento`, `siguiente`) para que un agente pueda
+    decidir si reintenta, corrige o descubre sin parsear el mensaje."""
+    return json.dumps({
+        "error": motivo, "pista": pista,
+        "clase": clase, "reintento": reintento, "siguiente": pista,
+    }, ensure_ascii=False)
+
+
 def ejecutar(sql: str, limite: int = 50) -> str:
     """Ejecuta SQL de solo lectura (DuckDB) sobre los 90 objetos y devuelve columnas y filas.
 
@@ -186,28 +203,46 @@ def ejecutar(sql: str, limite: int = 50) -> str:
     """
     limite = max(1, min(int(limite or 50), MAX_FILAS))
     sif = cliente()
+    t0 = time.perf_counter()
+    temporizador = None
+    if TIMEOUT_S > 0:
+        temporizador = threading.Timer(TIMEOUT_S, sif.con.interrupt)
+        temporizador.start()
     try:
         consulta = sif.sql(sql, limite=limite + 1)
         columnas = [d[0] for d in consulta.description]
         filas = consulta.fetchall()
     except ValueError as exc:  # el guardia de solo lectura
-        return json.dumps({"error": str(exc),
-                           "pista": "Se aceptan SELECT/WITH/DESCRIBE y una sola sentencia."},
-                          ensure_ascii=False)
+        return _error(str(exc), "Se aceptan SELECT/WITH/DESCRIBE y una sola sentencia.",
+                      clase="refused", reintento="no")
     except Exception as exc:  # noqa: BLE001 - el agente necesita el motivo, no un traceback
         primero = str(exc).splitlines()[0][:300]
+        if type(exc).__name__ == "InterruptException":
+            return _error(
+                f"La consulta superó el tiempo máximo de {TIMEOUT_S:g} s.",
+                "Acota la consulta: filtra por periodo y agrega antes de devolver filas.",
+                clase="timeout", reintento="after_fix")
         pista = ("Revisa el nombre de la tabla y sus columnas con sif_buscar antes de "
                  "reintentar; no inventes columnas.")
         if "does not exist" in primero or "Referenced column" in primero:
             pista = "Esa tabla o columna no existe en el contrato: búscala con sif_buscar."
-        return json.dumps({"error": primero, "pista": pista}, ensure_ascii=False)
+        return _error(primero, pista, clase="input", reintento="after_fix")
+    finally:
+        if temporizador is not None:
+            temporizador.cancel()
 
     truncado = len(filas) > limite
+    datos = [[_recortar(v) for v in fila] for fila in filas[:limite]]
+    celdas_recortadas = sum(
+        1 for fila in filas[:limite] for v in fila
+        if isinstance(v, str) and len(v) > MAX_CELDA)
     return json.dumps({
         "filas": min(len(filas), limite),
         "truncado": truncado,
+        "celdas_recortadas": celdas_recortadas,
         "columnas": columnas,
-        "datos": [[_recortar(v) for v in fila] for fila in filas[:limite]],
+        "datos": datos,
+        "ms": round((time.perf_counter() - t0) * 1000, 1),
     }, ensure_ascii=False, default=str)
 
 
