@@ -1,0 +1,8 @@
+# api-anything ETL (fixtures) · 2026-11-03T03:53:27
+
+OK    tier 1 HTML · 7 AFP extraídas sin navegador
+OK    verify original · pass=4 fail=0
+OK    verify tras deriva · fail=4 (la spec dejó de encontrar la tabla)
+OK    verify tras reparación · pass=4 fail=0
+
+ETL api-anything: extracción HTML tier 1 y ciclo deriva→reparación probados con fixtures

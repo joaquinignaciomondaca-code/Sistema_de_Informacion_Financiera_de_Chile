@@ -1,0 +1,323 @@
+{
+  "name": "sif-chile",
+  "displayName": "SIF Chile · contrato estático",
+  "baseUrl": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
+  "description": "Contrato estático de datos financieros chilenos (CMF, BCCh, SPensiones): catálogo, esquemas, particiones, consultas y resultados precalculados. Solo GET, sin autenticación. No es SQL arbitrario.",
+  "operations": [
+    {
+      "name": "catalog",
+      "description": "Índice de los objetos del contrato: id, sector, estado, filas, bytes, clave, corte y rutas.",
+      "request": {
+        "method": "GET",
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/catalog.json",
+        "headers": {}
+      },
+      "slots": [],
+      "trigger": {
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/catalog.json"
+      },
+      "match": {
+        "method": "GET",
+        "path": "/Sistema_de_Informacion_Financiera_de_Chile/api/v2/catalog.json"
+      },
+      "response": {
+        "format": "json",
+        "extract": "objetos",
+        "pick": [
+          "id",
+          "sector",
+          "estado",
+          "filas",
+          "bytes",
+          "primaryKey",
+          "corte"
+        ]
+      },
+      "params": [],
+      "readOnly": true,
+      "minTier": 1,
+      "learnedLoggedIn": false,
+      "checks": [
+        {
+          "args": {},
+          "expect": "result",
+          "purpose": "el catálogo siempre trae objetos"
+        }
+      ]
+    },
+    {
+      "name": "schema",
+      "description": "Columnas, tipos, significado y clave de un objeto.",
+      "request": {
+        "method": "GET",
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/{id}.json",
+        "headers": {}
+      },
+      "slots": [
+        {
+          "param": "id",
+          "at": [
+            "path:4"
+          ],
+          "template": "{id}.json"
+        }
+      ],
+      "trigger": {
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/{id}.json"
+      },
+      "match": {
+        "method": "GET",
+        "path": "/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/*.json"
+      },
+      "response": {
+        "format": "json",
+        "pick": [
+          "id",
+          "titulo",
+          "primaryKey",
+          "columnas"
+        ]
+      },
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Id estable del objeto o consulta del contrato.",
+          "example": "afp_lista_entidades",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$",
+          "hint": "id del catálogo (p. ej. bancos_balance) o de consultas (slug-6hex)"
+        }
+      ],
+      "readOnly": true,
+      "minTier": 1,
+      "learnedLoggedIn": false,
+      "checks": [
+        {
+          "args": {
+            "id": "afp_lista_entidades"
+          },
+          "expect": "result",
+          "purpose": "un objeto con datos tiene esquema"
+        },
+        {
+          "args": {
+            "id": "no_existe_este_objeto"
+          },
+          "expect": "input",
+          "purpose": "un id inventado es 404, no datos"
+        }
+      ]
+    },
+    {
+      "name": "partitions",
+      "description": "Archivos Parquet que componen un objeto, con período, filas, bytes y SHA-256.",
+      "request": {
+        "method": "GET",
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/{id}.json",
+        "headers": {}
+      },
+      "slots": [
+        {
+          "param": "id",
+          "at": [
+            "path:4"
+          ],
+          "template": "{id}.json"
+        }
+      ],
+      "trigger": {
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/{id}.json"
+      },
+      "match": {
+        "method": "GET",
+        "path": "/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/*.json"
+      },
+      "response": {
+        "format": "json",
+        "extract": "particiones",
+        "pick": [
+          "path",
+          "periodo",
+          "filas",
+          "bytes",
+          "sha256"
+        ]
+      },
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Id estable del objeto o consulta del contrato.",
+          "example": "afp_lista_entidades",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$",
+          "hint": "id del catálogo (p. ej. bancos_balance) o de consultas (slug-6hex)"
+        }
+      ],
+      "readOnly": true,
+      "minTier": 1,
+      "learnedLoggedIn": false,
+      "checks": [
+        {
+          "args": {
+            "id": "afp_lista_entidades"
+          },
+          "expect": "result",
+          "purpose": "un objeto publicado tiene particiones"
+        },
+        {
+          "args": {
+            "id": "no_existe_este_objeto"
+          },
+          "expect": "input",
+          "purpose": "un id inventado es 404"
+        }
+      ]
+    },
+    {
+      "name": "queries",
+      "description": "Las consultas sugeridas del sitio, con id estable, título, SQL y expectativa.",
+      "request": {
+        "method": "GET",
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/queries.json",
+        "headers": {}
+      },
+      "slots": [],
+      "trigger": {
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/queries.json"
+      },
+      "match": {
+        "method": "GET",
+        "path": "/Sistema_de_Informacion_Financiera_de_Chile/api/v2/queries.json"
+      },
+      "response": {
+        "format": "json",
+        "extract": "consultas",
+        "pick": [
+          "id",
+          "titulo",
+          "sql",
+          "espera"
+        ]
+      },
+      "params": [],
+      "readOnly": true,
+      "minTier": 1,
+      "learnedLoggedIn": false,
+      "checks": [
+        {
+          "args": {},
+          "expect": "result",
+          "purpose": "el catálogo de consultas no está vacío"
+        }
+      ]
+    },
+    {
+      "name": "resultados",
+      "description": "Índice de los resultados ya calculados: filas, columnas, tope, sha256 y URL.",
+      "request": {
+        "method": "GET",
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/resultados/index.json",
+        "headers": {}
+      },
+      "slots": [],
+      "trigger": {
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/resultados/index.json"
+      },
+      "match": {
+        "method": "GET",
+        "path": "/Sistema_de_Informacion_Financiera_de_Chile/api/v2/resultados/index.json"
+      },
+      "response": {
+        "format": "json",
+        "extract": "consultas",
+        "pick": [
+          "id",
+          "titulo",
+          "filas",
+          "columnas",
+          "truncado",
+          "url"
+        ]
+      },
+      "params": [],
+      "readOnly": true,
+      "minTier": 1,
+      "learnedLoggedIn": false,
+      "checks": [
+        {
+          "args": {},
+          "expect": "result",
+          "purpose": "hay resultados precalculados"
+        }
+      ]
+    },
+    {
+      "name": "resultado",
+      "description": "El resultado ya calculado de una consulta: datos, SQL que los produjo y data_release.",
+      "request": {
+        "method": "GET",
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/resultados/{id}.json",
+        "headers": {}
+      },
+      "slots": [
+        {
+          "param": "id",
+          "at": [
+            "path:4"
+          ],
+          "template": "{id}.json"
+        }
+      ],
+      "trigger": {
+        "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/resultados/{id}.json"
+      },
+      "match": {
+        "method": "GET",
+        "path": "/Sistema_de_Informacion_Financiera_de_Chile/api/v2/resultados/*.json"
+      },
+      "response": {
+        "format": "json",
+        "pick": [
+          "id",
+          "sql",
+          "data_release",
+          "columnas",
+          "filas",
+          "datos"
+        ]
+      },
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Id estable del objeto o consulta del contrato.",
+          "example": "companias-que-reportan-en-el-ultimo-mes-7ece34",
+          "pattern": "^[a-z0-9][a-z0-9_-]*$",
+          "hint": "id del catálogo (p. ej. bancos_balance) o de consultas (slug-6hex)"
+        }
+      ],
+      "readOnly": true,
+      "minTier": 1,
+      "learnedLoggedIn": false,
+      "checks": [
+        {
+          "args": {
+            "id": "companias-que-reportan-en-el-ultimo-mes-7ece34"
+          },
+          "expect": "result",
+          "purpose": "una consulta publicada tiene resultado"
+        },
+        {
+          "args": {
+            "id": "no-existe-esta-consulta-000000"
+          },
+          "expect": "input",
+          "purpose": "un id inventado es 404"
+        }
+      ]
+    }
+  ]
+}
