@@ -1,0 +1,10 @@
+# api-anything · 2026-11-03T03:52:55
+
+OK    call catalog · 18 objetos en la primera vista
+OK    result (vista paginada) · offset 18 → 19 objetos más, sin red
+OK    call schema · primaryKey=['periodo', 'codigo_institucion', 'codigo_cuenta', 'modelo_cmf']
+OK    id inexistente → input · class=input retry=after_fix
+OK    call resultado · 66 filas precalculadas
+OK    verify --strict · pass=15 fail=0 inconclusive=0
+
+api-anything: spec del contrato verificada contra espejo local (6 operaciones, tier 1)

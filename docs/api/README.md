@@ -23,7 +23,10 @@ el usuario descarga.
 | `reglas.json` | Las comprobaciones con su nivel (invariante / expectativa / informativo) y las excepciones declaradas con su motivo. Hoy: **0 excepciones**. |
 | `prueba_maquina_limpia.log` | Evidencia de que un consumidor **sin el repo** descubre el catálogo, lee el esquema y consulta por HTTP. |
 | `mcp.log` | Evidencia del servidor MCP: dos herramientas, 191 tokens de contexto y la pregunta del README respondida con dos llamadas. |
-| `test_contrato.log` | Evidencia del test de contrato: 908 rutas HTTP sin 404, 1.474 columnas comparadas con `DESCRIBE`, 105 vistas de catálogo + 4 auxiliares temporales, 159 consultas, 728 archivos verificados y cobertura manifiesto ↔ catálogo. El corte actual tolera y nombra una columna sin valores. |
+| `servidor.log` | Evidencia del servidor HTTP opcional (`servidor/`): 101 pruebas en modo local contra los Parquet reales. |
+| `api_anything.log` | Evidencia de la spec api-anything del contrato: 6 operaciones, `verify --strict` en verde contra un espejo local. |
+| `api_anything_etl.log` | Evidencia del experimento ETL con api-anything: HTML tier 1 y ciclo deriva→reparación con fixtures. |
+| `test_contrato.log` | Evidencia del test de contrato: 910 rutas HTTP sin 404, 1.474 columnas comparadas con `DESCRIBE`, 105 vistas de catálogo + 4 auxiliares temporales, 159 consultas, 730 archivos verificados y cobertura manifiesto ↔ catálogo. El corte actual tolera y nombra una columna sin valores. |
 | `v2/catalog.json` | El índice de los 90 objetos: estado, filas, bytes, clave, corte y a dónde ir por más detalle. |
 | `v2/schema/{id}.json` | Columnas, tipos, significado y clave de cada objeto. |
 | `v2/partitions/{id}.json` | Los archivos que componen el objeto, con período y SHA-256. |
@@ -51,6 +54,9 @@ python3 scripts/auditar_contrato.py       # audita el contrato
 python3 scripts/probar_ejemplos.py        # ejemplos de Python y JS
 python3 scripts/test_contrato.py --autoprueba  # test del consumidor (~7 s)
 python3 scripts/auditar_mcp.py            # servidor MCP y presupuesto
+python3 scripts/build_api_anything.py     # spec api-anything del contrato
+python3 scripts/probar_api_anything.py    # prueba real de la spec contra espejo local
+python3 scripts/probar_api_anything_etl.py # experimento ETL HTML (fixtures)
 python3 scripts/build_estado_claves.py    # docs/js/estado_claves.js (Diccionario y visor)
 python3 scripts/build_og_image.py         # assets/og_sif_1200x630.png   (tarjeta social)
 python3 scripts/build_metadatos.py        # <head> social, robots.txt y sitemap.xml
@@ -387,11 +393,14 @@ cerrada, no una amnistía.
 
 **Best effort, sin SLA.** Este contrato describe datos públicos que publica un
 tercero y que se normalizan y se republican; no hay compromiso de
-disponibilidad, latencia ni corrección en un plazo. La API **no** es un servicio
-de consulta: no hay `/query`, no hay SQL arbitrario y no hay autenticación. Lo
-que hay son archivos Parquet en una URL estable, un descriptor que dice cómo
-leerlos y el resultado de las 159 consultas del catálogo ya calculado. Si algo falta, se arregla en el siguiente release, y cada release queda
-identificado por su hash.
+disponibilidad, latencia ni corrección en un plazo. El contrato estático **no**
+es un servicio de consulta: no hay `/query`, no hay SQL arbitrario y no hay
+autenticación. Lo que hay son archivos Parquet en una URL estable, un descriptor
+que dice cómo leerlos y el resultado de las 159 consultas del catálogo ya
+calculado. Quien necesite SQL remoto puede autoalojar el servidor opcional de
+[`servidor/`](../../servidor/README.md), que expone `/v2/query` bajo sus propias
+cuotas y no forma parte de este despliegue estático. Si algo falta, se arregla en
+el siguiente release, y cada release queda identificado por su hash.
 
 ## Retención
 
@@ -403,11 +412,15 @@ guarda el release que estás usando.
 
 ## Lo que todavía no es
 
-- No hay **SQL arbitrario por HTTP**: quien necesite una consulta distinta a las
-  159 publicadas ejecuta el motor en su máquina (SDK, `views.sql` o DuckDB).
-- No hay **servidor DuckDB compartido** (Quack): la receta está en
-  [`servidor/README.md`](servidor/README.md), sin desplegar. Implica una máquina,
-  un certificado y un costo mensual.
+- No hay **SQL arbitrario por HTTP en el sitio publicado**: quien necesite una
+  consulta distinta a las 159 publicadas ejecuta el motor en su máquina (SDK,
+  `views.sql` o DuckDB), o autoaloja el servidor opcional de
+  [`servidor/`](../../servidor/README.md).
+- No hay **servidor DuckDB compartido desplegado**. Hay dos alternativas
+  documentadas: el servidor HTTP propio de [`servidor/`](../../servidor/README.md)
+  (implementado y probado en modo local, no desplegado) y la receta Quack de
+  [`servidor/README.md`](servidor/README.md) (protocolo nativo DuckDB, sin
+  ejecutar). Ambas implican una máquina, un certificado y un costo mensual.
 - **Las condiciones de las fuentes directas están documentadas por fuente**
   (`DATA_LICENSE.md`): CMF, BCCh y SPensiones, con las citas publicadas en
   `catalog.json` y `sources[].sif_cita` del Data Package. La procedencia histórica

@@ -8,6 +8,7 @@ código con 2 y ~736. Aquí nace directamente así: `sif_buscar` descubre y
 
     pip install mcp
     sif-mcp                       # servidor por stdio, como lo arranca un cliente
+    sif-mcp --http --port 8001    # Streamable HTTP (opcional, para agentes remotos)
 
 En un cliente MCP (Claude Desktop, por ejemplo):
 
@@ -15,13 +16,17 @@ En un cliente MCP (Claude Desktop, por ejemplo):
 
 Contra una copia local del repositorio, sin red: `SIF_CHILE_BASE=/ruta/a/docs`.
 
-El servidor no abre nada de red por su cuenta: ejecuta `views.sql` con DuckDB y
-lee los Parquet del sitio (o de la carpeta que diga `SIF_CHILE_BASE`). El guardia
-de solo lectura es el mismo del SDK y, como allí, es una conveniencia y no una
-frontera de seguridad.
+Por stdio el servidor no abre nada de red: ejecuta `views.sql` con DuckDB y lee
+los Parquet del sitio (o de la carpeta que diga `SIF_CHILE_BASE`). El guardia de
+solo lectura es el mismo del SDK y, como allí, es una conveniencia y no una
+frontera de seguridad. En modo HTTP se añade la protección DNS-rebinding del SDK
+oficial (Host/Origin); para exponerlo fuera de loopback hay que listar los hosts
+y orígenes exactos permitidos, o desactivarla explícitamente bajo un proxy TLS.
 """
 from __future__ import annotations
 
+import argparse
+import os
 import sys
 
 from . import agente
@@ -65,14 +70,73 @@ def crear_servidor():
     return servidor
 
 
-def main() -> int:
+def _lista(valor: str | None) -> list[str]:
+    return [v.strip() for v in (valor or "").split(",") if v.strip()]
+
+
+def crear_app_http(servidor, host: str = "127.0.0.1", port: int = 8001,
+                   allowed_hosts: list[str] | None = None,
+                   allowed_origins: list[str] | None = None,
+                   dns_rebinding: bool = True):
+    """App Starlette de Streamable HTTP con la seguridad de transporte del SDK.
+
+    `allowed_hosts`/`allowed_origins` aceptan valores exactos o comodín de puerto
+    (`host:*`), no comodines de hostname. Para un preview iframe hay que listar el
+    host exacto, o poner `dns_rebinding=False` detrás de un proxy que ya valide.
+    """
+    try:
+        from mcp.server.transport_security import TransportSecuritySettings
+    except ImportError as exc:  # mcp 1.x no trae este módulo
+        raise RuntimeError("El modo HTTP requiere mcp>=2 (pip install -U mcp).") from exc
+    hosts = allowed_hosts if allowed_hosts is not None else _lista(os.environ.get("SIF_MCP_ALLOWED_HOSTS"))
+    origins = allowed_origins if allowed_origins is not None else _lista(os.environ.get("SIF_MCP_ALLOWED_ORIGINS"))
+    if not hosts:
+        hosts = [f"{host}:{port}", "localhost:*", "127.0.0.1:*"]
+    if not origins:
+        origins = [f"http://{host}:{port}", "http://localhost:*", "http://127.0.0.1:*"]
+    seguridad = TransportSecuritySettings(
+        enable_dns_rebinding_protection=dns_rebinding,
+        allowed_hosts=hosts, allowed_origins=origins,
+    )
+    return servidor.streamable_http_app(transport_security=seguridad, host=host)
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(prog="sif-mcp", description="Servidor MCP de SIF Chile (dos herramientas).")
+    ap.add_argument("--http", action="store_true", help="Streamable HTTP en vez de stdio")
+    ap.add_argument("--host", default=os.environ.get("SIF_MCP_HOST", "127.0.0.1"))
+    ap.add_argument("--port", type=int, default=int(os.environ.get("SIF_MCP_PORT", "8001")))
+    ap.add_argument("--allowed-host", action="append", default=None,
+                    help="Host permitido (exacto o host:*). Repetible. Por defecto loopback.")
+    ap.add_argument("--allowed-origin", action="append", default=None,
+                    help="Origin permitido (exacto o http://host:*). Repetible.")
+    ap.add_argument("--no-dns-rebinding-protection", action="store_true",
+                    help="Desactiva la validación Host/Origin (solo detrás de un proxy TLS de confianza).")
+    args = ap.parse_args(argv)
     try:
         servidor = crear_servidor()
     except ImportError:
-        print("Falta el SDK de MCP. Instálalo con: pip install mcp",
-              file=sys.stderr)
+        print("Falta el SDK de MCP. Instálalo con: pip install mcp", file=sys.stderr)
         return 2
-    servidor.run("stdio")
+    if not args.http:
+        servidor.run("stdio")
+        return 0
+    try:
+        import uvicorn
+    except ImportError:
+        print("El modo HTTP requiere uvicorn. Instálalo con: pip install uvicorn", file=sys.stderr)
+        return 2
+    try:
+        app = crear_app_http(
+            servidor, host=args.host, port=args.port,
+            allowed_hosts=args.allowed_host, allowed_origins=args.allowed_origin,
+            dns_rebinding=not args.no_dns_rebinding_protection,
+        )
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+    print(f"MCP Streamable HTTP en http://{args.host}:{args.port}/mcp", file=sys.stderr)
+    uvicorn.run(app, host=args.host, port=args.port, log_level="info")
     return 0
 
 

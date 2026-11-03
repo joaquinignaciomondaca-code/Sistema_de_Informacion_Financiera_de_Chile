@@ -42,14 +42,16 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 
 `pip install "sif-chile[mcp] @ git+https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile@main#subdirectory=sdk/python"` y `sif-mcp`: dos herramientas, `sif_buscar`
 (descubre tabla y columnas) y `sif_ejecutar` (SQL de solo lectura). 191 tokens de
-contexto en total. Si puedes ejecutar código, te basta `views.sql` y este archivo:
-es lo mismo, con menos piezas.
+contexto en total. También hay Streamable HTTP opcional (`sif-mcp --http`, extra
+`mcp-http`). Si puedes ejecutar código, te basta `views.sql` y este archivo: es lo
+mismo, con menos piezas. El contrato estático tiene además una spec generada de
+api-anything en `integraciones/api-anything/` (6 operaciones GET verificables).
 
 ## Límites
 
 - Best effort, sin SLA; los datos son de la CMF y de otros organismos públicos y se republican normalizados.
 - Las tres fuentes autorizan la republicación citándolas; cada objeto declara su cita en `api/v2/catalog.json` (`atribucion`). Condiciones y datos personales en `DATA_LICENSE.md` y `PRIVACIDAD.md`; el código es MIT.
-- No hay SQL arbitrario por HTTP: los resultados publicados son los de las 159 consultas del catálogo, y cualquier otra consulta la ejecuta tu motor sobre los Parquet. Un servidor DuckDB compartido (Quack) está documentado pero **no desplegado**: implica una máquina, un certificado y un costo que este proyecto estático no tiene.
+- No hay SQL arbitrario por HTTP en el sitio publicado: los resultados publicados son los de las 159 consultas del catálogo, y cualquier otra consulta la ejecuta tu motor sobre los Parquet. Existe un servidor HTTP autoalojado opcional en `servidor/` (implementado y probado en modo local, **no desplegado**) y una receta Quack en `docs/api/servidor/`; ambos implican una máquina, un certificado y un costo que este proyecto estático no tiene.
 
 ## Más
 
