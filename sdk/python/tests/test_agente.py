@@ -99,3 +99,54 @@ class Agente(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SobreDeError(unittest.TestCase):
+    """El sobre additive de api-anything: error+pista siguen, y se añaden
+    clase/reintento/siguiente para que el agente decida sin parsear el mensaje."""
+
+    @classmethod
+    def setUpClass(cls):
+        os.environ["SIF_CHILE_BASE"] = str(DOCS)
+
+    @classmethod
+    def tearDownClass(cls):
+        agente.cerrar()
+        os.environ.pop("SIF_CHILE_BASE", None)
+
+    def test_sql_roto_es_input_after_fix(self):
+        r = json.loads(agente.ejecutar("SELECT nope FROM ffmm_cartera_extranjera"))
+        self.assertIn("error", r)
+        self.assertIn("pista", r)
+        self.assertEqual(r["clase"], "input")
+        self.assertEqual(r["reintento"], "after_fix")
+        self.assertEqual(r["siguiente"], r["pista"])
+
+    def test_guardia_es_refused_no(self):
+        r = json.loads(agente.ejecutar("DROP VIEW ffmm_cartera_extranjera"))
+        self.assertEqual(r["clase"], "refused")
+        self.assertEqual(r["reintento"], "no")
+
+    def test_exito_trae_ms_y_celdas_recortadas(self):
+        r = json.loads(agente.ejecutar("SELECT 1 AS x"))
+        self.assertIn("ms", r)
+        self.assertEqual(r["celdas_recortadas"], 0)
+
+    def test_celda_larga_se_recorta_y_se_cuenta(self):
+        r = json.loads(agente.ejecutar("SELECT repeat('x', 500) AS t"))
+        self.assertEqual(r["celdas_recortadas"], 1)
+        self.assertTrue(r["datos"][0][0].endswith("…"))
+
+    def test_timeout_interrumpe_y_da_pista(self):
+        viejo = agente.TIMEOUT_S
+        agente.TIMEOUT_S = 0.3
+        try:
+            r = json.loads(agente.ejecutar(
+                "SELECT count(*) FROM ffmm_cartera_nacional a CROSS JOIN ffmm_cartera_nacional b"))
+            self.assertEqual(r["clase"], "timeout")
+            self.assertEqual(r["reintento"], "after_fix")
+            # El cliente queda reusable tras la interrupción.
+            ok = json.loads(agente.ejecutar("SELECT 42 AS respuesta"))
+            self.assertEqual(ok["datos"], [[42]])
+        finally:
+            agente.TIMEOUT_S = viejo

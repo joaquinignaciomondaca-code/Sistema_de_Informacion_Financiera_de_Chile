@@ -1,0 +1,21 @@
+# TLS automático delante de la API de consultas. Ajusta el dominio.
+# El servidor escucha en 0.0.0.0:8000 dentro de la red de compose; Caddy es el
+# único puerto público. No se añade X-Frame-Options: /docs debe poder embeberse
+# en previews iframe (p. ej. Arena). Si no lo necesitas, añade tu propia política.
+sif.example.com {
+	encode zstd gzip
+
+	# La consulta más lenta permitida por la API es SIF_API_TIMEOUT_S (10 s por
+	# defecto); el proxy deja margen para la cola del pool.
+	reverse_proxy api:8000 {
+		transport http {
+			read_timeout 30s
+			write_timeout 30s
+		}
+	}
+
+	log {
+		output file /var/log/caddy/sif-api.log
+		format json
+	}
+}
