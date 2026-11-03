@@ -1,0 +1,9 @@
+# Dependencias de desarrollo/pruebas del servidor HTTP de consultas.
+# El runtime es `requirements.txt`; aquí va lo que sólo necesitan los tests.
+-r requirements.txt
+
+# `fastapi.testclient.TestClient` (Starlette) necesita un cliente HTTP instalado:
+# no viene con fastapi ni con starlette, es un extra. Sin él, la colección de
+# pytest falla en conftest.py con "requires the httpx2 package to be installed".
+httpx2>=2.0.0,<3
+pytest>=8,<10

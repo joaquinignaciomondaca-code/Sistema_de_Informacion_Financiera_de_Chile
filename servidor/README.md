@@ -122,8 +122,15 @@ SIF_CHILE_BASE=/datos SIF_API_TOKEN=… docker compose -f servidor/compose.yaml 
 ## Pruebas
 
 ```bash
+pip install -r servidor/requirements-dev.txt   # runtime + httpx2 (TestClient) + pytest
+pip install -e sdk/python
 PYTHONPATH=sdk/python:. python -m pytest servidor/tests -q
 ```
+
+`requirements-dev.txt` existe porque `fastapi.testclient.TestClient` necesita un
+cliente HTTP (`httpx2`) que **no** viene con fastapi ni con starlette: sin él, la
+colección de pytest falla en `conftest.py`. El runtime (`requirements.txt`) no lo
+arrastra a propósito.
 
 Corren contra los Parquet reales de `docs/outputs` en modo local: guardia AST
 (legítimas y ataques), motor (consulta real, truncado, serialización, timeout y
