@@ -1,5 +1,11 @@
 # Servidor Quack propio (fase 3, **no desplegado**)
 
+> **Actualización:** existe una implementación HTTP propia en
+> [`servidor/`](../../../servidor/README.md) (FastAPI + DuckDB, guardia AST, cuotas,
+> Docker/compose), probada en modo local con 101 pruebas. Esta página queda como
+> la receta Quack original (protocolo nativo DuckDB), que es otra alternativa y
+> sigue sin desplegarse. Para el servicio HTTP autoalojado, ver `servidor/`.
+
 El sitio es estático: GitHub Pages sirve archivos y no ejecuta procesos, y GitHub
 Actions no recibe tráfico entrante. Por eso la fase 3 se resolvió donde sí cabe
 —los 156 resultados precalculados, ver [`../README.md`](../README.md)— y esta

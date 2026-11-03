@@ -1,0 +1,6 @@
+# Dependencias del servidor HTTP de consultas (fase 3).
+# El SDK del repo se instala aparte: pip install -e sdk/python
+duckdb==2.0.0
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+pydantic>=2.14,<3

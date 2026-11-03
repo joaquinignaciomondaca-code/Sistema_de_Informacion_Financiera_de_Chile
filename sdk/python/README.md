@@ -52,6 +52,10 @@ Si el agente **no puede ejecutar código** —Claude Desktop, un asistente con
 ```bash
 pip install "sif-chile[mcp] @ git+https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile@main#subdirectory=sdk/python"
 sif-mcp                     # servidor por stdio
+
+# Streamable HTTP (opcional, para agentes remotos):
+pip install "sif-chile[mcp-http] @ git+https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile@main#subdirectory=sdk/python"
+sif-mcp --http --port 8001  # protección Host/Origin activada por defecto
 ```
 
 ```json
@@ -76,8 +80,19 @@ OK 2.3 solo lectura · el guardia rechaza DROP y responde con JSON
 
 Las respuestas de las herramientas son JSON compacto y recortado (200 filas como
 máximo, 160 caracteres por celda) porque el recurso escaso es el contexto del
-modelo. Los errores vuelven como `{"error": …, "pista": …}`: un agente que recibe
-una excepción suele repetirla, uno que recibe una pista la corrige.
+modelo. El éxito añade `ms` y `celdas_recortadas`. Los errores mantienen
+`{"error": …, "pista": …}` y añaden el vocabulario de api-anything:
+`clase` (`input`, `refused`, `timeout`, `error`), `reintento` (`after_fix`, `no`)
+y `siguiente` (la acción concreta). Un agente que recibe una excepción suele
+repetirla; uno que recibe una pista la corrige. Una consulta que supera
+`SIF_AGENTE_TIMEOUT_S` (10 s por defecto, 0 lo desactiva) se interrumpe y vuelve
+como `timeout`, no como cuelgue.
+
+El modo HTTP usa la protección DNS-rebinding del SDK oficial: por defecto sólo
+acepta Host/Origin de loopback. Para exponerlo fuera de loopback hay que listar
+los hosts y orígenes exactos (`--allowed-host`, `--allowed-origin`,
+`SIF_MCP_ALLOWED_HOSTS`, `SIF_MCP_ALLOWED_ORIGINS`) o desactivarla explícitamente
+detrás de un proxy TLS de confianza (`--no-dns-rebinding-protection`).
 
 ## Trabajar contra una copia local
 
