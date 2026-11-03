@@ -483,14 +483,18 @@ jobs:
 
       - name: 'Servidor MCP: dos herramientas, presupuesto de contexto y la pregunta del README'
         run: |
-          python -m pip install --disable-pip-version-check "mcp>=2"
+          # uvicorn además del SDK: sin él, la prueba de Streamable HTTP se salta
+          # en silencio y el transporte quedaría sin cobertura en CI.
+          python -m pip install --disable-pip-version-check "mcp>=2" "uvicorn>=0.30"
           set +e
           python scripts/auditar_mcp.py --check > mcp.log 2>&1; n=$?
           grep -h -E "^(OK|FALLA)" mcp.log | sed 's/%/%25/g' | while IFS= read -r l; do echo "::notice title=MCP::$l"; done
           if [ "$n" -ne 0 ]; then
             grep -h -E "^(FALLA|\[FALLA\])" mcp.log | head -6 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=MCP::$l"; done
           fi
-          exit $n
+          python -m unittest discover -s sdk/python/tests -t sdk/python -p "test_mcp_http.py" -v > mcp_http.log 2>&1; h=$?
+          tail -n 4 mcp_http.log
+          exit $(( n | h ))
 
       - name: 'Ejemplos reproducibles: Python sin red y JavaScript con fetch'
         run: |
@@ -737,8 +741,10 @@ jobs:
           python-version: '3.11'
       - name: Dependencias del servidor y del SDK
         run: |
-          python -m pip install --disable-pip-version-check -r servidor/requirements.txt
-          python -m pip install --disable-pip-version-check -e sdk/python pytest
+          # requirements-dev incluye el runtime y lo que sólo necesitan los tests:
+          # TestClient (Starlette) exige httpx2, que no viene con fastapi.
+          python -m pip install --disable-pip-version-check -r servidor/requirements-dev.txt
+          python -m pip install --disable-pip-version-check -e sdk/python
       - name: Guardia AST, motor y app HTTP (101 pruebas)
         run: python -m pytest servidor/tests -q
 
