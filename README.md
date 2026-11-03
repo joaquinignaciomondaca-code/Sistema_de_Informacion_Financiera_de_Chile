@@ -241,6 +241,12 @@ Las 105 vistas de catálogo salen del `views.sql` publicado, junto con vistas te
 
 Hay ejemplos ejecutables en Python, R y JavaScript, y una guía para agentes con [`llms.txt`](docs/llms.txt): ver [`examples/`](examples/README.md).
 
+### API HTTP opcional y agentes
+
+El sitio publicado sigue siendo estático. Para quien necesite SQL remoto sin descargar los Parquet, el repositorio incluye un **servidor HTTP autoalojado opcional** en [`servidor/`](servidor/README.md): FastAPI + DuckDB, guardia de solo lectura por AST, cuotas, rate limit y Docker/compose. Está probado en modo local contra los Parquet reales (101 pruebas); no forma parte del despliegue de GitHub Pages.
+
+Para agentes, el SDK expone un servidor MCP de dos herramientas (`sif_buscar`, `sif_ejecutar`) por stdio o Streamable HTTP (`sif-mcp --http`), y el contrato estático tiene una spec generada de [`api-anything`](integraciones/api-anything/README.md) con 6 operaciones de lectura verificables. El experimento de ingesta HTML con api-anything está en [`integraciones/api-anything/etl/`](integraciones/api-anything/etl/README.md).
+
 ---
 
 ## 6. Se mantiene solo
@@ -300,7 +306,7 @@ Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_w
 
 ## 7. Decisiones de diseño
 
-1. **Sin backend de consultas ni base de datos central.** El hosting estático sirve los Parquet; DuckDB-Wasm ejecuta SQL en el navegador y lee por HTTP Range solo los archivos que necesita. Cuatro vistas usan copias Parquet compactas de uso exclusivo de SQL para reducir aperturas; se generan desde los datos publicados, pero no son objetos adicionales ni archivos de Descargas. No hay un servicio compartido que reciba o ejecute SQL.
+1. **Sin backend de consultas ni base de datos central en el sitio publicado.** El hosting estático sirve los Parquet; DuckDB-Wasm ejecuta SQL en el navegador y lee por HTTP Range solo los archivos que necesita. Cuatro vistas usan copias Parquet compactas de uso exclusivo de SQL para reducir aperturas; se generan desde los datos publicados, pero no son objetos adicionales ni archivos de Descargas. El sitio publicado no tiene un servicio compartido que reciba o ejecute SQL. Quien necesite SQL remoto puede autoalojar el servidor opcional de [`servidor/`](servidor/README.md), que es otra forma de leer lo mismo y no cambia el contrato estático.
 2. **Fail-closed antes que «algo es mejor que nada».** Publicar un balance descuadrado es peor que no publicarlo: quien lo use tomará una decisión con un número falso sin saberlo. Por eso la validación aborta en vez de degradar.
 3. **Un vocabulario, no convenciones orales.** Todo nombre visible vive en `docs/vocabulario.json` y un verificador recorre el repositorio; los sinónimos desaparecieron de la interfaz por construcción, no por disciplina.
 4. **Compatibilidad sin contaminar.** Los nombres históricos siguen funcionando como alias en SQL, pero no se sugieren en pantalla: quien tenía una consulta guardada no se rompe, y quien llega nuevo ve un solo criterio.
@@ -322,6 +328,8 @@ Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_w
 [`pipelines/README.md`](pipelines/README.md) — operación de datos y credenciales ·
 [`docs/vendor/duckdb/README.md`](docs/vendor/duckdb/README.md) — cómo se vendoriza el motor ·
 [`archive/notas/version_academica_y_privacidad_2026-10-20.md`](archive/notas/version_academica_y_privacidad_2026-10-20.md) — versión citable, reproducibilidad y protección de identificadores ·
+[`servidor/README.md`](servidor/README.md) — API HTTP de consultas opcional (autoalojada) ·
+[`integraciones/api-anything/README.md`](integraciones/api-anything/README.md) — spec api-anything del contrato y experimento ETL ·
 READMEs por sector en `bancos/`, `ccaf/`, `factoring_leasing/`, `ffmm/`, `fi/`, `macro/`, `pensiones/` y `seguros/`.
 
 ---

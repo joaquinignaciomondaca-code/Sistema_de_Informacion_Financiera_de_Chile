@@ -22,7 +22,9 @@ dependencies = ["duckdb>=1.1", "pyarrow>=14"]
 [project.optional-dependencies]
 pandas = ["pandas>=2.0"]
 mcp = ["mcp>=1.2"]
-dev = ["pandas>=2.0", "pytest>=8", "mcp>=1.2"]
+# Streamable HTTP (sif-mcp --http) requiere el SDK 2.x y un servidor ASGI.
+mcp-http = ["mcp>=2", "uvicorn>=0.30"]
+dev = ["pandas>=2.0", "pytest>=8", "mcp>=2", "uvicorn>=0.30"]
 
 [project.urls]
 Homepage = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/"

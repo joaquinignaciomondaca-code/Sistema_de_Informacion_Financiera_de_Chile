@@ -116,11 +116,18 @@ async def correr() -> list[tuple[str, bool, str]]:
                 "sif_ejecutar", {"sql": "SELECT nope FROM ffmm_cartera_extranjera"})))
             checks.append(("2.3 error útil", bool(roto.get("error")) and bool(roto.get("pista")),
                            f"error con pista: {roto.get('pista', '')[:60]}"))
+            checks.append(("2.5 sobre input",
+                           roto.get("clase") == "input" and roto.get("reintento") == "after_fix"
+                           and bool(roto.get("siguiente")),
+                           f"clase={roto.get('clase')} reintento={roto.get('reintento')} siguiente presente"))
 
             bloqueado = json.loads(texto(await sesion.call_tool(
                 "sif_ejecutar", {"sql": "DROP VIEW ffmm_cartera_extranjera"})))
             checks.append(("2.3 solo lectura", bool(bloqueado.get("error")),
                            "el guardia rechaza DROP y responde con JSON"))
+            checks.append(("2.5 sobre refused",
+                           bloqueado.get("clase") == "refused" and bloqueado.get("reintento") == "no",
+                           f"clase={bloqueado.get('clase')} reintento={bloqueado.get('reintento')}"))
 
             # --- 2.4 · la ficha de un objeto sin clave ----------------------
             # La 2.0.1 publica `primaryKey: null` en 27 objetos. La herramienta
