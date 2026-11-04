@@ -192,6 +192,34 @@ mismo conjunto— publica el cierre parcial. `2025-03` arrastra además 1 envío
 crónico («la ficha no enlaza FIEF»), que no bloquea la publicación pero tampoco se puede
 completar: por eso su cierre parcial queda con ese fondo fuera del censo conocido.
 
+## 9. `ubuntu-latest` deja de ser una imagen fija el 2026-11-19
+
+**Síntoma.** Todas las corridas traen la misma anotación: *«The ubuntu-latest label will migrate
+to Ubuntu 26 beginning October 19, 2026»*. Es fácil leerla como ruido del runner y no hacerle
+caso, pero describe un riesgo con fecha.
+
+**Causa.** GitHub pasa la etiqueta `ubuntu-latest` de Ubuntu 24.04 a 26.04 entre el 19 de
+octubre y el **19 de noviembre de 2026** ([actions/runner-images#14748]). Durante esas semanas
+la misma etiqueta entrega una imagen u otra **sin aviso**: un flujo puede pasar en una corrida
+y fallar en la siguiente sin que cambie una línea del repositorio. En un flujo que publica en
+`main` eso no es solo ruido: deja la serie sin actualizar hasta la corrida siguiente, que en la
+mayoría de estos flujos es cada 3 días. Es el mismo tipo de fallo intermitente que costó
+diagnosticar en `servidor` (exit 4), donde el mismo commit pasó y falló con 12 minutos de
+diferencia.
+
+**Arreglo.** Los flujos que escriben en `main` fijan `ubuntu-24.04` explícitamente: 16 flujos
+más `pensiones_carteras` en sus dos jobs de runner gestionado (los dos self-hosted no se tocan).
+`contrato_publicado` y `seguros_carteras` ya lo hacían, así que la convención existía y solo
+faltaba aplicarla al resto. Cada flujo lleva un comentario con el motivo y cómo probar la 26.04
+sin arriesgar `main`.
+
+`web_audit` es la excepción a propósito: es de solo lectura, no publica, y fijarle la imagen
+obligaría a mantener además la versión del runner en cada paso de Node y jsdom. Ahí un fallo
+intermitente se ve en el PR y se reintenta, no corrompe datos.
+
+**Guardián.** Una prueba nueva falla si un flujo vuelve a `ubuntu-latest` y tiene `git push` o
+`contents: write`. Comprobado reintroduciendo la etiqueta en `macro.yml`: la prueba lo detecta.
+
 ## Verificación
 
 | Comprobación | Resultado |
@@ -199,7 +227,7 @@ completar: por eso su cierre parcial queda con ese fondo fuera del censo conocid
 | `fi/tests` (incluye el cierre parcial) | 128 pruebas OK |
 | `pipelines.ifrs_sectores` + `pipelines.auto` + `pipelines.entidades` + extractores | 311 pruebas OK |
 | `factoring_leasing/tests` | 60 pruebas OK |
-| `scripts.*` (guardián, métricas y refresco), con solo pyarrow | 19 pruebas OK |
+| `scripts.*` (guardián, métricas y refresco), con solo pyarrow | 20 pruebas OK |
 | Job `automatizacion` completo, con solo pyarrow | 68 pruebas OK |
 | `audit_automatizacion.py` (estático) | 91 tablas, 0 problemas |
 | `audit_automatizacion.py --frescura` contra `main` | detecta los 3 flujos inestables |
