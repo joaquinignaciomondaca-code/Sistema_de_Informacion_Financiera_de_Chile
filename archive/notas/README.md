@@ -3,7 +3,7 @@
 <!-- Generado por scripts/build_indice_notas.py. No editar a mano:
      --check falla si no coincide con las notas de la carpeta. -->
 
-Las 68 notas de esta carpeta. Cada una registra una decisión, una
+Las 69 notas de esta carpeta. Cada una registra una decisión, una
 medición o una corrección, con la fecha en que se hizo y el motivo. Se citan
 desde el código, la web y las respuestas a las revisiones externas, así que
 están escritas para poder verificarse: qué se afirmó, contra qué se contrastó
@@ -12,6 +12,10 @@ y qué quedó abierto.
 Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 `python3 scripts/build_indice_notas.py`; el índice se rehace solo.
 
+
+## noviembre de 2026
+
+- [Revisión de la automatización y de las compuertas (2026-11-04)](revision_automatizacion_2026-11-04.md) — Revisión de los fallos que la auditoría de la web y el guardián de automatización estaban
 
 ## octubre de 2026
 

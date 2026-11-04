@@ -27,6 +27,13 @@ on:
       - 'docs/**'
       - 'scripts/audit_*.py'
       - 'scripts/audit_*.js'
+      # Pruebas y cadena del contrato derivado: la defensa contra la condición de
+      # carrera de los publicadores se audita en cada push que la toca.
+      - 'scripts/test_audit_automatizacion.py'
+      - 'scripts/test_build_metricas_publicadas.py'
+      - 'scripts/test_refrescar_contrato.py'
+      - 'scripts/refrescar_contrato.py'
+      - 'scripts/cadena_contrato.py'
       - 'scripts/lib/**'
       - 'scripts/test_busqueda.js'
       - 'scripts/test_busqueda_dom.js'
@@ -62,6 +69,18 @@ on:
       - 'scripts/build_sql_compact_parquets.py'
       - 'scripts/test_sql_compact_parquets.py'
       - 'pipelines/**'
+      # Los extractores por sector (fi/, ffmm/, seguros/, bancos/, …) publican las tablas
+      # que esta auditoría cruza contra el catálogo. `fi/` faltaba: un cambio en sus
+      # pruebas o en el publicador de EEFF de fondos de inversión no volvía a correr la
+      # auditoría de la web, que es donde se prueban sus manifiestos y su cuadratura.
+      - 'fi/**'
+      - 'ffmm/**'
+      - 'macro/**'
+      - 'seguros/**'
+      - 'pensiones/**'
+      # Las cifras del README son parte del contrato (build_metricas_publicadas las audita
+      # y las sincroniza): un cambio en el README tiene que auditarse.
+      - 'README.md'
       - 'factoring_leasing/**'
       - 'securitizadoras/**'
       - 'bancos/**'
@@ -683,6 +702,13 @@ jobs:
       - name: Pruebas de las compuertas compartidas de los pipelines
         run: python -m unittest -v pipelines.auto.tests.test_cuadratura pipelines.auto.tests.test_estable
 
+      - name: Pruebas del propio guardián (frescura, estabilidad y escritores de la rama)
+        run: >
+          python -m unittest -v
+          scripts.test_audit_automatizacion
+          scripts.test_build_metricas_publicadas
+          scripts.test_refrescar_contrato
+
   # Pruebas unitarias de los extractores y publicadores de estados financieros. Cada publicador
   # corre las suyas antes de publicar, pero solo cuando se dispara; aquí corren en cada PR y push,
   # que es cuando un cambio todavía se puede corregir. Sin red: todo con fuentes sintéticas.
@@ -746,7 +772,20 @@ jobs:
           python -m pip install --disable-pip-version-check -r servidor/requirements-dev.txt
           python -m pip install --disable-pip-version-check -e sdk/python
       - name: Guardia AST, motor y app HTTP (101 pruebas)
-        run: python -m pytest servidor/tests -q
+        # pytest sale con 4 cuando no puede ni recolectar (un import del conftest que no
+        # resuelve), no cuando una prueba falla. El 2026-11-03 el job falló así por una
+        # instalación transitoria y el log no se podía leer desde fuera del runner: la cola
+        # queda como anotación del paso, que sí se consulta por la API.
+        run: |
+          set +e
+          python -m pytest servidor/tests -q > pytest.log 2>&1; n=$?
+          if [ $n -ne 0 ]; then
+            grep -E "^(E |ERROR|FAILED|[A-Za-z_.]*(Error|Exception):)" pytest.log | head -6 |
+              sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Servidor::$l"; done
+            tail -n 6 pytest.log | sed 's/%/%25/g' | while IFS= read -r l; do echo "::warning title=Servidor (cola)::$l"; done
+          fi
+          echo "::notice title=Servidor::pytest salió con $n (4 = error de recolección, no prueba fallida)"
+          exit $n
 
   # Spec api-anything del contrato estático y experimento ETL HTML. Node 22 es
   # el mínimo de api-anything 0.3.2; las pruebas corren contra un espejo local
@@ -795,11 +834,15 @@ jobs:
           python scripts/audit_automatizacion.py --frescura --rama "${{ github.event.repository.default_branch }}" > frescura.log 2>&1; n=$?
           cat frescura.log
           grep -h "^Error" frescura.log | head -20 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Frescura::$l"; done
+          titulo="Automatización: hay tablas que no se están actualizando"
+          num=$(gh issue list --state open --search "in:title \"$titulo\"" --json number --jq '.[0].number')
           if [ $n -ne 0 ]; then
-            titulo="Automatización: hay tablas que no se están actualizando"
             cuerpo=$(printf 'Revisión semanal (%s) de scripts/audit_automatizacion.py --frescura:\n\n```\n%s\n```\n\nCorrida: %s/%s/actions/runs/%s' \
               "$(date -u +%F)" "$(cat frescura.log)" "${{ github.server_url }}" "${{ github.repository }}" "${{ github.run_id }}")
-            num=$(gh issue list --state open --search "in:title \"$titulo\"" --json number --jq '.[0].number')
             if [ -n "$num" ]; then gh issue comment "$num" --body "$cuerpo"; else gh issue create --title "$titulo" --body "$cuerpo"; fi
+          elif [ -n "$num" ]; then
+            # Sin esto el issue quedaba abierto para siempre: el del 2026-11-02 seguía
+            # abierto aunque su único error ya no existía, y tapaba los fallos reales.
+            gh issue close "$num" --comment "La revisión semanal ($(date -u +%F)) ya no encuentra workflows atrasados; se cierra.\n\nCorrida: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           fi
           exit $n

@@ -25,6 +25,8 @@ on:
       - 'scripts/build_ficha_piloto.py'
       - 'scripts/build_download_exports.py'
       - 'scripts/construir_reproducibilidad.py'
+      - 'scripts/refrescar_contrato.py'
+      - 'README.md'
   workflow_dispatch:
   # Los flujos de datos empujan con el GITHUB_TOKEN del propio Actions, y esos
   # push no disparan otros workflows (regla anti-recursión de GitHub). El 22 de
@@ -66,70 +68,39 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # El orden importa y es el mismo de docs/api/README.md: la
-          # reconciliación nombra, las claves miden, los esquemas describen el
-          # catálogo, el catálogo alimenta el Data Package y los resultados se
-          # calculan sobre las vistas. La macro web se deriva también de sus
-          # Parquet y del manifiesto ETL, antes de que API/Descargas publiquen
-          # las mismas filas; al final se actualizan estado de claves, metadatos
-          # sociales y reconciliación de métricas ETL/API/Descargas.
+          # Varias automatizaciones escriben en main a la vez y cada una regenera una parte
+          # de los mismos artefactos. Dos defensas, en este orden:
           #
-          # El 2026-10-23 este flujo dejó fuera `claves.csv` y `esquemas.json`
-          # respecto del corte macro y `audit` falló en main. La cadena se corre
-          # entera y se comprueba entera antes de publicar.
-          # Varias automatizaciones escriben en main a la vez. Se amplía la
-          # ventana de reintentos y se añade backoff aleatorio (como en el
-          # publicador macro) para absorber contención transitoria; cada intento
-          # regenera sobre la cabeza vigente.
+          # 1. `scripts/refrescar_contrato.py` corre la cadena completa y la rehace entera si
+          #    HEAD cambió a mitad de camino. El 2026-11-04 la cadena vieja mezcló dos estados
+          #    (macro había publicado 11 filas nuevas): el catálogo quedó con 19.814.981 filas
+          #    y las descargas con 19.814.992, y web_audit falló en main con «MÉTRICAS
+          #    DESACTUALIZADAS» sin que nadie hubiese tocado el código.
+          # 2. Si aun así el push es rechazado, se reintenta sobre la cabeza nueva con espera
+          #    aleatoria.
+          #
+          # `refrescar_contrato.py` termina además con la pasada de `--check`: no se publica
+          # un artefacto que no coincida con lo que producen los datos ya publicados.
           for i in 1 2 3 4 5 6 7 8; do
             git fetch origin main
             git reset --hard FETCH_HEAD
-            python scripts/build_reconciliacion.py
-            python scripts/verificar_claves.py
-            # El diccionario macro se genera antes de los esquemas, que lo leen para los significados.
-            python scripts/build_macro_web.py
-            python scripts/build_esquemas.py
-            python scripts/build_api.py
-            python scripts/build_contrato.py
-            python scripts/build_ficha_piloto.py
-            python scripts/build_resultados.py
-            # Descargas pre-construidas (CSV/JSON combinados): se generan antes
-            # del catálogo de descargas, que enlaza a los archivos estáticos.
-            python scripts/build_download_exports.py
-            python scripts/build_download_catalog.py
-            python scripts/build_metricas_publicadas.py
-            python scripts/build_estado_claves.py
-            python scripts/build_metadatos.py
-            python scripts/construir_reproducibilidad.py
-            python scripts/generar_indice_busqueda.py
+            if ! python scripts/refrescar_contrato.py; then
+              echo "La cadena no convergió con la cabeza vigente (intento ${i}/8)."
+              sleep $(( 15 + RANDOM % 20 ))
+              continue
+            fi
             git add docs/api docs/js/download_catalog.js docs/js/estado_claves.js \
                     docs/js/sidebar.js docs/js/data_dictionary.js docs/js/erd_graph.js \
                     docs/vocabulario.json docs/metricas_publicadas.json docs/datos \
                     docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml \
                     docs/reproducibilidad docs/outputs/indice_busqueda.json \
-                    docs/outputs/_exportes.json \
+                    docs/outputs/_exportes.json README.md \
                     'docs/outputs/**/*.completo.csv' 'docs/outputs/**/*.completo.json'
             if git diff --cached --quiet; then
               echo "::notice title=Contrato derivado::sin cambios; los artefactos ya reflejaban los datos publicados"
               exit 0
             fi
             git commit -m "Contrato derivado: esquemas, catálogo y resultados de los datos publicados"
-            # Si la cadena quedó a medias, no se publica: se prefiere un push
-            # fallido y visible a dejar main con las compuertas en rojo.
-            python scripts/build_macro_web.py --check
-            python scripts/build_esquemas.py --check
-            python scripts/build_reconciliacion.py --check
-            python scripts/build_api.py --check
-            python scripts/build_contrato.py --check
-            python scripts/build_ficha_piloto.py --check
-            python scripts/build_download_exports.py --check
-            python scripts/build_download_catalog.py --check
-            python scripts/build_metricas_publicadas.py --check
-            python scripts/build_estado_claves.py --check
-            python scripts/build_metadatos.py --check
-            python scripts/construir_reproducibilidad.py --check
-            python scripts/generar_indice_busqueda.py --check
-            python scripts/auditar_contrato.py --check
             if git push origin HEAD:main; then
               echo "::notice title=Contrato derivado::publicado en main"
               exit 0
