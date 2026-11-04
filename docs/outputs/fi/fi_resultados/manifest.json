@@ -6,6 +6,7 @@
     "outputs/fi/fi_resultados/2022-09.parquet",
     "outputs/fi/fi_resultados/2022-12.parquet",
     "outputs/fi/fi_resultados/2023-03.parquet",
+    "outputs/fi/fi_resultados/2023-06.parquet",
     "outputs/fi/fi_resultados/2023-09.parquet",
     "outputs/fi/fi_resultados/2023-12.parquet",
     "outputs/fi/fi_resultados/2024-03.parquet",
@@ -24,6 +25,7 @@
     "2022-09",
     "2022-12",
     "2023-03",
+    "2023-06",
     "2023-09",
     "2023-12",
     "2024-03",
@@ -36,8 +38,8 @@
     "2026-03",
     "2026-06"
   ],
-  "total_records": 1164000,
-  "updated_at": "2026-10-02T04:09:51+00:00",
+  "total_records": 1229970,
+  "updated_at": "2026-11-04T19:45:08+00:00",
   "nota": "Filtrar contexto = 'PeriodoActual' para el cierre/acumulado actual; no sumar contextos ni monedas.",
   "contextos_excluidos": [
     {
@@ -2297,6 +2299,377 @@
       "contexto": "TrimestreAnterior",
       "errores": [
         "fechas inválidas/ambiguas: TrimestreAnterior: fechas 2021-01-01..2021-03-31 incoherentes con 2023-03"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "7119",
+      "contexto": "PeriodoAnterior",
+      "errores": [
+        "fechas inválidas/ambiguas: PeriodoAnterior: fechas 2022-01-01..2022-12-31 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "7119",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "fechas inválidas/ambiguas: TrimestreActual: fechas 2023-01-01..2023-06-30 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "7119",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "fechas inválidas/ambiguas: TrimestreAnterior: fechas 2022-01-01..2022-06-30 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "7141",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "faltan 1 cuentas: TotalDeOtrosResultadosIntegrales"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9488",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9488",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9540",
+      "contexto": "PeriodoAnterior",
+      "errores": [
+        "fechas inválidas/ambiguas: PeriodoAnterior: fechas 2022-01-01..2022-12-31 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9540",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "fechas inválidas/ambiguas: TrimestreActual: fechas 2023-01-01..2023-06-30 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9540",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "fechas inválidas/ambiguas: TrimestreAnterior: fechas 2022-01-01..2022-06-30 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9592",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9592",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9613",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ -60)"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9689",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "operación + costos financieros = utilidad antes de impuesto (Δ -50000)"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9706",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9706",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9736",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "resultado + otros integrales = resultado integral (Δ -2172400)"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9739",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9739",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9754",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "fechas inválidas/ambiguas: TrimestreActual: fechas 2023-01-01..2023-06-30 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9754",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "fechas inválidas/ambiguas: TrimestreAnterior: fechas 2023-01-01..2023-03-31 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9797",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "faltan 1 cuentas: OtrosIngresosPerdidasDeLaOperacion"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9797",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "faltan 1 cuentas: OtrosIngresosPerdidasDeLaOperacion"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9846",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9846",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9906",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9906",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9945",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ 200000)",
+        "operación + costos financieros = utilidad antes de impuesto (Δ -200000)"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9954",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9954",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9970",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9970",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9990",
+      "contexto": "PeriodoAnterior",
+      "errores": [
+        "fechas inválidas/ambiguas: PeriodoAnterior: fechas 2022-01-01..2022-12-31 incoherentes con 2023-06"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9991",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "9991",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10035",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ -950)",
+        "operación + costos financieros = utilidad antes de impuesto (Δ 950)"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10090",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10090",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10134",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "Σ ingresos = total ingresos (Δ -45243)"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10150",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10150",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10172",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "Σ gastos = total gastos (Δ -404)"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10207",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ -3)",
+        "operación + costos financieros = utilidad antes de impuesto (Δ 3)"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10228",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "faltan 1 cuentas: TotalDeOtrosResultadosIntegrales"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10308",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10356",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "10391",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
       ]
     },
     {
