@@ -56,6 +56,10 @@ def fmt(n: int) -> str:
     return f"{n:,}".replace(",", ".")
 
 
+# La etiqueta de la tabla sectorial del README no siempre coincide con la clave del catálogo.
+ALIAS_ETIQUETAS = {"FinTech": "Fintech y Finanzas Abiertas"}
+
+
 def auditar_tabla_readme(
     sectores: dict[str, dict[str, Any]],
     consultas_total: int,
@@ -99,7 +103,7 @@ def auditar_tabla_readme(
     except ValueError:
         return ["README.md: no se encontró la tabla sectorial con su encabezado contractual"]
 
-    aliases = {"FinTech": "Fintech y Finanzas Abiertas"}
+    aliases = ALIAS_ETIQUETAS
     filas_readme: dict[str, tuple[int, int, str, str]] = {}
     total_readme: tuple[int, int] | None = None
     for linea in lineas[inicio + 2:]:
@@ -765,6 +769,136 @@ def construir() -> dict[str, Any]:
     return reporte
 
 
+def leer_artefactos() -> dict[str, Any]:
+    """Las cifras que manda lo publicado: catálogo API y catálogo de descargas.
+
+    Es un subconjunto de `construir()` sin las compuertas cruzadas: la sincronización del
+    README tiene que poder correr aunque el catálogo API y las descargas todavía no hayan
+    convergido tras una publicación de datos (ese desfase lo corrige el propio flujo).
+    """
+    api = cargar_json(DOCS / "api" / "v2" / "catalog.json")
+    descargas = cargar_catalogo_descargas()
+    objetos = api.get("objetos") or []
+    elementos = [i for g in descargas.get("grupos", []) for i in g.get("items", [])]
+    visibles_ids = set(descargas.get("alcance", {}).get("visibles", []))
+    visibles = [
+        i for i in elementos
+        if not i.get("oculto") and i.get("nivel") in visibles_ids
+    ]
+    fuera = [
+        i for i in elementos
+        if not i.get("oculto") and i.get("nivel") not in visibles_ids
+    ]
+    ocultos = [i for i in elementos if i.get("oculto")]
+
+    def cifras(items: list[dict[str, Any]]) -> dict[str, int]:
+        return {
+            "elementos": len(items),
+            "filas": sum(entero(i.get("filas")) for i in items),
+            "bytes": sum(entero(i.get("bytes")) for i in items),
+        }
+
+    por_sector: dict[str, dict[str, Any]] = {}
+    for clave, info in sorted(descargas.get("alcance", {}).get("sectores", {}).items()):
+        items_sector = [
+            i for i in elementos if not i.get("oculto") and i.get("clave") == clave
+        ]
+        conteo = cifras(items_sector)
+        por_sector[str(clave)] = {
+            "etiqueta": info.get("corta") or info.get("etiqueta"),
+            "elementos": conteo["elementos"],
+            "filas": conteo["filas"],
+            "bytes": conteo["bytes"],
+        }
+    return {
+        "fuentes": {
+            "api_v2": {
+                "objetos": len(objetos),
+                "filas": sum(entero(o.get("filas")) for o in objetos),
+            },
+            "descargas": {
+                "principal": cifras(visibles),
+                "fuera_de_foco": cifras(fuera),
+                "ocultos": cifras(ocultos),
+                "por_sector": por_sector,
+            },
+        }
+    }
+
+
+def sincronizar_readme(reporte: dict[str, Any]) -> list[str]:
+    """Reescribe en README.md las cifras que dependen de lo publicado, no de la prosa.
+
+    El contrato derivado regenera catálogo, descargas y este mismo artefacto, pero no puede
+    tocar el README porque una publicación de datos (p. ej. la serie diaria macro) no lo
+    incluye en su commit. Así, cada vez que entra un dato nuevo, `web_audit` encontraba la
+    tabla sectorial un par de filas atrás y `main` quedaba en rojo por una cifra: pasó el
+    2026-11-04 con 11 filas de macro y el total de 19.814.981. Solo se sustituyen los números
+    de las celdas, del total y de los tres resúmenes narrativos; ni una palabra del texto.
+
+    Devuelve lo que cambió (vacío = nada que sincronizar).
+    """
+    ruta = ROOT / "README.md"
+    try:
+        texto = ruta.read_text(encoding="utf-8")
+    except OSError as exc:  # pragma: no cover - el README existe en el repo
+        return [f"no se pudo leer README.md: {exc}"]
+    cambios: list[str] = []
+    salida = texto
+    filas_api = entero(reporte["fuentes"]["api_v2"]["filas"])
+
+    def cambiar(patron: str, reemplazo: str, que: str, flags: int = 0) -> None:
+        nonlocal salida
+        nuevo, n = re.subn(patron, reemplazo, salida, count=1, flags=flags)
+        if n:
+            if nuevo != salida:
+                cambios.append(que)
+            salida = nuevo
+
+    # Celdas de la tabla sectorial: | Etiqueta | elementos | filas | …
+    filas = reporte["fuentes"]["descargas"]["por_sector"]
+    for clave, info in sorted(filas.items()):
+        etiqueta = info["etiqueta"]
+        cambiar(
+            rf"(\|\s*{re.escape(etiqueta)}\s*\|\s*)[\d.]+(\s*\|\s*)[\d.]+",
+            rf"\g<1>{info['elementos']}\g<2>{fmt(info['filas'])}",
+            f"tabla sectorial · {etiqueta}",
+        )
+    descargas = reporte["fuentes"]["descargas"]
+    principal, fuera, ocultos = (
+        descargas["principal"],
+        descargas["fuera_de_foco"],
+        descargas["ocultos"],
+    )
+    total_elementos = principal["elementos"] + fuera["elementos"]
+    cambiar(
+        r"(\|\s*\*\*Total\*\*\s*\|\s*\*\*)\d+(\*\*\s*\|\s*\*\*)[\d.]+(\*\*)",
+        rf"\g<1>{total_elementos}\g<2>{fmt(principal['filas'] + fuera['filas'])}\g<3>",
+        "tabla sectorial · total",
+    )
+
+    # El catálogo API suma N objetos y M filas (suma por objeto del catálogo).
+    cambiar(
+        r"(El catálogo API suma\s+)[\d.]+(\s+objetos y\s+)[\d.]+(\s+filas)",
+        rf"\g<1>{reporte['fuentes']['api_v2']['objetos']}\g<2>{fmt(filas_api)}\g<3>",
+        "resumen API",
+        re.IGNORECASE,
+    )
+    # De esos N elementos, A están en niveles principales (F filas; …) y B en archivo/registro (G; …)
+    cambiar(
+        r"(De esos\s+)[\d.]+(\s+elementos,\s+)[\d.]+(\s+están en niveles principales\s+\()"
+        r"[\d.]+(\s+filas;)([^)]*\)\s+y\s+)[\d.]+(\s+en archivo/registro\s+\()[\d.]+(;)",
+        rf"\g<1>{total_elementos}\g<2>{principal['elementos']}\g<3>"
+        rf"{fmt(principal['filas'])}\g<4>\g<5>{fuera['elementos']}\g<6>"
+        rf"{fmt(fuera['filas'])}\g<7>",
+        "resumen de Descargas",
+        re.IGNORECASE,
+    )
+    if cambios and salida != texto:
+        ruta.write_text(salida, encoding="utf-8")
+    return cambios
+
+
 def render(doc: dict[str, Any]) -> str:
     return json.dumps(doc, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
 
@@ -773,7 +907,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="falla si el artefacto no coincide")
     args = parser.parse_args()
-    doc = construir()
+    sincronizados: list[str] = []
+    if args.check:
+        doc = construir()
+    else:
+        # Se sincroniza el README antes de auditar: la auditoría comprueba justo esas cifras;
+        # si se escribieran después, el generador fallaría con el README que él mismo tiene
+        # que poner al día. Las cifras salen de los artefactos de datos ya publicados.
+        sincronizados = sincronizar_readme(leer_artefactos())
+        doc = construir()
     contenido = render(doc)
     if args.check:
         try:
@@ -797,6 +939,8 @@ def main() -> int:
             f"{cantidad_oculta} {etiqueta_oculta}; "
             f"{fmt(f['api_v2']['filas'])} filas y {fmt(f['api_v2']['bytes'])} bytes alineados."
         )
+        if sincronizados:
+            print("README.md sincronizado: " + "; ".join(sincronizados))
         print(f"Escrito: {OUT.relative_to(ROOT)}")
     return 0
 

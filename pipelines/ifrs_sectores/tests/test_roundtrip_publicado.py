@@ -48,8 +48,14 @@ def a_txt(filas) -> list[str]:
     return lineas
 
 
-def relleno(cuantas: int = 60) -> list[str]:
-    """Sociedades de otros giros: el extractor exige al menos 50 en el archivo."""
+def relleno(cuantas: int = 120) -> list[str]:
+    """Sociedades de otros giros.
+
+    El extractor exige al menos 50 en cualquier archivo y 100 si el trimestre todavía no
+    cierra (`MIN_SOCIEDADES_RECIENTE`): un TXT a medio cargar se reintenta en vez de dejar el
+    cierre registrado con una foto parcial. 202606 está abierto la mayor parte del año, así
+    que el relleno cubre el umbral alto y la prueba no depende del día en que corre.
+    """
     return [";".join([PERIODO_TXT, str(90000000 + i), f"EMPRESA {i} SPA", "I", "CLP",
                       "Total de activos", "1", "TAX CI", "ESF C/NC"]) for i in range(cuantas)]
 

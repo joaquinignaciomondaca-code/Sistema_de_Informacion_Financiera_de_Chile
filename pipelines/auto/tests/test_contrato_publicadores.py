@@ -22,7 +22,10 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[3]
 WORKFLOWS = sorted((RAIZ / ".github" / "workflows").glob("*.yml"))
 COMPARTIDOS = ("data_manifest.json", "docs/index.html", "docs/js/", "docs/metricas_publicadas.json")
-REGENERADORES = ("--solo-", "build_download_catalog.py", "build_metricas_publicadas.py", "build_macro_web.py")
+# Los publicadores regeneran su parte con un `--solo-…`; el contrato derivado, con la cadena
+# unificada de `scripts/refrescar_contrato.py` (que además la rehace entera si HEAD se movió).
+REGENERADORES = ("--solo-", "build_download_catalog.py", "build_metricas_publicadas.py",
+                 "build_macro_web.py", "refrescar_contrato.py")
 
 
 def logicas(texto: str) -> list[tuple[int, str]]:
@@ -93,30 +96,62 @@ class ContratoDePublicadoresTest(unittest.TestCase):
         self.assertEqual([l for _p, l in logicas(texto)], ["git add a.json docs/js/x.js data_manifest.json", "echo listo"])
 
     def test_el_contrato_derivado_regenera_y_verifica_los_indices_publicados(self):
+        """La cadena vive en un solo sitio (`CADENA`) y el flujo la corre completa.
+
+        Antes las líneas estaban duplicadas dentro del paso del workflow; el 2026-11-04 la
+        cadena se partió entre dos flujos y publicó un contrato mezclado. Ahora el flujo
+        invoca `scripts/refrescar_contrato.py`, que corre `CADENA` y la verifica entera.
+        """
+        import sys
+        sys.path.insert(0, str(RAIZ))
+        from scripts.cadena_contrato import CADENA
         flujo = (RAIZ / ".github" / "workflows" / "contrato_publicado.yml").read_text(encoding="utf-8")
-        self.assertIn("python scripts/generar_indice_busqueda.py", flujo)
-        self.assertIn("python scripts/generar_indice_busqueda.py --check", flujo)
-        self.assertIn("docs/outputs/indice_busqueda.json", flujo)
-        self.assertIn("python scripts/build_metricas_publicadas.py", flujo)
-        self.assertIn("python scripts/build_metricas_publicadas.py --check", flujo)
-        self.assertIn("docs/metricas_publicadas.json", flujo)
-        self.assertIn("python scripts/build_macro_web.py", flujo)
-        self.assertIn("python scripts/build_macro_web.py --check", flujo)
-        self.assertIn("docs/js/sidebar.js", flujo)
-        self.assertIn("docs/js/data_dictionary.js", flujo)
-        self.assertIn("docs/js/erd_graph.js", flujo)
-        self.assertIn("docs/vocabulario.json", flujo)
-        self.assertLess(flujo.index("python scripts/build_macro_web.py\n"),
-                        flujo.index("python scripts/build_esquemas.py\n"))
-        self.assertLess(flujo.index("python scripts/build_esquemas.py\n"),
-                        flujo.index("python scripts/build_api.py\n"))
+        self.assertIn("python scripts/refrescar_contrato.py", flujo)
+        for script in ("generar_indice_busqueda.py", "build_metricas_publicadas.py",
+                       "build_macro_web.py", "build_esquemas.py", "build_api.py",
+                       "build_ficha_piloto.py", "build_download_catalog.py"):
+            self.assertIn(script, CADENA)
+        self.assertLess(CADENA.index("build_macro_web.py"), CADENA.index("build_esquemas.py"))
+        self.assertLess(CADENA.index("build_esquemas.py"), CADENA.index("build_api.py"))
+        self.assertLess(CADENA.index("build_download_exports.py"), CADENA.index("build_download_catalog.py"))
+        self.assertLess(CADENA.index("build_download_catalog.py"), CADENA.index("build_metricas_publicadas.py"))
+        for ruta in ("docs/outputs/indice_busqueda.json", "docs/metricas_publicadas.json",
+                     "docs/js/sidebar.js", "docs/js/data_dictionary.js",
+                     "docs/js/erd_graph.js", "docs/vocabulario.json", "docs/datos", "README.md"):
+            self.assertIn(ruta, flujo)
         self.assertIn("      - 'scripts/build_macro_web.py'", flujo)
         self.assertIn("      - 'macro/scripts/build_tablas_tematicas.py'", flujo)
         self.assertIn("pandas==2.2.3", flujo)
-        self.assertIn("python scripts/build_ficha_piloto.py", flujo)
-        self.assertIn("python scripts/build_ficha_piloto.py --check", flujo)
         self.assertIn("      - 'scripts/build_ficha_piloto.py'", flujo)
-        self.assertIn("docs/datos", flujo)
+
+    def test_el_refresco_verifica_cada_generador_y_reintenta_si_la_cabeza_se_mueve(self):
+        refresco = (RAIZ / "scripts" / "refrescar_contrato.py").read_text(encoding="utf-8")
+        self.assertIn("--check", refresco)
+        self.assertIn("rev-parse", refresco)
+        self.assertIn("if cpu() != inicial", refresco)
+        # La cadena vive en su propio módulo, sin dependencias: así estas pruebas corren en un
+        # job que solo instala pyarrow. `build_macro_web` la reexporta por compatibilidad.
+        cadena = (RAIZ / "scripts" / "cadena_contrato.py").read_text(encoding="utf-8")
+        for script in ("build_api.py", "build_contrato.py", "build_download_catalog.py"):
+            self.assertIn(script, cadena)
+        self.assertIn("from scripts.cadena_contrato import CADENA",
+                      (RAIZ / "scripts" / "refrescar_contrato.py").read_text(encoding="utf-8"))
+        self.assertIn("from scripts.cadena_contrato import CADENA",
+                      (RAIZ / "scripts" / "build_macro_web.py").read_text(encoding="utf-8"))
+
+    def test_el_contrato_publica_las_cifras_del_readme_que_el_mismo_regenera(self):
+        """El README declara cifras que cambian con los datos: el flujo debe versionarlas.
+
+        `web_audit` compara la tabla sectorial y los resúmenes narrativos del README con el
+        catálogo; si el flujo que actualiza esos números no los commitea, `main` queda en
+        rojo en la siguiente publicación de datos (así pasó el 2026-11-04 con 11 filas de
+        macro).
+        """
+        flujo = (RAIZ / ".github" / "workflows" / "contrato_publicado.yml").read_text(encoding="utf-8")
+        self.assertIn("README.md", flujo)
+        generador = (RAIZ / "scripts" / "build_metricas_publicadas.py").read_text(encoding="utf-8")
+        self.assertIn("def sincronizar_readme", generador)
+        self.assertIn("auditar_tabla_readme", generador)
 
     def test_contrato_derivado_reintenta_con_backoff_ante_publicaciones_concurrentes(self):
         flujo = (RAIZ / ".github" / "workflows" / "contrato_publicado.yml").read_text(encoding="utf-8")

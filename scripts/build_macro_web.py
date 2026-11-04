@@ -522,6 +522,12 @@ def reemplazar(ruta: Path, inicio: str, fin: str, contenido: str, check: bool) -
     return cambia
 
 
+# La cadena vive en `scripts/cadena_contrato.py`, sin dependencias: las pruebas del contrato
+# la importan en un job que solo instala pyarrow, y este módulo arrastra pandas. Se reexporta
+# para los llamadores que ya la buscaban aquí.
+from scripts.cadena_contrato import CADENA  # noqa: E402,F401
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--check", action="store_true")
