@@ -15,7 +15,7 @@ RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
 
 from scripts import refrescar_contrato as r  # noqa: E402
-from scripts.build_macro_web import CADENA  # noqa: E402
+from scripts.cadena_contrato import CADENA  # noqa: E402
 
 
 class RefrescoTest(unittest.TestCase):

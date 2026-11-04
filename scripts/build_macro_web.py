@@ -522,30 +522,10 @@ def reemplazar(ruta: Path, inicio: str, fin: str, contenido: str, check: bool) -
     return cambia
 
 
-# Cadena completa de artefactos derivados, en orden de dependencia (docs/api/README.md).
-# La comparten `contrato_publicado.yml` y `scripts/refrescar_contrato.py`: si se separan,
-# un flujo puede regenerar solo una parte y publicar un contrato a medias.
-CADENA = (
-    "build_reconciliacion.py",
-    "verificar_claves.py",
-    "build_macro_web.py",          # el diccionario macro se genera antes de los esquemas
-    "build_esquemas.py",
-    "build_api.py",
-    "build_contrato.py",
-    "build_ficha_piloto.py",
-    "build_resultados.py",
-    "build_download_exports.py",   # exportaciones antes del catálogo que las enlaza
-    "build_download_catalog.py",
-    # Las métricas se reconcilian justo después de los catálogos que leen: es el paso que
-    # sincroniza las cifras publicadas de README.md y detecta cualquier desalineación antes
-    # de que el commit llegue a la rama.
-    "build_metricas_publicadas.py",
-    "build_estado_claves.py",
-    "build_metadatos.py",
-    "construir_reproducibilidad.py",
-    "generar_indice_busqueda.py",
-    "auditar_contrato.py",
-)
+# La cadena vive en `scripts/cadena_contrato.py`, sin dependencias: las pruebas del contrato
+# la importan en un job que solo instala pyarrow, y este módulo arrastra pandas. Se reexporta
+# para los llamadores que ya la buscaban aquí.
+from scripts.cadena_contrato import CADENA  # noqa: E402,F401
 
 
 def main(argv=None) -> int:
