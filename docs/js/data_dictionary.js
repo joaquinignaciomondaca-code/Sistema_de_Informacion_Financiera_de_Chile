@@ -1381,11 +1381,11 @@ const DATA_DICTIONARY = [
   sector: "fi",
   sectorLabel: "Fondos de Inversión (CMF)",
   norma: "IFRS · XML CMF FIEF (Circular 1998)",
-  corte: "2022-03 a 2026-06 · 16 cierres publicados",
+  corte: "2022-03 a 2026-06 · 17 cierres publicados",
   frecuencia: "Trimestral",
   frescura: "Se actualiza sola 3 veces al mes",
   modo: "Automático · incremental; identidades y cotejo antes de publicar",
-  ultimaActualizacion: "2026-10-02",
+  ultimaActualizacion: "2026-11-04",
   registros: "Trimestral · contextos separados",
   origen: "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado.",
   descripcion: "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
@@ -1401,7 +1401,7 @@ const DATA_DICTIONARY = [
     {
       name: "run_fondo",
       type: "VARCHAR",
-      role: "PK",
+      role: "FK",
       significado: "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
       contable: "No aplica"
     },
@@ -1542,7 +1542,7 @@ const DATA_DICTIONARY = [
       name: "fuente_archivo",
       type: "VARCHAR",
       role: "Dato fuente",
-      significado: "Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",
+      significado: "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
       contable: "No aplica"
     },
     {
@@ -1568,11 +1568,11 @@ const DATA_DICTIONARY = [
   sector: "fi",
   sectorLabel: "Fondos de Inversión (CMF)",
   norma: "IFRS · XML CMF FIEF (Circular 1998)",
-  corte: "2022-03 a 2026-06 · 16 cierres publicados",
+  corte: "2022-03 a 2026-06 · 17 cierres publicados",
   frecuencia: "Trimestral",
   frescura: "Se actualiza sola 3 veces al mes",
   modo: "Automático · incremental; identidades y cotejo antes de publicar",
-  ultimaActualizacion: "2026-10-02",
+  ultimaActualizacion: "2026-11-04",
   registros: "Trimestral · contextos separados",
   origen: "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado.",
   descripcion: "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
@@ -1588,7 +1588,7 @@ const DATA_DICTIONARY = [
     {
       name: "run_fondo",
       type: "VARCHAR",
-      role: "PK",
+      role: "FK",
       significado: "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
       contable: "No aplica"
     },
@@ -1729,7 +1729,7 @@ const DATA_DICTIONARY = [
       name: "fuente_archivo",
       type: "VARCHAR",
       role: "Dato fuente",
-      significado: "Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",
+      significado: "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
       contable: "No aplica"
     },
     {
