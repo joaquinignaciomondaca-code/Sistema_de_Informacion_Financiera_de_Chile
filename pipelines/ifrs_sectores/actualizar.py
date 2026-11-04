@@ -146,6 +146,25 @@ class ErrorContenido(ErrorFuente):
     pass
 
 
+# Guardas de sociedades mínimas por trimestre. Los ficheros históricos de la CMF pueden venir
+# incompletos para siempre (201003, 4 sociedades): para ellos basta con no publicar y avisar.
+# Un trimestre que todavía no cierra puede estar a medio cargar (202609 llegó con 14 de ~370
+# sociedades), y ese caso no es lo mismo: si se publicara, dejaría el cierre con una foto
+# parcial; y si la corrida fallara, reintentaría en rojo el mismo archivo cada tres días hasta
+# el plazo de presentación. Se trata como transitorio y se reintenta sin fallar.
+MIN_SOCIEDADES = 50
+MIN_SOCIEDADES_RECIENTE = 100
+
+
+class ErrorIncompleto(ErrorContenido):
+    """Un trimestre abierto llegó con muy pocas sociedades: es transitorio, no histórico.
+
+    No se registra como cierre ni falla la corrida: se reintenta en la próxima, cuando la CMF
+    termine de cargar el archivo.
+    """
+    pass
+
+
 class _Links(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -299,8 +318,14 @@ def leer_archivo(raw: bytes, periodo: str, listas: dict[str, dict[str, str]]):
         })
     if lineas_periodo == 0:
         raise ErrorContenido(f"el archivo no trae filas de {periodo}")
-    if len(entidades_archivo) < 50:
+    if len(entidades_archivo) < MIN_SOCIEDADES:
         raise ErrorContenido(f"el archivo trae solo {len(entidades_archivo)} sociedades")
+    if len(entidades_archivo) < MIN_SOCIEDADES_RECIENTE and not cerrado(periodo, _hoy()):
+        # Un trimestre que todavía no cierra (la CMF envía hasta ~150 días) puede venir a
+        # medio cargar: se reintenta, no se registra como cierre incompleto.
+        raise ErrorIncompleto(
+            f"el archivo trae solo {len(entidades_archivo)} sociedades y el trimestre aún no cierra"
+        )
     return datos, {"lineas": lineas_periodo, "sociedades": len(entidades_archivo),
                    "solo_lista_fuera": {s: [{"rut": r, "razon_social": n} for r, n in sorted(v.items())]
                                         for s, v in candidatos.items()}}, avisos
@@ -732,6 +757,15 @@ def main(argv=None) -> int:
                 raw = cache_anual[par]
                 datos, est, avisos = leer_archivo(raw, periodo, listas)
                 avisos.insert(0, f"trimestre leído del archivo anual ({e})")
+        except ErrorIncompleto as e:
+            # Transitorio: la CMF todavía está cargando un trimestre abierto (el 202609 llegó
+            # con 14 de ~370 sociedades). No se registra como cierre ni se publica, y se
+            # reintenta en la próxima corrida. Tampoco es una falla del extractor: igual que
+            # el backfill de factoring/leasing, «aún incompleto» no pinta la corrida de rojo;
+            # si el trimestre nunca se completara, lo delata que la serie publicada no avanza.
+            defectos.append(f"{periodo}: {e}")
+            print(f"::warning::{periodo}: {e} — se reintenta en la próxima corrida")
+            continue
         except ErrorContenido as e:
             if cerrado(periodo, hoy):
                 # Trimestre histórico cerrado cuyo archivo de la CMF trae contenido incompleto
