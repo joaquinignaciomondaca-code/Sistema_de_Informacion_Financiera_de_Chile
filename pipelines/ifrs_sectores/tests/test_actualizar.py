@@ -636,6 +636,33 @@ class ReedicionCmfTest(unittest.TestCase):
             # La lectura previa queda como estaba: se vuelve a intentar cuando la CMF reedite de nuevo.
             self.assertEqual(control["periodos"]["202606"]["leido_utc"], "2027-03-01T12:00:00+00:00")
 
+    def test_un_trimestre_abierto_ya_publicado_no_pinta_la_corrida_de_rojo(self):
+        """El caso real que dejó `ifrs_sectores` en rojo desde el 2026-10-22.
+
+        `202606` sigue abierto (~150 días), así que se relee en **cada** corrida. Cuando la CMF
+        reenvía el archivo con cifras que no pasan la cuadratura, la compuerta conserva lo ya
+        publicado —que es lo correcto— pero lo anotaba como `errores`. Como en esa corrida no
+        se publicaba nada nuevo (`hechos == 0`), el flujo salía con `exit 1` y la serie quedaba
+        en rojo aunque la web no perdiera una sola fila. El índice no trae fecha de reedición
+        para un trimestre abierto, así que la indulgencia de `reeditados` no lo cubría.
+        """
+        with TemporaryDirectory() as tmp:
+            # El trimestre sigue abierto: 202606 no cierra hasta ~150 días después de junio.
+            hoy = date(2026, 10, 20)
+            _, previo, _ = self._correr(tmp, self._indice(), self._txt(agfs=25), self.T0, hoy=hoy)
+            self.assertFalse(previo["periodos"]["202606"]["cerrado"])
+            antes = self._filas(tmp)
+            sha_previo = previo["periodos"]["202606"]["sha256"]
+            # La CMF reenvía el archivo abierto con 10 de 25 balances descuadrados y sin
+            # anunciar reedición en el índice: no se publica, pero tampoco es falla de la corrida.
+            t1 = datetime(2027, 3, 20, 13, 0, tzinfo=timezone.utc)
+            codigo, control, pedidas = self._correr(
+                tmp, self._indice(), self._txt(agfs=25, patrimonio_malo=10), t1, hoy=hoy)
+            self.assertEqual(len(pedidas), 1, "el trimestre abierto se vuelve a leer")
+            self.assertEqual(codigo, 0, "un trimestre abierto ya publicado no es una falla")
+            self.assertEqual(self._filas(tmp), antes, "no se pierde lo ya publicado")
+            self.assertEqual(control["periodos"]["202606"]["sha256"], sha_previo)
+
     def test_un_cierre_defectuoso_que_nunca_se_publico_sigue_siendo_un_error(self):
         """La indulgencia es solo para reediciones: lo que nunca llegó a la web debe verse rojo."""
         with TemporaryDirectory() as tmp:
