@@ -767,9 +767,18 @@ def main(argv=None) -> int:
             print(f"::warning::{periodo}: {e} — se reintenta en la próxima corrida")
             continue
         except ErrorContenido as e:
+            # Dos casos, misma decisión (no publicar y no fallar) pero por motivos distintos que
+            # conviene no mezclar en la anotación: el mensaje es lo primero que se lee cuando la
+            # corrida sale en rojo, y durante el 2026-11-04 decirle «archivo histórico» a un
+            # trimestre abierto costó más de una hora de diagnóstico.
+            if periodo in control["periodos"]:
+                defectos.append(f"{periodo}: {e}")
+                print(f"::warning::{periodo}: {e} — ya está publicado y no se reemplaza; "
+                      f"la relectura se reintenta en la próxima corrida")
+                continue
             if cerrado(periodo, hoy):
                 # Trimestre histórico cerrado cuyo archivo de la CMF trae contenido incompleto
-                # (p. ej. 201003 con solo 4 sociedades): no se publica, se reintenta ante cada
+                # (p. ej. 201003 con solo 4 sociedades): nunca se publicó, se reintenta ante cada
                 # cambio de la fuente y no debe dejar la corrida en rojo cuando no hay nada
                 # nuevo que publicar.
                 defectos.append(f"{periodo}: {e}")
@@ -821,15 +830,24 @@ def main(argv=None) -> int:
             verificaciones += vr
             divergencias += [f"{sec} {m}" for m in mr]
         motivo = cuadratura.motivo_detener(verificados, descuadres, balances_totales)
-        # Un cierre ya publicado cuya reedición no cumple las compuertas conserva lo publicado:
-        # es un aviso sobre la fuente, no una falla de la corrida (que no tiene nada pendiente).
+        # Un cierre ya publicado cuya (re)lectura no cumple las compuertas conserva lo publicado:
+        # es un aviso sobre la fuente, no una falla de la corrida, que no tiene nada pendiente.
+        # Cubre dos casos que antes se veían distintos y son el mismo:
+        #   - una reedición anunciada en el índice (el caso de 2027-03);
+        #   - un trimestre **abierto** que se relee en cada corrida (202606 hasta ~150 días
+        #     después de junio). El índice no anuncia reedición al cargar cifras nuevas, así
+        #     que caía en `errores`: con nada nuevo que publicar, el flujo salía con `exit 1`
+        #     aunque la web no perdiera una sola fila. Así quedó en rojo desde el 2026-10-22.
+        releyendo = periodo in reeditados or (
+            periodo in control["periodos"] and not cerrado(periodo, hoy)
+        )
         if motivo:
-            (defectos if periodo in reeditados else errores).append(f"{periodo}: {motivo}")
+            (defectos if releyendo else errores).append(f"{periodo}: {motivo}")
             print(f"::warning::{periodo}: {motivo}; no se publica")
             continue
         motivo_res = cuadratura.motivo_detener(verificaciones, divergencias)
         if motivo_res:
-            (defectos if periodo in reeditados else errores).append(f"{periodo}: estado de resultados · {motivo_res}")
+            (defectos if releyendo else errores).append(f"{periodo}: estado de resultados · {motivo_res}")
             print(f"::warning::{periodo}: {len(divergencias)} de {verificaciones} identidades del "
                   f"estado de resultados no se cumplen; no se publica. Ej.: {divergencias[0]}")
             continue

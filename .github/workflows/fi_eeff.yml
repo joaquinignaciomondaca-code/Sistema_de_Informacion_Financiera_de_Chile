@@ -51,9 +51,24 @@ concurrency:
   group: fi-eeff-${{ github.ref }}
   cancel-in-progress: false
 
+# Por qué `ubuntu-24.04` y no `ubuntu-latest`
+#
+# `ubuntu-latest` deja de ser Ubuntu 24.04 y pasa a 26.04 entre el 19 de octubre y el
+# 19 de noviembre de 2026 (actions/runner-images#14748). Durante esas semanas la misma
+# etiqueta da una imagen u otra sin aviso, así que un flujo puede pasar en una corrida y
+# fallar en la siguiente sin que cambie una línea del repositorio. Es exactamente el patrón
+# que se veía en las anotaciones: «The ubuntu-latest label will migrate to Ubuntu 26…».
+#
+# Estos flujos publican datos en `main`, así que un fallo intermitente no es solo ruido: deja
+# la serie sin actualizar hasta la corrida siguiente (cada 3 días en la mayoría). Por eso la
+# imagen se fija explícitamente. `contrato_publicado` y `seguros_carteras` ya lo hacían.
+#
+# Para probar Ubuntu 26 se cambia a `ubuntu-26.04` en una rama, no en `main`. Para volver a
+# la etiqueta móvil hay que esperar al fin de la migración y correr la auditoría completa.
+
 jobs:
   probar:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
@@ -81,7 +96,7 @@ jobs:
     # una primera carga de UN cierre reciente sin necesitar el permiso actions:write
     # de workflow_dispatch; mantiene todas las compuertas y nunca publica en main.
     if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-carga-inicial]'))
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 330
     permissions:
       contents: write
