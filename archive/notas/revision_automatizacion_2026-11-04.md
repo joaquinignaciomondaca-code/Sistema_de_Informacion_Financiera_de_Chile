@@ -136,6 +136,28 @@ la mezcla: se quedó reintentando hasta agotar los 8 intentos. En local, sobre `
 `refrescar_contrato.py` converge en 266 s y deja todas las compuertas en 0; los artefactos de
 ese refresco van en este mismo commit, así que `main` vuelve a quedar consistente al fusionar.
 
+## 7. Dos fallos del propio arreglo, detectados en los checks del PR
+
+El primer push de esta revisión dejó dos jobs en rojo, y ninguno venía de la rama:
+
+- **`automatizacion`**: `test_refrescar_contrato.py` importaba `CADENA` desde
+  `build_macro_web`, que importa pandas. El job solo instala pyarrow, así que fallaba con
+  `ModuleNotFoundError` y lo que se veía era «Pruebas del propio guardián» en rojo con
+  «0 problemas» en la línea anterior. La cadena se movió a `scripts/cadena_contrato.py`, sin
+  dependencias; `build_macro_web` la reexporta para no romper llamadores. Reproducido con un
+  venv que solo tiene pyarrow.
+- **`audit`**: al agregar esta nota, `archive/notas/README.md` quedó atrás
+  (`INDICE-NOTAS: no coincide con las notas`). Regenerado con `build_indice_notas.py`.
+
+Los dos son el mismo tipo de error: una compuerta que solo se descubre cuando corre en el
+entorno de CI. Por eso el arreglo se verificó con un venv que replica las dependencias del job
+(68 pruebas OK), no con el entorno completo de desarrollo.
+
+Con esos dos corregidos, los checks del PR 103 quedaron todos en verde: `audit`,
+`automatizacion`, `pruebas`, `servidor`, `r_ejemplos`, `api_anything` y `actualizar-feed`.
+`frescura` aparece en `skipping` porque solo corre programada o por `workflow_dispatch` sobre
+la rama por defecto; su verificación en esta revisión se hizo a mano contra `main`.
+
 ## Verificación
 
 | Comprobación | Resultado |
@@ -143,7 +165,8 @@ ese refresco van en este mismo commit, así que `main` vuelve a quedar consisten
 | `fi/tests` (incluye el cierre parcial) | 128 pruebas OK |
 | `pipelines.ifrs_sectores` + `pipelines.auto` + `pipelines.entidades` + extractores | 311 pruebas OK |
 | `factoring_leasing/tests` | 60 pruebas OK |
-| `scripts.*` (guardián, métricas y refresco) | 19 pruebas OK |
+| `scripts.*` (guardián, métricas y refresco), con solo pyarrow | 19 pruebas OK |
+| Job `automatizacion` completo, con solo pyarrow | 68 pruebas OK |
 | `audit_automatizacion.py` (estático) | 91 tablas, 0 problemas |
 | `audit_automatizacion.py --frescura` contra `main` | detecta los 3 flujos inestables |
 | `auditar_eeff_ifrs.py` (datos reales de `main`) | cuadratura completa, 0 descuadres |
