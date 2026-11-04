@@ -124,7 +124,11 @@ class DisparadoresTest(unittest.TestCase):
             self.assertIn(carpeta, rutas)
 
     def test_el_readme_esta_en_los_disparadores(self):
-        self.assertIn("README.md", self.rutas_de_push())
+        rutas = self.rutas_de_push()
+        self.assertIn("README.md", rutas)
+        # `fi/README.md` describe las reglas de publicación y queda cubierto por `fi/**`;
+        # se comprueba el patrón, no una ruta redundante en la lista.
+        self.assertTrue({"fi/**", "fi/README.md"} & set(rutas))
 
     def test_las_pruebas_del_guardian_y_del_contrato_estan_disparadas(self):
         rutas = self.rutas_de_push()

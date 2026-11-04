@@ -29,6 +29,12 @@ historia anterior a 2022. El intento programado del 2026-10-04 no completó el b
 rechazó 175 de 782 descargas XML de 2023-06 (`ACCION NO PERMITIDA 16`); en 2025-03 quedaron
 3 rechazos y 1 envío pendiente. Las compuertas conservaron los períodos válidos ya publicados.
 
+Esa negativa es permanente, no un corte pasajero: reintentar el cierre completo cada tres días
+dejaba el flujo en rojo sin recuperar un solo documento. Desde el 2026-11-04 el cierre se
+publica como **parcial** en cuanto el conjunto de negativas se repite, con el piso declarado en
+`fi_eeff_control.json → parciales` (RUN, validados y motivo) y un aviso en el run. El piso no
+baja solo: una negativa nueva bloquea otra vez hasta que su conjunto también se estabilice.
+
 Los metadatos detallan cada exclusión y la fuente/hash de cada documento aceptado. La revisión de
 cobertura del 2026-10-01 sigue describiendo el padrón y la evidencia disponibles a esa fecha;
 no debe confundirse con el estado del backfill aquí actualizado.
@@ -138,10 +144,16 @@ XML y las columnas que la ficha no muestra quedan diferenciadas por `cotejo_fich
 6. Completitud del cierre: cada fondo del registro debe estar resuelto (`ok`, ausencia
    declarada o rechazo explícito). Un desafío/corte/JSON de error sigue pendiente, nunca
    equivale a ausencia. Los dos motivos de rechazo no pesan igual:
-   - **negativa de acceso de la CMF** (`ACCION NO PERMITIDA`): un solo documento basta para
-     bloquear el cierre. No es un defecto de las cifras, es la fuente negando la descarga
-     (no se busca una ruta alternativa para eludirla) y el cierre quedaría incompleto por una
-     causa ajena al dato;
+   - **negativa de acceso de la CMF** (`ACCION NO PERMITIDA`): no es un defecto de las cifras,
+     es la fuente negando la descarga (no se busca una ruta alternativa para eludirla). Un
+     documento negado que **no estaba negado en la corrida anterior** bloquea el cierre: el
+     conjunto todavía cambia y se reintenta.
+     Cuando el **mismo conjunto** de negativas se repite, no es una carrera: son documentos que
+     la CMF no entrega. Reintentarlos cada tres días no los recupera, deja el flujo en rojo
+     para siempre y frena los cierres nuevos que vienen detrás. Ahí el cierre se publica como
+     **parcial**, con el piso de negativas en `fi_eeff_control.json → parciales` y un
+     `::warning` en el run; el período deja de reintentarse salvo con `--refrescar-todo`. Una
+     negativa nueva vuelve a bloquear hasta que su conjunto también se repita.
    - **defecto del documento** (no cuadra, falta una cuenta, no coteja con la ficha): se
      excluye con su motivo en `manifest.json`/`fi_eeff_control.json`, como en el resto de los
      extractores IFRS. Solo bloquea la publicación cuando supera el 2 % de los documentos

@@ -39,22 +39,41 @@ las actualiza no lo versionaba, así que cada publicación de datos lo dejaba at
 serie FI seguía en 2026-06. El guardián de frescura solo lo detectó el 2026-11-02, 33 días
 después, porque `fi_eeff.yml` no estaba en su lista.
 
-**Causa.** En 2025-03, 3 de 859 documentos (0,35 %) vinieron con el balance como bloque XBRL
-y no como cuenta/cifra. Con una negativa de acceso de la CMF en el mismo cierre, la compuerta
-`MAX_RECHAZADOS = 2 %` no distinguía dos cosas muy distintas: un documento defectuoso y la
-CMF negando la descarga. El cierre quedaba bloqueado para siempre y se reintentaba idéntico
-cada tres días.
+**Causa.** Eran dos fallos encadenados.
+
+1. La compuerta `MAX_RECHAZADOS = 2 %` mezclaba dos cosas muy distintas: un documento
+   defectuoso (en 2025-03, 3 de 859 venían con el balance como bloque XBRL y no como
+   cuenta/cifra) y una negativa de acceso de la CMF. Con el umbral contando ambas, cualquier
+   negativa empujaba el cierre por encima del 2 % y lo bloqueaba.
+2. El bloqueo era definitivo. La anotación del run 41343943402 lo muestra sin ambigüedad:
+   `2023-06: 175 de 782 documentos con XML rechazados`, todos con el mismo motivo,
+   `CMF rechaza explícitamente la descarga: ACCION NO PERMITIDA 16`. Es el mismo censo que el
+   `fi/README.md` declaró no rescatable el 2026-10-01: no se recupera reintentando. Como la
+   regla era «un solo documento negado bloquea el cierre», ese cierre **no se podía completar
+   nunca**: cada corrida de 3 días bajaba los 782 documentos, volvía a fallar y frenaba los
+   cierres nuevos que venían detrás. Diez de las últimas diez corridas en rojo, 33 días sin
+   éxito.
 
 **Cambios** (`fi/scripts/actualizar_eeff.py`, `fi/README.md`).
 
-- Una negativa de acceso (`ACCION NO PERMITIDA`) bloquea el cierre aunque sea un solo fondo:
-  no es un defecto del dato y el cierre quedaría incompleto por una causa externa.
-- Un documento que no pasa las identidades contables o el cotejo se excluye con su motivo,
-  como ya hacía `pipelines/auto/cuadratura.py`; sigue bloqueando por encima del 2 %, que es
-  cuando la lectura falla en bloque y no en un caso aislado.
+- El umbral del 2 % mira solo los documentos defectuosos; las negativas de acceso ya no lo
+  alimentan. Un documento que no pasa las identidades contables o el cotejo se excluye con su
+  motivo, como ya hacía `pipelines/auto/cuadratura.py`, y sigue bloqueando por encima del 2 %,
+  que es cuando la lectura falla en bloque y no en un caso aislado.
+- Una negativa de acceso que **no estaba** en la corrida anterior bloquea el cierre: el
+  conjunto todavía cambia y se reintenta, porque la CMF a veces la levanta.
+- El **mismo conjunto** de negativas ya no es una carrera: son documentos que la CMF no
+  entrega. El cierre se publica como **parcial**, con el piso en
+  `fi_eeff_control.json → parciales` (RUN, validados y motivo) y un `::warning` en el run. El
+  período deja de reintentarse salvo con `--refrescar-todo`, y una negativa nueva vuelve a
+  bloquear hasta que su conjunto también se repita.
 - El diagnóstico agrupa los rechazos por motivo y elige un ejemplo por motivo: antes
   `784 × «faltan cuentas»` desbordaba la anotación de Actions y el motivo real no se veía.
 - `--max-periodos` ya no puede dejar fuera un cierre publicado que quedó en reintento.
+
+Verificado sobre el perfil real de `2023-06` (607 validados, 175 negados): la primera corrida
+bloquea, la segunda publica el cierre parcial con los 175 RUN declarados, y una negativa
+adicional lo vuelve a bloquear.
 
 ## 3. IFRS de AGF, securitizadoras y CCAF: 6 corridas en rojo por un archivo a medio cargar
 
@@ -105,24 +124,6 @@ commit: las 101 pruebas pasan.
 Para que un fallo así se explique solo, `web_audit.yml` ahora publica la cola de pytest como
 anotación cuando el paso falla.
 
-## Verificación
-
-| Comprobación | Resultado |
-|---|---|
-| `fi/tests` | 125 pruebas OK |
-| `pipelines.ifrs_sectores` + `pipelines.auto` + `pipelines.entidades` + extractores | 292 pruebas OK |
-| `factoring_leasing/tests` | 60 pruebas OK |
-| `scripts.test_audit_automatizacion` | 8 pruebas OK (incluye disparadores de `web_audit`) |
-| `audit_automatizacion.py` (estático) | 91 tablas, 0 problemas |
-| `audit_automatizacion.py --frescura` contra `main` | detecta los 3 flujos inestables |
-| `auditar_eeff_ifrs.py` (datos reales de `main`) | cuadratura completa, 0 descuadres |
-| `refrescar_contrato.py` sobre `main` | converge y deja todas las compuertas en 0 |
-| `audit_cifras.js` | 14 respaldos al día |
-| `scripts.test_build_metricas_publicadas` | 6 pruebas OK |
-| `scripts.test_refrescar_contrato` | 5 pruebas OK |
-| `build_metricas_publicadas.py --check` tras el refresco | MÉTRICAS OK (90 objetos, 19.814.992 filas) |
-| `servidor/tests` | 101 pruebas OK |
-
 ## 6. `main` quedó roto y el bot no podía arreglarlo
 
 La revisión siguió a los runs del PR, y en `main` aparecieron dos fallos del propio
@@ -135,3 +136,18 @@ la mezcla: se quedó reintentando hasta agotar los 8 intentos. En local, sobre `
 `refrescar_contrato.py` converge en 266 s y deja todas las compuertas en 0; los artefactos de
 ese refresco van en este mismo commit, así que `main` vuelve a quedar consistente al fusionar.
 
+## Verificación
+
+| Comprobación | Resultado |
+|---|---|
+| `fi/tests` (incluye el cierre parcial) | 128 pruebas OK |
+| `pipelines.ifrs_sectores` + `pipelines.auto` + `pipelines.entidades` + extractores | 311 pruebas OK |
+| `factoring_leasing/tests` | 60 pruebas OK |
+| `scripts.*` (guardián, métricas y refresco) | 19 pruebas OK |
+| `audit_automatizacion.py` (estático) | 91 tablas, 0 problemas |
+| `audit_automatizacion.py --frescura` contra `main` | detecta los 3 flujos inestables |
+| `auditar_eeff_ifrs.py` (datos reales de `main`) | cuadratura completa, 0 descuadres |
+| `refrescar_contrato.py` sobre `main` | converge y deja todas las compuertas en 0 |
+| `audit_cifras.js` | 14 respaldos al día |
+| `build_metricas_publicadas.py --check` tras el refresco | MÉTRICAS OK (90 objetos, 19.814.992 filas) |
+| `servidor/tests` | 101 pruebas OK |

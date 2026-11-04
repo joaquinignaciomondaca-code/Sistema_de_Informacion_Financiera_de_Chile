@@ -191,6 +191,107 @@ class CorridaTest(unittest.TestCase):
             self.assertIn("ACCION NO PERMITIDA", r["periodos"]["2026-06"]["motivo_error"])
             self.assertFalse(cfg.control.exists())
 
+    def test_una_negativa_que_se_repite_declara_cierre_parcial(self):
+        """2023-06 no se puede completar: 175 de 782 XML los niega la CMF siempre.
+
+        Reintentarlo cada tres días deja el flujo en rojo para siempre y frena los cierres
+        nuevos que vienen detrás. Cuando el conjunto de negativas es el mismo que la corrida
+        anterior, el cierre se publica como parcial con su piso declarado.
+        """
+        negativa = {
+            "estado": "rechazado",
+            "motivo": "CMF rechaza explícitamente la descarga: ACCION NO PERMITIDA 16",
+        }
+        registro = {str(run): {} for run in range(7000, 7800)}
+        estado = {run: {"run": run, "estado": "ok"} for run in registro}
+        for run in ("7002", "7003"):
+            estado[run] = {"run": run, **negativa}
+        # Primera vez: bloquea, porque la negativa puede ser transitoria.
+        ev = m.evaluar(estado, registro, None)
+        self.assertFalse(ev["puede_publicar"])
+        self.assertFalse(ev["parcial"])
+        self.assertIn("ACCION NO PERMITIDA", ev["motivo_error"])
+        self.assertEqual(ev["piso_acceso"], ["7002", "7003"])
+        # Segunda corrida con el mismo conjunto: cierre parcial, publicable y sin error.
+        previo = {"piso": ["7002", "7003"], "veces": 1}
+        ev = m.evaluar(estado, registro, previo)
+        self.assertTrue(ev["puede_publicar"], ev["motivo_error"])
+        self.assertTrue(ev["parcial"])
+        self.assertEqual(ev["motivo_error"], "")
+        self.assertIn("cierre parcial", ev["avisos"][0])
+        # Una negativa nueva por encima del piso vuelve a bloquear: el piso no crece solo.
+        estado["7004"] = {"run": "7004", **negativa}
+        ev = m.evaluar(estado, registro, previo)
+        self.assertFalse(ev["puede_publicar"])
+        self.assertFalse(ev["parcial"])
+        self.assertIn("1 nuevas", ev["motivo_error"])
+        # Y se declara parcial cuando ese conjunto también se repite.
+        ev = m.evaluar(estado, registro, {"piso": ["7002", "7003", "7004"], "veces": 2})
+        self.assertTrue(ev["puede_publicar"])
+
+    def test_el_umbral_del_dos_por_ciento_no_cuenta_las_negativas_de_acceso(self):
+        """En 2023-06 las negativas son el 22 % del censo y no dicen nada de las cifras."""
+        registro = {str(run): {} for run in range(7000, 7800)}
+        estado = {run: {"run": run, "estado": "ok"} for run in registro}
+        negativa = {
+            "estado": "rechazado",
+            "motivo": "CMF rechaza explícitamente la descarga: ACCION NO PERMITIDA 16",
+        }
+        runs = list(registro)
+        negados = runs[:170]
+        for run in negados:
+            estado[run] = {"run": run, **negativa}
+        for run in runs[170:173]:
+            estado[run] = {"run": run, "estado": "rechazado",
+                           "motivo": "faltan 1 cuentas: TotalActivo"}
+        # 22 % negado y 0,35 % defectuoso: es el perfil real de 2023-06, y es publicable.
+        ev = m.evaluar(estado, registro, {"piso": negados, "veces": 2})
+        self.assertTrue(ev["puede_publicar"], ev["motivo_error"])
+        self.assertTrue(ev["parcial"])
+        # Los defectuosos de verdad siguen contando contra el 2 %.
+        for run in runs[173:200]:
+            estado[run] = {"run": run, "estado": "rechazado",
+                           "motivo": "faltan 1 cuentas: TotalActivo"}
+        ev = m.evaluar(estado, registro, {"piso": negados, "veces": 2})
+        self.assertFalse(ev["puede_publicar"])
+        self.assertIn("documentos con XML rechazados", ev["motivo_error"])
+
+    def test_el_cierre_parcial_queda_en_el_control_y_no_se_reintenta(self):
+        """El piso se publica junto a los datos y el período sale de la cola de pendientes."""
+        # Un censo de dos fondos: el 7002 entrega su XML y el 7003 está negado. Es el perfil de
+        # 2023-06 (hay cientos de válidos junto a los negados).
+        bueno = proveedor()
+
+        def con_negado(url):
+            if "archivo" in parse_qs(urlsplit(url).query) and "7003" in url:
+                return b"ACCION NO PERMITIDA 16"
+            return bueno(url)
+
+        registro_dos = {
+            "7002": {"run": "7002", "tipo_entidad": "FINRE"},
+            "7003": {"run": "7003", "tipo_entidad": "FINRE"},
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg = make_root(Path(tmp))
+            # Primera corrida: negativa nueva, bloquea y se recuerda en la caché del flujo.
+            r = correr(cfg, con_negado, registro=registro_dos)
+            self.assertEqual(r["parciales"], [])
+            self.assertIn("ACCION NO PERMITIDA", r["errores"][0])
+            vistas = json.loads((cfg.cache / "negativas.json").read_text(encoding="utf-8"))
+            self.assertEqual(vistas["2026-06"]["piso"], ["7003"])
+            # Segunda corrida con el mismo conjunto: publica el cierre parcial y lo declara.
+            r = correr(cfg, con_negado, registro=registro_dos)
+            self.assertEqual(r["errores"], [])
+            self.assertEqual(r["parciales"], ["2026-06"])
+            control = json.loads(cfg.control.read_text(encoding="utf-8"))
+            self.assertEqual(control["parciales"]["2026-06"]["negados"], 1)
+            self.assertIn("cierre parcial", control["parciales"]["2026-06"]["motivo"])
+            # Tercera: el período ya no está en la cola, así que no se vuelve a bajar.
+            llamadas = []
+            r = correr(cfg, proveedor(llamadas=llamadas), registro=registro_dos)
+            self.assertEqual(r["periodos"], {})
+            self.assertEqual(llamadas, [])
+
     def test_el_diagnostico_agrupa_cientos_de_rechazos_por_motivo(self):
         """La anotación de Actions debe caber: 800 rechazos iguales son un solo motivo."""
         estados = {
