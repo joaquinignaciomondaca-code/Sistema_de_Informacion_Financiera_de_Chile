@@ -158,6 +158,40 @@ Con esos dos corregidos, los checks del PR 103 quedaron todos en verde: `audit`,
 `frescura` aparece en `skipping` porque solo corre programada o por `workflow_dispatch` sobre
 la rama por defecto; su verificación en esta revisión se hizo a mano contra `main`.
 
+## 8. `ifrs_sectores` siguió en rojo después del merge
+
+La primera corrida programada en `main` (41789244162) volvió a fallar, y la causa no era la
+que se había corregido: era otra puerta del mismo flujo.
+
+**Síntoma.** `exit 1` en 50 s, con solo dos anotaciones y ambas de tipo «defecto»:
+`202609: el archivo trae solo 22 sociedades` y `201003: ... archivo histórico incompleto`.
+Ninguna debía pintar la corrida de rojo, y la prueba que lo comprobaba pasaba.
+
+**Causa.** El `exit 1` no venía de esos dos. `202606` está **publicado y todavía abierto**
+(cierra ~150 días después de junio), así que se relee en cada corrida. Cuando la CMF reenvía el
+archivo con cifras que no pasan la cuadratura —o con menos sociedades—, la compuerta conserva
+lo ya publicado, que es lo correcto, pero lo anotaba en `errores`. La indulgencia existente
+(`defectos`) solo cubría los cierres que el **índice** anuncia como reeditados; para un
+trimestre abierto la CMF sube cifras sin anunciarlo, así que caía del lado equivocado. Como en
+esa corrida no había nada nuevo que publicar (`hechos == 0`), el resultado era `exit 1`. El
+mismo caso explica las corridas en rojo desde el 2026-10-22, la última verde de la serie.
+
+**Arreglo.** La condición deja de mirar solo el anuncio del índice y pasa a mirar los hechos:
+un período que ya está publicado y sigue abierto se está **releyendo**, no descubriendo. Si su
+relectura no pasa las compuertas, es un aviso sobre la fuente (defecto), no una falla de la
+corrida. Lo que nunca se publicó sigue en rojo: esa prueba ya existía y sigue pasando.
+
+**Verificación.** La prueba nueva reproduce el fallo real (`exit 1`) y pasa con el arreglo;
+desactivando el arreglo vuelve a fallar, así que prueba lo que dice probar.
+
+**Esperado en `fi_eeff`.** La corrida del merge falló, y es el comportamiento diseñado: la
+primera vez que ve el conjunto de negativas lo bloquea para reintentar. Las anotaciones lo
+muestran funcionando (`2023-06: 607 validados, 175 rechazados` y `2025-03: 856 validados, 3
+rechazados`), y el piso queda guardado en la caché del flujo. La corrida siguiente —con el
+mismo conjunto— publica el cierre parcial. `2025-03` arrastra además 1 envío pendiente
+crónico («la ficha no enlaza FIEF»), que no bloquea la publicación pero tampoco se puede
+completar: por eso su cierre parcial queda con ese fondo fuera del censo conocido.
+
 ## Verificación
 
 | Comprobación | Resultado |
