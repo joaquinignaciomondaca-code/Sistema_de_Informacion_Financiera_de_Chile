@@ -130,6 +130,24 @@ class DisparadoresTest(unittest.TestCase):
         # se comprueba el patrón, no una ruta redundante en la lista.
         self.assertTrue({"fi/**", "fi/README.md"} & set(rutas))
 
+    def test_ningun_flujo_que_publica_usa_la_etiqueta_movil_ubuntu_latest(self):
+        """`ubuntu-latest` cambia de imagen sola y hace intermitentes los flujos que publican.
+
+        Entre el 2026-10-19 y el 2026-11-19 la etiqueta pasa de Ubuntu 24.04 a 26.04
+        (actions/runner-images#14748): durante ese periodo la misma corrida puede caer en una
+        imagen u otra. En un flujo que escribe en `main`, un fallo así deja la serie sin
+        actualizar hasta la corrida siguiente, que en la mayoría es cada 3 días. Por eso la
+        imagen se fija. Este guardián evita que un flujo nuevo vuelva a la etiqueta móvil.
+        """
+        import re
+        culpables = []
+        for flujo in sorted((RAIZ / ".github" / "workflows").glob("*.yml")):
+            texto = flujo.read_text(encoding="utf-8")
+            publica = "git push" in texto or re.search(r"^\s*contents:\s*write", texto, re.M)
+            if publica and re.search(r"^\s*runs-on:\s*ubuntu-latest\s*$", texto, re.M):
+                culpables.append(flujo.name)
+        self.assertEqual(culpables, [], "flujos que publican con la etiqueta móvil")
+
     def test_las_pruebas_del_guardian_y_del_contrato_estan_disparadas(self):
         rutas = self.rutas_de_push()
         for prueba in ("scripts/test_audit_automatizacion.py",
