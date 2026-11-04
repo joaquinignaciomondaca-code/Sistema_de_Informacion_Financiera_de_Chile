@@ -318,14 +318,20 @@ def leer_archivo(raw: bytes, periodo: str, listas: dict[str, dict[str, str]]):
         })
     if lineas_periodo == 0:
         raise ErrorContenido(f"el archivo no trae filas de {periodo}")
-    if len(entidades_archivo) < MIN_SOCIEDADES:
+    # El trimestre abierto se pregunta ANTES del piso absoluto, porque los dos umbrales se pisan:
+    # un abierto puede llegar con 22 sociedades —por debajo de MIN_SOCIEDADES— y no por eso es un
+    # archivo histórico defectuoso (el caso de 201003, 4 sociedades). Con el orden inverso, el piso
+    # de 50 lo capturaba primero y lo convertía en ErrorContenido; en `main` eso terminaba en
+    # `errores` y la corrida salía en rojo cada tres días por un archivo que la fuente recién
+    # empezaba a poblar (202609, 2026-11-04). Si el trimestre todavía no cierra, la decisión es
+    # transitoria: se reintenta, no se registra como cierre incompleto y no se pinta de rojo.
+    if not cerrado(periodo, _hoy()):
+        if len(entidades_archivo) < MIN_SOCIEDADES_RECIENTE:
+            raise ErrorIncompleto(
+                f"el archivo trae solo {len(entidades_archivo)} sociedades y el trimestre aún no cierra"
+            )
+    elif len(entidades_archivo) < MIN_SOCIEDADES:
         raise ErrorContenido(f"el archivo trae solo {len(entidades_archivo)} sociedades")
-    if len(entidades_archivo) < MIN_SOCIEDADES_RECIENTE and not cerrado(periodo, _hoy()):
-        # Un trimestre que todavía no cierra (la CMF envía hasta ~150 días) puede venir a
-        # medio cargar: se reintenta, no se registra como cierre incompleto.
-        raise ErrorIncompleto(
-            f"el archivo trae solo {len(entidades_archivo)} sociedades y el trimestre aún no cierra"
-        )
     return datos, {"lineas": lineas_periodo, "sociedades": len(entidades_archivo),
                    "solo_lista_fuera": {s: [{"rut": r, "razon_social": n} for r, n in sorted(v.items())]
                                         for s, v in candidatos.items()}}, avisos
