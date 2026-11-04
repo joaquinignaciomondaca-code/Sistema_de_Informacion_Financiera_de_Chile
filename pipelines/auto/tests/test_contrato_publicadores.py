@@ -104,7 +104,7 @@ class ContratoDePublicadoresTest(unittest.TestCase):
         """
         import sys
         sys.path.insert(0, str(RAIZ))
-        from scripts.build_macro_web import CADENA
+        from scripts.cadena_contrato import CADENA
         flujo = (RAIZ / ".github" / "workflows" / "contrato_publicado.yml").read_text(encoding="utf-8")
         self.assertIn("python scripts/refrescar_contrato.py", flujo)
         for script in ("generar_indice_busqueda.py", "build_metricas_publicadas.py",
@@ -129,8 +129,15 @@ class ContratoDePublicadoresTest(unittest.TestCase):
         self.assertIn("--check", refresco)
         self.assertIn("rev-parse", refresco)
         self.assertIn("if cpu() != inicial", refresco)
+        # La cadena vive en su propio módulo, sin dependencias: así estas pruebas corren en un
+        # job que solo instala pyarrow. `build_macro_web` la reexporta por compatibilidad.
+        cadena = (RAIZ / "scripts" / "cadena_contrato.py").read_text(encoding="utf-8")
         for script in ("build_api.py", "build_contrato.py", "build_download_catalog.py"):
-            self.assertIn(script, (RAIZ / "scripts" / "build_macro_web.py").read_text(encoding="utf-8"))
+            self.assertIn(script, cadena)
+        self.assertIn("from scripts.cadena_contrato import CADENA",
+                      (RAIZ / "scripts" / "refrescar_contrato.py").read_text(encoding="utf-8"))
+        self.assertIn("from scripts.cadena_contrato import CADENA",
+                      (RAIZ / "scripts" / "build_macro_web.py").read_text(encoding="utf-8"))
 
     def test_el_contrato_publica_las_cifras_del_readme_que_el_mismo_regenera(self):
         """El README declara cifras que cambian con los datos: el flujo debe versionarlas.

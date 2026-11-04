@@ -31,7 +31,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ))
-from scripts.build_macro_web import CADENA  # noqa: E402
+from scripts.cadena_contrato import CADENA  # noqa: E402
 
 GIT = ["git", "-C", str(RAIZ)]
 
