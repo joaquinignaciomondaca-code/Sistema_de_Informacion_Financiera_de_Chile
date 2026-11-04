@@ -557,7 +557,23 @@ def procesar(registro, estado, periodo, hoy, ultimo, deadline, hilos, fetcher, f
     return dict(cuenta), freno.activo
 
 
-def evaluar(estado, registro):
+def evaluar(estado, registro, previo=None):
+    """¿Se puede publicar este cierre, y si no, por qué?
+
+    `previo` es lo que la corrida anterior registró sobre las negativas de acceso de este
+    período. Separa dos casos que antes se confundían:
+
+    - aparece una negativa que no estaba registrada: el cierre puede quedar incompleto por una
+      causa que todavía cambia, así que no se publica y se reintenta (la CMF a veces la levanta);
+    - el conjunto de negativas es exactamente el ya registrado: no es una carrera, son
+      documentos que la CMF no entrega. Reintentarlos cada tres días no los recupera, deja el
+      flujo en rojo para siempre y frena los cierres nuevos que vienen detrás. El cierre se
+      publica como **parcial**, con el piso declarado en el control y en la anotación.
+
+    El piso se acumula: una negativa nueva vuelve a bloquear hasta que su conjunto se repita.
+    Es el caso real de 2023-06 (175 de 782, `ACCION NO PERMITIDA 16`), declarado no rescatable
+    en `fi/README.md` desde el 2026-10-01.
+    """
     faltan = sorted(
         run
         for run in set(registro) | set(estado)
@@ -567,28 +583,45 @@ def evaluar(estado, registro):
     malos = [r for r in estado.values() if r["estado"] == "rechazado"]
     negados = [r for r in malos if es_negativa_de_acceso(r.get("motivo"))]
     conocidos = len(ok) + len(malos)
-    motivos = []
-    # Una negativa de acceso de la CMF no es un defecto del documento: el cierre queda
-    # incompleto por una causa externa (no se busca una ruta alternativa para eludirla) y
-    # por eso se bloquea la publicación, se registre en un fondo o en doscientos.
-    if negados:
+    piso = {str(r) for r in ((previo or {}).get("piso") or [])}
+    nuevas = [r for r in negados if str(r["run"]) not in piso]
+    motivos, avisos = [], []
+    if nuevas:
         motivos.append(
             f"{len(negados)} descargas negadas por la CMF (ACCION NO PERMITIDA); "
             "el cierre quedaría incompleto y no se publica"
+            + (
+                f" ({len(nuevas)} nuevas respecto del cierre parcial ya declarado)"
+                if piso
+                else " (se reintenta antes de declararlo parcial)"
+            )
+        )
+    elif negados:
+        avisos.append(
+            f"cierre parcial: {len(negados)} de {conocidos} documentos no están disponibles "
+            "por negativa de acceso persistente de la CMF (ACCION NO PERMITIDA); para "
+            "reintentarlos hace falta --refrescar-todo"
         )
     # Un documento aislado que no pasa las identidades contables (o el cotejo con la ficha)
     # se excluye con su motivo, como en el resto de los extractores IFRS. Con > 2 % la
-    # lectura deja de ser «un caso aislado» y se bloquea, igual que antes.
-    if conocidos and len(malos) > MAX_RECHAZADOS * conocidos:
+    # lectura deja de ser «un caso aislado» y se bloquea, igual que antes. El umbral mira los
+    # documentos defectuosos, no las negativas de acceso: en 2023-06 son el 22 % del censo y
+    # no dicen nada sobre la calidad de lo publicado.
+    por_documento = [r for r in malos if not es_negativa_de_acceso(r.get("motivo"))]
+    if conocidos and len(por_documento) > MAX_RECHAZADOS * conocidos:
         motivos.append(
-            f"{len(malos)} de {conocidos} documentos con XML rechazados (> {MAX_RECHAZADOS:.0%})"
+            f"{len(por_documento)} de {conocidos} documentos con XML rechazados "
+            f"(> {MAX_RECHAZADOS:.0%})"
         )
     return {
         "pendientes": faltan,
         "ok": len(ok),
         "rechazados": len(malos),
         "negados_acceso": len(negados),
+        "piso_acceso": sorted(piso | {str(r["run"]) for r in negados}),
         "motivo_error": "; ".join(motivos),
+        "avisos": avisos,
+        "parcial": bool(negados) and not nuevas,
         "puede_publicar": bool(ok) and not faltan and not motivos,
     }
 
@@ -839,11 +872,14 @@ def correr(
     publicados = set(control.get("periodos", {}).keys())
     reintentables = trimestres_reintentables(cfg)
     todos = set(trimestres(primer_trimestre, hasta))
+    # Un cierre parcial ya declarado (negativa de acceso persistente) no se reintenta: se
+    # reintenta bajar su piso cuando aparece una negativa nueva, no cada tres días idéntica.
+    parciales = set((control.get("parciales") or {}).keys())
     if forzar:
         # Con forzar=True, reprocesar todo (incluye periodos ya publicados)
         periodos_set = todos
     else:
-        periodos_set = (todos - publicados) | (reintentables & todos)
+        periodos_set = ((todos - publicados) | (reintentables & todos)) - parciales
     periodos = sorted(periodos_set, reverse=True)
     # `--max-periodos` limita cuántos cierres se revisan, no cuántos se pierden: un cierre ya
     # publicado que quedó marcado como «sondeado sin datos» no puede dejar de reintentarse
@@ -857,9 +893,11 @@ def correr(
         "desde": primer_trimestre,
         "hasta": hasta,
         "publicados": [],
+        "parciales": [],
         "periodos": {},
         "errores": [],
     }
+    negativas = leer_json(cfg.cache / "negativas.json", {})
     for periodo in periodos:
         if time.monotonic() >= deadline:
             break
@@ -868,7 +906,22 @@ def correr(
             registro, estado, periodo, hoy, ultimo, deadline, hilos, fetcher, forzar
         )
         guardar_progreso(cfg, periodo, estado)
-        ev = evaluar(estado, registro)
+        ev = evaluar(estado, registro, negativas.get(periodo))
+        # El conjunto de negativas vistas se conserva en la caché del flujo, junto al progreso
+        # de las descargas: no es un dato publicado, pero es lo que distingue «la CMF está
+        # rechazando ahora» de «estos documentos no están disponibles». Persiste entre
+        # corridas porque el flujo restaura `.local-data/fi_eeff` desde su caché.
+        anterior = negativas.get(periodo) or {}
+        veces = int(anterior.get("veces", 0)) + 1 if ev["piso_acceso"] == sorted(
+            anterior.get("piso") or []
+        ) else 1
+        negativas[periodo] = {
+            "negados": ev["negados_acceso"],
+            "veces": veces,
+            "piso": ev["piso_acceso"],
+            "ultima_revision_utc": _ahora(),
+        }
+        json_atomico(cfg.cache / "negativas.json", negativas)
         rechazados = [r for r in estado.values() if r["estado"] == "rechazado"]
         diagnostico = {
             "motivos_rechazo": dict(
@@ -896,13 +949,24 @@ def correr(
             **diagnostico,
         }
         if ev["puede_publicar"] and publicar:
+            # El piso de negativas queda declarado junto a los datos: es la parte del cierre
+            # que la CMF no entrega, y se ve sin abrir la anotación del run. Se anota antes de
+            # publicar porque `publicar_periodo` escribe el control completo.
+            if periodo in control.get("sondeados_sin_datos", []):
+                control["sondeados_sin_datos"].remove(periodo)
+            if ev["parcial"]:
+                control.setdefault("parciales", {})[periodo] = {
+                    "negados": ev["negados_acceso"],
+                    "validados": ev["ok"],
+                    "motivo": ev["avisos"][0] if ev["avisos"] else "",
+                }
+            elif periodo in (control.get("parciales") or {}):
+                del control["parciales"][periodo]
             try:
                 if publicar_periodo(cfg, periodo, estado, control, registro):
                     resumen["publicados"].append(periodo)
-                    # Publicado con éxito: remover de sondeados_sin_datos
-                    if periodo in control.get("sondeados_sin_datos", []):
-                        control["sondeados_sin_datos"].remove(periodo)
-                        json_atomico(cfg.control, control)
+                    if ev["parcial"]:
+                        resumen["parciales"].append(periodo)
             except (OSError, ValueError) as e:
                 resumen["errores"].append(f"{periodo}: {e}")
         elif ev["motivo_error"]:
@@ -914,6 +978,8 @@ def correr(
                 # Solo persistir si el control ya existe (hay datos publicados)
                 if cfg.control.exists():
                     json_atomico(cfg.control, control)
+        for aviso in ev["avisos"]:
+            print(f"::warning title=FI EEFF::{periodo}: {aviso}", flush=True)
         print(
             f"::notice title=FI EEFF::{periodo}: {ev['ok']} fondos validados, {ev['rechazados']} rechazados, "
             f"{len(ev['pendientes'])} pendientes; eventos {json.dumps(cuenta, ensure_ascii=False)}; "
