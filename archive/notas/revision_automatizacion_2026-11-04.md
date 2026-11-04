@@ -182,7 +182,9 @@ relectura no pasa las compuertas, es un aviso sobre la fuente (defecto), no una 
 corrida. Lo que nunca se publicó sigue en rojo: esa prueba ya existía y sigue pasando.
 
 **Verificación.** La prueba nueva reproduce el fallo real (`exit 1`) y pasa con el arreglo;
-desactivando el arreglo vuelve a fallar, así que prueba lo que dice probar.
+desactivando el arreglo vuelve a fallar, así que prueba lo que dice probar. **Este arreglo
+era necesario pero no suficiente:** el rojo persistió después del merge y la causa que
+faltaba está en la §10.
 
 **Esperado en `fi_eeff`.** La corrida del merge falló, y es el comportamiento diseñado: la
 primera vez que ve el conjunto de negativas lo bloquea para reintentar. Las anotaciones lo
@@ -220,12 +222,48 @@ intermitente se ve en el PR y se reintenta, no corrompe datos.
 **Guardián.** Una prueba nueva falla si un flujo vuelve a `ubuntu-latest` y tiene `git push` o
 `contents: write`. Comprobado reintroduciendo la etiqueta en `macro.yml`: la prueba lo detecta.
 
+## 10. La causa real del rojo de `ifrs_sectores`: dos umbrales que se pisaban
+
+La §8 encontró un motivo cierto (la relectura de un trimestre abierto iba a `errores`) y lo
+corrigió, pero la corrida siguiente en `main` (41899150961, 51 s) volvió a fallar. La §8 no
+alcanzaba para explicar ese `exit 1`: `202606` **sí** tenía el arreglo, y aun así el flujo
+seguía en rojo.
+
+**Causa.** En `leer_archivo` las dos guardas de completitud se evaluaban en el orden inverso
+al que corresponde:
+
+```python
+if len(entidades_archivo) < MIN_SOCIEDADES:            # 50 → ErrorContenido
+    raise ErrorContenido(...)
+if len(entidades_archivo) < MIN_SOCIEDADES_RECIENTE and not cerrado(periodo, _hoy()):
+    raise ErrorIncompleto(...)                         # 100
+```
+
+El piso absoluto de 50 atrapaba primero a cualquier archivo por debajo de ese número, así que
+la pregunta «¿el trimestre está abierto?» nunca llegaba a hacerse. `202609` llegó con **22**
+sociedades: no es un archivo histórico defectuoso como `201003` (4 sociedades), es un trimestre
+que la CMF recién empieza a poblar. Pero caía en `ErrorContenido`, que no tiene indulgencia en
+el bucle principal, así que terminaba en `errores` y con `hechos == 0` el flujo salía `exit 1`
+cada tres días. Las anotaciones no lo delataban: el mensaje que se veía era «solo 22
+sociedades», idéntico al de un archivo incompleto de verdad.
+
+**Arreglo.** Se invierte el orden: primero se pregunta si el trimestre está abierto y solo
+después se aplica el piso de 50 a los cerrados. Un abierto con pocas sociedades es transitorio
+(`ErrorIncompleto`, aviso, se reintenta); un cerrado con pocas sigue siendo un archivo
+defectuoso que no publica ni falla.
+
+**Por qué las pruebas no lo vieron.** Todas construían archivos con 50 sociedades o más, así
+que nunca tocaban la zona donde los dos umbrales se pisan. La prueba nueva baja a 22 —el número
+real de 202609— y la de punta a punta se ajustó al mismo caso. Ambas fallan con el código de
+`main` reproduciendo el mensaje de producción, y pasan con el arreglo. Una tercera prueba fija
+la contracara: un **cerrado** con 22 sociedades sigue siendo `ErrorContenido`.
+
 ## Verificación
 
 | Comprobación | Resultado |
 |---|---|
 | `fi/tests` (incluye el cierre parcial) | 128 pruebas OK |
-| `pipelines.ifrs_sectores` + `pipelines.auto` + `pipelines.entidades` + extractores | 311 pruebas OK |
+| `pipelines.ifrs_sectores` + `pipelines.auto` + `pipelines.entidades` + extractores | 313 pruebas OK |
 | `factoring_leasing/tests` | 60 pruebas OK |
 | `scripts.*` (guardián, métricas y refresco), con solo pyarrow | 20 pruebas OK |
 | Job `automatizacion` completo, con solo pyarrow | 68 pruebas OK |
