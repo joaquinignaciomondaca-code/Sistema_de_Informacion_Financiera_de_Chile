@@ -33,6 +33,7 @@ on:
       - 'scripts/test_build_metricas_publicadas.py'
       - 'scripts/test_refrescar_contrato.py'
       - 'scripts/refrescar_contrato.py'
+      - 'scripts/cadena_contrato.py'
       - 'scripts/lib/**'
       - 'scripts/test_busqueda.js'
       - 'scripts/test_busqueda_dom.js'
