@@ -767,9 +767,18 @@ def main(argv=None) -> int:
             print(f"::warning::{periodo}: {e} — se reintenta en la próxima corrida")
             continue
         except ErrorContenido as e:
-            if cerrado(periodo, hoy) or periodo in control["periodos"]:
+            # Dos casos, misma decisión (no publicar y no fallar) pero por motivos distintos que
+            # conviene no mezclar en la anotación: el mensaje es lo primero que se lee cuando la
+            # corrida sale en rojo, y durante el 2026-11-04 decirle «archivo histórico» a un
+            # trimestre abierto costó más de una hora de diagnóstico.
+            if periodo in control["periodos"]:
+                defectos.append(f"{periodo}: {e}")
+                print(f"::warning::{periodo}: {e} — ya está publicado y no se reemplaza; "
+                      f"la relectura se reintenta en la próxima corrida")
+                continue
+            if cerrado(periodo, hoy):
                 # Trimestre histórico cerrado cuyo archivo de la CMF trae contenido incompleto
-                # (p. ej. 201003 con solo 4 sociedades): no se publica, se reintenta ante cada
+                # (p. ej. 201003 con solo 4 sociedades): nunca se publicó, se reintenta ante cada
                 # cambio de la fuente y no debe dejar la corrida en rojo cuando no hay nada
                 # nuevo que publicar.
                 defectos.append(f"{periodo}: {e}")
