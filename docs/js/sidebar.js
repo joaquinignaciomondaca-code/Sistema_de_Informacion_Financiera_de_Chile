@@ -306,18 +306,18 @@ const EXPLORER_TREE = [
   id: "cat_fi_balance",
   type: "circular",
   label: "Balance trimestral IFRS · CMF",
-  badge: "16 cierres validados",
+  badge: "17 cierres validados",
   badgeType: "data",
   status: "active",
   sector: "fi",
   chips: [
     {
       label: "Mayores patrimonios en pesos, último cierre (MM$)",
-      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;"
+      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 20;"
     },
     {
       label: "Balance actual del mayor fondo en pesos, último cierre",
-      query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = '2026-06' AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;"
+      query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = (SELECT max(periodo) FROM fi_balance) AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;"
     },
     {
       label: "Cobertura de balances por cierre y contexto",
@@ -340,18 +340,18 @@ const EXPLORER_TREE = [
   id: "cat_fi_resultados",
   type: "circular",
   label: "Estado de Resultados trimestral IFRS · CMF",
-  badge: "16 cierres validados",
+  badge: "17 cierres validados",
   badgeType: "data",
   status: "active",
   sector: "fi",
   chips: [
     {
       label: "Mayores resultados acumulados en pesos, último cierre (MM$)",
-      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;"
+      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;"
     },
     {
       label: "Resultado SOLO del trimestre en pesos, según XML (MM$)",
-      query: "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;"
+      query: "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;"
     },
     {
       label: "Comisiones acumuladas por cierre y moneda, sin mezclar contextos",
