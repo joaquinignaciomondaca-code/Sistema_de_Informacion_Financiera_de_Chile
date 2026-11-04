@@ -3,8 +3,8 @@
  "id": "tpm-y-tasa-interbancaria-ultimos-60-dias-9bc7ba",
  "titulo": "TPM y tasa interbancaria: últimos 60 días",
  "origen": "explorador",
- "data_release": "2026-11-02.6a08302803cc",
- "generado": "2026-11-03",
+ "data_release": "2026-11-03.0359dc56780c",
+ "generado": "2026-11-04",
  "max_filas": 500,
  "columnas": [
   "fecha",
@@ -15,12 +15,6 @@
  "filas": 60,
  "truncado": false,
  "datos": [
-  [
-   "2026-08-07",
-   4.5,
-   4.5,
-   0.0
-  ],
   [
    "2026-08-10",
    4.5,
@@ -371,6 +365,12 @@
   ],
   [
    "2026-11-02",
+   4.5,
+   4.5,
+   0.0
+  ],
+  [
+   "2026-11-03",
    4.5,
    null,
    null

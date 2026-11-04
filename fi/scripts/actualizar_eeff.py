@@ -69,6 +69,19 @@ ESQUEMA = pa.schema(
 )
 
 
+def es_negativa_de_acceso(motivo) -> bool:
+    """¿El rechazo viene de una negativa de acceso de la CMF y no del documento?
+
+    `eeff_xml` ya distingue la respuesta explícita «ACCION NO PERMITIDA» del resto de los
+    errores de fuente. La distinción importa para la compuerta de publicación: un documento
+    concreto que no pasa las identidades contables es un defecto aislado que se excluye con
+    su motivo (como ya hace `pipelines/auto/cuadratura.py` con un balance descuadrado), pero
+    que la CMF niegue la descarga de un censo entero es una falla de acceso: el cierre queda
+    incompleto por una causa ajena a las cifras y no se publica.
+    """
+    return "CMF rechaza explícitamente la descarga" in str(motivo or "")
+
+
 @dataclass(frozen=True)
 class Config:
     raiz: Path = RAIZ
@@ -453,6 +466,17 @@ class Frenazo:
             self.activo = self.activo or self.malos >= 12
 
 
+def motivo_breve(motivo) -> str:
+    """Motivo de rechazo sin la lista de cuentas: agrupa los cientos de casos iguales.
+
+    El diagnóstico por período se publica como una anotación de GitHub, que admite unos
+    pocos kilobytes. Con «faltan 1 cuentas: TotalActivo» repetido 784 veces la anotación se
+    pierde y el motivo del bloqueo deja de verse.
+    """
+    texto = " ".join(str(motivo or "").split())
+    return texto.split(":", 1)[0][:120]
+
+
 def procesar(registro, estado, periodo, hoy, ultimo, deadline, hilos, fetcher, forzar):
     def necesita(run):
         r = estado.get(run, {})
@@ -541,16 +565,31 @@ def evaluar(estado, registro):
     )
     ok = [r for r in estado.values() if r["estado"] == "ok"]
     malos = [r for r in estado.values() if r["estado"] == "rechazado"]
+    negados = [r for r in malos if es_negativa_de_acceso(r.get("motivo"))]
     conocidos = len(ok) + len(malos)
-    motivo = ""
+    motivos = []
+    # Una negativa de acceso de la CMF no es un defecto del documento: el cierre queda
+    # incompleto por una causa externa (no se busca una ruta alternativa para eludirla) y
+    # por eso se bloquea la publicación, se registre en un fondo o en doscientos.
+    if negados:
+        motivos.append(
+            f"{len(negados)} descargas negadas por la CMF (ACCION NO PERMITIDA); "
+            "el cierre quedaría incompleto y no se publica"
+        )
+    # Un documento aislado que no pasa las identidades contables (o el cotejo con la ficha)
+    # se excluye con su motivo, como en el resto de los extractores IFRS. Con > 2 % la
+    # lectura deja de ser «un caso aislado» y se bloquea, igual que antes.
     if conocidos and len(malos) > MAX_RECHAZADOS * conocidos:
-        motivo = f"{len(malos)} de {conocidos} documentos con XML rechazados (> {MAX_RECHAZADOS:.0%})"
+        motivos.append(
+            f"{len(malos)} de {conocidos} documentos con XML rechazados (> {MAX_RECHAZADOS:.0%})"
+        )
     return {
         "pendientes": faltan,
         "ok": len(ok),
         "rechazados": len(malos),
-        "motivo_error": motivo,
-        "puede_publicar": bool(ok) and not faltan and not motivo,
+        "negados_acceso": len(negados),
+        "motivo_error": "; ".join(motivos),
+        "puede_publicar": bool(ok) and not faltan and not motivos,
     }
 
 
@@ -806,8 +845,12 @@ def correr(
     else:
         periodos_set = (todos - publicados) | (reintentables & todos)
     periodos = sorted(periodos_set, reverse=True)
-    if max_periodos:
-        periodos = periodos[:max_periodos]
+    # `--max-periodos` limita cuántos cierres se revisan, no cuántos se pierden: un cierre ya
+    # publicado que quedó marcado como «sondeado sin datos» no puede dejar de reintentarse
+    # sólo porque hay muchos pendientes por delante en el mismo orden.
+    if max_periodos and len(periodos) > max_periodos:
+        pendientes = [p for p in periodos if p not in publicados][:max_periodos]
+        periodos = sorted(set(pendientes) | {p for p in periodos if p in publicados}, reverse=True)
     print(f"Periodos publicados: {len(publicados)}. "
           f"A procesar: {len(periodos)} ({len(reintentables)} reintentables).")
     resumen = {
@@ -829,17 +872,22 @@ def correr(
         rechazados = [r for r in estado.values() if r["estado"] == "rechazado"]
         diagnostico = {
             "motivos_rechazo": dict(
-                Counter(r.get("motivo", "")[:120] for r in rechazados).most_common(5)
+                Counter(motivo_breve(r.get("motivo", "")) for r in rechazados).most_common(5)
             ),
             "ejemplos_pendientes": [
-                {"run": r["run"], "motivo": r.get("motivo", "")[:220]}
+                {"run": r["run"], "motivo": str(r.get("motivo", ""))[:220]}
                 for r in estado.values()
                 if r["estado"] == "pendiente"
             ][:8],
+            # Los ejemplos se eligen uno por motivo: con 784 documentos idénticos, tres
+            # ejemplos del mismo defecto no explican nada y sí llenan la anotación.
             "ejemplos_rechazo": [
-                {"run": r["run"], "motivo": r.get("motivo", "")[:220]}
-                for r in rechazados[:3]
-            ],
+                {"run": r["run"], "motivo": str(r.get("motivo", ""))[:220]}
+                for r in sorted(
+                    {motivo_breve(r.get("motivo", "")): r for r in reversed(rechazados)}.values(),
+                    key=lambda r: int(r["run"]),
+                )
+            ][:4],
         }
         resumen["periodos"][periodo] = {
             **ev,
