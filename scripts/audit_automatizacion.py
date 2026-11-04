@@ -20,6 +20,14 @@ automatización del procesamiento de la automatización de su orquestación.
 Revisión de frescura (--frescura, semanal en Actions, requiere GH_TOKEN y la rama por defecto):
   5. cada workflow del inventario tuvo una corrida exitosa en los últimos `max_dias` días.
      Si no, falla (y el workflow abre un issue).
+  6. los publicadores que escriben en la rama sin producir tablas del manifiesto
+     (`FLUJOS_DE_ESCRITURA`: el contrato derivado y los EEFF de fondos de inversión) se
+     revisan con el mismo criterio que los del inventario. `fi_eeff.yml` pasó 33 días en
+     rojo sin que esta compuerta lo dijera, porque sus tablas ya estaban inventariadas y el
+     flujo no.
+  7. ningún workflow puede fallar más de la mitad de sus últimas corridas terminadas: tener
+     «una corrida exitosa reciente» no es estar sano. El 2026-11-04 `contrato_publicado.yml`
+     fallaba 4 de cada 6 corridas y el guardián solo miraba la última exitosa.
 
 Uso:  python scripts/audit_automatizacion.py [--frescura --repo dueño/repo --rama main]
 """
@@ -285,11 +293,36 @@ def llegada(nombre: str, rama: str) -> datetime | None:
     return None
 
 
+# Workflows que no producen tablas del manifiesto pero escriben en la rama por su cuenta.
+# `fi_eeff.yml` es el caso que motivó esta lista: sus tablas ya estaban inventariadas, pero
+# la compuerta de frescura solo miraba los flujos del inventario, así que pasó **33 días**
+# en rojo (una negativa de acceso de la CMF bloqueaba cada cierre) sin que el guardián
+# semanal lo dijera. Un publicador que commitea en la rama es parte de la automatización
+# aunque su salida no esté en `data_manifest.json`.
+FLUJOS_DE_ESCRITURA = {
+    "contrato_publicado.yml": 1,   # contrato derivado, cada 2 h
+    "fi_eeff.yml": 16,             # balance y resultados FI, cada 3 días
+}
+FLUJO_TITULO = {
+    "contrato_publicado.yml": "Contrato derivado (web, esquemas, catálogo y resultados)",
+    "fi_eeff.yml": "Fondos de inversión - balance y resultados XML IFRS CMF",
+}
+
+
+def workflows_inventariables() -> list[tuple[str, dict]]:
+    """Inventario + escritores de la rama, sin repetir los que ya están."""
+    inv = json.loads(INVENTARIO.read_text(encoding="utf-8"))
+    flujos = dict(inv["workflows"])
+    for nombre, maximo in FLUJOS_DE_ESCRITURA.items():
+        flujos.setdefault(nombre, {"scripts": [], "max_dias": maximo})
+    return list(flujos.items())
+
+
 def frescura(repo: str, rama: str) -> list[str]:
     token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
-    inv = json.loads(INVENTARIO.read_text(encoding="utf-8"))
     ahora, errores = datetime.now(timezone.utc), []
-    for nombre, wf in inv["workflows"].items():
+    inv_workflows = set(json.loads(INVENTARIO.read_text(encoding="utf-8"))["workflows"])
+    for nombre, wf in workflows_inventariables():
         def api(ruta: str) -> dict:
             req = urllib.request.Request(f"https://api.github.com/repos/{repo}/actions/workflows/{nombre}{ruta}",
                                          headers={"Accept": "application/vnd.github+json",
@@ -315,9 +348,42 @@ def frescura(repo: str, rama: str) -> list[str]:
         estado = "OK" if dias <= wf["max_dias"] else "ATRASADO"
         print(f"{nombre:36} última corrida exitosa hace {dias:3d} días (máx. {wf['max_dias']}) {estado}")
         if dias > wf["max_dias"]:
+            que = ("las tablas del manifiesto" if nombre in inv_workflows
+                   else "lo que publica en la rama")
             errores.append(f"{nombre}: {dias} días sin una corrida exitosa (máximo {wf['max_dias']}); "
-                           f"sus tablas se están quedando como foto fija")
+                           f"{que} se están quedando como foto fija")
+        errores += inestabilidad(nombre, api, rama)
     return errores
+
+
+# Un flujo puede tener «una corrida exitosa reciente» y fallar casi siempre: el 2026-11-03/04
+# `contrato_publicado.yml` falló 4 de 6 corridas del día y el guardián no dijo nada, porque
+# solo miraba la última exitosa. Un publicador que falla más de la mitad de las veces es una
+# automatización rota aunque la foto del momento esté al día.
+CORRIDAS_PARA_INESTABILIDAD = 10
+
+
+def inestabilidad(nombre: str, api, rama: str) -> list[str]:
+    """Falla si el flujo falla más que acierta en sus últimas corridas terminadas."""
+    try:
+        historial = api(
+            f"/runs?branch={rama}&per_page={CORRIDAS_PARA_INESTABILIDAD}"
+        ).get("workflow_runs", [])
+    except Exception as e:  # la consulta principal ya informó el problema si era de red
+        return [f"{nombre}: no se pudo revisar la estabilidad de sus corridas ({e})"]
+    # `cancelled` y `skipped` no dicen nada del flujo; se descartan antes de dividir.
+    terminadas = [r for r in historial if r.get("conclusion") in {"success", "failure"}]
+    fallidas = [r for r in terminadas if r["conclusion"] == "failure"]
+    if len(terminadas) < 4 or len(fallidas) * 2 <= len(terminadas):
+        return []
+    ultima_falla = max(
+        (r.get("updated_at", "") for r in fallidas), default=""
+    )[:10]
+    return [
+        f"{nombre}: {len(fallidas)} de sus últimas {len(terminadas)} corridas fallaron "
+        f"(última el {ultima_falla}); la automatización no es estable aunque su última "
+        "corrida exitosa esté dentro del plazo"
+    ]
 
 
 def main(argv=None) -> int:

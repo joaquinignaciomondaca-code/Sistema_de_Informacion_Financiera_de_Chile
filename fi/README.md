@@ -137,9 +137,18 @@ XML y las columnas que la ficha no muestra quedan diferenciadas por `cotejo_fich
    `sin_columna` y solo se publica si valida internamente.
 6. Completitud del cierre: cada fondo del registro debe estar resuelto (`ok`, ausencia
    declarada o rechazo explícito). Un desafío/corte/JSON de error sigue pendiente, nunca
-   equivale a ausencia. Más del 2 % de envíos con XML conocidos rechazados bloquea la publicación.
-   Una negativa explícita `ACCION NO PERMITIDA` se registra como exclusión de descarga
-   (no como ausencia), sin buscar rutas que eludan la negativa de acceso.
+   equivale a ausencia. Los dos motivos de rechazo no pesan igual:
+   - **negativa de acceso de la CMF** (`ACCION NO PERMITIDA`): un solo documento basta para
+     bloquear el cierre. No es un defecto de las cifras, es la fuente negando la descarga
+     (no se busca una ruta alternativa para eludirla) y el cierre quedaría incompleto por una
+     causa ajena al dato;
+   - **defecto del documento** (no cuadra, falta una cuenta, no coteja con la ficha): se
+     excluye con su motivo en `manifest.json`/`fi_eeff_control.json`, como en el resto de los
+     extractores IFRS. Solo bloquea la publicación cuando supera el 2 % de los documentos
+     conocidos del cierre, porque ahí ya no es un caso aislado sino una lectura que falla en
+     bloque. Así lo exige el incidente del 2026-11-02: en 2025-03, 3 de 859 documentos
+     (0,35 %) venían con el balance como bloque XBRL en lugar de cuenta/cifra, y bloquear el
+     cierre por eso dejó la serie FI congelada en 2026-06 durante un mes.
 7. Auditoría de la salida completa, incluidos comparativos, claves, cobertura igual entre
    balance y resultados actuales, conteos y hashes de Parquet, antes de habilitar el push.
 

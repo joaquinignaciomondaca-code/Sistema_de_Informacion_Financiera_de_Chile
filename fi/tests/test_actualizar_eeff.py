@@ -68,6 +68,7 @@ def proveedor(raw=None, html=None, llamadas=None):
 
 
 def correr(cfg, fetcher=None, **kwargs):
+    kwargs.setdefault("registro", {"7002": {"run": "7002", "tipo_entidad": "FINRE"}})
     with (
         mock.patch.object(m, "_hoy", return_value=date(2026, 10, 1)),
         mock.patch.object(m.time, "sleep"),
@@ -79,7 +80,6 @@ def correr(cfg, fetcher=None, **kwargs):
             hilos=1,
             desde="2026-06",
             hasta="2026-06",
-            registro={"7002": {"run": "7002", "tipo_entidad": "FINRE"}},
             fetcher=fetcher or proveedor(),
             **kwargs,
         )
@@ -154,6 +154,58 @@ class CorridaTest(unittest.TestCase):
             r = correr(cfg, proveedor(html=html), forzar=True)
             self.assertTrue(r["errores"])
             self.assertEqual(r["publicados"], [])
+
+    def test_un_documento_aislado_que_no_pasa_las_identidades_se_excluye(self):
+        """Un XML malo entre cientos no puede dejar el cierre sin publicar para siempre.
+
+        Es la política de `pipelines/auto/cuadratura.py` —un caso aislado es un aviso con su
+        motivo; el bloqueo es para la lectura en bloque— y la del caso real del 2026-11-02:
+        en 2025-03, 3 de 859 documentos redactaron el balance como bloque XBRL y no como
+        cuenta/cifra, y la negativa de la CMF pesó más que el 0,35 %. El cierre se publica
+        con esos documentos excluidos y su motivo, en vez de reintentar lo mismo cada tres
+        días y dejar la serie congelada.
+        """
+        registro = {str(run): {} for run in range(7000, 7800)}
+        estado = {run: {"run": run, "estado": "ok"} for run in registro}
+        estado["7001"] = {"run": "7001", "estado": "rechazado", "motivo": "faltan 1 cuentas: TotalActivo"}
+        ev = m.evaluar(estado, registro)
+        self.assertTrue(ev["puede_publicar"], ev["motivo_error"])
+        self.assertEqual((ev["ok"], ev["rechazados"], ev["negados_acceso"]), (799, 1, 0))
+        # Con el 3 % rechazado se bloquea: ahí la lectura sí falla en bloque.
+        for run in ("7002", "7003", "7004", "7005", "7006", "7007", "7008", "7009",
+                    "7010", "7011", "7012", "7013", "7014", "7015", "7016", "7017",
+                    "7018", "7019", "7020", "7021", "7022", "7023", "7024", "7025",
+                    "7026", "7027"):
+            estado[run] = {"run": run, "estado": "rechazado", "motivo": "faltan 1 cuentas: TotalActivo"}
+        ev = m.evaluar(estado, registro)
+        self.assertFalse(ev["puede_publicar"])
+        self.assertIn("rechazados", ev["motivo_error"])
+
+    def test_una_negativa_de_acceso_de_la_cmf_bloquea_el_cierre(self):
+        """`ACCION NO PERMITIDA` no es un defecto del documento: el cierre queda incompleto."""
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg = make_root(Path(tmp))
+            r = correr(cfg, proveedor(b"ACCION NO PERMITIDA 16"))
+            self.assertEqual(r["publicados"], [])
+            self.assertEqual(r["periodos"]["2026-06"]["negados_acceso"], 1)
+            self.assertIn("ACCION NO PERMITIDA", r["periodos"]["2026-06"]["motivo_error"])
+            self.assertFalse(cfg.control.exists())
+
+    def test_el_diagnostico_agrupa_cientos_de_rechazos_por_motivo(self):
+        """La anotación de Actions debe caber: 800 rechazos iguales son un solo motivo."""
+        estados = {
+            str(run): {
+                "run": str(run),
+                "estado": "rechazado",
+                "motivo": f"{run}: faltan 1 cuentas: TotalActivo",
+            }
+            for run in range(7000, 7900)
+        }
+        estados["7002"] = {"run": "7002", "estado": "ok"}
+        self.assertEqual(m.motivo_breve(estados["7001"]["motivo"]), "7001")
+        self.assertTrue(m.es_negativa_de_acceso(
+            "CMF rechaza explícitamente la descarga: ACCION NO PERMITIDA 16"))
+        self.assertFalse(m.es_negativa_de_acceso("faltan 1 cuentas: TotalActivo"))
 
     def test_relectura_identica_es_idempotente_y_no_baja_xml_otra_vez(self):
         with tempfile.TemporaryDirectory() as tmp:

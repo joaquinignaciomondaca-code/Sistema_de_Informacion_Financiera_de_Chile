@@ -366,6 +366,74 @@ class CoberturaTest(unittest.TestCase):
                 actualizar.RUTA_DICCIONARIO = real
 
 
+class GuardasDeCompletitudTest(unittest.TestCase):
+    """Un trimestre abierto a medio cargar se reintenta; no se publica ni se da por cerrado."""
+
+    def test_un_trimestre_a_medio_cargar_no_pinta_la_corrida_de_rojo(self):
+        """La CMF sirvió 14 de ~370 sociedades en 202609: se avisa, no se falla.
+
+        Es el mismo criterio del backfill de factoring/leasing («aún incompleto» no es una
+        falla del extractor). Antes esa anotación venía con `exit 1`, así que el flujo IFRS
+        llevaba 6 corridas seguidas en rojo por un archivo que la fuente no terminaba de
+        cargar. El reloj se inyecta: la prueba no depende del día en que corre.
+        """
+        indice = b'<html><a href="ver_archivo.php?inicio=202606&amp;termino=202606">202606</a></html>'
+        raw = txt(sociedad("76034728", "HMC AGF", periodo="202606") + relleno(55, periodo="202606"))
+        pedidas: list[str] = []
+        with TemporaryDirectory() as tmp:
+            reales = {n: getattr(actualizar, n) for n in
+                      ("_get", "CONTROL", "ruta_tabla", "RUTA_DICCIONARIO", "cargar_listas",
+                       "actualizar_data_manifest", "agregar_altas", "_hoy", "_ahora")}
+            diccionario = Path(tmp) / "data_dictionary.js"
+            diccionario.write_text("const DATA_DICTIONARY = [\n];\n", encoding="utf-8")
+            pedidas.clear()
+
+            def get(url):
+                if "estadisticas_ifrs.php" in url:
+                    return indice
+                pedidas.append(url)
+                return raw
+
+            actualizar._get = get
+            actualizar.CONTROL = Path(tmp) / "control.json"
+            actualizar.ruta_tabla = lambda sec, tabla: Path(tmp) / "salida" / sec / tabla
+            actualizar.RUTA_DICCIONARIO = diccionario
+            actualizar.cargar_listas = lambda: LISTAS_COMPLETAS
+            actualizar.actualizar_data_manifest = lambda control: None
+            actualizar.agregar_altas = lambda fuera, periodo: 0
+            actualizar._hoy = lambda: date(2026, 10, 15)   # 202606 sigue abierto
+            actualizar._ahora = lambda: datetime(2026, 10, 15, 12, 0, tzinfo=timezone.utc)
+            try:
+                with redirect_stdout(io.StringIO()):
+                    codigo = actualizar.main(["--max-periodos", "1"])
+                control = (json.loads(actualizar.CONTROL.read_text(encoding="utf-8"))
+                           if actualizar.CONTROL.exists() else {"periodos": {}})
+            finally:
+                for n, v in reales.items():
+                    setattr(actualizar, n, v)
+        self.assertEqual(codigo, 0)
+        self.assertEqual(len(pedidas), 1)
+        self.assertNotIn("202606", control["periodos"])
+
+    def test_un_trimestre_abierto_con_pocas_sociedades_es_transitorio(self):
+        # 202606 sigue abierto en HOY_FIJO (2026-10-15, menos de 150 días): la CMF lo está poblando.
+        raw = txt(sociedad("76034728", "HMC AGF", periodo="202606") + relleno(55, periodo="202606"))
+        with self.assertRaises(actualizar.ErrorIncompleto):
+            actualizar.leer_archivo(raw, "202606", LISTAS)
+
+    def test_un_trimestre_cerrado_con_pocas_sociedades_no_publica_y_avisa(self):
+        # 201003 es el caso real: la CMF nunca lo completó. No publica ni falla la corrida.
+        raw = txt(sociedad("76034728", "HMC AGF", periodo="201003") + relleno(4, periodo="201003"))
+        with self.assertRaises(actualizar.ErrorContenido) as ctx:
+            actualizar.leer_archivo(raw, "201003", LISTAS)
+        self.assertNotIsInstance(ctx.exception, actualizar.ErrorIncompleto)
+
+    def test_un_archivo_completo_no_se_ve_afectado(self):
+        raw = txt(sociedad("76034728", "HMC AGF", periodo="201003") + relleno(120, periodo="201003"))
+        datos, est, _ = actualizar.leer_archivo(raw, "201003", LISTAS)
+        self.assertEqual(est["sociedades"], 121)
+
+
 class CorridaCompletaTest(unittest.TestCase):
     """La corrida completa, sin red: se sirve el índice y el TXT desde memoria.
 
@@ -377,7 +445,7 @@ class CorridaCompletaTest(unittest.TestCase):
         indice = (b'<html><a href="ver_archivo.php?inicio=202606&amp;termino=202606">202606</a></html>')
         raw = txt(sociedad("76034728", "HMC AGF", periodo="202606")
                   + sociedad("76111111", "OTRA AGF S.A. ADMINISTRADORA GENERAL DE FONDOS", periodo="202606")
-                  + relleno(55, periodo="202606"))
+                  + relleno(155, periodo="202606"))
         control = Path(tmp) / "control.json"
         diccionario = Path(tmp) / "data_dictionary.js"
         diccionario.write_text('const DATA_DICTIONARY = [\n];\n', encoding="utf-8")
@@ -424,7 +492,7 @@ class CorridaCompletaTest(unittest.TestCase):
             solo_resultados = txt(
                 [l for l in sociedad("76034728", "HMC AGF", periodo="202606")
                  + sociedad("76111111", "OTRA AGF S.A. ADMINISTRADORA GENERAL DE FONDOS", periodo="202606")
-                 if not l.endswith(";ESF C/NC")] + relleno(55, periodo="202606"))
+                 if not l.endswith(";ESF C/NC")] + relleno(155, periodo="202606"))
             reales = {n: getattr(actualizar, n) for n in
                       ("_get", "CONTROL", "ruta_tabla", "RUTA_DICCIONARIO", "cargar_listas",
                        "actualizar_data_manifest", "agregar_altas", "_hoy")}
@@ -473,7 +541,7 @@ class ReedicionCmfTest(unittest.TestCase):
             lineas += sociedad(str(76100000 + i), f"AGF {i} S.A. ADMINISTRADORA GENERAL DE FONDOS",
                                activos=10_000_000, pasivos=4_000_000,
                                patrimonio=1_000_000 if i < patrimonio_malo else 6_000_000, periodo="202606")
-        return txt(lineas + relleno(55, periodo="202606"))
+        return txt(lineas + relleno(155, periodo="202606"))
 
     def _correr(self, tmp, indice, raw, ahora, hoy=None):
         """Una corrida sin red. Devuelve (código, control, URL de TXT pedidas)."""
