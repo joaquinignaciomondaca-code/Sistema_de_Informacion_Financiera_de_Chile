@@ -101,6 +101,28 @@ class SincronizarReadmeTest(unittest.TestCase):
         self.assertEqual(texto, "# Solo prosa\n")
         self.assertEqual(cambios, [])
 
+    def test_sincroniza_las_etiquetas_que_el_readme_abrevia(self):
+        """`FinTech` en el README, «Fintech y Finanzas Abiertas» en el catálogo.
+
+        La auditoría ya normalizaba ese alias para comparar, pero la sincronización no, así que
+        la celda no se podía reescribir nunca: fintech quedó declarado con 265 filas mientras el
+        catálogo tenía 267 y `web_audit` fallaba en cada push sin que ninguna regeneración lo
+        arreglara (2026-11-04). La prueba fija que el alias se sustituye igual que la etiqueta.
+        """
+        datos = reporte()
+        datos["fuentes"]["descargas"]["por_sector"]["fintech"] = {
+            "etiqueta": "Fintech y Finanzas Abiertas", "elementos": 1, "filas": 267,
+        }
+        texto = README.replace(
+            "| Macroeconomía y Tasas |",
+            "| FinTech | 1 | 265 | registro vigente | CMF |\n| Macroeconomía y Tasas |",
+        )
+        sincronizado, cambios = self.sincronizar(texto, datos)
+        self.assertIn("| FinTech | 1 | 267 | registro vigente | CMF |", sincronizado)
+        self.assertIn("tabla sectorial · FinTech", cambios)
+        # Y no se duplica la fila ni se reescribe dos veces.
+        self.assertEqual(sincronizado.count("| FinTech |"), 1)
+
 
 class ConstruirTest(unittest.TestCase):
     def test_leer_artefactos_usa_el_catalogo_y_las_descargas_publicadas(self):

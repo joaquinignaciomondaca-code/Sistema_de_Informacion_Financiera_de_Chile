@@ -1026,7 +1026,7 @@ ffmm.opciones,ffmm_opciones,ffmm,Circular CMF 1333,valorizacion_precio_ejercicio
 ffmm.opciones,ffmm_opciones,ffmm,Circular CMF 1333,valorizacion_mercado_miles_mf,DOUBLE,Métrica,"Valor de mercado, en miles de la moneda funcional del fondo.",Valor Razonable / MtM
 ffmm.opciones,ffmm_opciones,ffmm,Circular CMF 1333,pct_primas_activo_fondo,DOUBLE,Métrica,Inversión en primas como % del activo total del fondo.,No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),periodo,VARCHAR,PK,Cierre del archivo AAAA-MM. En comparativos no es la fecha de la cifra: usar fecha_fin_contexto.,No aplica
-fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo,VARCHAR,PK,"RUN del fondo, sin DV; une directamente con fi.lista_entidades.",No aplica
+fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo,VARCHAR,FK,"RUN del fondo, sin DV; une directamente con fi.lista_entidades.",No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo_dv,VARCHAR,Atributo,RUN con DV módulo 11. El DV recibido se conserva separado.,No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),dv_fondo_fuente,VARCHAR,Dato fuente,Dígito verificador literal del XML; las discrepancias quedan como aviso.,No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),nombre_fondo,VARCHAR,Dimensión,Nombre reportado en el XML; puede ser abreviado y diferir del maestro.,No aplica
@@ -1046,11 +1046,11 @@ fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),codigo_cuenta,VARC
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),cuenta,VARCHAR,Dimensión,Glosa del modelo CMF. TotalPasivo se explicita como pasivo más patrimonio.,No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),nota,VARCHAR,Atributo,"Referencia a nota del XML, si existe. No se extrae su texto PDF.",No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),valor_miles_mf,BIGINT,Métrica,"Entero exacto del XML, en miles de su moneda. No convertido, redondeado ni rellenado. No sumar contextos.",Valor contable
-fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),fuente_archivo,VARCHAR,Dato fuente,"Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",No aplica
+fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),fuente_archivo,VARCHAR,Dato fuente,"Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),enviado_cmf,VARCHAR,Fecha,"Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),cotejo_ficha,VARCHAR,Atributo,"coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),periodo,VARCHAR,PK,Cierre del archivo AAAA-MM. En comparativos no es la fecha de la cifra: usar fecha_fin_contexto.,No aplica
-fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo,VARCHAR,PK,"RUN del fondo, sin DV; une directamente con fi.lista_entidades.",No aplica
+fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo,VARCHAR,FK,"RUN del fondo, sin DV; une directamente con fi.lista_entidades.",No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo_dv,VARCHAR,Atributo,RUN con DV módulo 11. El DV recibido se conserva separado.,No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),dv_fondo_fuente,VARCHAR,Dato fuente,Dígito verificador literal del XML; las discrepancias quedan como aviso.,No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),nombre_fondo,VARCHAR,Dimensión,Nombre reportado en el XML; puede ser abreviado y diferir del maestro.,No aplica
@@ -1070,7 +1070,7 @@ fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),codigo_cuent
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),cuenta,VARCHAR,Dimensión,Glosa del modelo CMF. TotalPasivo se explicita como pasivo más patrimonio.,No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),nota,VARCHAR,Atributo,"Referencia a nota del XML, si existe. No se extrae su texto PDF.",No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),valor_miles_mf,BIGINT,Métrica,"Entero exacto del XML, en miles de su moneda. No convertido, redondeado ni rellenado. No sumar contextos.",Valor contable
-fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),fuente_archivo,VARCHAR,Dato fuente,"Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",No aplica
+fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),fuente_archivo,VARCHAR,Dato fuente,"Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),enviado_cmf,VARCHAR,Fecha,"Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),cotejo_ficha,VARCHAR,Atributo,"coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),periodo,VARCHAR,PK,Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.,No aplica

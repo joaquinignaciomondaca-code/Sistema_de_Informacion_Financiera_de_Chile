@@ -1,10 +1,10 @@
 {
  "contrato": "sif-api/resultado",
- "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-88c716",
+ "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e",
  "titulo": "Mayores patrimonios en pesos, último cierre (MM$)",
  "origen": "explorador",
- "data_release": "2026-11-04.76a49f0569a5",
- "generado": "2026-11-04",
+ "data_release": "2026-11-04.120087bb69bd",
+ "generado": "2026-11-05",
  "max_filas": 500,
  "columnas": [
   "run_fondo",
@@ -115,6 +115,6 @@
    308453.0
   ]
  ],
- "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;",
+ "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 20;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }

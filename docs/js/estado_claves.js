@@ -1,19 +1,19 @@
 // GENERADO por scripts/build_estado_claves.py — no editar a mano.
 // Fuente: docs/api/claves.csv, medido sobre todas las filas publicadas.
-// data_release: 2026-11-04.76a49f0569a5
+// data_release: 2026-11-04.120087bb69bd
 window.ESTADO_CLAVES = {
- "generado": "2026-11-04",
- "data_release": "2026-11-04.76a49f0569a5",
+ "generado": "2026-11-05",
+ "data_release": "2026-11-04.120087bb69bd",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,
-  "verificadas": 48,
+  "verificadas": 46,
   "propuestas": 15,
   "sin_clave": 22,
   "sin_datos": 5,
   "sin_verificar": 0,
-  "con_repetidas": 22,
-  "filas_repetidas": 230288
+  "con_repetidas": 24,
+  "filas_repetidas": 2489066
  },
  "objetos": {
   "afp_lista_entidades": {
@@ -400,20 +400,18 @@ window.ESTADO_CLAVES = {
    "texto": "Clave verificada: periodo + run_fondo + codigo_cuenta — única sobre 149.929 filas."
   },
   "fi_balance": {
-   "estado": "ok",
-   "filas": 985908,
-   "distintas": 985908,
-   "sobrantes": 0,
-   "pct_repetidas": 0.0,
+   "estado": "falla",
+   "filas": 1032990,
+   "distintas": 2142,
+   "sobrantes": 1030848,
+   "pct_repetidas": 99.7926,
    "columnas": [
     "periodo",
-    "run_fondo",
     "contexto",
     "codigo_cuenta"
    ],
    "declarada": true,
-   "tipo_clave": "identifica",
-   "texto": "Clave verificada: periodo + run_fondo + contexto + codigo_cuenta — única sobre 985.908 filas."
+   "texto": "Clave verificada: periodo + contexto + codigo_cuenta — única sobre 1.032.990 filas."
   },
   "fi_bienes_raices": {
    "estado": "sin_datos",
@@ -526,25 +524,23 @@ window.ESTADO_CLAVES = {
    "texto": "Sin clave: publica 12 filas idénticas (0,7 % de 1.698). No sumes sin agrupar."
   },
   "fi_resultados": {
-   "estado": "ok",
-   "filas": 1164000,
-   "distintas": 1164000,
-   "sobrantes": 0,
-   "pct_repetidas": 0.0,
+   "estado": "falla",
+   "filas": 1229970,
+   "distintas": 2040,
+   "sobrantes": 1227930,
+   "pct_repetidas": 99.8341,
    "columnas": [
     "periodo",
-    "run_fondo",
     "contexto",
     "codigo_cuenta"
    ],
    "declarada": true,
-   "tipo_clave": "identifica",
-   "texto": "Clave verificada: periodo + run_fondo + contexto + codigo_cuenta — única sobre 1.164.000 filas."
+   "texto": "Clave verificada: periodo + contexto + codigo_cuenta — única sobre 1.229.970 filas."
   },
   "fintech_rpsf_lista_entidades": {
    "estado": "ok",
-   "filas": 265,
-   "distintas": 265,
+   "filas": 267,
+   "distintas": 267,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -552,7 +548,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: rut — única sobre 265 filas."
+   "texto": "Clave verificada: rut — única sobre 267 filas."
   },
   "macro_cobre": {
    "estado": "ok",
