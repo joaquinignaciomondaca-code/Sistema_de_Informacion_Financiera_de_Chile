@@ -13,8 +13,8 @@
   {
    "criterio_contable": "No aplica",
    "nombre": "run_fondo",
-   "rol": "FK",
-   "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+   "rol": "FK · PK parcial",
+   "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades. Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
@@ -207,7 +207,12 @@
  "fuente": "CMF",
  "id": "fi_balance",
  "licencia_estado": "verificada",
- "primaryKey": null,
+ "primaryKey": [
+  "periodo",
+  "run_fondo",
+  "contexto",
+  "codigo_cuenta"
+ ],
  "sector": "fi",
  "titulo": "fi.balance",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",

@@ -6618,9 +6618,9 @@
       "type": "string"
      },
      {
-      "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+      "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades. Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
       "name": "run_fondo",
-      "sif_rol": "FK",
+      "sif_rol": "FK · PK parcial",
       "type": "string"
      },
      {
@@ -6755,6 +6755,12 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
+    ],
+    "primaryKey": [
+     "periodo",
+     "run_fondo",
+     "contexto",
+     "codigo_cuenta"
     ]
    },
    "scheme": "file",
@@ -6763,7 +6769,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2022-03 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
@@ -6880,7 +6886,6 @@
     ],
     "puente": "directo",
     "sector": "fi",
-    "sin_clave": "falla",
     "sql_view": "fi_balance",
     "ultima_actualizacion": "2026-11-04",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -8789,9 +8794,9 @@
       "type": "string"
      },
      {
-      "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+      "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades. Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
       "name": "run_fondo",
-      "sif_rol": "FK",
+      "sif_rol": "FK · PK parcial",
       "type": "string"
      },
      {
@@ -8926,6 +8931,12 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
+    ],
+    "primaryKey": [
+     "periodo",
+     "run_fondo",
+     "contexto",
+     "codigo_cuenta"
     ]
    },
    "scheme": "file",
@@ -8934,7 +8945,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2022-03 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
@@ -9051,7 +9062,6 @@
     ],
     "puente": "directo",
     "sector": "fi",
-    "sin_clave": "falla",
     "sql_view": "fi_resultados",
     "ultima_actualizacion": "2026-11-04",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"

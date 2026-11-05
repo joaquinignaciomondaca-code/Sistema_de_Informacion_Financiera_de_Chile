@@ -7,13 +7,13 @@ window.ESTADO_CLAVES = {
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,
-  "verificadas": 46,
+  "verificadas": 48,
   "propuestas": 15,
   "sin_clave": 22,
   "sin_datos": 5,
   "sin_verificar": 0,
-  "con_repetidas": 24,
-  "filas_repetidas": 2489066
+  "con_repetidas": 22,
+  "filas_repetidas": 230288
  },
  "objetos": {
   "afp_lista_entidades": {
@@ -400,18 +400,20 @@ window.ESTADO_CLAVES = {
    "texto": "Clave verificada: periodo + run_fondo + codigo_cuenta — única sobre 149.929 filas."
   },
   "fi_balance": {
-   "estado": "falla",
+   "estado": "ok",
    "filas": 1032990,
-   "distintas": 2142,
-   "sobrantes": 1030848,
-   "pct_repetidas": 99.7926,
+   "distintas": 1032990,
+   "sobrantes": 0,
+   "pct_repetidas": 0.0,
    "columnas": [
     "periodo",
+    "run_fondo",
     "contexto",
     "codigo_cuenta"
    ],
    "declarada": true,
-   "texto": "Clave verificada: periodo + contexto + codigo_cuenta — única sobre 1.032.990 filas."
+   "tipo_clave": "identifica",
+   "texto": "Clave verificada: periodo + run_fondo + contexto + codigo_cuenta — única sobre 1.032.990 filas."
   },
   "fi_bienes_raices": {
    "estado": "sin_datos",
@@ -524,18 +526,20 @@ window.ESTADO_CLAVES = {
    "texto": "Sin clave: publica 12 filas idénticas (0,7 % de 1.698). No sumes sin agrupar."
   },
   "fi_resultados": {
-   "estado": "falla",
+   "estado": "ok",
    "filas": 1229970,
-   "distintas": 2040,
-   "sobrantes": 1227930,
-   "pct_repetidas": 99.8341,
+   "distintas": 1229970,
+   "sobrantes": 0,
+   "pct_repetidas": 0.0,
    "columnas": [
     "periodo",
+    "run_fondo",
     "contexto",
     "codigo_cuenta"
    ],
    "declarada": true,
-   "texto": "Clave verificada: periodo + contexto + codigo_cuenta — única sobre 1.229.970 filas."
+   "tipo_clave": "identifica",
+   "texto": "Clave verificada: periodo + run_fondo + contexto + codigo_cuenta — única sobre 1.229.970 filas."
   },
   "fintech_rpsf_lista_entidades": {
    "estado": "ok",
