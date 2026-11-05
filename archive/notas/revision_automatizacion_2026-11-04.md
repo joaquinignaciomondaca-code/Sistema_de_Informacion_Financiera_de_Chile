@@ -258,6 +258,40 @@ real de 202609— y la de punta a punta se ajustó al mismo caso. Ambas fallan c
 `main` reproduciendo el mensaje de producción, y pasan con el arreglo. Una tercera prueba fija
 la contracara: un **cerrado** con 22 sociedades sigue siendo `ErrorContenido`.
 
+## 11. `web_audit` en rojo por una cifra que ningún comando podía corregir
+
+**Síntoma.** Con el arreglo de la §10, el PR seguía con el check `audit` en rojo, y el paso que
+fallaba era el primero: `build_metricas_publicadas.py --check`. El mensaje era una sola línea,
+siempre la misma: *«FinTech declara 1 elementos/265 filas; el catálogo indica 1/267»*.
+
+**Lo que engañaba.** Ejecutar el generador (`build_metricas_publicadas.py`) sincroniza el README
+y luego audita. Fallaba igual, con el mismo mensaje, después de decir «README sincronizado». Es
+decir: el propio sincronizador no podía arreglar la cifra que la auditoría le reclamaba.
+
+**Causa.** `auditar_tabla_readme` normaliza la etiqueta del README con `ALIAS_ETIQUETAS`
+(`FinTech` → `Fintech y Finanzas Abiertas`) antes de comparar, pero `sincronizar_readme` buscaba
+solo la etiqueta oficial. La celda del README dice `FinTech`, así que la expresión regular nunca
+encontraba la fila: no la reescribía, no la contaba como cambio, y la auditoría volvía a leer
+`265` contra los `267` publicados. Un bucle cerrado sin salida por la vía normal.
+
+**Arreglo.** El sincronizador prueba también los alias del mismo diccionario que usa la
+auditoría, así que las dos partes leen la tabla con la misma clave. Una declaración, dos usos.
+
+**Por qué importaba.** La cifra vieja no venía de este cambio: `docs/outputs/fintech/…parquet`
+tiene 267 filas y el README decía 265 desde antes. Como el bot del contrato derivado corre la
+misma función, el desfase tampoco se curaba solo con el cron: cada dos horas reescribía el
+catálogo, sincronizaba todo lo demás y dejaba esa celda intacta.
+
+**Prueba.** `test_sincroniza_las_etiquetas_que_el_readme_abrevia` construye la fila `FinTech` y
+comprueba que se reescribe a 267 sin duplicarse. Verificada contra el código anterior: falla con
+la misma cifra que se veía en producción.
+
+**Alcance mayor del esperado.** Al arreglar la sincronización, la cadena derivada
+(`refrescar_contrato.py`) convergió entera sobre `main` y el diff incluyó la regeneración de
+`docs/api/**` (178 archivos), el catálogo de descargas y cuatro resultados con `data_release`
+nuevo. No es un cambio de datos: es el contrato derivado poniéndose al día con los Parquet que
+`main` ya tenía publicados y que nadie había vuelto a procesar.
+
 ## Verificación
 
 | Comprobación | Resultado |
@@ -272,5 +306,5 @@ la contracara: un **cerrado** con 22 sociedades sigue siendo `ErrorContenido`.
 | `auditar_eeff_ifrs.py` (datos reales de `main`) | cuadratura completa, 0 descuadres |
 | `refrescar_contrato.py` sobre `main` | converge y deja todas las compuertas en 0 |
 | `audit_cifras.js` | 14 respaldos al día |
-| `build_metricas_publicadas.py --check` tras el refresco | MÉTRICAS OK (90 objetos, 19.814.992 filas) |
+| `build_metricas_publicadas.py --check` tras el refresco | MÉTRICAS OK (90 objetos, 19.928.062 filas) |
 | `servidor/tests` | 101 pruebas OK |
