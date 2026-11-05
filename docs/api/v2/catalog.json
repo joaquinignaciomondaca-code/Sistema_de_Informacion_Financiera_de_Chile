@@ -826,7 +826,12 @@
    "nota_adaptacion": null,
    "particiones": 17,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/fi_balance.json",
-   "primaryKey": null,
+   "primaryKey": [
+    "periodo",
+    "run_fondo",
+    "contexto",
+    "codigo_cuenta"
+   ],
    "sector": "fi",
    "sql_view": "fi_balance",
    "titulo": "fi.balance",
@@ -1082,7 +1087,12 @@
    "nota_adaptacion": null,
    "particiones": 17,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/fi_resultados.json",
-   "primaryKey": null,
+   "primaryKey": [
+    "periodo",
+    "run_fondo",
+    "contexto",
+    "codigo_cuenta"
+   ],
    "sector": "fi",
    "sql_view": "fi_resultados",
    "titulo": "fi.resultados",
