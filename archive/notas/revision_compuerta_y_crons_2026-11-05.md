@@ -123,3 +123,64 @@ respaldo (`5,15`), no cambiar el horario.
 | `audit_automatizacion.py --frescura` contra `main`, historial completo | 13 flujos OK, 0 problemas, exit 0 |
 | `yaml.safe_load` sobre los 20 workflows | 20 válidos |
 | Crons de los 9 flujos normalizados | ninguno conserva `*/3` en el día |
+
+## 4. Segunda pasada: `web_audit` quedó fuera de la campaña de etiquetas
+
+**Síntoma.** El commit abff1ce («Workflows: fijar Ubuntu 24.04») tocó 17 workflows y dejó
+fuera justo a `web_audit.yml`: seis de sus siete jobs seguían en `ubuntu-latest`. Al ser el
+flujo que avisa cuando un publicador se atasca —y el que abre o cierra el issue #24—, es el
+peor candidato para una etiqueta móvil: la migración a Ubuntu 26.04 ocurre entre el 19 de
+octubre y el 19 de noviembre de 2026, y un `fail` intermitente suyo tapa los fallos reales.
+
+**Causa de que nadie lo notara.** La prueba `test_ningun_flujo_que_publica_usa_la_etiqueta_movil`
+filtraba por «publica» (`git push` o `contents: write`) antes de mirar la etiqueta. `web_audit`
+no publica, así que para la prueba no existía. El filtro tenía sentido para priorizar, no para
+excluir: un job intermitente gasta corridas y credibilidad aunque no escriba nada.
+
+**Cambios.**
+
+- Los seis jobs pasan a `ubuntu-24.04`. `r_ejemplos` se queda en `ubuntu-22.04` **a propósito**
+  y ahora está documentado en el flujo y en una prueba: instala `duckdb` para R desde el
+  repositorio binario de Posit, que sirve por distribución (`jammy` = 22.04); en `noble`
+  (24.04) R podría caer a compilar desde fuente, que es lo que el propio paso rechaza.
+- La prueba pasa a mirar **todos** los jobs de **todos** los workflows, sin filtro por
+  publicación, y a exigir una etiqueta de la lista conocida. Se añadieron dos pruebas más:
+  que `r_ejemplos` siga en 22.04 con su comentario `jammy`, y que `audit` y `frescura` corran
+  en imagen fija.
+
+**Verificación.** Con `ubuntu-latest` restaurado a mano, las dos pruebas nuevas fallan; con el
+arreglo, pasan (16 pruebas OK).
+
+## 5. Dos `git push` sin reintento
+
+`seo-sitemap-github-action.yml` empujaba `docs/sitemap.xml` con un solo intento y sin rebasar,
+a las 04:00 UTC: 45 minutos después de que `pages.yml` publique (03:15) y en cualquier momento
+en que un publicador escriba. Si la rama se movía en el medio, el push se rechazaba y la
+corrida quedaba en rojo sin publicar; el 2026-11-02 hay un `failure` por `push` con esa forma.
+`pensiones_carteras.yml` tenía el mismo patrón, agravado por correr sobre un runner propio con
+`clean: false`.
+
+**Cambios.** Ambos rebasan sobre la cabeza vigente y reintentan cinco veces con espera
+aleatoria, como ya hacían los otros trece publicadores. En el sitemap el rebase es el
+tratamiento correcto porque el archivo se regenera entero desde la cabeza (no se mezcla
+contenido); si el rebase choca, se toma el del commit y se vuelve a añadir. En `pensiones` un
+conflicto de rebase se reporta como error explícito en vez de reintentar a ciegas, porque ahí
+el contenido son datos privados que conviene mirar a mano.
+
+**Lo que se revisó y no necesitó cambios**, para no volver a investigarlo: los grupos de
+`concurrency` son distintos por flujo, pero 13 de 15 publicadores ya reintentaban ocho veces y
+las corridas duran ~1 minuto (frente a `timeout-minutes` de 300), así que la contención teórica
+no se materializa; todos los flujos tienen `timeout-minutes`, así que un job colgado libera su
+lock; la cobertura de `paths` alcanza todos los scripts del inventario; `fi_eeff` y
+`pensiones_carteras` elevan `contents: write` a nivel de job aunque el flujo declare `read`;
+las versiones de las actions son recientes y consistentes.
+
+| Comprobación | Resultado |
+|---|---|
+| `python -m unittest scripts.test_audit_automatizacion` | 16 pruebas OK (2 nuevas) |
+| Las 2 pruebas de etiqueta con `ubuntu-latest` restaurado | fallan; con el arreglo, pasan |
+| `yaml.safe_load` sobre los 20 workflows | 20 válidos |
+| `bash -n` sobre todos los bloques `run:` de los 20 workflows | 0 errores de sintaxis |
+| `audit_automatizacion.py` (estático) | 91 tablas, 0 problemas |
+| `python -m unittest scripts.test_sitemap_workflow` | 4 pruebas OK |
+| `runs-on` del repo | 27 × `ubuntu-24.04`, 1 × `ubuntu-22.04` (R), 2 × self-hosted |
