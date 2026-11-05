@@ -1,10 +1,13 @@
-name: Estados financieros de corredores de bolsa y agentes de valores (CMF, FECU IFRS trimestral), cada 3 días, incremental
+name: Estados financieros de corredores de bolsa y agentes de valores (CMF, FECU IFRS trimestral), días 1,4,7,…,28, incremental
 
 on:
   schedule:
-    # Cada 3 días (13:45 UTC). Los trimestres cerrados (más de 150 días) no se vuelven a descargar; los
+# Días fijos 1,4,7,…,28 y no '* */3': en cron `*/3` significa «cada 3 días del mes»,
+    # no «cada 3 días». Ese último solo existe hasta el 28: con 31 nunca corría, y en los
+    # meses de 30 el salto final era de 2 días. La lista de días no tiene ese hueco.
+    # Los días 1,4,7,…,28 de cada mes (13:45 UTC). Los trimestres cerrados (más de 150 días) no se vuelven a descargar; los
     # recientes se releen para sumar a quienes presentan tarde.
-    - cron: '45 13 */3 * *'
+    - cron: '45 13 1 * *'
   push:
     branches:
       - main
