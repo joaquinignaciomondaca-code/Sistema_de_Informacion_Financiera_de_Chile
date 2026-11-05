@@ -28,6 +28,16 @@ Revisión de frescura (--frescura, semanal en Actions, requiere GH_TOKEN y la ra
   7. ningún workflow puede fallar más de la mitad de sus últimas corridas terminadas: tener
      «una corrida exitosa reciente» no es estar sano. El 2026-11-04 `contrato_publicado.yml`
      fallaba 4 de cada 6 corridas y el guardián solo miraba la última exitosa.
+  8. pero un flujo **arreglado** no se juzga por las corridas anteriores al arreglo. La regla 7
+     mira las últimas N corridas terminadas sin ventana de tiempo, así que, tras corregir la
+     causa, el historial viejo sigue condenando al flujo durante semanas: el 2026-11-05
+     `ifrs_sectores.yml` llevaba 9 fallos consecutivos (del 22 de octubre al 4 de noviembre,
+     antes del arreglo) y la compuerta semanal lo habría vuelto a marcar el lunes 9. Un
+     diagnóstico sobre corridas que ya no existen no protege a nadie y entierra el issue en
+     ruido. El corte es automático: la fecha del último commit que tocó el flujo o los scripts
+     que el inventario le asocia. A partir de ahí se vuelve a medir; si el flujo falla otra vez
+     después del arreglo, se reporta igual. Un arreglo no compra un perdón: compra que se juzgue
+     lo que vino después.
 
 Uso:  python scripts/audit_automatizacion.py [--frescura --repo dueño/repo --rama main]
 """
@@ -293,6 +303,69 @@ def llegada(nombre: str, rama: str) -> datetime | None:
     return None
 
 
+# Un commit que barre más workflows que esto no es un arreglo: es una campaña sobre toda la
+# flota. El 2026-11-04 un solo commit fijó `ubuntu-24.04` en 17 workflows y, si contara como
+# «arreglo», reiniciaría el reloj de estabilidad de toda la automatización a la vez y dejaría la
+# compuerta ciega justo cuando hay que mirarla. Se mide en **workflows tocados**, no en archivos:
+# los commits de regeneración del bot tocan cientos de datos sin arreglar ningún flujo, y el
+# arreglo del alias del contrato (2026-11-04) tocó 192 archivos siendo un arreglo de verdad.
+WORKFLOWS_PARA_CONTAR_COMO_CAMPANA = 3
+
+
+def ultimo_arreglo(nombre: str, rama: str) -> datetime | None:
+    """Fecha del último commit que tocó el flujo **o cualquiera de sus scripts**.
+
+    Es el corte para juzgar estabilidad: las corridas anteriores no dicen nada del código que
+    corre hoy. Se incluyen los scripts porque el arreglo casi nunca está en el YAML —el de
+    `ifrs_sectores` del 2026-11-05 fue en `pipelines/ifrs_sectores/actualizar.py`—, y se
+    descartan los commits de campaña (ver `WORKFLOWS_PARA_CONTAR_COMO_CAMPANA`): tocar diecisiete
+    flujos a la vez no arregla ninguno en particular.
+
+    Devuelve `None` si no hay historial (clon sin `.git`, p. ej. un artefacto) o si el único
+    candidato es de campaña: ahí no se recorta nada y se juzga el historial completo, que es el
+    comportamiento conservador.
+    """
+    import subprocess
+    rutas = [f".github/workflows/{nombre}"]
+    try:
+        inventario = json.loads(INVENTARIO.read_text(encoding="utf-8"))["workflows"]
+    except Exception:  # inventario ilegible: la revisión estática ya lo reporta
+        inventario = {}
+    rutas += list(inventario.get(nombre, {}).get("scripts", []))
+    for ref in (f"origin/{rama}", rama, "HEAD"):
+        # `%H` y `%cI` por commit; el hash hace falta para medir el tamaño de cada uno. `--name-only`
+        # NO sirve para eso: con un pathspec, git lista solo los archivos que coinciden, así que un
+        # commit que tocó veinte siempre informaría uno.
+        r = subprocess.run(["git", "log", "--format=%H %cI", "-20", ref, "--", *rutas],
+                           cwd=RAIZ, capture_output=True, text=True)
+        if r.returncode != 0 or not r.stdout.strip():
+            continue
+        for linea in r.stdout.splitlines():
+            partes = linea.strip().split(" ", 1)
+            if len(partes) != 2:
+                continue
+            sha, fecha_iso = partes
+            try:
+                fecha = datetime.fromisoformat(fecha_iso)
+            except ValueError:
+                continue
+            barridos = workflows_del_commit(sha)
+            if barridos is None or barridos <= WORKFLOWS_PARA_CONTAR_COMO_CAMPANA:
+                return fecha   # sin poder medir se asume arreglo: el corte solo puede acortar
+            # Se sigue mirando hacia atrás: puede haber un arreglo anterior más específico.
+    return None
+
+
+def workflows_del_commit(sha: str) -> int | None:
+    """Cuántos archivos de `.github/workflows/` tocó el commit."""
+    import subprocess
+    r = subprocess.run(["git", "show", "--name-only", "--format=", sha, "--", ".github/workflows/"],
+                       cwd=RAIZ, capture_output=True, text=True)
+    if r.returncode != 0:
+        return None
+    return len([l for l in r.stdout.splitlines() if l.strip().endswith((".yml", ".yaml"))])
+
+
 # Workflows que no producen tablas del manifiesto pero escriben en la rama por su cuenta.
 # `fi_eeff.yml` es el caso que motivó esta lista: sus tablas ya estaban inventariadas, pero
 # la compuerta de frescura solo miraba los flujos del inventario, así que pasó **33 días**
@@ -301,7 +374,7 @@ def llegada(nombre: str, rama: str) -> datetime | None:
 # aunque su salida no esté en `data_manifest.json`.
 FLUJOS_DE_ESCRITURA = {
     "contrato_publicado.yml": 1,   # contrato derivado, cada 2 h
-    "fi_eeff.yml": 16,             # balance y resultados FI, cada 3 días
+    "fi_eeff.yml": 16,             # balance y resultados FI, días 1,4,7,…,28
 }
 FLUJO_TITULO = {
     "contrato_publicado.yml": "Contrato derivado (web, esquemas, catálogo y resultados)",
@@ -322,6 +395,7 @@ def frescura(repo: str, rama: str) -> list[str]:
     token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
     ahora, errores = datetime.now(timezone.utc), []
     inv_workflows = set(json.loads(INVENTARIO.read_text(encoding="utf-8"))["workflows"])
+    recortados: dict[str, str] = {}
     for nombre, wf in workflows_inventariables():
         def api(ruta: str) -> dict:
             req = urllib.request.Request(f"https://api.github.com/repos/{repo}/actions/workflows/{nombre}{ruta}",
@@ -352,7 +426,17 @@ def frescura(repo: str, rama: str) -> list[str]:
                    else "lo que publica en la rama")
             errores.append(f"{nombre}: {dias} días sin una corrida exitosa (máximo {wf['max_dias']}); "
                            f"{que} se están quedando como foto fija")
-        errores += inestabilidad(nombre, api, rama)
+        corte = ultimo_arreglo(nombre, rama)
+        encontrados, descartadas = inestabilidad(nombre, api, rama, desde=corte)
+        errores += encontrados
+        if corte is not None and descartadas:
+            recortados[nombre] = corte.strftime("%Y-%m-%d")
+    if recortados:
+        # Una sola línea, no una por flujo: en la semana siguiente a un arreglo el corte toca a
+        # casi todos y trece líneas iguales esconderían el resto del informe.
+        fechas = sorted(set(recortados.values()))
+        print(f"\nEstabilidad medida desde el último arreglo ({', '.join(fechas)}): "
+              f"{len(recortados)} flujo(s) con historial anterior descartado")
     return errores
 
 
@@ -363,27 +447,54 @@ def frescura(repo: str, rama: str) -> list[str]:
 CORRIDAS_PARA_INESTABILIDAD = 10
 
 
-def inestabilidad(nombre: str, api, rama: str) -> list[str]:
-    """Falla si el flujo falla más que acierta en sus últimas corridas terminadas."""
+def _fecha_corrida(run: dict) -> datetime | None:
+    """Momento de la corrida, para ordenar y recortar. `created_at` manda: `updated_at` cambia
+    cuando alguien re-ejecuta el job desde la interfaz y ensuciaría el corte."""
+    for campo in ("created_at", "run_started_at", "updated_at"):
+        valor = run.get(campo)
+        if valor:
+            try:
+                return datetime.fromisoformat(valor.replace("Z", "+00:00"))
+            except ValueError:
+                continue
+    return None
+
+
+def inestabilidad(nombre: str, api, rama: str,
+                  desde: datetime | None = None) -> tuple[list[str], int]:
+    """Falla si el flujo falla más que acierta en sus últimas corridas terminadas.
+
+    `desde` recorta el historial anterior al último arreglo del flujo (ver `ultimo_arreglo`):
+    una vez corregida la causa, las corridas viejas no describen el código que corre hoy.
+    Devuelve los errores y cuántas corridas quedaron fuera por el corte.
+    """
     try:
         historial = api(
             f"/runs?branch={rama}&per_page={CORRIDAS_PARA_INESTABILIDAD}"
         ).get("workflow_runs", [])
     except Exception as e:  # la consulta principal ya informó el problema si era de red
-        return [f"{nombre}: no se pudo revisar la estabilidad de sus corridas ({e})"]
+        return [f"{nombre}: no se pudo revisar la estabilidad de sus corridas ({e})"], 0
     # `cancelled` y `skipped` no dicen nada del flujo; se descartan antes de dividir.
     terminadas = [r for r in historial if r.get("conclusion") in {"success", "failure"}]
-    fallidas = [r for r in terminadas if r["conclusion"] == "failure"]
-    if len(terminadas) < 4 or len(fallidas) * 2 <= len(terminadas):
-        return []
+    posteriores, descartadas = terminadas, 0
+    if desde is not None:
+        con_fecha = [(r, _fecha_corrida(r)) for r in terminadas]
+        posteriores = [r for r, f in con_fecha if f is None or f >= desde]
+        descartadas = len(terminadas) - len(posteriores)
+        if not posteriores:
+            # Todo el historial que se ve es anterior al arreglo: todavía no hay con qué juzgar.
+            return [], descartadas
+    fallidas = [r for r in posteriores if r["conclusion"] == "failure"]
+    if len(posteriores) < 4 or len(fallidas) * 2 <= len(posteriores):
+        return [], descartadas
     ultima_falla = max(
         (r.get("updated_at", "") for r in fallidas), default=""
     )[:10]
     return [
-        f"{nombre}: {len(fallidas)} de sus últimas {len(terminadas)} corridas fallaron "
+        f"{nombre}: {len(fallidas)} de sus últimas {len(posteriores)} corridas fallaron "
         f"(última el {ultima_falla}); la automatización no es estable aunque su última "
         "corrida exitosa esté dentro del plazo"
-    ]
+    ], descartadas
 
 
 def main(argv=None) -> int:

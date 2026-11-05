@@ -1,9 +1,12 @@
-name: Publicación CMF B1/B2/R1 (bancos), cada 3 días, incremental
+name: Publicación CMF B1/B2/R1 (bancos), días 1,4,7,…,28, incremental
 
 on:
   schedule:
-    # Cada 3 días (13:00 UTC). La CMF publica el mes M hacia fines de M+1, así que cualquiera de los intentos lo recoge. Es incremental: los meses ya publicados se saltan sin descargarse, y si el mes pendiente aún no está en la CMF la corrida termina sin cambios (en verde).
-    - cron: '0 13 */3 * *'
+# Días fijos 1,4,7,…,28 y no '* */3': en cron `*/3` significa «cada 3 días del mes»,
+    # no «cada 3 días». Ese último solo existe hasta el 28: con 31 nunca corría, y en los
+    # meses de 30 el salto final era de 2 días. La lista de días no tiene ese hueco.
+    # Los días 1,4,7,…,28 de cada mes (13:00 UTC). La CMF publica el mes M hacia fines de M+1, así que cualquiera de los intentos lo recoge. Es incremental: los meses ya publicados se saltan sin descargarse, y si el mes pendiente aún no está en la CMF la corrida termina sin cambios (en verde).
+    - cron: '0 13 1 * *'
   # Primera carga automática: al fusionar/subir cambios del publicador se ejecuta
   # una vez y pone al día todos los meses cerrados pendientes desde 2026-07.
   push:
