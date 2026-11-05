@@ -99,10 +99,22 @@ on:
 permissions:
   contents: read
 
+# Por qué `ubuntu-24.04` y no `ubuntu-latest` en estos jobs
+#
+# `ubuntu-latest` deja de ser Ubuntu 24.04 y pasa a 26.04 entre el 19 de octubre y el
+# 19 de noviembre de 2026 (actions/runner-images#14748). Durante esas semanas la misma
+# etiqueta da una imagen u otra sin aviso, así que la compuerta puede fallar un lunes y
+# pasar el siguiente sin que cambie una línea del repositorio: un `fail` espurio en
+# `audit` es peor que un dato atrasado, porque tapa los fallos reales del resto del job.
+#
+# `r_ejemplos` se queda en `ubuntu-22.04` a propósito: instala `duckdb` para R desde el
+# repositorio binario de Posit, que sirve binarios por distribución (`jammy` = 22.04).
+# En 24.04 (`noble`) ese binario puede no existir y R caería a compilar desde fuente,
+# que es justo lo que el paso detecta y rechaza.
 jobs:
   audit:
     if: github.event_name != 'schedule'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # La cadena completa (historial, Parquet, contrato, IFRS y DOM) superó el
     # límite anterior de 20 minutos antes de poder terminar; deja margen para
     # que el job alcance todas las compuertas en vez de cancelarse a mitad.
@@ -683,7 +695,7 @@ jobs:
 
   automatizacion:
     if: github.event_name != 'schedule'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
@@ -714,7 +726,7 @@ jobs:
   # que es cuando un cambio todavía se puede corregir. Sin red: todo con fuentes sintéticas.
   pruebas:
     if: github.event_name != 'schedule'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -758,7 +770,7 @@ jobs:
   # la auditoría de la web, pero el check queda en rojo igual.
   servidor:
     if: github.event_name != 'schedule'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -792,7 +804,7 @@ jobs:
   # de docs/, sin depender de que GitHub Pages sea alcanzable desde el runner.
   api_anything:
     if: github.event_name != 'schedule'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -811,7 +823,7 @@ jobs:
 
   frescura:
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref_name == github.event.repository.default_branch)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     permissions:
       contents: read

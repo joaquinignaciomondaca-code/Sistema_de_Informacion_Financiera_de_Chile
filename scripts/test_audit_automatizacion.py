@@ -270,23 +270,63 @@ class DisparadoresTest(unittest.TestCase):
         # se comprueba el patrón, no una ruta redundante en la lista.
         self.assertTrue({"fi/**", "fi/README.md"} & set(rutas))
 
-    def test_ningun_flujo_que_publica_usa_la_etiqueta_movil_ubuntu_latest(self):
-        """`ubuntu-latest` cambia de imagen sola y hace intermitentes los flujos que publican.
+    # Etiquetas admitidas. `ubuntu-latest` NO está: cambia de imagen sola (Ubuntu 24.04 →
+    # 26.04 entre el 2026-10-19 y el 2026-11-19, actions/runner-images#14748), así que la
+    # misma corrida puede caer en una imagen u otra sin que cambie una línea del repo.
+    ETIQUETAS_FIJAS = {"ubuntu-24.04", "ubuntu-22.04", "ubuntu-26.04"}
 
-        Entre el 2026-10-19 y el 2026-11-19 la etiqueta pasa de Ubuntu 24.04 a 26.04
-        (actions/runner-images#14748): durante ese periodo la misma corrida puede caer en una
-        imagen u otra. En un flujo que escribe en `main`, un fallo así deja la serie sin
-        actualizar hasta la corrida siguiente, que en la mayoría es cada 3 días. Por eso la
-        imagen se fija. Este guardián evita que un flujo nuevo vuelva a la etiqueta móvil.
+    def test_ningun_flujo_usa_la_etiqueta_movil_ubuntu_latest(self):
+        """Ningún job, publique o no, puede correr sobre una etiqueta móvil.
+
+        La versión anterior de esta prueba solo miraba los flujos que escriben en `main`
+        (`git push` o `contents: write`). Por eso no vio que `web_audit.yml` seguía en
+        `ubuntu-latest` en **seis de sus siete jobs**: al no publicar, quedaba fuera del
+        filtro. Y es el flujo que más importa, porque es la compuerta que avisa cuando un
+        publicador se atasca: un `fail` intermitente suyo —que es exactamente lo que produce
+        una imagen que cambia sola— tapa los fallos reales.
+
+        El riesgo no es solo de los publicadores. Cualquier job intermitente gasta corridas
+        y credibilidad, y el que decide si el lunes hay issue abierto es este.
         """
         import re
         culpables = []
         for flujo in sorted((RAIZ / ".github" / "workflows").glob("*.yml")):
             texto = flujo.read_text(encoding="utf-8")
-            publica = "git push" in texto or re.search(r"^\s*contents:\s*write", texto, re.M)
-            if publica and re.search(r"^\s*runs-on:\s*ubuntu-latest\s*$", texto, re.M):
-                culpables.append(flujo.name)
-        self.assertEqual(culpables, [], "flujos que publican con la etiqueta móvil")
+            # Las menciones en comentarios no cuentan: se mira solo la línea de `runs-on`.
+            for etiqueta in re.findall(r"^\s*runs-on:\s*(\S+)\s*$", texto, re.M):
+                if etiqueta == "ubuntu-latest":
+                    culpables.append(flujo.name)
+                elif etiqueta.startswith("ubuntu-") and etiqueta not in self.ETIQUETAS_FIJAS:
+                    culpables.append(f"{flujo.name} ({etiqueta})")
+        self.assertEqual(culpables, [], "jobs con etiqueta de runner móvil o desconocida")
+
+    def test_r_ejemplos_sigue_en_ubuntu_22_04_a_proposito(self):
+        """`r_ejemplos` instala `duckdb` para R desde el binario de Posit, que va por `jammy`.
+
+        Si alguien «moderniza» este job a 24.04 en una campaña de etiquetas, R puede caer a
+        compilar desde fuente; el paso lo detecta y falla, pero el fallo aparecería lejos de
+        su causa. Se deja escrito para que el cambio sea una decisión, no un descuido.
+        """
+        import re
+        flujo = (RAIZ / ".github" / "workflows" / "web_audit.yml").read_text(encoding="utf-8")
+        bloque = flujo[flujo.index("\n  r_ejemplos:"):]
+        bloque = bloque[:bloque.index("\n  automatizacion:")]
+        self.assertRegex(bloque, r"runs-on:\s*ubuntu-22\.04")
+        self.assertIn("jammy", bloque)
+
+    def test_la_compuerta_que_avisa_no_es_ella_misma_intermitente(self):
+        """El job `frescura` decide si el issue se abre o se cierra: su imagen no puede moverse.
+
+        Si `frescura` falla por la imagen, el issue no se cierra nunca —el caso que motivó
+        el #24— y si falla el job `audit`, el rojo tapa los datos. Los dos van fijados.
+        """
+        import re
+        flujo = (RAIZ / ".github" / "workflows" / "web_audit.yml").read_text(encoding="utf-8")
+        for job in ("audit", "frescura"):
+            bloque = flujo[flujo.index(f"\n  {job}:"):]
+            bloque = bloque[:bloque.index("\n  r_ejemplos:")] if job == "audit" else bloque
+            self.assertRegex(bloque, r"runs-on:\s*ubuntu-24\.04",
+                             f"{job} debe correr en una imagen fija")
 
     def test_las_pruebas_del_guardian_y_del_contrato_estan_disparadas(self):
         rutas = self.rutas_de_push()
