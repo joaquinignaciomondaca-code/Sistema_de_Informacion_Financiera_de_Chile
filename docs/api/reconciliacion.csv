@@ -10,10 +10,10 @@ ccaf_balance,ccaf.balance,ccaf_balance,directo,archivo,publicado,,,17,8043,21509
 ccaf_lista_entidades,ccaf.maestro,ccaf_maestro,alias,archivo,publicado,,,1,6,17300,Lista vigente,2026-09-28
 ccaf_resultados,ccaf.resultados,ccaf_resultados,directo,archivo,publicado,,,17,5506,192163,2010-06 a 2026-06,2026-10-22
 cooperativas_lista_entidades,cooperativas.lista_entidades,cooperativas_lista_entidades,directo,registro,publicado,,,1,7,4324,Lista vigente,2026-09-29
-corredoras_bolsa_balance,corredoras.balance,corredoras_bolsa_balance,directo,secundario,publicado,,,17,109305,655063,2010-12 a 2026-09,2026-11-01
+corredoras_bolsa_balance,corredoras.balance,corredoras_bolsa_balance,directo,secundario,publicado,,,17,109305,655063,2010-12 a 2026-09,2026-11-04
 corredoras_bolsa_lista_entidades,corredoras.maestro,corredoras_bolsa_maestro,alias,secundario,publicado,,,1,120,9358,2014-03 a 2026-06,2026-09-23
 corredoras_bolsa_lista_entidades_registro,corredoras.lista_entidades_registro,corredoras_bolsa_lista_entidades_registro,directo,secundario,publicado,,,1,120,14484,2014-03 a 2026-06,2026-09-29
-corredoras_bolsa_resultados,corredoras.resultados,corredoras_bolsa_resultados,directo,secundario,publicado,,,17,78683,524993,2010-12 a 2026-09,2026-11-01
+corredoras_bolsa_resultados,corredoras.resultados,corredoras_bolsa_resultados,directo,secundario,publicado,,,17,78683,524993,2010-12 a 2026-09,2026-11-04
 factoring_leasing_balance,factoring_leasing.balance_serie_ifrs_cmf,factoring_leasing_balance_serie_ifrs_cmf,alias,archivo,publicado,,,1,30075,537163,2009-03 a 2026-09,2026-10-31
 factoring_leasing_lista_entidades,factoring_leasing.lista_entidades,factoring_leasing_maestro,alias,archivo,publicado,,,1,32,13989,Lista vigente,2026-09-28
 factoring_leasing_resultados,factoring_leasing.resultados_serie_ifrs_cmf,factoring_leasing_resultados_serie_ifrs_cmf,alias,archivo,publicado,,,1,22389,330523,2009-03 a 2026-09,2026-10-31
@@ -24,7 +24,7 @@ ffmm_futuros,ffmm.futuros_forwards,ffmm_futuros,directo,nucleo,publicado,,,26,28
 ffmm_lista_entidades,ffmm.lista_entidades,ffmm_maestro,alias,nucleo,publicado,,,1,1334,23962,2001-01 a 2026-09,2026-10-13
 ffmm_opciones,ffmm.opciones,ffmm_opciones,directo,nucleo,publicado,,,26,5365,535816,2001-01 a 2026-09,2026-10-13
 ffmm_resultados,ffmm.resultados,ffmm_resultados,directo,nucleo,publicado,,,16,149929,1229489,2010-12 a 2025-12,2026-10-01
-fi_balance,fi.balance,fi_balance,directo,nucleo,publicado,,,16,985908,2402485,2022-03 a 2026-06,2026-10-02
+fi_balance,fi.balance,fi_balance,directo,nucleo,publicado,,,17,1032990,2511893,2022-03 a 2026-06,2026-11-04
 fi_bienes_raices,fi.bienes_raices,fi_bienes_raices,directo,nucleo,publicado,,,1,0,2589,2020-03 a 2026-06,2026-10-07
 fi_cartera_extranjera,fi.cartera_extranjera,fi_cartera_extranjera,directo,nucleo,publicado,,,7,76849,2425644,2020-03 a 2026-06,2026-10-07
 fi_cartera_nacional,fi.cartera_nacional,fi_cartera_nacional,directo,nucleo,publicado,,,26,933532,21485858,2020-03 a 2026-06,2026-10-07
@@ -33,8 +33,8 @@ fi_lista_entidades,fi.lista_entidades,fi_maestro,alias,nucleo,publicado,,,1,1679
 fi_metodo_participacion,fi.metodo_participacion,fi_metodo_participacion,directo,nucleo,publicado,,,7,10038,325115,2020-03 a 2026-06,2026-10-07
 fi_opciones,fi.opciones,fi_opciones,directo,nucleo,publicado,,,7,307,115649,2020-03 a 2026-06,2026-10-07
 fi_pactos,fi.pactos,fi_pactos,directo,nucleo,publicado,,,15,1698,204649,2012-03 a 2026-06,2026-10-07
-fi_resultados,fi.resultados,fi_resultados,directo,nucleo,publicado,,,16,1164000,2536368,2022-03 a 2026-06,2026-10-02
-fintech_rpsf_lista_entidades,fintech.rpsf_maestro,fintech_rpsf_maestro,alias,registro,publicado,,,1,265,34339,Catálogo Oficial Vigente CMF,2026-09-23
+fi_resultados,fi.resultados,fi_resultados,directo,nucleo,publicado,,,17,1229970,2670392,2022-03 a 2026-06,2026-11-04
+fintech_rpsf_lista_entidades,fintech.rpsf_maestro,fintech_rpsf_maestro,alias,registro,publicado,,,1,267,34455,Catálogo Oficial Vigente CMF,2026-09-23
 macro_cobre,macro.cobre,macro_cobre,directo,contexto,publicado,,,1,3270,33223,2014-01-01 a 2026-11-04,2026-11-04
 macro_curva_bonos_pesos,macro.curva_bonos_pesos,macro_curva_bonos_pesos,directo,contexto,publicado,,,1,3181,61537,2014-01-02 a 2026-11-02,2026-11-04
 macro_curva_bonos_uf,macro.curva_bonos_uf,macro_curva_bonos_uf,directo,contexto,publicado,,,1,3183,94268,2014-01-02 a 2026-11-02,2026-11-04

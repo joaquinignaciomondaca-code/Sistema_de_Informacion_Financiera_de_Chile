@@ -2371,6 +2371,10 @@
      "bytes": 144625
     },
     {
+     "ruta": "outputs/fi/fi_balance/2023-06.parquet",
+     "bytes": 109408
+    },
+    {
      "ruta": "outputs/fi/fi_balance/2023-09.parquet",
      "bytes": 144702
     },
@@ -2419,7 +2423,7 @@
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 985908,
+   "filas": 1032990,
    "firma": {
     "archivos": [
      {
@@ -2441,6 +2445,10 @@
      {
       "ruta": "outputs/fi/fi_balance/2023-03.parquet",
       "bytes": 144625
+     },
+     {
+      "ruta": "outputs/fi/fi_balance/2023-06.parquet",
+      "bytes": 109408
      },
      {
       "ruta": "outputs/fi/fi_balance/2023-09.parquet",
@@ -2488,7 +2496,7 @@
      }
     ],
     "where": "",
-    "filas": 985908
+    "filas": 1032990
    }
   },
   "fi_resultados": {
@@ -2512,6 +2520,10 @@
     {
      "ruta": "outputs/fi/fi_resultados/2023-03.parquet",
      "bytes": 113658
+    },
+    {
+     "ruta": "outputs/fi/fi_resultados/2023-06.parquet",
+     "bytes": 134024
     },
     {
      "ruta": "outputs/fi/fi_resultados/2023-09.parquet",
@@ -2562,7 +2574,7 @@
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 1164000,
+   "filas": 1229970,
    "firma": {
     "archivos": [
      {
@@ -2584,6 +2596,10 @@
      {
       "ruta": "outputs/fi/fi_resultados/2023-03.parquet",
       "bytes": 113658
+     },
+     {
+      "ruta": "outputs/fi/fi_resultados/2023-06.parquet",
+      "bytes": 134024
      },
      {
       "ruta": "outputs/fi/fi_resultados/2023-09.parquet",
@@ -2631,7 +2647,7 @@
      }
     ],
     "where": "",
-    "filas": 1164000
+    "filas": 1229970
    }
   },
   "ffmm_lista_entidades": {
@@ -6985,34 +7001,34 @@
    "archivos": [
     {
      "ruta": "outputs/fintech/fintech_rpsf_maestro.parquet",
-     "bytes": 34339
+     "bytes": 34455
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/fintech/fintech_rpsf_maestro.completo.csv",
-    "bytes": 75242,
-    "filas": 265
+    "bytes": 75662,
+    "filas": 267
    },
    "json": {
     "ruta": "outputs/fintech/fintech_rpsf_maestro.completo.json",
-    "bytes": 153038
+    "bytes": 154094
    },
    "nota": null,
-   "filas": 265,
+   "filas": 267,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/fintech/fintech_rpsf_maestro.parquet",
-      "bytes": 34339
+      "bytes": 34455
      }
     ],
     "where": "",
-    "filas": 265
+    "filas": 267
    }
   }
  },
- "generado": "2026-11-04T18:08:47+00:00",
+ "generado": "2026-11-05T01:50:17+00:00",
  "parametros": {
   "csv_max_mb": 35,
   "json_max_mb": 5,
