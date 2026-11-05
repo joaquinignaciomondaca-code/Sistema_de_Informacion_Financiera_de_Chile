@@ -1,12 +1,15 @@
-name: Fondos mutuos - balance y estado de resultados anuales (CMF, XML IFRS), cada 3 días, incremental
+name: Fondos mutuos - balance y estado de resultados anuales (CMF, XML IFRS), días 1,4,7,…,28, incremental
 
 on:
   schedule:
-    # Cada 3 días (14:20 UTC). La CMF publica un XML por fondo y año (cierre de diciembre) en la ficha de cada
+# Días fijos 1,4,7,…,28 y no '* */3': en cron `*/3` significa «cada 3 días del mes»,
+    # no «cada 3 días». Ese último solo existe hasta el 28: con 31 nunca corría, y en los
+    # meses de 30 el salto final era de 2 días. La lista de días no tiene ese hueco.
+    # Los días 1,4,7,…,28 de cada mes (14:20 UTC). La CMF publica un XML por fondo y año (cierre de diciembre) en la ficha de cada
     # fondo; no hay descarga masiva. La primera corrida recorre toda la historia (~7.900 fondos y cierres, ~90 min);
     # después cada corrida revisa los dos últimos cierres y 1/36 del resto (toda la historia una vez al año) y
     # baja solo lo que cambió (reenvíos) o apareció (presentaciones tardías).
-    - cron: '20 14 */3 * *'
+    - cron: '20 14 10 * *'
   push:
     branches:
       - main

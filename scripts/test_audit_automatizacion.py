@@ -5,6 +5,7 @@ que cada caso necesita.
 """
 from __future__ import annotations
 
+import json
 import unittest
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -24,8 +25,13 @@ def corrida(conclusion: str, hace_dias: float) -> dict:
 class FrescuraTest(unittest.TestCase):
     """La compuerta que debía haber avisado de los 33 días de `fi_eeff`."""
 
-    def frescura_con(self, nombre: str, historial: list[dict]) -> tuple[list[str], list[str]]:
-        """Corre `frescura()` completa con un doble de la API de GitHub."""
+    def frescura_con(self, nombre: str, historial: list[dict],
+                     arreglo: datetime | None = None) -> tuple[list[str], list[str]]:
+        """Corre `frescura()` completa con un doble de la API de GitHub.
+
+        `arreglo` fija el corte de estabilidad: por defecto es muy antiguo, para que el
+        historial de cada caso cuente entero (las pruebas son anteriores al corte real).
+        """
         vistos = []
 
         def api(ruta: str) -> dict:
@@ -40,7 +46,9 @@ class FrescuraTest(unittest.TestCase):
             return {"workflow_runs": historial}
 
         original = g.workflows_inventariables
+        original_arreglo = g.ultimo_arreglo
         g.workflows_inventariables = lambda: [(nombre, {"scripts": [], "max_dias": 16})]
+        g.ultimo_arreglo = lambda n, r: arreglo if arreglo else datetime(2000, 1, 1, tzinfo=timezone.utc)
         try:
             import urllib.request
             real = urllib.request.urlopen
@@ -57,6 +65,7 @@ class FrescuraTest(unittest.TestCase):
                 urllib.request.urlopen = real
         finally:
             g.workflows_inventariables = original
+            g.ultimo_arreglo = original_arreglo
         return errores, vistos
 
     def test_un_publicador_que_falla_mas_que_acierta_se_reporte(self):
@@ -101,6 +110,137 @@ class FrescuraTest(unittest.TestCase):
         # es un error más fuerte que «falla la mitad de las veces».
         self.assertEqual(len(errores), 1, errores)
         self.assertIn("ninguna corrida exitosa en main", errores[0])
+
+    def test_un_flujo_arreglado_no_se_juzga_por_las_corridas_anteriores_al_arreglo(self):
+        """El caso real del 2026-11-05: 9 fallos viejos y el arreglo de hoy.
+
+        `ifrs_sectores.yml` acumuló 9 fallos entre el 22 de octubre y el 4 de noviembre; el
+        arreglo entró el 5 y su primera corrida salió verde. Sin corte, la compuerta semanal
+        del lunes 9 habría vuelto a marcarlo como inestable y a comentar el issue #24 con un
+        diagnóstico sobre código que ya no existe. Con corte, el veredicto es «todavía no hay
+        con qué juzgar»: una sola corrida posterior al arreglo no alcanza el mínimo de cuatro.
+        """
+        historial = [corrida("success", 0.02)] + [
+            corrida("failure", d) for d in (1, 2, 3.5, 5, 6.5, 8, 9.5, 11, 12.5)
+        ]
+        errores, _ = self.frescura_con(
+            "ifrs_sectores.yml", historial, arreglo=datetime.now(timezone.utc) - timedelta(hours=6)
+        )
+        self.assertEqual(errores, [])
+
+    def test_si_vuelve_a_fallar_despues_del_arreglo_se_reporta_igual(self):
+        """El corte no compra un perdón: lo que falla después del arreglo cuenta entero.
+
+        Mismo historial que el caso anterior, pero el flujo vuelve a fallar tras la corrección.
+        Ahí sí hay señal —4 de 5 corridas posteriores fallidas— y la compuerta tiene que decirla.
+        """
+        historial = [
+            corrida("failure", 0.02), corrida("failure", 0.06),
+            corrida("failure", 0.1), corrida("failure", 0.14), corrida("success", 0.18),
+        ] + [corrida("failure", d) for d in (2, 3.5, 5, 6.5, 8)]
+        errores, _ = self.frescura_con(
+            "ifrs_sectores.yml", historial, arreglo=datetime.now(timezone.utc) - timedelta(hours=8)
+        )
+        self.assertEqual(len(errores), 1, errores)
+        self.assertIn("4 de sus últimas 5 corridas fallaron", errores[0])
+
+    def test_el_corte_incluye_los_scripts_del_inventario(self):
+        """El arreglo casi nunca está en el YAML: en `ifrs_sectores` estuvo en `actualizar.py`.
+
+        Se comprueba sobre git de verdad: se toca el extractor y la fecha del corte tiene que
+        moverse a ese commit. Si `ultimo_arreglo` mirara solo el workflow, un arreglo en el
+        script dejaría el historial viejo condenando al flujo durante semanas.
+        """
+        import subprocess
+        from tempfile import TemporaryDirectory
+        import os
+        with TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+
+            def git(*args, fecha="2026-01-01T00:00:00+00:00"):
+                entorno = {**os.environ, "GIT_AUTHOR_DATE": fecha, "GIT_COMMITTER_DATE": fecha,
+                           "GIT_AUTHOR_NAME": "prueba", "GIT_AUTHOR_EMAIL": "p@e",
+                           "GIT_COMMITTER_NAME": "prueba", "GIT_COMMITTER_EMAIL": "p@e"}
+                subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True,
+                               env=entorno)
+
+            (repo / ".github" / "workflows").mkdir(parents=True)
+            (repo / "pipelines" / "ifrs_sectores").mkdir(parents=True)
+            (repo / "pipelines" / "auto").mkdir(parents=True)
+            git("init", "-q")
+            (repo / ".github" / "workflows" / "ifrs_sectores.yml").write_text("on: push\n")
+            (repo / "pipelines" / "ifrs_sectores" / "actualizar.py").write_text("# v1\n")
+            (repo / "pipelines" / "auto" / "inventario.json").write_text(json.dumps({
+                "tablas": [], "workflows": {"ifrs_sectores.yml": {
+                    "scripts": ["pipelines/ifrs_sectores/actualizar.py"], "max_dias": 16}}
+            }))
+            git("add", "-A"); git("commit", "-qm", "inicial", fecha="2026-01-01T00:00:00+00:00")
+            # El arreglo: solo el script, nada del YAML.
+            (repo / "pipelines" / "ifrs_sectores" / "actualizar.py").write_text("# v2 arreglado\n")
+            git("add", "-A"); git("commit", "-qm", "arreglo", fecha="2026-03-15T12:00:00+00:00")
+
+            original = (g.RAIZ, g.INVENTARIO)
+            g.RAIZ, g.INVENTARIO = repo, repo / "pipelines" / "auto" / "inventario.json"
+            try:
+                corte = g.ultimo_arreglo("ifrs_sectores.yml", "main")
+            finally:
+                g.RAIZ, g.INVENTARIO = original
+        self.assertIsNotNone(corte)
+        self.assertEqual((corte.year, corte.month, corte.day), (2026, 3, 15))
+
+    def test_un_commit_de_campana_no_reinicia_el_reloj(self):
+        """El 2026-11-04 un commit tocó 17 workflows y no arregló ninguno en particular.
+
+        Si contara como «arreglo», el corte se movería para toda la flota a la vez y la
+        compuerta quedaría ciega justo cuando hay que mirarla. Se ignora y se sigue hacia
+        atrás hasta el último cambio que tocó este flujo y no los diecisiete.
+        """
+        import subprocess
+        from tempfile import TemporaryDirectory
+        import os
+        with TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+
+            def git(*args, fecha="2026-01-01T00:00:00+00:00"):
+                entorno = {**os.environ, "GIT_AUTHOR_DATE": fecha, "GIT_COMMITTER_DATE": fecha,
+                           "GIT_AUTHOR_NAME": "p", "GIT_AUTHOR_EMAIL": "p@e",
+                           "GIT_COMMITTER_NAME": "p", "GIT_COMMITTER_EMAIL": "p@e"}
+                subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True,
+                               env=entorno)
+
+            wfs = repo / ".github" / "workflows"
+            wfs.mkdir(parents=True)
+            git("init", "-q")
+            # Arreglo específico del flujo, el 1 de marzo.
+            (wfs / "macro.yml").write_text("on: push\n")
+            git("add", "-A"); git("commit", "-qm", "arreglo real",
+                                  fecha="2026-03-01T00:00:00+00:00")
+            # Campaña: el mismo flujo y otros cuatro, el 1 de abril.
+            for i in range(3):
+                (wfs / f"otro{i}.yml").write_text("on: push\n")
+            (wfs / "macro.yml").write_text("on: push\nruns-on: x\n")
+            (wfs / "quinto.yml").write_text("on: push\n")
+            git("add", "-A"); git("commit", "-qm", "campaña",
+                                  fecha="2026-04-01T00:00:00+00:00")
+
+            original = (g.RAIZ, g.INVENTARIO)
+            g.RAIZ, g.INVENTARIO = repo, repo / "no-existe.json"  # inventario ilegible: sin scripts
+            try:
+                corte = g.ultimo_arreglo("macro.yml", "main")
+            finally:
+                g.RAIZ, g.INVENTARIO = original
+        self.assertIsNotNone(corte)
+        self.assertEqual((corte.year, corte.month, corte.day), (2026, 3, 1),
+                         "la campaña del 1 de abril no debe contar como arreglo")
+
+    def test_sin_historial_no_se_recorta_nada(self):
+        """Sin git (un artefacto, un tarball) se juzga el historial completo: conservador."""
+        historial = [
+            corrida("failure", 0.1), corrida("success", 0.2), corrida("failure", 0.4),
+            corrida("failure", 0.6), corrida("failure", 0.8), corrida("success", 1.0),
+        ]
+        errores, _ = self.frescura_con("contrato_publicado.yml", historial, arreglo=None)
+        self.assertEqual(len(errores), 1, errores)
 
 
 class DisparadoresTest(unittest.TestCase):

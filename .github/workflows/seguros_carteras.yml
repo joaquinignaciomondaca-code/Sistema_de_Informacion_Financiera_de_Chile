@@ -1,11 +1,14 @@
-name: Cartera de inversiones de seguros (CMF, Circular 1835), cada 3 días, incremental
+name: Cartera de inversiones de seguros (CMF, Circular 1835), días 1,4,7,…,28, incremental
 
 on:
   schedule:
-    # Cada 3 días (14:00 UTC). Las compañías informan el mes M hasta mediados de M+1 y la CMF
+# Días fijos 1,4,7,…,28 y no '* */3': en cron `*/3` significa «cada 3 días del mes»,
+    # no «cada 3 días». Ese último solo existe hasta el 28: con 31 nunca corría, y en los
+    # meses de 30 el salto final era de 2 días. La lista de días no tiene ese hueco.
+    # Los días 1,4,7,…,28 de cada mes (14:00 UTC). Las compañías informan el mes M hasta mediados de M+1 y la CMF
     # lo publica después; cualquiera de los tres intentos lo recoge. Es incremental: los meses ya
     # publicados no se descargan, y si el mes pendiente aún no está la corrida termina sin cambios.
-    - cron: '0 14 */3 * *'
+    - cron: '0 14 22 * *'
   # Primera carga: al subir cambios del publicador se ejecuta y completa los meses pendientes.
   push:
     branches:
