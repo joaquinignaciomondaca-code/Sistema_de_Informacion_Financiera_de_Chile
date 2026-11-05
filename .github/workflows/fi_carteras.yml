@@ -1,12 +1,15 @@
-name: Cartera de inversiones de fondos de inversión (CMF, informes IFRS trimestrales), cada 3 días, incremental
+name: Cartera de inversiones de fondos de inversión (CMF, informes IFRS trimestrales), días 1,4,7,…,28, incremental
 
 on:
   schedule:
-    # Cada 3 días (15:00 UTC). Los fondos presentan la cartera trimestral con sus estados
+# Días fijos 1,4,7,…,28 y no '* */3': en cron `*/3` significa «cada 3 días del mes»,
+    # no «cada 3 días». Ese último solo existe hasta el 28: con 31 nunca corría, y en los
+    # meses de 30 el salto final era de 2 días. La lista de días no tiene ese hueco.
+    # Los días 1,4,7,…,28 de cada mes (15:00 UTC). Los fondos presentan la cartera trimestral con sus estados
     # financieros (60 días; 90 el cierre anual). El publicador espera 75/100 días desde el cierre,
     # exige el 90 % de los fondos del trimestre anterior y no repite trimestres ya publicados.
     # La carga histórica avanza por tramos de hasta 4,5 horas por corrida.
-    - cron: '0 15 */3 * *'
+    - cron: '0 15 13 * *'
   push:
     branches:
       - main
