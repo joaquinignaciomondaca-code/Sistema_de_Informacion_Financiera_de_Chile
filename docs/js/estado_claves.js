@@ -1,9 +1,9 @@
 // GENERADO por scripts/build_estado_claves.py — no editar a mano.
 // Fuente: docs/api/claves.csv, medido sobre todas las filas publicadas.
-// data_release: 2026-11-04.76a49f0569a5
+// data_release: 2026-11-04.120087bb69bd
 window.ESTADO_CLAVES = {
- "generado": "2026-11-04",
- "data_release": "2026-11-04.76a49f0569a5",
+ "generado": "2026-11-05",
+ "data_release": "2026-11-04.120087bb69bd",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,
@@ -401,8 +401,8 @@ window.ESTADO_CLAVES = {
   },
   "fi_balance": {
    "estado": "ok",
-   "filas": 985908,
-   "distintas": 985908,
+   "filas": 1032990,
+   "distintas": 1032990,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -413,7 +413,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: periodo + run_fondo + contexto + codigo_cuenta — única sobre 985.908 filas."
+   "texto": "Clave verificada: periodo + run_fondo + contexto + codigo_cuenta — única sobre 1.032.990 filas."
   },
   "fi_bienes_raices": {
    "estado": "sin_datos",
@@ -527,8 +527,8 @@ window.ESTADO_CLAVES = {
   },
   "fi_resultados": {
    "estado": "ok",
-   "filas": 1164000,
-   "distintas": 1164000,
+   "filas": 1229970,
+   "distintas": 1229970,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -539,12 +539,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: periodo + run_fondo + contexto + codigo_cuenta — única sobre 1.164.000 filas."
+   "texto": "Clave verificada: periodo + run_fondo + contexto + codigo_cuenta — única sobre 1.229.970 filas."
   },
   "fintech_rpsf_lista_entidades": {
    "estado": "ok",
-   "filas": 265,
-   "distintas": 265,
+   "filas": 267,
+   "distintas": 267,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -552,7 +552,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: rut — única sobre 265 filas."
+   "texto": "Clave verificada: rut — única sobre 267 filas."
   },
   "macro_cobre": {
    "estado": "ok",

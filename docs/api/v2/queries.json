@@ -561,9 +561,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-88c716",
+   "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e",
    "origen": "explorador",
-   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 20;",
    "titulo": "Mayores patrimonios en pesos, último cierre (MM$)"
   },
   {
@@ -573,9 +573,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "balance-actual-del-mayor-fondo-en-pesos-ultimo-c-b09905",
+   "id": "balance-actual-del-mayor-fondo-en-pesos-ultimo-c-2ee7e1",
    "origen": "explorador",
-   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = '2026-06' AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;",
+   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = (SELECT max(periodo) FROM fi_balance) AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;",
    "titulo": "Balance actual del mayor fondo en pesos, último cierre"
   },
   {
@@ -597,9 +597,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "mayores-resultados-acumulados-en-pesos-ultimo-ci-836579",
+   "id": "mayores-resultados-acumulados-en-pesos-ultimo-ci-ec3f0d",
    "origen": "explorador",
-   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
    "titulo": "Mayores resultados acumulados en pesos, último cierre (MM$)"
   },
   {
@@ -609,9 +609,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "resultado-solo-del-trimestre-en-pesos-segun-xml--be25fe",
+   "id": "resultado-solo-del-trimestre-en-pesos-segun-xml--c46755",
    "origen": "explorador",
-   "sql": "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "sql": "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
    "titulo": "Resultado SOLO del trimestre en pesos, según XML (MM$)"
   },
   {
@@ -1922,7 +1922,7 @@
   }
  ],
  "contrato": "sif-api/consultas",
- "generado": "2026-11-04",
+ "generado": "2026-11-05",
  "nota": "Salen de la propia web (sidebar.js e index.html); la auditoría las ejecuta contra los Parquet en cada CI.",
  "total": 159,
  "version": "2.3.0"

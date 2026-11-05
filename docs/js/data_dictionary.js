@@ -1401,8 +1401,9 @@ const DATA_DICTIONARY = [
     {
       name: "run_fondo",
       type: "VARCHAR",
-      role: "FK",
-      significado: "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+      role: "FK · PK parcial",
+      significado: "RUN del fondo, sin DV; une directamente con fi.lista_entidades. "
+        + "Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
       contable: "No aplica"
     },
     {
@@ -1588,8 +1589,9 @@ const DATA_DICTIONARY = [
     {
       name: "run_fondo",
       type: "VARCHAR",
-      role: "FK",
-      significado: "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+      role: "FK · PK parcial",
+      significado: "RUN del fondo, sin DV; une directamente con fi.lista_entidades. "
+        + "Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
       contable: "No aplica"
     },
     {

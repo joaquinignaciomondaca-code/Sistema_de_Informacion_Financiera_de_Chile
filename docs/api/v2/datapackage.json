@@ -3140,7 +3140,7 @@
     "puente": "directo",
     "sector": "corredoras_bolsa",
     "sql_view": "corredoras_bolsa_balance",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-04",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -3636,7 +3636,7 @@
     "puente": "directo",
     "sector": "corredoras_bolsa",
     "sql_view": "corredoras_bolsa_resultados",
-    "ultima_actualizacion": "2026-11-01",
+    "ultima_actualizacion": "2026-11-04",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -6577,10 +6577,10 @@
    "title": "ffmm.resultados"
   },
   {
-   "bytes": 2402485,
+   "bytes": 2511893,
    "description": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
    "format": "parquet",
-   "hash": "8bfceddc8228967a624bd7773eba08006a20bc74f837c5072cfd78dfc04aaa8b",
+   "hash": "d981874b5f75d434a2e3cd57cf3af0d3ba179372aa2cb651e6100b78937cf110",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -6595,6 +6595,7 @@
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2022-09.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2022-12.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-03.parquet",
+    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-06.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-09.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-12.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2024-03.parquet",
@@ -6617,9 +6618,9 @@
       "type": "string"
      },
      {
-      "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+      "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades. Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
       "name": "run_fondo",
-      "sif_rol": "PK",
+      "sif_rol": "FK · PK parcial",
       "type": "string"
      },
      {
@@ -6737,7 +6738,7 @@
       "type": "integer"
      },
      {
-      "description": "Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",
+      "description": "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
       "name": "fuente_archivo",
       "sif_rol": "Dato fuente",
       "type": "string"
@@ -6772,8 +6773,8 @@
     "corte": "2022-03 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-02",
-    "filas": 985908,
+    "extracted_at": null,
+    "filas": 1032990,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "fi_balance",
@@ -6809,6 +6810,12 @@
       "filas": 59934,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-03.parquet",
       "sha256": "c4807ca936600ff3a283572d30bd5c9a4b8da40ee955617682e94f5479f93ef3"
+     },
+     {
+      "bytes": 109408,
+      "filas": 47082,
+      "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-06.parquet",
+      "sha256": "8c9eeba0c5278d7a295d190cac6169da5011514ffea3ec4112af2331aca3be76"
      },
      {
       "bytes": 144702,
@@ -6880,7 +6887,7 @@
     "puente": "directo",
     "sector": "fi",
     "sql_view": "fi_balance",
-    "ultima_actualizacion": "2026-10-02",
+    "ultima_actualizacion": "2026-11-04",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -8746,10 +8753,10 @@
    "title": "fi.pactos"
   },
   {
-   "bytes": 2536368,
+   "bytes": 2670392,
    "description": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
    "format": "parquet",
-   "hash": "9baee422206c0a7e6a05585064e9798e152114caa4a1a41ad2ac52c56050b93f",
+   "hash": "a165539fe7ea655ac13463cb002e875de4b85da7c40d36e373fc941772b5a8e1",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -8764,6 +8771,7 @@
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-09.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-12.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-03.parquet",
+    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-06.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-09.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-12.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-03.parquet",
@@ -8786,9 +8794,9 @@
       "type": "string"
      },
      {
-      "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+      "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades. Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
       "name": "run_fondo",
-      "sif_rol": "PK",
+      "sif_rol": "FK · PK parcial",
       "type": "string"
      },
      {
@@ -8906,7 +8914,7 @@
       "type": "integer"
      },
      {
-      "description": "Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",
+      "description": "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
       "name": "fuente_archivo",
       "sif_rol": "Dato fuente",
       "type": "string"
@@ -8941,8 +8949,8 @@
     "corte": "2022-03 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-02",
-    "filas": 1164000,
+    "extracted_at": null,
+    "filas": 1229970,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "fi_resultados",
@@ -8978,6 +8986,12 @@
       "filas": 48480,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-03.parquet",
       "sha256": "9b6e41722588cff2c83917177eb1901ca4b256235325d574552330cdb87695f1"
+     },
+     {
+      "bytes": 134024,
+      "filas": 65970,
+      "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-06.parquet",
+      "sha256": "9dce44611d72f1c128087273a17c19144d5024cb4df63a7c239b13a5f7a274cb"
      },
      {
       "bytes": 185519,
@@ -9049,7 +9063,7 @@
     "puente": "directo",
     "sector": "fi",
     "sql_view": "fi_resultados",
-    "ultima_actualizacion": "2026-10-02",
+    "ultima_actualizacion": "2026-11-04",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -9064,10 +9078,10 @@
    "title": "fi.resultados"
   },
   {
-   "bytes": 34339,
+   "bytes": 34455,
    "description": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF y total de servicios autorizados.",
    "format": "parquet",
-   "hash": "c5216409a993449e694ac42e14df07c1bd70c24eb2b320863289c6f90687b4f0",
+   "hash": "ddc7d89eb44e66ced1241f5e5e462e464c9c34db4437ba8daa2aaf2c07420e3a",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -9200,7 +9214,7 @@
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": "2026-09-23",
-    "filas": 265,
+    "filas": 267,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "fintech_rpsf_maestro",
@@ -9208,10 +9222,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 34339,
-      "filas": 265,
+      "bytes": 34455,
+      "filas": 267,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fintech/fintech_rpsf_maestro.parquet",
-      "sha256": "792f0cf39335ad9c066d902c9324404c7151a31334a08b2e795fc5be1ce019a3"
+      "sha256": "00d86da2ea7d043b34592a5043fcea503ed3c14a5bcba7449378c28d0fe68c28"
      }
     ],
     "puente": "alias",
@@ -10711,7 +10725,7 @@
    "bytes": 10885,
    "description": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
    "format": "parquet",
-   "hash": "357e331bb68fcb3be52cdb581eebeef69dbf7538c05eb667817df121a9da66a8",
+   "hash": "5c927ef5ce28f37bcf707c3463b41eca9017cfdcba6062e78996939aa22bb9c1",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10825,7 +10839,7 @@
       "bytes": 10885,
       "filas": 51,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_series_catalogo.parquet",
-      "sha256": "620ea24879fceca009aad7671f90db8c6e5ea8effad4356b8c5d25d10f9b7b77"
+      "sha256": "c19a79c605c48f634d12037ac7a3e6100150840c9bdaef6129ce8ccda55712f5"
      }
     ],
     "puente": "directo",
@@ -19205,9 +19219,9 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-11-04.76a49f0569a5",
+  "data_release": "2026-11-04.120087bb69bd",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
-  "filas_unicas": 19815008,
+  "filas_unicas": 19928062,
   "identificador": {
    "aliases": "los nombres heredados se publican por recurso en sif.aliases y no son identificadores",
    "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",

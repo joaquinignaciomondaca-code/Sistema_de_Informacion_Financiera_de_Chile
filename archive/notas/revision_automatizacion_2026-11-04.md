@@ -182,7 +182,9 @@ relectura no pasa las compuertas, es un aviso sobre la fuente (defecto), no una 
 corrida. Lo que nunca se publicó sigue en rojo: esa prueba ya existía y sigue pasando.
 
 **Verificación.** La prueba nueva reproduce el fallo real (`exit 1`) y pasa con el arreglo;
-desactivando el arreglo vuelve a fallar, así que prueba lo que dice probar.
+desactivando el arreglo vuelve a fallar, así que prueba lo que dice probar. **Este arreglo
+era necesario pero no suficiente:** el rojo persistió después del merge y la causa que
+faltaba está en la §10.
 
 **Esperado en `fi_eeff`.** La corrida del merge falló, y es el comportamiento diseñado: la
 primera vez que ve el conjunto de negativas lo bloquea para reintentar. Las anotaciones lo
@@ -220,12 +222,82 @@ intermitente se ve en el PR y se reintenta, no corrompe datos.
 **Guardián.** Una prueba nueva falla si un flujo vuelve a `ubuntu-latest` y tiene `git push` o
 `contents: write`. Comprobado reintroduciendo la etiqueta en `macro.yml`: la prueba lo detecta.
 
+## 10. La causa real del rojo de `ifrs_sectores`: dos umbrales que se pisaban
+
+La §8 encontró un motivo cierto (la relectura de un trimestre abierto iba a `errores`) y lo
+corrigió, pero la corrida siguiente en `main` (41899150961, 51 s) volvió a fallar. La §8 no
+alcanzaba para explicar ese `exit 1`: `202606` **sí** tenía el arreglo, y aun así el flujo
+seguía en rojo.
+
+**Causa.** En `leer_archivo` las dos guardas de completitud se evaluaban en el orden inverso
+al que corresponde:
+
+```python
+if len(entidades_archivo) < MIN_SOCIEDADES:            # 50 → ErrorContenido
+    raise ErrorContenido(...)
+if len(entidades_archivo) < MIN_SOCIEDADES_RECIENTE and not cerrado(periodo, _hoy()):
+    raise ErrorIncompleto(...)                         # 100
+```
+
+El piso absoluto de 50 atrapaba primero a cualquier archivo por debajo de ese número, así que
+la pregunta «¿el trimestre está abierto?» nunca llegaba a hacerse. `202609` llegó con **22**
+sociedades: no es un archivo histórico defectuoso como `201003` (4 sociedades), es un trimestre
+que la CMF recién empieza a poblar. Pero caía en `ErrorContenido`, que no tiene indulgencia en
+el bucle principal, así que terminaba en `errores` y con `hechos == 0` el flujo salía `exit 1`
+cada tres días. Las anotaciones no lo delataban: el mensaje que se veía era «solo 22
+sociedades», idéntico al de un archivo incompleto de verdad.
+
+**Arreglo.** Se invierte el orden: primero se pregunta si el trimestre está abierto y solo
+después se aplica el piso de 50 a los cerrados. Un abierto con pocas sociedades es transitorio
+(`ErrorIncompleto`, aviso, se reintenta); un cerrado con pocas sigue siendo un archivo
+defectuoso que no publica ni falla.
+
+**Por qué las pruebas no lo vieron.** Todas construían archivos con 50 sociedades o más, así
+que nunca tocaban la zona donde los dos umbrales se pisan. La prueba nueva baja a 22 —el número
+real de 202609— y la de punta a punta se ajustó al mismo caso. Ambas fallan con el código de
+`main` reproduciendo el mensaje de producción, y pasan con el arreglo. Una tercera prueba fija
+la contracara: un **cerrado** con 22 sociedades sigue siendo `ErrorContenido`.
+
+## 11. `web_audit` en rojo por una cifra que ningún comando podía corregir
+
+**Síntoma.** Con el arreglo de la §10, el PR seguía con el check `audit` en rojo, y el paso que
+fallaba era el primero: `build_metricas_publicadas.py --check`. El mensaje era una sola línea,
+siempre la misma: *«FinTech declara 1 elementos/265 filas; el catálogo indica 1/267»*.
+
+**Lo que engañaba.** Ejecutar el generador (`build_metricas_publicadas.py`) sincroniza el README
+y luego audita. Fallaba igual, con el mismo mensaje, después de decir «README sincronizado». Es
+decir: el propio sincronizador no podía arreglar la cifra que la auditoría le reclamaba.
+
+**Causa.** `auditar_tabla_readme` normaliza la etiqueta del README con `ALIAS_ETIQUETAS`
+(`FinTech` → `Fintech y Finanzas Abiertas`) antes de comparar, pero `sincronizar_readme` buscaba
+solo la etiqueta oficial. La celda del README dice `FinTech`, así que la expresión regular nunca
+encontraba la fila: no la reescribía, no la contaba como cambio, y la auditoría volvía a leer
+`265` contra los `267` publicados. Un bucle cerrado sin salida por la vía normal.
+
+**Arreglo.** El sincronizador prueba también los alias del mismo diccionario que usa la
+auditoría, así que las dos partes leen la tabla con la misma clave. Una declaración, dos usos.
+
+**Por qué importaba.** La cifra vieja no venía de este cambio: `docs/outputs/fintech/…parquet`
+tiene 267 filas y el README decía 265 desde antes. Como el bot del contrato derivado corre la
+misma función, el desfase tampoco se curaba solo con el cron: cada dos horas reescribía el
+catálogo, sincronizaba todo lo demás y dejaba esa celda intacta.
+
+**Prueba.** `test_sincroniza_las_etiquetas_que_el_readme_abrevia` construye la fila `FinTech` y
+comprueba que se reescribe a 267 sin duplicarse. Verificada contra el código anterior: falla con
+la misma cifra que se veía en producción.
+
+**Alcance mayor del esperado.** Al arreglar la sincronización, la cadena derivada
+(`refrescar_contrato.py`) convergió entera sobre `main` y el diff incluyó la regeneración de
+`docs/api/**` (178 archivos), el catálogo de descargas y cuatro resultados con `data_release`
+nuevo. No es un cambio de datos: es el contrato derivado poniéndose al día con los Parquet que
+`main` ya tenía publicados y que nadie había vuelto a procesar.
+
 ## Verificación
 
 | Comprobación | Resultado |
 |---|---|
 | `fi/tests` (incluye el cierre parcial) | 128 pruebas OK |
-| `pipelines.ifrs_sectores` + `pipelines.auto` + `pipelines.entidades` + extractores | 311 pruebas OK |
+| `pipelines.ifrs_sectores` + `pipelines.auto` + `pipelines.entidades` + extractores | 313 pruebas OK |
 | `factoring_leasing/tests` | 60 pruebas OK |
 | `scripts.*` (guardián, métricas y refresco), con solo pyarrow | 20 pruebas OK |
 | Job `automatizacion` completo, con solo pyarrow | 68 pruebas OK |
@@ -234,5 +306,5 @@ intermitente se ve en el PR y se reintenta, no corrompe datos.
 | `auditar_eeff_ifrs.py` (datos reales de `main`) | cuadratura completa, 0 descuadres |
 | `refrescar_contrato.py` sobre `main` | converge y deja todas las compuertas en 0 |
 | `audit_cifras.js` | 14 respaldos al día |
-| `build_metricas_publicadas.py --check` tras el refresco | MÉTRICAS OK (90 objetos, 19.814.992 filas) |
+| `build_metricas_publicadas.py --check` tras el refresco | MÉTRICAS OK (90 objetos, 19.928.062 filas) |
 | `servidor/tests` | 101 pruebas OK |
