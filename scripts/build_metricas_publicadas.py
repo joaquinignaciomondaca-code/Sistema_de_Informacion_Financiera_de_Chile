@@ -856,14 +856,20 @@ def sincronizar_readme(reporte: dict[str, Any]) -> list[str]:
             salida = nuevo
 
     # Celdas de la tabla sectorial: | Etiqueta | elementos | filas | …
+    # Se prueba la etiqueta del catálogo y también los alias del README: `auditar_tabla_readme`
+    # normaliza `FinTech` → `Fintech y Finanzas Abiertas` antes de comparar, así que sin esta
+    # misma normalización la celda del README no se podía reescribir nunca y la auditoría
+    # fallaba con la cifra vieja para siempre (fintech quedó en 265 con 267 publicadas).
     filas = reporte["fuentes"]["descargas"]["por_sector"]
     for clave, info in sorted(filas.items()):
         etiqueta = info["etiqueta"]
-        cambiar(
-            rf"(\|\s*{re.escape(etiqueta)}\s*\|\s*)[\d.]+(\s*\|\s*)[\d.]+",
-            rf"\g<1>{info['elementos']}\g<2>{fmt(info['filas'])}",
-            f"tabla sectorial · {etiqueta}",
-        )
+        alias = [a for a, oficial in ALIAS_ETIQUETAS.items() if oficial == etiqueta]
+        for nombre in [etiqueta, *alias]:
+            cambiar(
+                rf"(\|\s*{re.escape(nombre)}\s*\|\s*)[\d.]+(\s*\|\s*)[\d.]+",
+                rf"\g<1>{info['elementos']}\g<2>{fmt(info['filas'])}",
+                f"tabla sectorial · {nombre}",
+            )
     descargas = reporte["fuentes"]["descargas"]
     principal, fuera, ocultos = (
         descargas["principal"],

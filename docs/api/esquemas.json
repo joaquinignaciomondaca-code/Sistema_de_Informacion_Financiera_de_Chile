@@ -11,7 +11,7 @@
  },
  "como_se_genera": "python3 scripts/build_esquemas.py",
  "contrato": "sif-api/esquemas",
- "generado": "2026-11-04",
+ "generado": "2026-11-05",
  "objetos": {
   "afp_lista_entidades": {
    "archivo": "outputs/pensiones/afp_maestro_administradoras.parquet",
@@ -2982,8 +2982,8 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "run_fondo",
-     "rol": "PK",
-     "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+     "rol": "FK · PK parcial",
+     "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades. Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
      "tipo": "VARCHAR"
     },
     {
@@ -3123,7 +3123,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fuente_archivo",
      "rol": "Dato fuente",
-     "significado": "Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",
+     "significado": "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
      "tipo": "VARCHAR"
     },
     {
@@ -3143,11 +3143,11 @@
    ],
    "corte": "2022-03 a 2026-06",
    "estado": "publicado",
-   "filas": 985908,
+   "filas": 1032990,
    "manifest_id": "fi_balance",
    "nivel": "nucleo",
    "nombre_visible": "fi.balance",
-   "particiones": 16,
+   "particiones": 17,
    "puente": "directo",
    "sector": "fi"
   },
@@ -4298,8 +4298,8 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "run_fondo",
-     "rol": "PK",
-     "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+     "rol": "FK · PK parcial",
+     "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades. Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
      "tipo": "VARCHAR"
     },
     {
@@ -4439,7 +4439,7 @@
      "criterio_contable": "No aplica",
      "nombre": "fuente_archivo",
      "rol": "Dato fuente",
-     "significado": "Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",
+     "significado": "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
      "tipo": "VARCHAR"
     },
     {
@@ -4459,11 +4459,11 @@
    ],
    "corte": "2022-03 a 2026-06",
    "estado": "publicado",
-   "filas": 1164000,
+   "filas": 1229970,
    "manifest_id": "fi_resultados",
    "nivel": "nucleo",
    "nombre_visible": "fi.resultados",
-   "particiones": 16,
+   "particiones": 17,
    "puente": "directo",
    "sector": "fi"
   },
@@ -4590,7 +4590,7 @@
    ],
    "corte": "Catálogo Oficial Vigente CMF",
    "estado": "publicado",
-   "filas": 265,
+   "filas": 267,
    "manifest_id": "fintech_rpsf_maestro",
    "nivel": "registro",
    "nombre_visible": "fintech.rpsf_maestro",
@@ -11588,8 +11588,8 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 19815008,
-  "filas_unicas": 19815008,
+  "filas_por_objeto": 19928062,
+  "filas_unicas": 19928062,
   "objetos": 90,
   "sin_esquema": 4,
   "tablas_manifiesto": 89,
