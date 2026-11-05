@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/fintech/fintech_rpsf_maestro.parquet",
-   "bytes": 34339,
+   "bytes": 34455,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fintech/fintech_rpsf_maestro.parquet",
    "periodo": "fintech_rpsf_maestro",
-   "sha256": "792f0cf39335ad9c066d902c9324404c7151a31334a08b2e795fc5be1ce019a3"
+   "sha256": "00d86da2ea7d043b34592a5043fcea503ed3c14a5bcba7449378c28d0fe68c28"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 34339,
-  "filas": 265
+  "bytes": 34455,
+  "filas": 267
  },
  "version": "2.3.0"
 }

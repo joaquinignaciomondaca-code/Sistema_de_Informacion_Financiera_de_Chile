@@ -13,8 +13,8 @@
   {
    "criterio_contable": "No aplica",
    "nombre": "run_fondo",
-   "rol": "PK",
-   "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+   "rol": "FK · PK parcial",
+   "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades. Forma parte de la clave: cada cierre trae una fila por fondo y cuenta.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
@@ -174,7 +174,7 @@
    "criterio_contable": "No aplica",
    "nombre": "fuente_archivo",
    "rol": "Dato fuente",
-   "significado": "Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",
+   "significado": "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
@@ -197,7 +197,13 @@
  ],
  "contrato": "sif-api/esquema",
  "estado": "publicado",
- "foraneas": [],
+ "foraneas": [
+  {
+   "columna": "run_fondo",
+   "destino": "fi_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
  "fuente": "CMF",
  "id": "fi_resultados",
  "licencia_estado": "verificada",

@@ -378,7 +378,9 @@ class GuardasDeCompletitudTest(unittest.TestCase):
         cargar. El reloj se inyecta: la prueba no depende del día en que corre.
         """
         indice = b'<html><a href="ver_archivo.php?inicio=202606&amp;termino=202606">202606</a></html>'
-        raw = txt(sociedad("76034728", "HMC AGF", periodo="202606") + relleno(55, periodo="202606"))
+        # El caso real de 202609 son 22 sociedades: por debajo del piso absoluto de 50, que es
+        # justo el orden de compuertas que hacía fallar la corrida. Con 55 no se probaba nada.
+        raw = txt(sociedad("76034728", "HMC AGF", periodo="202606") + relleno(21, periodo="202606"))
         pedidas: list[str] = []
         with TemporaryDirectory() as tmp:
             reales = {n: getattr(actualizar, n) for n in
@@ -421,12 +423,42 @@ class GuardasDeCompletitudTest(unittest.TestCase):
         with self.assertRaises(actualizar.ErrorIncompleto):
             actualizar.leer_archivo(raw, "202606", LISTAS)
 
+    def test_un_trimestre_abierto_bajo_el_piso_absoluto_sigue_siendo_transitorio(self):
+        """Un abierto con menos de MIN_SOCIEDADES no es un archivo histórico defectuoso.
+
+        202609 llegó con 22 sociedades el 2026-11-04 y tumbó la corrida: el piso absoluto
+        (`< MIN_SOCIEDADES`, pensado para 201003 con 4) se evaluaba antes que la pregunta
+        «¿está abierto?», así que el archivo recién poblado se clasificaba como ErrorContenido
+        y terminaba en `errores` → `exit 1`. El orden importa: la condición de transitorio va
+        primero y el piso de 50 solo aplica a trimestres ya cerrados.
+        """
+        raw = txt(sociedad("76034728", "HMC AGF", periodo="202606") + relleno(21, periodo="202606"))
+        with self.assertRaises(actualizar.ErrorIncompleto) as ctx:
+            actualizar.leer_archivo(raw, "202606", LISTAS)
+        # `ErrorIncompleto` hereda de `ErrorContenido`, así que lo que distingue el caso es que
+        # sea exactamente ErrorIncompleto (indulgencia) y no un ErrorContenido pelado (errores).
+        self.assertIs(type(ctx.exception), actualizar.ErrorIncompleto)
+        self.assertIn("aún no cierra", str(ctx.exception))
+
     def test_un_trimestre_cerrado_con_pocas_sociedades_no_publica_y_avisa(self):
         # 201003 es el caso real: la CMF nunca lo completó. No publica ni falla la corrida.
         raw = txt(sociedad("76034728", "HMC AGF", periodo="201003") + relleno(4, periodo="201003"))
         with self.assertRaises(actualizar.ErrorContenido) as ctx:
             actualizar.leer_archivo(raw, "201003", LISTAS)
         self.assertNotIsInstance(ctx.exception, actualizar.ErrorIncompleto)
+
+    def test_un_trimestre_cerrado_entre_el_piso_y_el_umbral_reciente_sigue_siendo_defectuoso(self):
+        """El piso de 50 no se relajó: un cerrado con 22 sociedades sigue siendo 201003.
+
+        Es la contracara de la prueba anterior. Al mover la pregunta «¿está abierto?» antes del
+        piso absoluto, un cerrado con menos de 50 debe seguir cayendo en ErrorContenido (no
+        publica, se avisa) y no colarse como transitorio.
+        """
+        raw = txt(sociedad("76034728", "HMC AGF", periodo="201003") + relleno(21, periodo="201003"))
+        with self.assertRaises(actualizar.ErrorContenido) as ctx:
+            actualizar.leer_archivo(raw, "201003", LISTAS)
+        self.assertIs(type(ctx.exception), actualizar.ErrorContenido)
+        self.assertIn("solo 22 sociedades", str(ctx.exception))
 
     def test_un_archivo_completo_no_se_ve_afectado(self):
         raw = txt(sociedad("76034728", "HMC AGF", periodo="201003") + relleno(120, periodo="201003"))
