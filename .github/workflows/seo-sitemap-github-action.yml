@@ -68,9 +68,31 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/sitemap.xml
-          if ! git diff --cached --quiet; then
-            git commit -m "SEO: sitemap.xml actualizado automáticamente (cicirello/generate-sitemap)"
-            git push origin HEAD:main
-          else
+          if git diff --cached --quiet; then
             echo "Sitemap sin cambios; no hay nada que commitear."
+            exit 0
           fi
+          git commit -m "SEO: sitemap.xml actualizado automáticamente (cicirello/generate-sitemap)"
+          # Un push a `main` desde acá compete con los publicadores (cada ~3 días) y con
+          # `pages.yml` (03:15, 45 minutos antes de este flujo): si alguien publicó en el
+          # medio, el push se rechaza. Antes se hacía un único intento y la corrida quedaba
+          # en rojo sin publicar el sitemap; el 2026-11-02 pasó exactamente eso. Como el
+          # sitemap se regenera entero a partir de la cabeza, basta con rebasar y reintentar
+          # (es un archivo generado: se resuelve tomando el del commit, no mezclando).
+          for intento in 1 2 3 4 5; do
+            git fetch origin "${GITHUB_REF_NAME:-main}"
+            if ! git rebase FETCH_HEAD; then
+              git rebase --abort 2>/dev/null || true
+              git reset --hard FETCH_HEAD
+              git add docs/sitemap.xml
+              git diff --cached --quiet || git commit -m "SEO: sitemap.xml actualizado automáticamente (cicirello/generate-sitemap)"
+            fi
+            if git push origin "HEAD:${GITHUB_REF_NAME:-main}"; then
+              echo "Sitemap publicado (intento ${intento}/5)."
+              exit 0
+            fi
+            echo "Push rechazado (intento ${intento}/5): otra corrida publicó primero."
+            sleep $(( 10 + RANDOM % 20 ))
+          done
+          echo "::error title=Sitemap::No se pudo publicar el sitemap tras 5 intentos por contención en la rama"
+          exit 1

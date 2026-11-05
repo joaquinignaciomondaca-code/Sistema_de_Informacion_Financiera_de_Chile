@@ -236,7 +236,26 @@ jobs:
             exit 0
           fi
           git commit -m 'Publica carteras AFP BDP auditadas'
-          git push origin "HEAD:${{ github.event.repository.default_branch }}"
+          # Este job corre a mano y sobre un runner propio con `clean: false`: el árbol puede
+          # venir con restos de la corrida anterior y el push competir con cualquier publicador.
+          # Se rebasa sobre la cabeza vigente antes de empujar (los archivos publicados son
+          # nuevos, así que el rebase no mezcla contenido) y se reintenta unas pocas veces.
+          for intento in 1 2 3 4 5; do
+            git fetch origin "${{ github.event.repository.default_branch }}"
+            if ! git rebase FETCH_HEAD; then
+              git rebase --abort 2>/dev/null || true
+              echo "::error title=Publicación BDP::Conflicto al rebasar sobre la cabeza; revisar a mano"
+              exit 1
+            fi
+            if git push origin "HEAD:${{ github.event.repository.default_branch }}"; then
+              echo "Carteras BDP publicadas (intento ${intento}/5)."
+              exit 0
+            fi
+            echo "Push rechazado (intento ${intento}/5): otra corrida publicó primero."
+            sleep $(( 10 + RANDOM % 20 ))
+          done
+          echo "::error title=Publicación BDP::No se pudo publicar tras 5 intentos por contención"
+          exit 1
       - name: Solicitar deploy Vercel si el propietario configuró un hook
         id: vercel
         env:
