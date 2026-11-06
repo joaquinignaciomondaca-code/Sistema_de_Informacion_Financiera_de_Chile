@@ -3,7 +3,7 @@
  "id": "curva-de-bonos-en-pesos-promedio-mensual-ultimos-5c9393",
  "titulo": "Curva de bonos en pesos: promedio mensual, últimos 24 meses",
  "origen": "explorador",
- "data_release": "2026-11-05.35b696fb1166",
+ "data_release": "2026-11-06.2f5e4018ea34",
  "generado": "2026-11-06",
  "max_filas": 500,
  "columnas": [
@@ -155,9 +155,9 @@
   ],
   [
    "2026-11",
-   5.06,
-   5.695,
-   5.985
+   5.09,
+   5.693,
+   5.983
   ]
  ],
  "sql": "SELECT periodo, round(avg(rendimiento_bono_pesos_2_anos_pct), 3) AS bono_2_anos_pct, round(avg(rendimiento_bono_pesos_5_anos_pct), 3) AS bono_5_anos_pct, round(avg(rendimiento_bono_pesos_10_anos_pct), 3) AS bono_10_anos_pct FROM macro_curva_bonos_pesos GROUP BY periodo ORDER BY periodo DESC LIMIT 24;",
