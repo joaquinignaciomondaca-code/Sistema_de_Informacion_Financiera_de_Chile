@@ -302,6 +302,58 @@ Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_w
 
 </details>
 
+### Mapa de la arquitectura
+
+El flujo completo, desde las fuentes hasta la consulta en el navegador:
+
+```mermaid
+flowchart LR
+    subgraph Fuentes["Fuentes externas"]
+        CMF["CMF · TXT, XLSX, ZIP/XML, PDF, HTML"]
+        BCCH["Banco Central · series oficiales"]
+        SP["Superintendencia de Pensiones · BDP"]
+    end
+
+    subgraph Repo["Repositorio · pipelines"]
+        WF[".github/workflows · 20 flujos (18 con horario)"]
+        PL["pipelines/ y scripts por sector · extrae, valida, publica"]
+        AUD["scripts/audit_*.py · auditorías en CI"]
+    end
+
+    subgraph Publicado["Datos publicados · archivos estáticos"]
+        PQ["docs/outputs/sector/*.parquet · ≈488 MB, más de 19 M filas"]
+        MAN["data_manifest.json · 89 entradas ETL"]
+        API["docs/api/v2/ · contrato estático y views.sql"]
+    end
+
+    subgraph Web["Sitio · GitHub Pages"]
+        SITE["docs/ · HTML y JS sin build · DuckDB-Wasm embebido"]
+    end
+
+    subgraph Consumo["Consumo"]
+        BROWSER["Navegador · SQL local por HTTP Range"]
+        SDK["sdk/python · sif-chile y MCP"]
+        SRV["servidor/ · API HTTP opcional autoalojada"]
+    end
+
+    CMF --> WF
+    BCCH --> WF
+    SP --> WF
+    WF --> PL
+    PL --> PQ
+    PL --> MAN
+    PL --> API
+    PQ --> SITE
+    API --> SITE
+    SITE --> BROWSER
+    PQ --> SDK
+    PQ --> SRV
+    AUD -. verifica .-> PQ
+    AUD -. verifica .-> SITE
+```
+
+Para una versión generada automáticamente por IA a partir del código, ver el diagrama de [GitDiagram para este repositorio](https://gitdiagram.com/joaquinignaciomondaca-code/sistema_de_informacion_financiera_de_chile).
+
 ---
 
 ## 7. Decisiones de diseño
@@ -324,7 +376,6 @@ Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_w
 
 ## 9. Documentación
 
-[`PSEUDOCODIGO.md`](PSEUDOCODIGO.md) — mapa de código, estructura del repositorio y decisiones ·
 [`pipelines/README.md`](pipelines/README.md) — operación de datos y credenciales ·
 [`docs/vendor/duckdb/README.md`](docs/vendor/duckdb/README.md) — cómo se vendoriza el motor ·
 [`archive/notas/version_academica_y_privacidad_2026-10-20.md`](archive/notas/version_academica_y_privacidad_2026-10-20.md) — versión citable, reproducibilidad y protección de identificadores ·
