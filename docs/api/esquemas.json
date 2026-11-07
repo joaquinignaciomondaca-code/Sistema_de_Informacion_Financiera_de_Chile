@@ -4679,9 +4679,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-04",
+   "corte": "2014-01-02 a 2026-11-05",
    "estado": "publicado",
-   "filas": 3183,
+   "filas": 3184,
    "manifest_id": "macro_curva_bonos_pesos",
    "nivel": "contexto",
    "nombre_visible": "macro.curva_bonos_pesos",
@@ -4749,9 +4749,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-04",
+   "corte": "2014-01-02 a 2026-11-05",
    "estado": "publicado",
-   "filas": 3185,
+   "filas": 3186,
    "manifest_id": "macro_curva_bonos_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.curva_bonos_uf",
@@ -5085,9 +5085,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-04",
+   "corte": "2014-01-02 a 2026-11-05",
    "estado": "publicado",
-   "filas": 3089,
+   "filas": 3090,
    "manifest_id": "macro_inflacion_implicita",
    "nivel": "contexto",
    "nombre_visible": "macro.inflacion_implicita",
@@ -5400,7 +5400,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2014-01-01 a 2026-11-06",
+   "corte": "2014-01-01 a 2026-11-07",
    "estado": "publicado",
    "filas": 51,
    "manifest_id": "macro_series_catalogo",
@@ -5463,9 +5463,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-05",
+   "corte": "2014-01-02 a 2026-11-06",
    "estado": "publicado",
-   "filas": 3214,
+   "filas": 3215,
    "manifest_id": "macro_swaps_camara",
    "nivel": "contexto",
    "nombre_visible": "macro.swaps_camara",
@@ -5666,9 +5666,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-11-06",
+   "corte": "2014-01-01 a 2026-11-07",
    "estado": "publicado",
-   "filas": 4693,
+   "filas": 4694,
    "manifest_id": "macro_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.uf",
@@ -11588,8 +11588,8 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 19928085,
-  "filas_unicas": 19928085,
+  "filas_por_objeto": 19928090,
+  "filas_unicas": 19928090,
   "objetos": 90,
   "sin_esquema": 4,
   "tablas_manifiesto": 89,
