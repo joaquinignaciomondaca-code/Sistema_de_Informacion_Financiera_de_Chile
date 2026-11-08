@@ -5400,7 +5400,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2014-01-01 a 2026-11-07",
+   "corte": "2014-01-01 a 2026-11-08",
    "estado": "publicado",
    "filas": 51,
    "manifest_id": "macro_series_catalogo",
@@ -5666,9 +5666,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-11-07",
+   "corte": "2014-01-01 a 2026-11-08",
    "estado": "publicado",
-   "filas": 4694,
+   "filas": 4695,
    "manifest_id": "macro_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.uf",
@@ -11588,8 +11588,8 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 19928090,
-  "filas_unicas": 19928090,
+  "filas_por_objeto": 19928091,
+  "filas_unicas": 19928091,
   "objetos": 90,
   "sin_esquema": 4,
   "tablas_manifiesto": 89,
