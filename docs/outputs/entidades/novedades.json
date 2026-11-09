@@ -209,9 +209,19 @@
       "evento": "alta",
       "antes": null,
       "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-11-09",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "78447256-6",
+      "razon_social": "CARDONE CAPITAL PARTNERS LIMITADA",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
     }
   ],
-  "ultima_revision_utc": "2026-11-04T19:41:19+00:00",
+  "ultima_revision_utc": "2026-11-09T06:38:32+00:00",
   "sectores_revisados": [
     "agf",
     "securitizadoras",
