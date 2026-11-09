@@ -40,12 +40,24 @@ import re
 import sys
 from pathlib import Path
 
-import duckdb
+try:  # el job `automatizacion` de web_audit no instala duckdb: sólo prueba el texto
+    import duckdb
+except Exception:  # pragma: no cover
+    duckdb = None
 
 RAIZ = Path(__file__).resolve().parents[1]
 DOCS = RAIZ / "docs"
 PRIVACIDAD = RAIZ / "PRIVACIDAD.md"
 PRIVACIDAD_HTML = DOCS / "privacidad.html"
+
+
+def _conectar():
+    if duckdb is None:
+        raise SystemExit(
+            "FALLA: duckdb no está instalado (python -m pip install duckdb); "
+            "sin él no se pueden leer los Parquet publicados"
+        )
+    return duckdb.connect()
 
 
 def contar_prestadores(con) -> int:
@@ -91,7 +103,7 @@ def sincronizar(texto: str, prestadores: int, corredoras: int, archivo: str) -> 
 
 def main() -> int:
     revisar = "--check" in sys.argv
-    con = duckdb.connect()
+    con = _conectar()
     prestadores = contar_prestadores(con)
     corredoras = contar_corredoras(con)
 
