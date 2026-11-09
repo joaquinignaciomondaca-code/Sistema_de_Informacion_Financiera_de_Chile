@@ -128,11 +128,20 @@ window.MFCDownload = (function () {
     return hoja;
   }
 
-  function libroXlsx(rows, cols, nombreHoja, tabla) {
+  // Etiquetas de hojas corregidas (2026-11-09):
+  //  - Hoja de datos siempre "Datos" — el nombre del conjunto va en el nombre
+  //    del archivo, no en la etiqueta de la hoja, para que el Excel sea
+  //    escaneable y consistente entre descargas.
+  //  - Hoja de diccionario siempre "Diccionario" (con mayúscula inicial, sin
+  //    tilde extra ni variantes). El límite de 31 caracteres de Excel se respeta.
+  //  - El parámetro nombreHoja se conserva por compatibilidad pero ya no decide
+  //    la etiqueta; se ignora para evitar "seguros_renta_fija_202605" como nombre
+  //    de pestaña.
+  function libroXlsx(rows, cols, _nombreHoja, tabla) {
     if (!window.XLSX) throw new Error("La librería de Excel (SheetJS) no está cargada en esta página.");
     const hoja = window.XLSX.utils.json_to_sheet(rows, { header: cols });
     const libro = window.XLSX.utils.book_new();
-    window.XLSX.utils.book_append_sheet(libro, hoja, String(nombreHoja || "Datos").slice(0, 31));
+    window.XLSX.utils.book_append_sheet(libro, hoja, "Datos");
     const diccionario = hojaDiccionario(tabla);
     if (diccionario) window.XLSX.utils.book_append_sheet(libro, diccionario, "Diccionario");
     const salida = window.XLSX.write(libro, { bookType: "xlsx", type: "array" });
@@ -165,7 +174,11 @@ window.MFCDownload = (function () {
       } else {
         const hoja = window.XLSX.utils.json_to_sheet(bloque, { header: cols });
         const libro = window.XLSX.utils.book_new();
-        window.XLSX.utils.book_append_sheet(libro, hoja, `Parte_${parte + 1}`);
+        // Etiqueta corregida: "Datos - Parte 1" en lugar de "Parte_1" genérico.
+        // El número de parte indica orden dentro del ZIP; el conjunto sigue
+        // siendo el mismo, por eso todas las partes comparten el prefijo "Datos".
+        const etiquetaDatos = total > 1 ? `Datos - Parte ${parte + 1} de ${total}` : "Datos";
+        window.XLSX.utils.book_append_sheet(libro, hoja, etiquetaDatos.slice(0, 31));
         const diccionario = hojaDiccionario(tabla);
         if (diccionario) window.XLSX.utils.book_append_sheet(libro, diccionario, "Diccionario");
         zip.file(`${nombre}_${sufijo}.xlsx`, window.XLSX.write(libro, { bookType: "xlsx", type: "array" }));
