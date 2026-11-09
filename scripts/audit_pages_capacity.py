@@ -25,9 +25,15 @@ LIMITE_GH_PAGES = 900 * MIB
 # El AVISO se mueve con la nueva política de descargas: además del Parquet, el
 # sitio publica CSV y JSON ya generados (scripts/build_download_exports.py) para
 # que Power BI y Data Studio consuman series largas sin generar nada en el
-# navegador. Eso sitúa al sitio cerca de 830 MiB; el AVISO deja margen para un
-# mes de crecimiento antes del límite preventivo de 900 MiB.
-AVISO = 870 * MIB
+# navegador. Con el tope de CSV en 10 MB por conjunto el bloque de exportes pesa
+# ~57 MiB de los ~670 MiB del sitio, y el AVISO deja margen antes del límite
+# preventivo de 900 MiB.
+#
+# El umbral no es sólo el límite de 1 GiB de Pages: cada despliegue sube `docs/`
+# completo y el publicador espera al servidor con un tope de 10 minutos. Con el
+# tope anterior de 35 MB el sitio llegó a 867 MiB y un despliegue de `main` se
+# cayó por timeout (2026-11-09, «Timeout reached, aborting!»).
+AVISO = 700 * MIB
 
 # Los cuatro Parquet sin contrato/manifest propio se conservan como muestras o
 # registros de proceso citados por su módulo. Mantener la lista explícita impide

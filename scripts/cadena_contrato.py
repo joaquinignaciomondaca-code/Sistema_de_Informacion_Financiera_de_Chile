@@ -35,6 +35,12 @@ CADENA = (
     # sincroniza las cifras publicadas de README.md y detecta cualquier desalineación antes
     # de que el commit llegue a la rama.
     "build_metricas_publicadas.py",
+    # Los totales del aviso de privacidad (prestadores FinTech, corredoras) son
+    # cifras de la fuente, no del código: se escriben desde los Parquet antes de
+    # que `build_metadatos` selle el HTML. Escritos a mano, un alta en el registro
+    # de la CMF ponía `web_audit` en rojo sin que nadie hubiera tocado nada
+    # (2026-11-09: 267 → 268 prestadores).
+    "build_privacidad_cifras.py",
     "build_estado_claves.py",
     "build_metadatos.py",
     "construir_reproducibilidad.py",
