@@ -146,23 +146,23 @@ Todas llevan `periodo` (`AAAA-MM`); las trimestrales usan el mes de referencia d
 
 ### 3.3 Ejemplo de autoexplicatividad (el caso del "nemotécnico")
 
-Fila de `macro.series` hoy — no se entiende sin ir al catálogo:
+Fila de `macro.series` hoy — no se entiende sin ir al catálogo (valor ilustrativo enmascarado con `XXX`):
 
 ```
-fecha=2026-09-30  periodo=2026-09  clave=oro  serie_id=F030.PRE.USD.ZOZ.D  valor=4XXX.XX
+fecha=2026-09-30  periodo=2026-09  clave=oro  serie_id=F030.PRE.USD.ZOZ.D  valor=4XXX.XX  # ilustrativo — enmascarado
 ```
 
 La misma fila en `macro.series_formato_largo`:
 
 ```
 fecha=2026-09-30  periodo=2026-09  nombre_serie=Oro (precio spot)  unidad=USD por onza troy
-frecuencia=Diaria  grupo=Commodities  codigo_bcch=F030.PRE.USD.ZOZ.D  valor=4XXX.XX
+frecuencia=Diaria  grupo=Commodities  codigo_bcch=F030.PRE.USD.ZOZ.D  valor=4XXX.XX  # ilustrativo — enmascarado
 ```
 
 Y el panel equivalente, `macro.metales_preciosos`:
 
 ```
-periodo=2026-09  oro_usd_por_onza_troy=4XXX.XX  plata_usd_por_onza_troy=XX.XX
+periodo=2026-09  oro_usd_por_onza_troy=4XXX.XX  plata_usd_por_onza_troy=XX.XX  # ilustrativo — enmascarado
 ```
 
 > Nota: si la tabla con nemotécnicos que se vio es de otra industria (`seguros.acciones`, `ffmm.cartera_nacional`…), el principio se aplica igual: cada fila debe traer el nombre/descripción del instrumento, no solo su código. Eso puede ser una segunda pasada fuera de macro.
