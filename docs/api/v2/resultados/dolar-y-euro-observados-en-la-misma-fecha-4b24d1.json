@@ -3,7 +3,7 @@
  "id": "dolar-y-euro-observados-en-la-misma-fecha-4b24d1",
  "titulo": "Dólar y euro observados en la misma fecha",
  "origen": "explorador",
- "data_release": "2026-11-08.f82c99370da0",
+ "data_release": "2026-11-09.520df1378a5c",
  "generado": "2026-11-09",
  "max_filas": 500,
  "columnas": [
@@ -15,12 +15,6 @@
  "filas": 30,
  "truncado": false,
  "datos": [
-  [
-   "2026-09-25",
-   965.71,
-   1098.15,
-   1.1371
-  ],
   [
    "2026-09-28",
    964.1,
@@ -194,6 +188,12 @@
    970.94,
    1090.94,
    1.1236
+  ],
+  [
+   "2026-11-09",
+   979.88,
+   1092.4,
+   1.1148
   ]
  ],
  "sql": "SELECT d.fecha, d.dolar_observado_clp_por_usd, e.euro_observado_clp_por_eur, round(e.euro_observado_clp_por_eur / d.dolar_observado_clp_por_usd, 4) AS euro_por_dolar FROM macro_dolar_observado d JOIN macro_euro_observado e USING (fecha) ORDER BY d.fecha DESC LIMIT 30;",
