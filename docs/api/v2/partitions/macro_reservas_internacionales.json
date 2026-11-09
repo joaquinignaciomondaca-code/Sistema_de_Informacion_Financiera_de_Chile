@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_reservas_internacionales.parquet",
-   "bytes": 4379,
+   "bytes": 4388,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_reservas_internacionales.parquet",
    "periodo": "macro_reservas_internacionales",
-   "sha256": "e871161bbdb9df32abefae98de3aa45bd628198a18474504f98e1670ff1b0f71"
+   "sha256": "961c7bba51958f5e76e7ed4a501cb2439a9d0f915bc89413dbaf206161206067"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 4379,
-  "filas": 153
+  "bytes": 4388,
+  "filas": 154
  },
  "version": "2.3.0"
 }

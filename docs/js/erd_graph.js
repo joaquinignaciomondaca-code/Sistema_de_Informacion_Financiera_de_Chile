@@ -696,7 +696,7 @@ const ERD_TABLES = [
     y: 110,
     w: 250,
     h: 170,
-    rows: "3.215 filas",
+    rows: "3.216 filas",
     file: "outputs/macro/macro_swaps_camara.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -717,7 +717,7 @@ const ERD_TABLES = [
     y: 256,
     w: 250,
     h: 134,
-    rows: "3.184 filas",
+    rows: "3.185 filas",
     file: "outputs/macro/macro_curva_bonos_pesos.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -736,7 +736,7 @@ const ERD_TABLES = [
     y: 310,
     w: 250,
     h: 188,
-    rows: "3.186 filas",
+    rows: "3.187 filas",
     file: "outputs/macro/macro_curva_bonos_uf.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -758,7 +758,7 @@ const ERD_TABLES = [
     y: 420,
     w: 250,
     h: 116,
-    rows: "3.090 filas",
+    rows: "3.091 filas",
     file: "outputs/macro/macro_inflacion_implicita.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -994,7 +994,7 @@ const ERD_TABLES = [
     y: 1386,
     w: 250,
     h: 98,
-    rows: "153 filas",
+    rows: "154 filas",
     file: "outputs/macro/macro_reservas_internacionales.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
