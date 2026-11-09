@@ -8,9 +8,9 @@ no la intención del pipeline.
 
 Comprueba siete cosas:
 
-  1. `fintech_rpsf_lista_entidades`: 36 personas naturales de 267 filas y
-     ninguna columna de correo.
-  2. `corredoras_bolsa_lista_entidades`: 11 nombres de personas entre 120.
+  1. `fintech_rpsf_lista_entidades`: ninguna columna de correo y el conteo de
+     personas naturales del aviso igual al de los archivos.
+  2. `corredoras_bolsa_lista_entidades`: 11 nombres de personas.
   3. `seguros_bienes_raices`: `rol`, `ubicacion` y `arrendatario` vacíos en todas
      las filas; `comuna`, `ciudad` y `property_id` presentes; y los conteos de
      tasadores que declara el aviso.
@@ -23,6 +23,15 @@ Comprueba siete cosas:
      la compuerta.
   7. Los números escritos en `PRIVACIDAD.md` coinciden con lo medido, y el
      catálogo sólo declara fuentes que efectivamente entregan datos.
+
+Sobre las cifras del aviso
+--------------------------
+Los conteos que dependen de la fuente (`267 prestadores`, `120 corredores`) no
+se escriben aquí: un alta en el registro de la CMF los deja obsoletos y la
+compuerta se pone en rojo por un dato que el pipeline hizo bien en publicar. Se
+leen **del propio aviso** y se contrastan con lo medido. Así el aviso sigue
+siendo la declaración que se audita —no una copia del código— y la compuerta
+señala sólo cuando aviso y archivos se separan.
 
 Uso:
     python3 scripts/auditar_personas_publicadas.py            # informe
@@ -66,8 +75,13 @@ MARCAS_SOCIEDAD = re.compile(
 FUENTES_ESPERADAS = {"CMF", "BCCh", "SPensiones"}
 
 
+FAVISO_FINTECH = re.compile(r"(\d+) personas naturales[^|\n]*?de\s+([\d.]+) prestadores")
+FAVISO_CORREDORAS = re.compile(r"(\d+) corredores[^|\n]*?de\s+([\d.]+)")
+
+
 def conectar() -> duckdb.DuckDBPyConnection:
     return duckdb.connect()
+
 
 
 def parquet(con, ruta: str, vista: str) -> None:
@@ -116,10 +130,19 @@ def main() -> int:
         "SELECT count(*), count(*) FILTER (WHERE tipo_persona = 'Persona Natural') FROM fintech"
     ).fetchone()
     cols = columnas(con, "fintech")
-    if filas != 267:
-        fallos.append(f"fintech: {filas} filas; el aviso declara 267 prestadores")
-    if naturales != 36:
-        fallos.append(f"fintech: {naturales} personas naturales; el aviso declara 36")
+    texto_aviso = PRIVACIDAD.read_text(encoding="utf-8")
+    declarado = FAVISO_FINTECH.search(texto_aviso)
+    if not declarado:
+        fallos.append("fintech: el aviso no declara personas naturales ni prestadores")
+    else:
+        if int(declarado.group(1)) != naturales:
+            fallos.append(
+                f"fintech: {naturales} personas naturales; el aviso declara {declarado.group(1)}"
+            )
+        if int(declarado.group(2).replace(".", "")) != filas:
+            fallos.append(
+                f"fintech: {filas} prestadores publicados; el aviso declara {declarado.group(2)}"
+            )
     if any("email" in c.lower() or "correo" in c.lower() for c in cols):
         fallos.append("fintech: sigue publicada una columna de correo")
     notas.append(f"fintech: {filas} filas · {naturales} personas naturales · sin correo")
@@ -128,10 +151,15 @@ def main() -> int:
     parquet(con, str(DOCS / "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet"), "corredoras")
     nombres = [n for (n,) in con.execute("SELECT nombre_empresa FROM corredoras").fetchall()]
     personas = [n for n in nombres if not MARCAS_SOCIEDAD.search(n)]
-    if len(nombres) != 120:
-        fallos.append(f"corredoras: {len(nombres)} filas; el aviso declara 120")
     if len(personas) != 11:
         fallos.append(f"corredoras: {len(personas)} nombres de persona; el aviso declara 11")
+    declarado = FAVISO_CORREDORAS.search(texto_aviso)
+    if not declarado:
+        fallos.append("corredoras: el aviso no declara corredores ni su total")
+    elif int(declarado.group(2).replace(".", "")) != len(nombres):
+        fallos.append(
+            f"corredoras: {len(nombres)} filas; el aviso declara {declarado.group(2)} corredores"
+        )
     notas.append(f"corredoras: {len(nombres)} filas · {len(personas)} a nombre de persona")
 
     # --- 3 · Bienes raíces de seguros -------------------------------------

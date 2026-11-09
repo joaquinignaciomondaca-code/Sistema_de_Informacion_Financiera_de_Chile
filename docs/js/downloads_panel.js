@@ -940,7 +940,10 @@ class DownloadsPanelController {
     if (!item || item.archivosN <= 1) return;
     const total = item.bytes || 0;
     if (total > 40 * 1024 * 1024) {
-      this.avisar("El conjunto supera los 40 MB de Parquet: empaquetar en el navegador puede colapsar la página. Baja los archivos sueltos o usa el CSV pre-generado.", 6000);
+      // No se sugiere «el CSV pre-generado»: por encima de 10 MB por conjunto ese
+      // archivo no se publica (scripts/build_download_exports.py) y el botón que
+      // aparece en su lugar es justamente el que arma el CSV en el navegador.
+      this.avisar("El conjunto supera los 40 MB de Parquet: empaquetar en el navegador puede colapsar la página. Baja los archivos sueltos o usa el botón CSV, que arma el archivo con el motor.", 6000);
       return;
     }
     await this.conBoton(boton, async () => {

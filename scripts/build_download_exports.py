@@ -22,8 +22,7 @@ docs/js/download_utils.js).
 
 Tipos y topes
 -------------
-  CSV   <- 35 MB por conjunto (GitHub Pages admite 100 MB por archivo; este
-           tope deja margen y mantiene el peso publicado en presupuesto).
+  CSV   <- 10 MB por conjunto (ver «Por qué 10 MB» más abajo).
            Escrito por DuckDB con comas y sin BOM: el formato que Power BI y
            Data Studio esperan.
   JSON  <- 5 MB por conjunto (JSON Lines; lo lee el conector JSON de Power BI).
@@ -33,6 +32,20 @@ Tipos y topes
   Vistas con filtro SQL (`where`, hoy sólo banca B1/B2/R1): se omiten. El
            CSV de la serie filtrada supera el tope; esa descarga sigue
            disponible en el navegador con el filtro aplicado.
+
+Por qué 10 MB
+-------------
+El tope no lo impone el archivo (Pages admite 100 MB), sino el **peso total del
+sitio**: cada despliegue sube `docs/` completo y el publicador espera al servidor
+de Pages con un límite de 10 minutos. Con el tope anterior de 35 MB, once
+conjuntos concentraban 190 MB de los 276 MB de exportes y `docs/` llegaba a
+867 MiB sobre un umbral preventivo de 900 MiB: el 2026-11-09 el despliegue de
+`main` se cayó por timeout («Timeout reached, aborting!», estado
+`syncing_files`) y 31 de las últimas 94 corridas del publicador quedaron
+canceladas por la misma congestión. Con 10 MB se conservan 57 de los 68 CSV y el
+sitio baja a ~670 MiB. Los conjuntos grandes no pierden datos: el Parquet sigue
+publicado y su CSV se genera en el navegador (con aviso de espera, ver
+`docs/js/download_utils.js`), igual que en los conjuntos con filtro SQL.
 
 Incremental
 -----------
@@ -75,7 +88,7 @@ from scripts.build_download_catalog import parse_views  # noqa: E402
 DOCS = ROOT / "docs"
 INDICE = DOCS / "outputs" / "_exportes.json"
 
-CSV_MAX_MB = 35
+CSV_MAX_MB = 10
 JSON_MAX_MB = 5
 PARQUET_MAX_MB = 60
 
@@ -240,10 +253,20 @@ def generar_conjunto(vista: dict, indice: dict, forzado: bool, escribir: bool = 
     if not forzado and not hay_cambio(anterior.get("firma"), firma_actual):
         # Sin cambios en la fuente: verificar que los publicados existen y
         # pesan lo que se registro; si no, regenerar (un archivo truncado no
-        # queda publicando media serie).
-        csv_ok = anterior.get("csv") and peso(DOCS / anterior["csv"]["ruta"]) == anterior["csv"].get("bytes")
-        json_ok = (not anterior.get("json")) or (
-            peso(DOCS / anterior["json"]["ruta"]) == anterior["json"].get("bytes"))
+        # queda publicando media serie). También se exige que respeten el tope
+        # vigente: al bajar CSV_MAX_MB, un archivo que ya estaba publicado no
+        # puede quedarse porque «no cambió la fuente» —el tope es parte de la
+        # política de publicación y el peso del sitio se decide con él.
+        csv_previo = anterior.get("csv") or {}
+        json_previo = anterior.get("json") or {}
+        csv_ok = bool(csv_previo) and (
+            peso(DOCS / csv_previo["ruta"]) == csv_previo.get("bytes")
+            and csv_previo.get("bytes", 0) <= CSV_MAX_MB * 1024 * 1024
+        )
+        json_ok = (not json_previo) or (
+            peso(DOCS / json_previo["ruta"]) == json_previo.get("bytes")
+            and json_previo.get("bytes", 0) <= JSON_MAX_MB * 1024 * 1024
+        )
         if csv_ok and json_ok:
             entrada["firma"] = firma_actual
             entrada["csv"] = anterior.get("csv")

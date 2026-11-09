@@ -28,6 +28,18 @@ class RefrescoTest(unittest.TestCase):
                         CADENA.index("auditar_contrato.py"))
         self.assertEqual(CADENA[-1], "auditar_contrato.py")
 
+    def test_el_aviso_de_privacidad_se_sincroniza_antes_de_sellar_el_html(self):
+        """Los totales de la fuente se escriben antes de que `build_metadatos` selle el HTML.
+
+        El 2026-11-09 el registro FinTech de la CMF pasó de 267 a 268 prestadores y
+        `web_audit` se puso en rojo en `main`: el aviso declaraba la cifra vieja. Si
+        el paso va después de `build_metadatos`, el HTML publicado queda una alta
+        atrás aunque el Markdown esté al día.
+        """
+        self.assertIn("build_privacidad_cifras.py", CADENA)
+        self.assertLess(CADENA.index("build_privacidad_cifras.py"),
+                        CADENA.index("build_metadatos.py"))
+
     def test_corre_todos_los_generadores_y_verifica_cada_uno(self):
         llamadas = []
 
