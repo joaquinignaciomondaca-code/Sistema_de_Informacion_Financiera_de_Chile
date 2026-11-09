@@ -1,6 +1,7 @@
 """Balance de los Patrimonios Separados (cuenta por cuenta) → Parquet publicado.
 
-Fuente: securitizadoras/fuentes/balances_patrimonios_separados.xlsx, hoja Balance_por_cuenta.
+Fuente: securitizadoras/fuentes/balances_patrimonios_separados.xlsx, hoja Datos
+    (antes Balance_por_cuenta; el lector acepta ambas por compatibilidad).
     Excel curado localmente a partir de los PDF de estados financieros que publica la CMF.
     El script no extrae PDFs: publica una fila por cuenta ya consolidada; montos en miles de pesos
     (M$) con el signo impreso.
@@ -35,7 +36,8 @@ from pipelines.auto.rut import con_puntos
 
 ROOT = Path(__file__).resolve().parents[2]
 XLSX = ROOT / "securitizadoras" / "fuentes" / "balances_patrimonios_separados.xlsx"
-HOJA = "Balance_por_cuenta"
+HOJA = "Datos"  # etiqueta unificada con el resto de Excels del SIF (antes "Balance_por_cuenta")
+HOJA_LEGADO = "Balance_por_cuenta"  # compatibilidad hacia atrás
 OUT = ROOT / "docs" / "outputs" / "securitizadoras"
 TABLA = "patrimonios_separados_balance"
 TOL = 2  # M$: redondeo impreso en los PDF
@@ -57,11 +59,18 @@ def fallar(msg: str) -> None:
 
 
 def leer(xlsx: Path) -> pd.DataFrame:
-    cuentas = pd.read_excel(xlsx, HOJA, dtype={"entidad_rut": str, "periodo": str})
+    # Lee "Datos" (nuevo) con fallback a "Balance_por_cuenta" (legado) para no romper
+    # archivos ya descargados antes del renombre de la pestaña.
+    try:
+        cuentas = pd.read_excel(xlsx, HOJA, dtype={"entidad_rut": str, "periodo": str})
+        hoja_usada = HOJA
+    except ValueError:
+        cuentas = pd.read_excel(xlsx, HOJA_LEGADO, dtype={"entidad_rut": str, "periodo": str})
+        hoja_usada = HOJA_LEGADO
     esperadas = {"archivo", "entidad_rut", "entidad_nombre", "patrimonio_codigo", "periodo",
                  "categoria", "asiento", "monto"}
     if not esperadas <= set(cuentas.columns):
-        fallar(f"Faltan columnas en {HOJA}: {esperadas - set(cuentas.columns)}")
+        fallar(f"Faltan columnas en {hoja_usada}: {esperadas - set(cuentas.columns)}")
     return cuentas
 
 
