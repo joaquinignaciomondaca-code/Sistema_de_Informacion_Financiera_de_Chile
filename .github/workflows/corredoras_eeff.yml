@@ -106,8 +106,8 @@ jobs:
       - name: Confirmar los trimestres publicados
         if: always() && steps.publicar.outcome != 'skipped'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           git add docs/outputs/corredoras_bolsa/manifest.json docs/outputs/corredoras_bolsa/corredoras_bolsa_balance docs/outputs/corredoras_bolsa/corredoras_bolsa_resultados
           if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
           ultimo=$(python -c "import json;print(max(k for k,v in json.load(open('docs/outputs/corredoras_bolsa/manifest.json'))['periodos'].items() if v.get('sociedades')))")

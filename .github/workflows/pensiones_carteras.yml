@@ -228,8 +228,8 @@ jobs:
         run: python -m pensiones.scripts.publish_bdp --staging .local-data/pensiones/bdp/staging
       - name: Confirmar datos validados en la rama de producción
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           git add docs/outputs/pensiones/bdp
           if git diff --cached --quiet; then
             echo 'No hay cambios de contenido para publicar.'

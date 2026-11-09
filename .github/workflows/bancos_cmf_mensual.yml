@@ -112,8 +112,8 @@ jobs:
       - name: Confirmar el período validado para que la web recoja los cambios
         if: steps.publish.outputs.published_changed == 'true'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           # El commit de datos lleva solo lo que escribe este workflow (las particiones y su
           # manifiesto). data_manifest.json lo editan todos los publicadores: si viajara en el commit
           # chocaría con la edición de otro, y reintentar no sirve: el conflicto persiste mientras esa

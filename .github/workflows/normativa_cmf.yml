@@ -123,8 +123,8 @@ jobs:
         # En un pull_request este flujo sólo audita: no consulta la CMF ni escribe en la rama.
         if: github.event_name != 'pull_request'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           git add data/normativa_cmf/state.json docs/outputs/normativa_cmf/feed.json
           if git diff --cached --quiet; then
             echo 'Feed y estado sin cambios.'

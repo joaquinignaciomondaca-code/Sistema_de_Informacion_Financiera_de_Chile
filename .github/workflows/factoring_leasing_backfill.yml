@@ -106,8 +106,8 @@ jobs:
             echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           # Los Parquets y su metadata solo los escribe este workflow. Los catálogos de la web
           # (duckdb_client, sidebar, data_viewer, data_dictionary, index.html), data_manifest.json y
           # el catálogo de descargas los editan TODOS los publicadores: si viajaran en el commit
