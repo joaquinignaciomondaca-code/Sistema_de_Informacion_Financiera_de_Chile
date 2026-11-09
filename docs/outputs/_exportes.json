@@ -175,11 +175,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/seguros/acciones/acciones.completo.csv",
-    "bytes": 26904209,
-    "filas": 109019
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 109019,
@@ -282,11 +278,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/seguros/fondos_mutuos/fondos_mutuos.completo.csv",
-    "bytes": 21772819,
-    "filas": 100472
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 100472,
@@ -893,11 +885,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/seguros/control_inversiones/control_inversiones.completo.csv",
-    "bytes": 11074651,
-    "filas": 111410
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 111410,
@@ -968,11 +956,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/seguros/otras_inversiones/otras_inversiones.completo.csv",
-    "bytes": 10791358,
-    "filas": 42494
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 42494,
@@ -1316,11 +1300,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/seguros/acciones_relevantes/acciones_relevantes.completo.csv",
-    "bytes": 13196970,
-    "filas": 109019
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 109019,
@@ -1919,11 +1899,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/fi/cartera_extranjera/cartera_extranjera.completo.csv",
-    "bytes": 10931996,
-    "filas": 76849
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 76849,
@@ -3482,11 +3458,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/ffmm/futuros_forwards/futuros_forwards.completo.csv",
-    "bytes": 27738208,
-    "filas": 282045
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 282045,
@@ -3899,11 +3871,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/ffmm/ffmm_balance/ffmm_balance.completo.csv",
-    "bytes": 34887680,
-    "filas": 126256
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 126256,
@@ -5771,11 +5739,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/agf/agf_balance/agf_balance.completo.csv",
-    "bytes": 12540047,
-    "filas": 71423
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 71423,
@@ -6729,11 +6693,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_balance/corredoras_bolsa_balance.completo.csv",
-    "bytes": 19182549,
-    "filas": 109305
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 109305,
@@ -6884,11 +6844,7 @@
     }
    ],
    "where": "",
-   "csv": {
-    "ruta": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/corredoras_bolsa_resultados.completo.csv",
-    "bytes": 15889677,
-    "filas": 78683
-   },
+   "csv": null,
    "json": null,
    "nota": null,
    "filas": 78683,
@@ -7028,9 +6984,9 @@
    }
   }
  },
- "generado": "2026-11-09T10:00:50+00:00",
+ "generado": "2026-11-09T19:25:57+00:00",
  "parametros": {
-  "csv_max_mb": 35,
+  "csv_max_mb": 10,
   "json_max_mb": 5,
   "parquet_max_mb": 60
  }

@@ -142,6 +142,27 @@ class BuildDownloadExportsTests(unittest.TestCase):
         self.assertIsNone(entrada["csv"])
         self.assertFalse((self.salida / "tabla.completo.csv").exists())
 
+    def test_bajar_el_tope_retira_el_csv_ya_publicado(self):
+        """Un CSV publicado que ya no cabe en el tope debe desaparecer, no quedarse.
+
+        El 2026-11-09 se bajó el tope de 35 MB a 10 MB para aliviar el peso del
+        sitio. Con el pase incremental anterior, el conjunto «no cambió su
+        fuente» y el CSV de 33 MB seguía publicado: la bajada del tope no tenía
+        efecto y el sitio seguía pesando lo mismo.
+        """
+        ruta = self.write_parquet("outputs/prueba/tabla.parquet", [{"a": 1}, {"a": 2}])
+        vista = {"name": "tabla", "kind": "file", "path": ruta, "where": ""}
+        indice = {"conjuntos": {}}
+        entrada = exp.generar_conjunto(vista, indice, forzado=False)
+        indice["conjuntos"]["tabla"] = entrada
+        csv_path = self.docs / entrada["csv"]["ruta"]
+        self.assertTrue(csv_path.exists())
+        # El mismo conjunto, ahora con un tope menor que el archivo publicado.
+        self.patchear("CSV_MAX_MB", 0)
+        entrada2 = exp.generar_conjunto(vista, indice, forzado=False)
+        self.assertIsNone(entrada2["csv"])
+        self.assertFalse(csv_path.exists())
+
     def test_json_sobre_tope_no_se_publica(self):
         ruta = self.write_parquet("outputs/prueba/tabla.parquet", [{"a": 1}, {"a": 2}])
         self.patchear("JSON_MAX_MB", 0)  # ningún JSON cabe

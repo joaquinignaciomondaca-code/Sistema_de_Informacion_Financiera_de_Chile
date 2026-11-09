@@ -65,6 +65,9 @@ on:
       - 'scripts/build_download_catalog.py'
       - 'scripts/build_download_exports.py'
       - 'scripts/test_build_download_exports.py'
+      - 'scripts/build_privacidad_cifras.py'
+      - 'scripts/auditar_personas_publicadas.py'
+      - 'PRIVACIDAD.md'
       - 'scripts/build_bancos_vistas.py'
       - 'scripts/build_sql_compact_parquets.py'
       - 'scripts/test_sql_compact_parquets.py'
@@ -330,6 +333,21 @@ jobs:
 
       - name: 'Descargas: generador de CSV/JSON (test unitario)'
         run: python -m unittest scripts.test_build_download_exports -v
+
+      # Los totales del aviso de privacidad son cifras de la fuente (prestadores
+      # FinTech, corredoras de bolsa) y los escribe el contrato derivado. Si alguien
+      # publica la tabla sin regenerar la cadena, el aviso queda un alta atrás y la
+      # compuerta de privacidad falla en el push siguiente: se detecta acá, antes.
+      - name: 'Aviso de privacidad: totales al día con los archivos publicados'
+        run: |
+          set +e
+          python scripts/build_privacidad_cifras.py --check > aviso.log 2>&1; n=$?
+          if [ "$n" -ne 0 ]; then
+            grep -h -E "^(FALLA|Ejecuta)" aviso.log | head -5 | sed 's/%/%25/g' \
+              | while IFS= read -r l; do echo "::error title=Aviso de privacidad::$l"; done
+          fi
+          echo "::notice title=Aviso de privacidad::$(tail -n 1 aviso.log)"
+          exit $n
 
       - name: 'SQL: pruebas y Parquet compactos sincronizados con las particiones'
         run: |
@@ -720,6 +738,7 @@ jobs:
           scripts.test_audit_automatizacion
           scripts.test_build_metricas_publicadas
           scripts.test_refrescar_contrato
+          scripts.test_build_privacidad_cifras
 
   # Pruebas unitarias de los extractores y publicadores de estados financieros. Cada publicador
   # corre las suyas antes de publicar, pero solo cuando se dispara; aquí corren en cada PR y push,
