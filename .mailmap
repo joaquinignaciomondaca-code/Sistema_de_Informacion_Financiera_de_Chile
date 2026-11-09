@@ -1,23 +1,29 @@
-# .mailmap — unifica identidades de Git en el historial
-# Formato:  Nombre canónico <email canónico>  Nombre alias <email alias>
-#           o  Nombre canónico <email canónico> <email alias>  cuando el nombre coincide.
-# Ver: git help mailmap, git shortlog, git log --use-mailmap
+# .mailmap — unifica TODAS las identidades al dueño del perfil
+# Objetivo: que el gráfico "Contributors 5 → 1" muestre solo a joaquinignaciomondaca-code.
+# GitHub respeta .mailmap para el grafo de contribuciones: cada alias histórico
+# se resuelve al email canónico del owner. Sin reescribir historial.
+# Ver: git help mailmap, https://docs.github.com/en/account-and-profile/reference/git-contribution-requirements
+#
+# Formato:  NombreCanónico <emailCanónico>  NombreAlias <emailAlias>
 
-# ─── Joaquín Mondaca — identidad canónica del repositorio ─────────────────────
-# La identidad configurada actualmente (git config user.name / user.email) es:
-#   joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com>
-# Todo alias histórico de Joaquín debe resolverse a esa identidad para que
-# `git shortlog -sne --all`, `git log --use-mailmap` y la analítica de contribuciones
-# muestren un único autor, sin duplicar aportes por variaciones de nombre/email.
+# ─── Identidad canónica (dueño) ─────────────────────────────────────────────
+# Config actual: joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com>
+
+# ─── 1. Alias humanos de Joaquín (variaciones con/sin tilde, gmail vs noreply) ─
 joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> Joaquín Mondaca <joaquinignaciomondaca@gmail.com>
 joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> Joaquin Mondaca <joaquinmondaca@users.noreply.github.com>
 joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> <joaquinignaciomondaca@gmail.com>
 joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> <joaquinmondaca@users.noreply.github.com>
 
-# ─── Agentes de Arena — unifica variantes del bot de asistencia ───────────────
-# No son de Joaquín, pero también se normalizan para que el historial no se fragmente
-# entre `Arena Agent`, `arena-agent` y las variantes con sufijo [bot].
-Arena Agent <agent@arena.ai> arena-agent <agent@arena.ai>
-Arena Agent <agent@arena.ai> <agent@users.noreply.github.com>
-Arena Agent <agent@arena.ai> arena-ai-coding-agent[bot] <298482267+arena-ai-coding-agent[bot]@users.noreply.github.com>
-Arena Agent <agent@arena.ai> arena-ai-coding-agent[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+# ─── 2. Bots de automatización (Actions + Arena) → dueño ───────────────────
+# Antes mostraban 3 avatares extra (github-actions[bot], arena-ai-coding-agent[bot], Arena Agent).
+# Al mapearlos al dueño, GitHub suma sus 91+452+12 commits al dueño y el badge pasa a "Contributors 1".
+joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> arena-ai-coding-agent[bot] <298482267+arena-ai-coding-agent[bot]@users.noreply.github.com>
+joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> arena-ai-coding-agent[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> Arena Agent <agent@arena.ai>
+joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> arena-agent <agent@arena.ai>
+joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> Arena Agent <agent@users.noreply.github.com>
+# Variante histórica de arena con email de GitHub (3 commits)
+joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> <agent@arena.ai>
+joaquinignaciomondaca-code <234955610+joaquinignaciomondaca-code@users.noreply.github.com> <agent@users.noreply.github.com>
