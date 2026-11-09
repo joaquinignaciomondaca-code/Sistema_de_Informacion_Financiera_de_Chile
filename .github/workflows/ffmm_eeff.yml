@@ -134,8 +134,8 @@ jobs:
       - name: Confirmar la serie publicada
         if: always() && steps.procesar.outputs.publicado == 'true'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           git add docs/outputs/ffmm/ffmm_balance docs/outputs/ffmm/ffmm_resultados docs/outputs/ffmm/ffmm_eeff_control.json
           if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
           ultimo=$(python -c "import json;print(json.load(open('docs/outputs/ffmm/ffmm_balance/manifest.json'))['periodos'][-1])")

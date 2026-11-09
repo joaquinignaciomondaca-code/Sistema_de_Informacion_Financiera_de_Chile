@@ -113,8 +113,8 @@ jobs:
       - name: Confirmar los trimestres publicados
         if: always() && steps.publicar.outcome != 'skipped'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           rutas="docs/outputs/ifrs_sectores docs/outputs/agf/agf_balance docs/outputs/agf/agf_resultados docs/outputs/securitizadoras/securitizadoras_balance docs/outputs/securitizadoras/securitizadoras_resultados docs/outputs/cajas_compensacion/ccaf_balance docs/outputs/cajas_compensacion/ccaf_resultados docs/outputs/cajas_compensacion/ccaf_maestro.json docs/outputs/cajas_compensacion/ccaf_maestro.parquet docs/outputs/factoring_leasing/factoring_leasing_maestro.json docs/outputs/factoring_leasing/factoring_leasing_maestro.parquet docs/outputs/entidades/novedades_ifrs.json"
           git add $rutas
           if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi

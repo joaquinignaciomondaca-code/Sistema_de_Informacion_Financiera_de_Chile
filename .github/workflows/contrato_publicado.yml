@@ -66,8 +66,8 @@ jobs:
 
       - name: Publicar el contrato derivado
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           # Varias automatizaciones escriben en main a la vez y cada una regenera una parte
           # de los mismos artefactos. Dos defensas, en este orden:
           #

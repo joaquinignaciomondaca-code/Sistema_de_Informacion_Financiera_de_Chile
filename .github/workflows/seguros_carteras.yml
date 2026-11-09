@@ -126,8 +126,8 @@ jobs:
       - name: Confirmar los meses publicados
         if: always() && steps.publicar.outcome != 'skipped'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           # Primero solo los datos del sector (no chocan con otros workflows); luego, sobre la
           # versión más reciente de la rama, se recalculan las entradas del sector en data_manifest.json.
           git add docs/outputs/seguros

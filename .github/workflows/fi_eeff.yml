@@ -158,8 +158,8 @@ jobs:
       - name: Publicar exclusivamente datos auditados y regenerar los catálogos sobre la cabeza vigente
         if: success() && steps.procesar.outputs.publicado == 'true' && steps.auditar.outcome == 'success'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "joaquinignaciomondaca-code"
+          git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
           git add docs/outputs/fi/fi_balance docs/outputs/fi/fi_resultados docs/outputs/fi/fi_eeff_control.json
           if git diff --cached --quiet; then echo 'Sin cambios de datos.'; exit 0; fi
           git commit -m "FI: balance y resultados FIEF validados"
