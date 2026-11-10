@@ -60,7 +60,9 @@ jobs:
         run: |
           git config user.name "joaquinignaciomondaca-code"
           git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
-          git add docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml docs/opensearch.xml
+          # Las páginas HTML son archivos compartidos y se regeneran en la cadena de
+          # contrato sobre la cabeza vigente. Este workflow sólo publica sus índices.
+          git add docs/robots.txt docs/sitemap.xml docs/opensearch.xml
           if git diff --cached --quiet; then
             echo "Sitemap sin cambios; no hay nada que commitear."
             exit 0
@@ -77,7 +79,7 @@ jobs:
             if ! git rebase FETCH_HEAD; then
               git rebase --abort 2>/dev/null || true
               git reset --hard FETCH_HEAD
-              git add docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml docs/opensearch.xml
+              git add docs/robots.txt docs/sitemap.xml docs/opensearch.xml
               git diff --cached --quiet || git commit -m "SEO: metadatos y sitemap regenerados desde el catálogo"
             fi
             if git push origin "HEAD:${GITHUB_REF_NAME:-main}"; then
