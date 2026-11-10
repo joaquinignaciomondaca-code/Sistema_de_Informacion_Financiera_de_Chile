@@ -16,6 +16,7 @@ import sys
 import urllib.error
 import urllib.request
 from pathlib import Path
+from urllib.parse import urlparse
 
 RAIZ = Path(__file__).resolve().parents[1]
 SITEMAP = RAIZ / "docs" / "sitemap.xml"
@@ -31,7 +32,12 @@ def extraer_urls(ruta: Path) -> list[str]:
 
 def enviar_indexnow(key: str, urls: list[str], host: str) -> dict:
     """Envía la lista de URLs a IndexNow. Devuelve el JSON de respuesta."""
-    key_location = f"https://{host}/{key}.txt"
+    # En un sitio de proyecto de GitHub Pages, el sitemap y el archivo de
+    # verificación viven bajo /<repositorio>/. Conserva ese prefijo; usar la
+    # raíz de github.io hace que IndexNow no encuentre la clave y responda 403.
+    primera_url = urlparse(urls[0])
+    prefijo_sitio = primera_url.path.rsplit("/", 1)[0].rstrip("/")
+    key_location = f"{primera_url.scheme}://{host}{prefijo_sitio}/{key}.txt"
     payload = {
         "host": host,
         "key": key,
@@ -72,8 +78,6 @@ def main() -> int:
         return 0
 
     # Extrae el host de la primera URL (debe coincidir con el sitio verificado)
-    from urllib.parse import urlparse
-
     host = urlparse(urls[0]).netloc
 
     print(f"Enviando {len(urls)} URL(s) a IndexNow desde {host}...")
