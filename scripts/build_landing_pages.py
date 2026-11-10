@@ -160,7 +160,7 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
   <meta property="og:image:alt" content="SIF Chile: datos financieros públicos organizados por mercado">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{esc(base)}/assets/og_sif_1200x630.png">
-  <link rel="stylesheet" href="{esc(base)}/css/seo-content.css">
+  <link rel="stylesheet" href="../../css/seo-content.css">
   <script type="application/ld+json">{ld}</script>
 </head>
 <body>
