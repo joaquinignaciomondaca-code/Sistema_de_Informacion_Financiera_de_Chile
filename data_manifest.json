@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-11-10",
   "total_tables": 89,
-  "total_records": 19928111,
+  "total_records": 19928113,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -961,9 +961,9 @@
       "modo": "Automático · diario, incremental",
       "ultima_actualizacion": "2026-11-10",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-01 a 2026-10-01",
+      "corte": "2014-01-01 a 2026-11-01",
       "file_parquet": "outputs/macro/macro_expectativas_inflacion.parquet",
-      "registros_reales": 154,
+      "registros_reales": 155,
       "descripcion": "Expectativas de inflación de la Encuesta de Expectativas Económicas (EEE) del Banco Central: variación del IPC en 12 meses vista, con horizonte de 11 y 23 meses, mediana en porcentaje."
     },
     {
@@ -993,9 +993,9 @@
       "modo": "Automático · diario, incremental",
       "ultima_actualizacion": "2026-11-10",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-01 a 2026-10-01",
+      "corte": "2014-01-01 a 2026-11-01",
       "file_parquet": "outputs/macro/macro_expectativas_tpm.parquet",
-      "registros_reales": 154,
+      "registros_reales": 155,
       "descripcion": "Expectativas de la Tasa de Política Monetaria (TPM) de la Encuesta de Expectativas Económicas (EEE) del Banco Central, con horizonte de 11 y 23 meses, mediana en porcentaje."
     },
     {
