@@ -41,7 +41,7 @@ h1 { max-width: 820px; margin: 10px 0 16px; font-size: 58px; line-height: 1.08; 
 .seo-section { margin-top: 44px; }
 h2 { margin: 0 0 14px; font-size: 31px; line-height: 1.2; }
 .seo-section p { max-width: 820px; color: var(--sif-muted); }
-.seo-table-wrap { overflow-x: auto; border: 1px solid var(--sif-border); border-radius: 10px; }
+.seo-table-wrap { overflow-x: auto; border: 1px solid var(--sif-border); border-radius: 10px; padding: 10px; }
 .seo-table { width: 100%; border-collapse: collapse; min-width: 740px; }
 .seo-table th, .seo-table td { padding: 14px 16px; border-bottom: 1px solid var(--sif-border); text-align: left; vertical-align: top; }
 .seo-table th { color: var(--sif-text); background: var(--sif-panel); font-size: 13px; }
@@ -62,5 +62,6 @@ h2 { margin: 0 0 14px; font-size: 31px; line-height: 1.2; }
   h1 { font-size: 36px; }
   .seo-lead { font-size: 18px; }
   h2 { font-size: 24px; }
+  .seo-table-wrap { padding: 6px; }
   .seo-table th, .seo-table td { padding: 11px 12px; }
 }
