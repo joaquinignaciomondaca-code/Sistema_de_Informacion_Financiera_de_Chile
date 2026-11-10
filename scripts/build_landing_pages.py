@@ -170,7 +170,7 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
       <p class="seo-kicker">Datos públicos · Chile · CMF</p>
       <h1>{esc(page["h1"])}</h1>
       <p class="seo-lead">{esc(page["bajada"])}</p>
-      <p class="seo-meta">Coberturas declaradas: {periods_html}. Última publicación del catálogo: {esc(newest or generated)}.</p>
+      <p class="seo-meta">Coberturas declaradas: {periods_html}. Última actualización de estos conjuntos: {esc(newest or generated)}.</p>
       <div class="seo-actions">
         <a class="seo-button seo-button-primary" href="{esc(query_url(base, queries[0]["sql"]))}">Probar una consulta SQL</a>
         <a class="seo-button" href="{esc(base)}/">Abrir el explorador completo</a>
