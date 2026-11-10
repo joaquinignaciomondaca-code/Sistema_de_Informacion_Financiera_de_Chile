@@ -219,9 +219,19 @@
       "evento": "alta",
       "antes": null,
       "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-11-10",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "77726203-3",
+      "razon_social": "NUAM S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
     }
   ],
-  "ultima_revision_utc": "2026-11-09T06:38:32+00:00",
+  "ultima_revision_utc": "2026-11-10T19:55:52+00:00",
   "sectores_revisados": [
     "agf",
     "securitizadoras",
