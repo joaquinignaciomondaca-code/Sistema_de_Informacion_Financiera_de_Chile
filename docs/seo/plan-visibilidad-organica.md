@@ -53,7 +53,8 @@ No llamar el SIF “oficial”, “certificado” ni atribuirle respaldo institu
 2. Inspeccionar primero la portada de Pages y luego URLs temáticas con impresiones. Pedir rastreo una vez si la versión publicada cambió y es accesible.
 3. Revisar una vez el informe de Sitemaps y el estado del sitemap público. El informe de Google puede tardar en refrescarse aunque el archivo sea correcto.
 4. Completar en About del repo SIF esta descripción: “Datos financieros públicos de Chile (CMF, Banco Central y SPensiones): catálogos, Parquet y consultas SQL con DuckDB.” Mantener como website la URL de Pages. Topics sugeridos: `chile`, `datos-abiertos`, `datos-financieros`, `cmf`, `banco-central-de-chile`, `parquet`, `duckdb`, `sql`, `open-data`, `financial-data`.
-5. Confirmar que los repos de SIF y tesis estén en los repositorios destacados del perfil. Usar la ficha USM como página de referencia de la tesis cuando el campo website esté libre, sin quitar el link al código.
+5. Completar About de la tesis: “Código de una tesis de pronóstico jerárquico de demanda intermitente en retail de moda femenina: ES-GBM, series de tiempo y benchmarks en Python.” Si se pone un website, usar la ficha USM y conservar el README como entrada al código. Topics: `demand-forecasting`, `hierarchical-forecasting`, `intermittent-demand`, `retail`, `time-series`, `machine-learning`, `python`.
+6. Confirmar que los repos de SIF y tesis estén en los repositorios destacados del perfil. Usar la ficha USM como página de referencia de la tesis cuando el campo website esté libre, sin quitar el link al código.
 
 ### Próximos 30 días
 
