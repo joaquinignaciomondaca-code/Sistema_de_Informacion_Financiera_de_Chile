@@ -80,7 +80,10 @@ jobs:
             echo "::warning title=GitHub Pages sin publicar desde Actions::GET /repos/${GITHUB_REPOSITORY}/pages devolvió ${estado}. Activar Settings → Pages → Build and deployment → Source: GitHub Actions; hecho eso, la próxima corrida publica sin tocar el repositorio."
             exit 0
           fi
-          origen=$(python3 -c 'import json;d=json.load(open("/tmp/pages.json"));print((d.get("build_config") or {}).get("build_type") or "legacy")')
+          # REST Pages devuelve `build_type` en la raíz de la respuesta, no dentro de
+          # `build_config`. Leer la ruta antigua hacía que Actions pareciera "legacy"
+          # incluso después de seleccionar GitHub Actions en Settings → Pages.
+          origen=$(python3 -c 'import json;d=json.load(open("/tmp/pages.json"));print(d.get("build_type") or "legacy")')
           if [ "${origen}" != "workflow" ]; then
             echo "enabled=false" >> "$GITHUB_OUTPUT"
             echo "::warning title=GitHub Pages en modo rama::el sitio se sirve con build_type=${origen}. Para publicar desde Actions cambiar Settings → Pages → Source a «GitHub Actions»; mientras tanto este flujo no despliega para no pisar el otro mecanismo."
