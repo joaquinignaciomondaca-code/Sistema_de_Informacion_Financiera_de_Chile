@@ -8,7 +8,7 @@
     "particiones_rutas_y_conteos_iguales_por_objeto": true
   },
   "contrato": "sif/metricas-publicadas",
-  "data_release": "2026-11-10.ca1347693d78",
+  "data_release": "2026-11-10.7c61dc21269c",
   "definiciones": {
     "alcance_principal": "Elementos en niveles visibles (núcleo, instituciones y contexto), según el alcance editorial de docs/vocabulario.json.",
     "auxiliares_sql": "Parquet compactos que DuckDB usa para algunas consultas; son copias de lectura, no objetos adicionales ni filas únicas de cobertura.",
@@ -29,13 +29,13 @@
     "api_v2": {
       "archivos_unicos": 732,
       "artefacto": "api/v2/catalog.json",
-      "bytes": 488205468,
+      "bytes": 488205487,
       "con_archivo": 86,
       "con_archivo_sin_filas": 1,
       "con_filas": 85,
       "consultas": 159,
-      "data_release": "2026-11-10.ca1347693d78",
-      "filas": 19928111,
+      "data_release": "2026-11-10.7c61dc21269c",
+      "filas": 19928114,
       "objetos": 90,
       "particiones": 732,
       "por_estado": {
@@ -55,13 +55,13 @@
     "descargas": {
       "archivos_unicos": 732,
       "artefacto": "js/download_catalog.js",
-      "bytes_total": 488205468,
+      "bytes_total": 488205487,
       "elementos": 90,
-      "filas_total": 19928111,
+      "filas_total": 19928114,
       "fuera_de_foco": {
-        "bytes": 1896894,
+        "bytes": 1896935,
         "elementos": 15,
-        "filas": 100318
+        "filas": 100319
       },
       "ocultos": {
         "bytes": 2589,
@@ -182,10 +182,10 @@
           }
         },
         "fintech": {
-          "bytes": 34513,
+          "bytes": 34554,
           "elementos": 1,
           "etiqueta": "Fintech y Finanzas Abiertas",
-          "filas": 268,
+          "filas": 269,
           "fuentes": [
             "CMF"
           ],
@@ -193,10 +193,10 @@
           "periodo": null
         },
         "macro": {
-          "bytes": 581741,
+          "bytes": 581719,
           "elementos": 24,
           "etiqueta": "Macroeconomía y Tasas",
-          "filas": 41618,
+          "filas": 41620,
           "fuentes": [
             "BCCh"
           ],
@@ -272,22 +272,22 @@
         }
       },
       "principal": {
-        "bytes": 486305985,
+        "bytes": 486305963,
         "elementos": 74,
-        "filas": 19827793
+        "filas": 19827795
       },
       "variantes": 1
     },
     "inventario_etl": {
       "artefacto": "data_manifest.json",
-      "filas": 19928111,
+      "filas": 19928114,
       "tablas": 89
     }
   },
   "lecturas_duckdb": {
     "archivos_unicos": 736,
-    "bytes": 532400125,
-    "filas_almacenadas": 23625346,
+    "bytes": 532400144,
+    "filas_almacenadas": 23625349,
     "nota": "Suma archivos del contrato y copias compactas de consulta; contiene filas repetidas entre recursos y no representa cobertura única."
   },
   "puentes_reconciliacion": {

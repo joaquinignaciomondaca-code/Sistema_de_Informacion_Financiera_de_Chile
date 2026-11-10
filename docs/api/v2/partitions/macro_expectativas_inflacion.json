@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_expectativas_inflacion.parquet",
-   "bytes": 4156,
+   "bytes": 4157,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_expectativas_inflacion.parquet",
    "periodo": "macro_expectativas_inflacion",
-   "sha256": "d8327ca161d5732e17960d44a9e37be51d12425a4a78a42c82df7fbd02b70a99"
+   "sha256": "62c41e829b95a4b4fe549bdc8cd2decc7631c46a5262dfe938994cccf13b974b"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 4156,
-  "filas": 154
+  "bytes": 4157,
+  "filas": 155
  },
  "version": "2.3.0"
 }

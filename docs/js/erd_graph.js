@@ -1045,7 +1045,7 @@ const ERD_TABLES = [
     y: 1624,
     w: 250,
     h: 116,
-    rows: "154 filas",
+    rows: "155 filas",
     file: "outputs/macro/macro_expectativas_inflacion.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -1063,7 +1063,7 @@ const ERD_TABLES = [
     y: 1642,
     w: 250,
     h: 116,
-    rows: "154 filas",
+    rows: "155 filas",
     file: "outputs/macro/macro_expectativas_tpm.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },

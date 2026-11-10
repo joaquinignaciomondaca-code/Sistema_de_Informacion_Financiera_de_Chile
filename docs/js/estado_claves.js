@@ -1,9 +1,9 @@
 // GENERADO por scripts/build_estado_claves.py — no editar a mano.
 // Fuente: docs/api/claves.csv, medido sobre todas las filas publicadas.
-// data_release: 2026-11-10.ca1347693d78
+// data_release: 2026-11-10.7c61dc21269c
 window.ESTADO_CLAVES = {
  "generado": "2026-11-10",
- "data_release": "2026-11-10.ca1347693d78",
+ "data_release": "2026-11-10.7c61dc21269c",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,
@@ -543,8 +543,8 @@ window.ESTADO_CLAVES = {
   },
   "fintech_rpsf_lista_entidades": {
    "estado": "ok",
-   "filas": 268,
-   "distintas": 268,
+   "filas": 269,
+   "distintas": 269,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -552,7 +552,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: rut — única sobre 268 filas."
+   "texto": "Clave verificada: rut — única sobre 269 filas."
   },
   "macro_cobre": {
    "estado": "ok",
@@ -634,8 +634,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_expectativas_inflacion": {
    "estado": "ok",
-   "filas": 154,
-   "distintas": 154,
+   "filas": 155,
+   "distintas": 155,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -643,7 +643,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 154 filas."
+   "texto": "Clave verificada: fecha — única sobre 155 filas."
   },
   "macro_expectativas_operadores": {
    "estado": "ok",
@@ -660,8 +660,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_expectativas_tpm": {
    "estado": "ok",
-   "filas": 154,
-   "distintas": 154,
+   "filas": 155,
+   "distintas": 155,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -669,7 +669,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 154 filas."
+   "texto": "Clave verificada: fecha — única sobre 155 filas."
   },
   "macro_imacec": {
    "estado": "ok",

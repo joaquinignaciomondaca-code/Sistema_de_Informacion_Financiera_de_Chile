@@ -4657,13 +4657,13 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_swaps_camara.parquet",
-     "bytes": 79422
+     "bytes": 79394
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_swaps_camara.completo.csv",
-    "bytes": 298986,
+    "bytes": 298990,
     "filas": 3216
    },
    "json": {
@@ -4676,7 +4676,7 @@
     "archivos": [
      {
       "ruta": "outputs/macro/macro_swaps_camara.parquet",
-      "bytes": 79422
+      "bytes": 79394
      }
     ],
     "where": "",
@@ -5227,60 +5227,60 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_expectativas_inflacion.parquet",
-     "bytes": 4156
+     "bytes": 4157
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_expectativas_inflacion.completo.csv",
-    "bytes": 4251,
-    "filas": 154
+    "bytes": 4278,
+    "filas": 155
    },
    "json": {
     "ruta": "outputs/macro/macro_expectativas_inflacion.completo.json",
-    "bytes": 20483
+    "bytes": 20616
    },
    "nota": null,
-   "filas": 154,
+   "filas": 155,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_expectativas_inflacion.parquet",
-      "bytes": 4156
+      "bytes": 4157
      }
     ],
     "where": "",
-    "filas": 154
+    "filas": 155
    }
   },
   "macro_expectativas_tpm": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_expectativas_tpm.parquet",
-     "bytes": 4075
+     "bytes": 4080
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_expectativas_tpm.completo.csv",
-    "bytes": 4355,
-    "filas": 154
+    "bytes": 4383,
+    "filas": 155
    },
    "json": {
     "ruta": "outputs/macro/macro_expectativas_tpm.completo.json",
-    "bytes": 17527
+    "bytes": 17641
    },
    "nota": null,
-   "filas": 154,
+   "filas": 155,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_expectativas_tpm.parquet",
-      "bytes": 4075
+      "bytes": 4080
      }
     ],
     "where": "",
-    "filas": 154
+    "filas": 155
    }
   },
   "macro_expectativas_operadores": {
@@ -6957,34 +6957,34 @@
    "archivos": [
     {
      "ruta": "outputs/fintech/fintech_rpsf_maestro.parquet",
-     "bytes": 34513
+     "bytes": 34554
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/fintech/fintech_rpsf_maestro.completo.csv",
-    "bytes": 75903,
-    "filas": 268
+    "bytes": 76096,
+    "filas": 269
    },
    "json": {
     "ruta": "outputs/fintech/fintech_rpsf_maestro.completo.json",
-    "bytes": 154653
+    "bytes": 155164
    },
    "nota": null,
-   "filas": 268,
+   "filas": 269,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/fintech/fintech_rpsf_maestro.parquet",
-      "bytes": 34513
+      "bytes": 34554
      }
     ],
     "where": "",
-    "filas": 268
+    "filas": 269
    }
   }
  },
- "generado": "2026-11-10T12:51:26+00:00",
+ "generado": "2026-11-10T20:57:54+00:00",
  "parametros": {
   "csv_max_mb": 10,
   "json_max_mb": 5,

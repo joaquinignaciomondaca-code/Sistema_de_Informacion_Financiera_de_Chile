@@ -3,7 +3,7 @@
  "id": "tpm-efectiva-frente-a-la-esperada-por-la-eee-f1cccc",
  "titulo": "TPM efectiva frente a la esperada por la EEE",
  "origen": "explorador",
- "data_release": "2026-11-10.ca1347693d78",
+ "data_release": "2026-11-10.7c61dc21269c",
  "generado": "2026-11-10",
  "max_filas": 500,
  "columnas": [
@@ -15,12 +15,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2024-11",
-   5.25,
-   4.5,
-   4.0
-  ],
   [
    "2024-12",
    5.15,
@@ -158,6 +152,12 @@
    4.5,
    4.5,
    4.5
+  ],
+  [
+   "2026-11",
+   4.5,
+   4.5,
+   4.25
   ]
  ],
  "sql": "SELECT e.periodo, round(avg(t.tpm_pct), 2) AS tpm_pct, max(e.expectativa_tpm_11_meses_pct) AS expectativa_tpm_11_meses_pct, max(e.expectativa_tpm_23_meses_pct) AS expectativa_tpm_23_meses_pct FROM macro_expectativas_tpm e JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY e.periodo ORDER BY e.periodo DESC LIMIT 24;",

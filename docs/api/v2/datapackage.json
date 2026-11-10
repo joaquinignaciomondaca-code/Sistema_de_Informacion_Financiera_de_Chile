@@ -9078,10 +9078,10 @@
    "title": "fi.resultados"
   },
   {
-   "bytes": 34513,
+   "bytes": 34554,
    "description": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF y total de servicios autorizados.",
    "format": "parquet",
-   "hash": "6af80be30fb34ed0f7ffc738372fc9d7f3fb62df0d25648d6cc89b1040a11add",
+   "hash": "ecaa3096051e6d307aa1e45aef1307e8c1f7e8fb06e260c115bb1f48a4a851ab",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -9214,7 +9214,7 @@
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": "2026-09-23",
-    "filas": 268,
+    "filas": 269,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "fintech_rpsf_maestro",
@@ -9222,10 +9222,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 34513,
-      "filas": 268,
+      "bytes": 34554,
+      "filas": 269,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fintech/fintech_rpsf_maestro.parquet",
-      "sha256": "99e97ec10b6e852b19467214fdf1d2e1fa9a4f663f596c531252f73885f35eb7"
+      "sha256": "3f99556fce7ed3a5aab298745feef0100c470448a93d1b5a1fe71a9c78f348ec"
      }
     ],
     "puente": "alias",
@@ -9798,10 +9798,10 @@
    "title": "macro.euro_observado"
   },
   {
-   "bytes": 4156,
+   "bytes": 4157,
    "description": "Expectativas de inflación de la Encuesta de Expectativas Económicas (EEE) del Banco Central: variación del IPC en 12 meses vista, con horizonte de 11 y 23 meses, mediana en porcentaje.",
    "format": "parquet",
-   "hash": "9f40a8c4fa353a0806ee6526dc03a2c7a28a41325925a20496a6d7623716d907",
+   "hash": "98472aaf49cb028b7f96ddb3e816efbdc261b606553569c0b75e81069047da63",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9852,11 +9852,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-10-01",
+    "corte": "2014-01-01 a 2026-11-01",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 154,
+    "filas": 155,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_expectativas_inflacion",
@@ -9864,10 +9864,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 4156,
-      "filas": 154,
+      "bytes": 4157,
+      "filas": 155,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_expectativas_inflacion.parquet",
-      "sha256": "d8327ca161d5732e17960d44a9e37be51d12425a4a78a42c82df7fbd02b70a99"
+      "sha256": "62c41e829b95a4b4fe549bdc8cd2decc7631c46a5262dfe938994cccf13b974b"
      }
     ],
     "puente": "directo",
@@ -9978,10 +9978,10 @@
    "title": "macro.expectativas_operadores"
   },
   {
-   "bytes": 4075,
+   "bytes": 4080,
    "description": "Expectativas de la Tasa de Política Monetaria (TPM) de la Encuesta de Expectativas Económicas (EEE) del Banco Central, con horizonte de 11 y 23 meses, mediana en porcentaje.",
    "format": "parquet",
-   "hash": "353230f66555ea7955a8c517793526411b2d8df756cc8fc679affa5302bfc16a",
+   "hash": "9cc7494104b8bc2978ef702359b02f27f2ec4257cf869de798661597dcc20405",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10032,11 +10032,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-10-01",
+    "corte": "2014-01-01 a 2026-11-01",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 154,
+    "filas": 155,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_expectativas_tpm",
@@ -10044,10 +10044,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 4075,
-      "filas": 154,
+      "bytes": 4080,
+      "filas": 155,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_expectativas_tpm.parquet",
-      "sha256": "5805f85896caa22c61caf52c6dde4173f90332faa3be69d9a9de10f833a39f76"
+      "sha256": "35786c77c1aefafe42eb0a5db9859cace7789aaf861c1bf1f6fc48eb43ec5911"
      }
     ],
     "puente": "directo",
@@ -10725,7 +10725,7 @@
    "bytes": 10893,
    "description": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
    "format": "parquet",
-   "hash": "e98bcda7992bd23112e45eb82e6c17a4d1aa294828d19bcd2e1dbc9c4093748c",
+   "hash": "81526dde85552f9ef56a42a99f03e54ca593177be911143d6363d45f981af8a6",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10839,7 +10839,7 @@
       "bytes": 10893,
       "filas": 51,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_series_catalogo.parquet",
-      "sha256": "4b6d0093e65928a7dea96ea01f7cabf19542d523f698c475845f7dbb7de28135"
+      "sha256": "04215fa09d441da18e40ae4af0a12d7cf3b5bec7b5dcf67037be79f98ec9cf61"
      }
     ],
     "puente": "directo",
@@ -10860,10 +10860,10 @@
    "title": "macro.series_catalogo"
   },
   {
-   "bytes": 79422,
+   "bytes": 79394,
    "description": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
    "format": "parquet",
-   "hash": "dc135957654005ae9075d54e40a1ae4f02f08faa4cd21f790efab2691994def7",
+   "hash": "c72a77a015181a099426e8118d703060800f5a7e80163f5378d36795df73c3de",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10944,10 +10944,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 79422,
+      "bytes": 79394,
       "filas": 3216,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_swaps_camara.parquet",
-      "sha256": "d92ec1f3c73c768df547e0327b38fa73b792aa0c8332832a9f2e12858e906a4d"
+      "sha256": "97648125e7ed9983c17e4ee661be30b0010083a26c91772baf3f5e88db597e25"
      }
     ],
     "puente": "directo",
@@ -19219,9 +19219,9 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-11-10.ca1347693d78",
+  "data_release": "2026-11-10.7c61dc21269c",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
-  "filas_unicas": 19928111,
+  "filas_unicas": 19928114,
   "identificador": {
    "aliases": "los nombres heredados se publican por recurso en sif.aliases y no son identificadores",
    "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",
