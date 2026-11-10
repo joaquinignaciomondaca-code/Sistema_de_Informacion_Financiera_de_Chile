@@ -58,12 +58,12 @@ fi_resultados,pk,periodo + run_fondo + contexto + codigo_cuenta,,1229970,1229970
 fi_resultados,fk,run_fondo,fi_lista_entidades,1229970,,0,1.0000,si,invariante,ok,
 fi_resultados,fk,rut_agf,,1229970,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
 fintech_rpsf_lista_entidades,pk,rut,,268,268,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_cobre,pk,fecha,,3273,3273,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_cobre,pk,fecha,,3274,3274,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_curva_bonos_pesos,pk,fecha,,3185,3185,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_curva_bonos_uf,pk,fecha,,3187,3187,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_deuda_publica_pct_pib,pk,fecha,,50,50,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_dolar_observado,pk,fecha,,3201,3201,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_euro_observado,pk,fecha,,3201,3201,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_dolar_observado,pk,fecha,,3202,3202,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_euro_observado,pk,fecha,,3202,3202,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_expectativas_inflacion,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_expectativas_operadores,pk,fecha,,238,238,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_expectativas_tpm,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
@@ -71,16 +71,16 @@ macro_imacec,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única 
 macro_inflacion_implicita,pk,fecha,,3091,3091,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_inflacion_ipc,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_mercado_laboral,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_metales_preciosos,pk,fecha,,3201,3201,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_metales_preciosos,pk,fecha,,3202,3202,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_pib_trimestral,pk,fecha,,50,50,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_reservas_internacionales,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_series_catalogo,pk,clave,,51,51,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_swaps_camara,pk,fecha,,3216,3216,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_tasa_referencia_fed,pk,fecha,,3338,3338,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_tasas_corto_plazo,pk,fecha,,3202,3202,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_tipo_cambio_multilateral,pk,fecha,,3201,3201,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_tasas_corto_plazo,pk,fecha,,3203,3203,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_tipo_cambio_multilateral,pk,fecha,,3202,3202,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_tipo_cambio_real,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_uf,pk,fecha,,4696,4696,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_uf,pk,fecha,,4697,4697,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_utm,pk,fecha,,155,155,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 patrimonios_separados_balance,pk,archivo + codigo_patrimonio + periodo + orden_en_balance + cuenta,,7962,7962,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 patrimonios_separados_balance,fk,rut_administradora,patrimonios_separados_lista_entidades,7962,,3604,0.5473,si,expectativa,huerfanas,3604 valores sin pareja en el destino

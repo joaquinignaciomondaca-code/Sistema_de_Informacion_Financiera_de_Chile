@@ -678,7 +678,7 @@ const ERD_TABLES = [
     y: 110,
     w: 250,
     h: 116,
-    rows: "3.202 filas",
+    rows: "3.203 filas",
     file: "outputs/macro/macro_tasas_corto_plazo.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -776,7 +776,7 @@ const ERD_TABLES = [
     y: 528,
     w: 250,
     h: 98,
-    rows: "3.201 filas",
+    rows: "3.202 filas",
     file: "outputs/macro/macro_dolar_observado.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -793,7 +793,7 @@ const ERD_TABLES = [
     y: 566,
     w: 250,
     h: 98,
-    rows: "3.201 filas",
+    rows: "3.202 filas",
     file: "outputs/macro/macro_euro_observado.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -810,7 +810,7 @@ const ERD_TABLES = [
     y: 656,
     w: 250,
     h: 134,
-    rows: "3.201 filas",
+    rows: "3.202 filas",
     file: "outputs/macro/macro_tipo_cambio_multilateral.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -847,7 +847,7 @@ const ERD_TABLES = [
     y: 820,
     w: 250,
     h: 98,
-    rows: "4.696 filas",
+    rows: "4.697 filas",
     file: "outputs/macro/macro_uf.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -958,7 +958,7 @@ const ERD_TABLES = [
     y: 1240,
     w: 250,
     h: 116,
-    rows: "3.273 filas",
+    rows: "3.274 filas",
     file: "outputs/macro/macro_cobre.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -976,7 +976,7 @@ const ERD_TABLES = [
     y: 1350,
     w: 250,
     h: 116,
-    rows: "3.201 filas",
+    rows: "3.202 filas",
     file: "outputs/macro/macro_metales_preciosos.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
