@@ -50,6 +50,24 @@ def replace_block(source: str, block: str) -> str:
     return source[:start] + block + source[finish:]
 
 
+def dataset_provenance(item: dict) -> dict:
+    """Add only source and reuse metadata confirmed by the published catalog."""
+    metadata = {}
+    if item.get("fuente") == "CMF":
+        metadata["creator"] = {
+            "@type": "Organization",
+            "name": "Comisión para el Mercado Financiero (CMF)",
+            "url": "https://www.cmfchile.cl/",
+        }
+    if item.get("licencia_estado") == "verificada" and item.get("url_terminos"):
+        metadata["license"] = {
+            "@type": "CreativeWork",
+            "name": "Reproducción autorizada citando la fuente",
+            "url": item["url_terminos"],
+        }
+    return metadata
+
+
 def query_url(base: str, sql: str) -> str:
     return f"{base}/#sql={quote(sql, safe='')}"
 
@@ -128,6 +146,7 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
                         "description": item.get("descripcion", ""),
                         "temporalCoverage": item.get("corte", ""),
                         "url": item.get("particiones_url", ""),
+                        **dataset_provenance(item),
                     },
                 }
                 for index, item in enumerate(objects, 1)

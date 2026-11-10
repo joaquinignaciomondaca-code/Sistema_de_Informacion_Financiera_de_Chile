@@ -1613,7 +1613,7 @@
       "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/fondos_mutuos/manifest.json",
       "registros_reales": 100472,
-      "descripcion": "Cuotas de fondos mutuos nacionales.",
+      "descripcion": "Registra las cuotas de fondos mutuos nacionales mantenidas por compañías de seguros y reportadas mensualmente a la CMF bajo la Circular 1835. Cada posición identifica el fondo, su administradora, tipo de instrumento y valorización, con cobertura histórica desde 2016.",
       "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
