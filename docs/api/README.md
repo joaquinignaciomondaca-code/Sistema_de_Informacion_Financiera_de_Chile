@@ -59,7 +59,8 @@ python3 scripts/probar_api_anything.py    # prueba real de la spec contra espejo
 python3 scripts/probar_api_anything_etl.py # experimento ETL HTML (fixtures)
 python3 scripts/build_estado_claves.py    # docs/js/estado_claves.js (Diccionario y visor)
 python3 scripts/build_og_image.py         # assets/og_sif_1200x630.png   (tarjeta social)
-python3 scripts/build_metadatos.py        # <head> social, robots.txt y sitemap.xml
+python3 scripts/build_landing_pages.py    # páginas temáticas SEO y enlaces desde la portada
+python3 scripts/build_metadatos.py        # <head> social, robots.txt y sitemap.xml canónico
 python3 scripts/construir_reproducibilidad.py  # docs/reproducibilidad/
 ```
 

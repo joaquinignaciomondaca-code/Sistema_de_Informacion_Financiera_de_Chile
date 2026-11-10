@@ -1,9 +1,9 @@
 name: SEO · Sitemap automático (GitHub Action gratuita)
 
-# Usa la acción comunitaria cicirello/generate-sitemap (MIT License) para
-# regenerar el sitemap.xml desde el sitio publicado en GitHub Pages.
-# Se ejecuta diario y bajo demanda (workflow_dispatch). Complementa al script
-# local scripts/build_metadatos.py; si hay cambios, los commitea en main.
+# Regenera metadatos, robots.txt y sitemap desde el catálogo fuente del
+# repositorio. Así se excluyen páginas noindex y archivos de verificación, y
+# las URLs del sitemap coinciden con los canonicals. Se ejecuta diario y bajo
+# demanda (workflow_dispatch); si hay cambios, los publica en main.
 
 on:
   schedule:
@@ -43,23 +43,16 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Python (stdlib del test, sin dependencias)
+      - name: Preparar Python
         uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
-      - name: Generar sitemap XML con cicirello/generate-sitemap
-        uses: cicirello/generate-sitemap@v1
-        with:
-          base-url-path: https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/
-          output-path: docs/sitemap.xml
-          exclude: 'docs/.well-known/ docs/notas/'
+      - name: Regenerar metadatos y sitemap desde el catálogo
+        run: python scripts/build_metadatos.py
 
-      # Compuerta de la guardia test_contrato_publicadores: un workflow que
-      # commitea en la rama debe probarse a sí mismo (en schedule no corre
-      # web_audit). El sitemap que produce la acción es validado antes de
-      # escribir: bien formado, namespace oficial, locs del sitio publicado
-      # y sin duplicados o carpetas excluidas.
+      # Comprobación estructural del sitemap antes de escribir: XML bien
+      # formado, namespace oficial, URLs del sitio y sin duplicados.
       - name: 'Compuerta: el sitemap generado es XML válido y coherente'
         run: python -m unittest -v scripts.test_sitemap_workflow
 
@@ -67,12 +60,12 @@ jobs:
         run: |
           git config user.name "joaquinignaciomondaca-code"
           git config user.email "234955610+joaquinignaciomondaca-code@users.noreply.github.com"
-          git add docs/sitemap.xml
+          git add docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml docs/opensearch.xml
           if git diff --cached --quiet; then
             echo "Sitemap sin cambios; no hay nada que commitear."
             exit 0
           fi
-          git commit -m "SEO: sitemap.xml actualizado automáticamente (cicirello/generate-sitemap)"
+          git commit -m "SEO: metadatos y sitemap regenerados desde el catálogo"
           # Un push a `main` desde acá compete con los publicadores (cada ~3 días) y con
           # `pages.yml` (03:15, 45 minutos antes de este flujo): si alguien publicó en el
           # medio, el push se rechaza. Antes se hacía un único intento y la corrida quedaba
@@ -84,8 +77,8 @@ jobs:
             if ! git rebase FETCH_HEAD; then
               git rebase --abort 2>/dev/null || true
               git reset --hard FETCH_HEAD
-              git add docs/sitemap.xml
-              git diff --cached --quiet || git commit -m "SEO: sitemap.xml actualizado automáticamente (cicirello/generate-sitemap)"
+              git add docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml docs/opensearch.xml
+              git diff --cached --quiet || git commit -m "SEO: metadatos y sitemap regenerados desde el catálogo"
             fi
             if git push origin "HEAD:${GITHUB_REF_NAME:-main}"; then
               echo "Sitemap publicado (intento ${intento}/5)."

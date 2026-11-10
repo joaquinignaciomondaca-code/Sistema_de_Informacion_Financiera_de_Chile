@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Compuerta del workflow SEO (seo-sitemap-github-action.yml).
+"""Comprobación estructural del workflow SEO (seo-sitemap-github-action.yml).
 
-El workflow regenera docs/sitemap.xml con la acción cicirello/generate-sitemap
-y lo commitea en main. Como corre en schedule —y en schedule no hay otro job
-que lo pruebe— el workflow mismo debe probarse a sí mismo antes de escribir:
-estas pruebas validan la forma del sitemap generado, no su contenido (los URLs
-vienen del sitio publicado, que cambia sin aviso).
+El workflow regenera el sitemap con scripts/build_metadatos.py y lo commitea
+en main. Esta comprobación valida el XML y que sus URLs pertenezcan al sitio;
+la lista concreta la calcula el generador desde las páginas indexables.
 
 Stdlib únicamente: el workflow SEO no instala dependencias.
 """

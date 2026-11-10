@@ -1,8 +1,8 @@
 name: SEO · IndexNow (indexación instantánea en Bing, Yandex, Naver)
 
-# Cuando se publican datos nuevos bajo docs/outputs/ o data_manifest.json,
-# notifica a IndexNow para que los buscadores participantes indexen el sitemap
-# casi de inmediato, en lugar de esperar al próximo rastreo programado.
+# Después de publicar la web, notifica a IndexNow para que los buscadores
+# participantes descubran el sitemap actualizado. También acepta push manuales
+# y workflow_dispatch; GITHUB_TOKEN no dispara el evento push de otros flujos.
 #
 # IndexNow es gratuito y de código abierto. Soportado por Bing, Yandex, Naver y Seznam.
 # Google no participa (usa su propio sistema vía Search Console, ya configurado).
@@ -19,6 +19,11 @@ on:
       - 'data_manifest.json'
       - 'docs/sitemap.xml'
       - '.github/workflows/seo_indexnow.yml'
+  workflow_run:
+    workflows:
+      - 'Publicar web (GitHub Pages)'
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -45,6 +50,7 @@ concurrency:
 
 jobs:
   indexnow:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:

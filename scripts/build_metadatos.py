@@ -13,8 +13,8 @@ Qué escribe:
     JSON-LD Dataset y las huellas de la imagen social);
  * el canonical de `docs/privacidad.html`;
  * `docs/robots.txt`, que permite todo y apunta al sitemap;
- * `docs/sitemap.xml`, generado escaneando automáticamente todas las
-   páginas HTML bajo `docs/` (no una lista hardcodeada), con `lastmod`;
+ * `docs/sitemap.xml`, generado escaneando páginas HTML indexables bajo `docs/`
+   (excluye `noindex` y archivos de verificación), con URLs canónicas y `lastmod`;
  * `docs/opensearch.xml`, descriptor para que los navegadores busquen dentro
    del sitio desde la barra de direcciones.
 
@@ -228,13 +228,15 @@ def opensearch() -> str:
 
 def _pagina_prioridad(ruta_relativa: Path) -> tuple[str, str, str]:
     """Devuelve (url, prioridad, changefreq) para una página HTML de docs/."""
-    url = f"{BASE}/{ruta_relativa.as_posix()}"
     if ruta_relativa == Path("index.html"):
-        return url, "1.0", "daily"
+        return f"{BASE}/", "1.0", "daily"
     if ruta_relativa == Path("privacidad.html"):
-        return url, "0.3", "monthly"
+        return f"{BASE}/privacidad.html", "0.3", "monthly"
+    if ruta_relativa.name == "index.html" and ruta_relativa.parts[:1] == ("temas",):
+        ruta = "/".join(ruta_relativa.parts[:-1])
+        return f"{BASE}/{ruta}/", "0.8", "weekly"
     # Páginas de detalle bajo subdirectorios (ej. docs/datos/.../index.html).
-    return url, "0.5", "monthly"
+    return f"{BASE}/{ruta_relativa.as_posix()}", "0.5", "monthly"
 
 
 def sitemap(d: dict) -> str:
@@ -244,6 +246,13 @@ def sitemap(d: dict) -> str:
         # Ignora páginas parciales o de plantilla que no son destino de navegación.
         nombre = html.name.lower()
         if nombre.startswith("_") or nombre.endswith("_fragment.html"):
+            continue
+        contenido = html.read_text(encoding="utf-8", errors="replace")
+        if 'name="robots" content="noindex' in contenido.lower():
+            continue
+        # El archivo de propiedad de Search Console verifica el sitio; no es una
+        # página para resultados de búsqueda ni un destino editorial.
+        if ruta_relativa.parent == Path(".") and contenido.lstrip().startswith("google-site-verification:"):
             continue
         paginas.append(_pagina_prioridad(ruta_relativa))
 

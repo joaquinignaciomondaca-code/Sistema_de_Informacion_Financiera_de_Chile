@@ -1,12 +1,9 @@
 name: Publicar web (GitHub Pages)
 
-# La web ES el producto: `docs/` es el sitio estático (visor DuckDB-Wasm + Parquet). Este flujo se
-# borró el 2026-09-30 después de fallar en `configure-pages` y desde entonces GitHub Pages responde
-# 404, aunque los datos siguieran publicándose: la rama avanzaba y el sitio no.
-#
-# El horario de cada 6 horas no es un capricho: los commits de datos los hace `github-actions[bot]`
-# con GITHUB_TOKEN, y un push creado por ese token NO dispara otros workflows. Sin schedule, la web
-# sólo se actualizaría cuando una persona toca `docs/`. (El `push` sigue ahí para ese caso.)
+# La web ES el producto: `docs/` es el sitio estático (visor DuckDB-Wasm + Parquet). El horario de
+# cada 6 horas mantiene la publicación al día cuando un publicador usa GITHUB_TOKEN. Además, la
+# cadena de contrato y el regenerador de sitemap la disparan al terminar, porque esos commits no
+# generan un evento `push` que inicie otro workflow.
 #
 # Requiere un ajuste del dueño del repositorio que ningún workflow puede hacer por sí solo:
 # Settings → Pages → Build and deployment → Source: **GitHub Actions**. Si falta, el paso previo lo
@@ -22,6 +19,12 @@ on:
       - 'docs/**'
       - 'data_manifest.json'
       - '.github/workflows/pages.yml'
+  workflow_run:
+    workflows:
+      - 'Contrato derivado (web, esquemas, catálogo y resultados)'
+      - 'SEO · Sitemap automático (GitHub Action gratuita)'
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -50,6 +53,7 @@ concurrency:
 
 jobs:
   desplegar:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     environment:

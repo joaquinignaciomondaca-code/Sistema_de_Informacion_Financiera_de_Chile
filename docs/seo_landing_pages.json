@@ -1,0 +1,116 @@
+{
+  "paginas": [
+    {
+      "slug": "carteras-inversion-seguros-chile",
+      "nav_label": "Carteras de seguros",
+      "titulo": "Carteras de seguros en Chile: datos CMF | SIF",
+      "descripcion": "Consulta carteras de inversiones de aseguradoras chilenas reportadas a la CMF: renta fija, acciones, fondos, inmuebles y datos históricos descargables.",
+      "h1": "Carteras de inversión de compañías de seguros en Chile",
+      "bajada": "Explora posiciones reportadas por compañías de seguros de vida y generales a la Comisión para el Mercado Financiero (CMF). Consulta por periodo, instrumento o entidad y descarga los archivos publicados.",
+      "ids": [
+        "seguros_renta_fija",
+        "seguros_acciones",
+        "seguros_fondos_mutuos",
+        "seguros_bienes_raices",
+        "seguros_extranjeros",
+        "seguros_lista_entidades"
+      ],
+      "consultas": [
+        "Renta fija por tipo de instrumento, último mes (M$)",
+        "Inversiones en el extranjero por país, último mes (M$)",
+        "Bienes raíces por ciudad, último mes (M$)"
+      ],
+      "secciones": [
+        {
+          "titulo": "Qué puedes consultar",
+          "parrafos": [
+            "La cartera mensual permite examinar instrumentos de renta fija, acciones y cuotas de fondos mutuos, inversiones extranjeras y bienes raíces. El registro de entidades ayuda a identificar qué compañías reportaron y qué periodos están disponibles.",
+            "La cobertura depende del archivo: algunas series comienzan en 2016 y otras tienen una historia más corta. Cada fila del catálogo indica su periodo publicado, número de registros, descripción y enlace al manifiesto de descargas."
+          ]
+        },
+        {
+          "titulo": "Cómo leer los montos",
+          "parrafos": [
+            "Las unidades y definiciones siguen el archivo de origen y se explican por conjunto. No se convierten automáticamente monedas ni se homogeneizan criterios contables entre formularios. Antes de comparar periodos o compañías, revisa el corte, el campo de valorización y las notas del esquema.",
+            "Este sitio es un proyecto independiente que organiza datos públicos; no es una publicación oficial de la CMF y no entrega recomendaciones de inversión."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "fondos-mutuos-datos-chile",
+      "nav_label": "Fondos mutuos",
+      "titulo": "Fondos mutuos en Chile: carteras CMF | SIF",
+      "descripcion": "Datos históricos de fondos mutuos en Chile: carteras nacionales y extranjeras, balances, resultados y fondos que reportan a la CMF.",
+      "h1": "Fondos mutuos en Chile: carteras y estados financieros",
+      "bajada": "Consulta datos publicados por la CMF sobre fondos mutuos: posiciones nacionales y extranjeras por mes, contratos vigentes y estados financieros anuales. Las consultas SQL se ejecutan en tu navegador.",
+      "ids": [
+        "ffmm_cartera_nacional",
+        "ffmm_cartera_extranjera",
+        "ffmm_futuros",
+        "ffmm_balance",
+        "ffmm_resultados",
+        "ffmm_lista_entidades"
+      ],
+      "consultas": [
+        "Cartera nacional por tipo de instrumento, último mes",
+        "Cartera extranjera por país emisor, último mes",
+        "Activo neto de la industria en pesos, por cierre (MM$)"
+      ],
+      "secciones": [
+        {
+          "titulo": "Carteras mensuales y estados anuales",
+          "parrafos": [
+            "La cartera nacional y la extranjera se publican por instrumento o emisor y cierre mensual. El catálogo también incluye futuros y otros contratos, además de balances y resultados anuales por fondo. Los periodos iniciales no son iguales entre conjuntos; la tabla de abajo muestra el corte exacto de cada uno.",
+            "Puedes explorar la composición por tipo de instrumento, seguir emisores o revisar qué fondos reportan en el último periodo disponible. Los ejemplos de consulta se actualizan junto con el catálogo para usar cortes que existan en los datos publicados."
+          ]
+        },
+        {
+          "titulo": "Uso y limitaciones",
+          "parrafos": [
+            "Las cifras conservan la moneda y unidad de cada reporte. No sumes directamente fondos que informan en monedas distintas ni compares balances anuales con posiciones mensuales como si fueran la misma medida. Revisa el esquema y la atribución de la CMF antes de construir indicadores.",
+            "SIF Chile es un proyecto independiente, no un servicio oficial de la CMF ni una recomendación de inversión. Los datos originales y sus condiciones se consultan en las fuentes enlazadas en cada conjunto."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "fondos-inversion-datos-chile",
+      "nav_label": "Fondos de inversión",
+      "titulo": "Fondos de inversión en Chile: datos CMF | SIF",
+      "descripcion": "Explora carteras y estados financieros de fondos de inversión chilenos reportados a la CMF, con periodos, esquemas, SQL y descargas por conjunto.",
+      "h1": "Fondos de inversión en Chile: carteras y estados financieros",
+      "bajada": "Revisa carteras nacionales y extranjeras, instrumentos derivados, pactos, balances y resultados de fondos de inversión reportados a la CMF. Cada tabla conserva su frecuencia, periodo y unidad de origen.",
+      "ids": [
+        "fi_cartera_nacional",
+        "fi_cartera_extranjera",
+        "fi_futuros",
+        "fi_pactos",
+        "fi_balance",
+        "fi_resultados",
+        "fi_lista_entidades"
+      ],
+      "consultas": [
+        "Cartera nacional por tipo de instrumento, último trimestre",
+        "Cartera extranjera por país emisor, último trimestre",
+        "Mayores patrimonios en pesos, último cierre (MM$)"
+      ],
+      "secciones": [
+        {
+          "titulo": "Qué contienen las series",
+          "parrafos": [
+            "Las tablas de cartera detallan instrumentos nacionales y extranjeros al cierre de cada trimestre, junto con derivados y operaciones de compra o venta con pacto. Los estados financieros de fondos de inversión incluyen balances y resultados por cuenta, con contextos publicados solo cuando cumplen las validaciones descritas en la documentación.",
+            "La cobertura varía por archivo. Por ejemplo, la cartera nacional, la extranjera y los estados financieros pueden partir en trimestres distintos. Consulta el periodo y la descripción del conjunto antes de comparar o unir tablas."
+          ]
+        },
+        {
+          "titulo": "Comparabilidad y procedencia",
+          "parrafos": [
+            "Los montos siguen la moneda de presentación o moneda funcional indicada por la CMF y no se convierten automáticamente. El proyecto conserva las notas de validación, los esquemas y los enlaces a la fuente para que cada análisis pueda documentar qué se usó.",
+            "SIF Chile es un proyecto independiente que facilita la consulta de datos públicos. No es un sitio oficial de la CMF, no reemplaza sus publicaciones y no ofrece asesoría financiera."
+          ]
+        }
+      ]
+    }
+  ]
+}

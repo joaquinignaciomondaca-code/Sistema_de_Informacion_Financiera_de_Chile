@@ -278,8 +278,8 @@ La ausencia de un workflow no implica ausencia de procesamiento automático. El 
 | `pensiones_carteras.yml` | día 10, 10:25 | Revisión de estado; ingesta BDP solo con runner privado habilitado y gates aprobados |
 | `fi_cobertura_eeff.yml` | sin horario (push) | nada: revisión de cobertura de FI (solo lectura) |
 | `pages.yml` | cada 6 h (03:15, 09:15, 15:15, 21:15) y push a `main` | Despliegue de `docs/` en GitHub Pages |
-| `seo-sitemap-github-action.yml` | diario 04:00 | nada: regenera `docs/sitemap.xml` desde el sitio publicado |
-| `seo_indexnow.yml` | push en `main` con datos nuevos | nada: avisa IndexNow (Bing, Yandex, Naver) para indexar el sitemap |
+| `seo-sitemap-github-action.yml` | diario 04:00 | nada: regenera metadatos y sitemap desde el catálogo fuente; excluye páginas noindex y verificación |
+| `seo_indexnow.yml` | tras publicar GitHub Pages, push manual o `workflow_dispatch` | nada: avisa IndexNow (Bing, Yandex, Naver) para descubrir el sitemap |
 
 Cada publicador deja su rastro en la cabecera del archivo de datos y en `data_manifest.json`; los horarios
 son los `cron` reales de `.github/workflows/*.yml`.

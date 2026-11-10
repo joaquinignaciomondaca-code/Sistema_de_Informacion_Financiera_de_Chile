@@ -24,15 +24,39 @@ on:
       - 'macro/scripts/build_tablas_tematicas.py'
       - 'scripts/build_ficha_piloto.py'
       - 'scripts/build_download_exports.py'
+      - 'scripts/build_landing_pages.py'
       - 'scripts/construir_reproducibilidad.py'
       - 'scripts/refrescar_contrato.py'
+      - 'docs/seo_landing_pages.json'
+      - 'docs/temas/**'
       - 'README.md'
   workflow_dispatch:
+  # Los publicadores escriben en main con GITHUB_TOKEN. GitHub no dispara el
+  # evento `push` del contrato para esos commits, pero sí permite reaccionar a
+  # `workflow_run`. Esto reconcilia los artefactos apenas termina cada publicador
+  # y evita esperar hasta dos horas al cron.
+  workflow_run:
+    workflows:
+      - 'Publicación CMF B1/B2/R1 (bancos), días 1,4,7,…,28, incremental'
+      - 'Estados financieros de corredores de bolsa y agentes de valores (CMF, FECU IFRS trimestral), días 1,4,7,…,28, incremental'
+      - 'Listas de entidades (altas y vigencia desde los registros CMF y la Superintendencia de Pensiones), 3 veces al mes'
+      - 'Factoring y Leasing - serie IFRS CMF y publicación automática'
+      - 'Cartera de inversiones de fondos mutuos (CMF, Circular 1333), días 1,4,7,…,28, incremental'
+      - 'Fondos mutuos - balance y estado de resultados anuales (CMF, XML IFRS), días 1,4,7,…,28, incremental'
+      - 'Cartera de inversiones de fondos de inversión (CMF, informes IFRS trimestrales), días 1,4,7,…,28, incremental'
+      - 'Fondos de inversión - balance y resultados XML IFRS CMF'
+      - 'Estados financieros IFRS de AGF, securitizadoras y cajas de compensación (CMF) y altas de CCAF y factoring/leasing, días 1,4,7,…,28, incremental'
+      - 'Actualización macro (incremental diaria)'
+      - 'Pensiones · ingesta histórica BDP y publicación protegida'
+      - 'Cartera de inversiones de seguros (CMF, Circular 1835), días 1,4,7,…,28, incremental'
+    types: [completed]
+    branches: [main]
   # Los flujos de datos empujan con el GITHUB_TOKEN del propio Actions, y esos
   # push no disparan otros workflows (regla anti-recursión de GitHub). El 22 de
   # octubre los flujos publicaron corredoras y IFRS y este flujo no se ejecutó
   # ni una vez: el contrato siguió viejo y la auditoría falló en el PR siguiente.
-  # El cron no depende del push, así que recoge cualquier deriva cada dos horas.
+  # workflow_run reconcilia al terminar un publicador; el cron conserva una
+  # pasada de seguridad cada dos horas para cualquier deriva restante.
   schedule:
     - cron: '23 */2 * * *'
 
@@ -45,6 +69,7 @@ concurrency:
 
 jobs:
   refrescar:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
@@ -92,7 +117,7 @@ jobs:
             git add docs/api docs/js/download_catalog.js docs/js/estado_claves.js \
                     docs/js/sidebar.js docs/js/data_dictionary.js docs/js/erd_graph.js \
                     docs/vocabulario.json docs/metricas_publicadas.json docs/datos \
-                    docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml \
+                    docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml docs/temas \
                     docs/reproducibilidad docs/outputs/indice_busqueda.json \
                     docs/outputs/_exportes.json README.md \
                     'docs/outputs/**/*.completo.csv' 'docs/outputs/**/*.completo.json'

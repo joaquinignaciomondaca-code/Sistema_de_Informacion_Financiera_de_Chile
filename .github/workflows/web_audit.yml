@@ -430,14 +430,16 @@ jobs:
       - name: 'Vitrina: metadatos sociales, robots y sitemap derivados del catálogo'
         run: |
           set +e
+          python scripts/build_landing_pages.py --check > temas.log 2>&1; t=$?
+          cat temas.log
           python scripts/build_metadatos.py --check > vitrina.log 2>&1; v=$?
           cat vitrina.log
-          if [ "$v" -ne 0 ]; then
-            echo "::error title=Vitrina::index.html, robots.txt o sitemap.xml no coinciden con el catálogo publicado"
+          if [ "$t" -ne 0 ] || [ "$v" -ne 0 ]; then
+            echo "::error title=Vitrina::páginas temáticas, index.html, robots.txt o sitemap.xml no coinciden con el catálogo publicado"
           else
             echo "::notice title=Vitrina::$(tail -n 1 vitrina.log)"
           fi
-          exit $v
+          test "$t" -eq 0 && test "$v" -eq 0
 
       - name: 'Diccionario: el estado de las claves se deriva de claves.csv'
         run: |

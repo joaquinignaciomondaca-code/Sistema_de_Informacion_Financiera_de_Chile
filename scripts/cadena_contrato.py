@@ -42,6 +42,7 @@ CADENA = (
     # (2026-11-09: 267 → 268 prestadores).
     "build_privacidad_cifras.py",
     "build_estado_claves.py",
+    "build_landing_pages.py",
     "build_metadatos.py",
     "construir_reproducibilidad.py",
     "generar_indice_busqueda.py",

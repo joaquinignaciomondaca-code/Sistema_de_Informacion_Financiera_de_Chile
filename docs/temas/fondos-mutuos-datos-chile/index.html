@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fondos mutuos en Chile: carteras CMF | SIF</title>
+  <meta name="description" content="Datos históricos de fondos mutuos en Chile: carteras nacionales y extranjeras, balances, resultados y fondos que reportan a la CMF.">
+  <link rel="canonical" href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/fondos-mutuos-datos-chile/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="Sistema de Información Financiera de Chile">
+  <meta property="og:title" content="Fondos mutuos en Chile: carteras CMF | SIF">
+  <meta property="og:description" content="Datos históricos de fondos mutuos en Chile: carteras nacionales y extranjeras, balances, resultados y fondos que reportan a la CMF.">
+  <meta property="og:url" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/fondos-mutuos-datos-chile/">
+  <meta property="og:image" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png">
+  <meta property="og:image:alt" content="SIF Chile: datos financieros públicos organizados por mercado">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png">
+  <link rel="stylesheet" href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/css/seo-content.css">
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Fondos mutuos en Chile: carteras CMF | SIF",
+  "description": "Datos históricos de fondos mutuos en Chile: carteras nacionales y extranjeras, balances, resultados y fondos que reportan a la CMF.",
+  "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/fondos-mutuos-datos-chile/",
+  "inLanguage": "es-CL",
+  "dateModified": "2026-11-10",
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": 6,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Dataset",
+          "name": "ffmm.cartera_nacional",
+          "description": "Inversiones de cada fondo en instrumentos de emisores nacionales, instrumento por instrumento, al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
+          "temporalCoverage": "2022-01 a 2026-09",
+          "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_cartera_nacional.json"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Dataset",
+          "name": "ffmm.cartera_extranjera",
+          "description": "Inversiones de cada fondo en instrumentos de emisores extranjeros al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
+          "temporalCoverage": "2001-01 a 2026-09",
+          "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_cartera_extranjera.json"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Dataset",
+          "name": "ffmm.futuros_forwards",
+          "description": "Contratos de futuro y forward vigentes de cada fondo al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
+          "temporalCoverage": "2001-01 a 2026-09",
+          "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_futuros.json"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "Dataset",
+          "name": "ffmm.balance",
+          "description": "Estado de situación financiera de cada fondo mutuo —vigente o extinto— al 31 de diciembre de cada año, línea por línea (16 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
+          "temporalCoverage": "2010-12 a 2025-12",
+          "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_balance.json"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "item": {
+          "@type": "Dataset",
+          "name": "ffmm.resultados",
+          "description": "Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
+          "temporalCoverage": "2010-12 a 2025-12",
+          "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_resultados.json"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "item": {
+          "@type": "Dataset",
+          "name": "ffmm.lista_entidades",
+          "description": "Fondos mutuos que reportan cartera a la CMF: RUN, nombre vigente, primer y último mes informado y si reportó el último mes publicado (un fondo nuevo aparece aquí el mes en que informa por primera vez).",
+          "temporalCoverage": "2001-01 a 2026-09",
+          "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_lista_entidades.json"
+        }
+      }
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Sistema de Información Financiera de Chile",
+    "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/"
+  }
+}</script>
+</head>
+<body>
+  <main class="seo-page">
+    <nav class="seo-breadcrumbs" aria-label="Ruta de navegación"><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/">SIF Chile</a> › Datos por mercado</nav>
+    <header class="seo-hero">
+      <p class="seo-kicker">Datos públicos · Chile · CMF</p>
+      <h1>Fondos mutuos en Chile: carteras y estados financieros</h1>
+      <p class="seo-lead">Consulta datos publicados por la CMF sobre fondos mutuos: posiciones nacionales y extranjeras por mes, contratos vigentes y estados financieros anuales. Las consultas SQL se ejecutan en tu navegador.</p>
+      <p class="seo-meta">Coberturas declaradas: 2001-01 a 2026-09 · 2010-12 a 2025-12 · 2022-01 a 2026-09. Última publicación del catálogo: 2026-10-13.</p>
+      <div class="seo-actions">
+        <a class="seo-button seo-button-primary" href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/#sql=SELECT%20tipo_instrumento%2C%20count%28%2A%29%20AS%20posiciones%2C%20count%28DISTINCT%20run_fondo%29%20AS%20fondos%2C%20SUM%28valorizacion_miles_mf%29%20AS%20valorizacion_miles_mf%20FROM%20ffmm_cartera_nacional%20WHERE%20periodo%20%3D%20%272026-09%27%20GROUP%20BY%20tipo_instrumento%20ORDER%20BY%20valorizacion_miles_mf%20DESC%20LIMIT%2015%3B">Probar una consulta SQL</a>
+        <a class="seo-button" href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/">Abrir el explorador completo</a>
+      </div>
+    </header>
+    <section class="seo-section" aria-labelledby="conjuntos-title">
+      <h2 id="conjuntos-title">Conjuntos de datos disponibles</h2>
+      <p>Los periodos y recuentos se leen del catálogo publicado. Abre el manifiesto para descargar por periodo o el esquema para revisar campos y definiciones.</p>
+      <div class="seo-table-wrap"><table class="seo-table">
+        <thead><tr><th>Conjunto y descripción</th><th>Periodo disponible</th><th>Filas</th><th>Recursos</th></tr></thead>
+        <tbody><tr><td><strong>ffmm.cartera_nacional</strong><span class="seo-description">Inversiones de cada fondo en instrumentos de emisores nacionales, instrumento por instrumento, al cierre de cada mes. Montos en miles de la moneda funcional del fondo.</span></td><td>2022-01 a 2026-09</td><td>1.590.196</td><td><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_cartera_nacional.json">Descargas</a> · <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/ffmm_cartera_nacional.json">Esquema</a> · <a href="https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html" rel="external">Condiciones de uso</a></td></tr>
+<tr><td><strong>ffmm.cartera_extranjera</strong><span class="seo-description">Inversiones de cada fondo en instrumentos de emisores extranjeros al cierre de cada mes. Montos en miles de la moneda funcional del fondo.</span></td><td>2001-01 a 2026-09</td><td>1.461.253</td><td><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_cartera_extranjera.json">Descargas</a> · <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/ffmm_cartera_extranjera.json">Esquema</a> · <a href="https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html" rel="external">Condiciones de uso</a></td></tr>
+<tr><td><strong>ffmm.futuros_forwards</strong><span class="seo-description">Contratos de futuro y forward vigentes de cada fondo al cierre de cada mes. Montos en miles de la moneda funcional del fondo.</span></td><td>2001-01 a 2026-09</td><td>282.045</td><td><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_futuros.json">Descargas</a> · <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/ffmm_futuros.json">Esquema</a> · <a href="https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html" rel="external">Condiciones de uso</a></td></tr>
+<tr><td><strong>ffmm.balance</strong><span class="seo-description">Estado de situación financiera de cada fondo mutuo —vigente o extinto— al 31 de diciembre de cada año, línea por línea (16 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).</span></td><td>2010-12 a 2025-12</td><td>126.256</td><td><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_balance.json">Descargas</a> · <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/ffmm_balance.json">Esquema</a> · <a href="https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html" rel="external">Condiciones de uso</a></td></tr>
+<tr><td><strong>ffmm.resultados</strong><span class="seo-description">Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).</span></td><td>2010-12 a 2025-12</td><td>149.929</td><td><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_resultados.json">Descargas</a> · <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/ffmm_resultados.json">Esquema</a> · <a href="https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html" rel="external">Condiciones de uso</a></td></tr>
+<tr><td><strong>ffmm.lista_entidades</strong><span class="seo-description">Fondos mutuos que reportan cartera a la CMF: RUN, nombre vigente, primer y último mes informado y si reportó el último mes publicado (un fondo nuevo aparece aquí el mes en que informa por primera vez).</span></td><td>2001-01 a 2026-09</td><td>1.334</td><td><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/partitions/ffmm_lista_entidades.json">Descargas</a> · <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/ffmm_lista_entidades.json">Esquema</a> · <a href="https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html" rel="external">Condiciones de uso</a></td></tr></tbody>
+      </table></div>
+    </section>
+    <section class="seo-section"><h2>Carteras mensuales y estados anuales</h2><p>La cartera nacional y la extranjera se publican por instrumento o emisor y cierre mensual. El catálogo también incluye futuros y otros contratos, además de balances y resultados anuales por fondo. Los periodos iniciales no son iguales entre conjuntos; la tabla de abajo muestra el corte exacto de cada uno.</p>
+<p>Puedes explorar la composición por tipo de instrumento, seguir emisores o revisar qué fondos reportan en el último periodo disponible. Los ejemplos de consulta se actualizan junto con el catálogo para usar cortes que existan en los datos publicados.</p></section><section class="seo-section"><h2>Uso y limitaciones</h2><p>Las cifras conservan la moneda y unidad de cada reporte. No sumes directamente fondos que informan en monedas distintas ni compares balances anuales con posiciones mensuales como si fueran la misma medida. Revisa el esquema y la atribución de la CMF antes de construir indicadores.</p>
+<p>SIF Chile es un proyecto independiente, no un servicio oficial de la CMF ni una recomendación de inversión. Los datos originales y sus condiciones se consultan en las fuentes enlazadas en cada conjunto.</p></section>
+    <section class="seo-section" aria-labelledby="consultas-title">
+      <h2 id="consultas-title">Consultas listas para usar</h2>
+      <p>Cada ejemplo abre el explorador SQL con una consulta preparada sobre el último periodo que contiene el catálogo.</p>
+      <ul class="seo-query-list"><li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/#sql=SELECT%20tipo_instrumento%2C%20count%28%2A%29%20AS%20posiciones%2C%20count%28DISTINCT%20run_fondo%29%20AS%20fondos%2C%20SUM%28valorizacion_miles_mf%29%20AS%20valorizacion_miles_mf%20FROM%20ffmm_cartera_nacional%20WHERE%20periodo%20%3D%20%272026-09%27%20GROUP%20BY%20tipo_instrumento%20ORDER%20BY%20valorizacion_miles_mf%20DESC%20LIMIT%2015%3B">Cartera nacional por tipo de instrumento, último mes<small>Abre la consulta SQL en SIF Chile.</small></a></li>
+<li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/#sql=SELECT%20pais_emisor%2C%20count%28%2A%29%20AS%20posiciones%2C%20count%28DISTINCT%20run_fondo%29%20AS%20fondos%20FROM%20ffmm_cartera_extranjera%20WHERE%20periodo%20%3D%20%272026-09%27%20GROUP%20BY%20pais_emisor%20ORDER%20BY%20posiciones%20DESC%20LIMIT%2015%3B">Cartera extranjera por país emisor, último mes<small>Abre la consulta SQL en SIF Chile.</small></a></li>
+<li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/#sql=SELECT%20periodo%2C%20count%28DISTINCT%20run_fondo%29%20AS%20fondos%2C%20round%28sum%28valor_miles_mf%29%20%2F%201e3%2C%200%29%20AS%20activo_neto_mm%20FROM%20ffmm_balance%20WHERE%20codigo_cuenta%20%3D%20%27ActivoNetoAtribuibleALosParticipes%27%20AND%20moneda%20%3D%20%27CLP%27%20GROUP%20BY%20periodo%20ORDER%20BY%20periodo%3B">Activo neto de la industria en pesos, por cierre (MM$)<small>Abre la consulta SQL en SIF Chile.</small></a></li></ul>
+    </section>
+    <section class="seo-section" aria-labelledby="api-title">
+      <h2 id="api-title">API y descargas</h2>
+      <p>Los datos están disponibles como archivos estáticos y pueden utilizarse desde Python, DuckDB u otras herramientas compatibles con Parquet. El catálogo API describe los objetos y sus recursos; los manifiestos de cada conjunto enumeran los archivos y periodos.</p>
+      <ul>
+        <li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/catalog.json">Catálogo API completo (JSON)</a></li>
+        <li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/datapackage.json">Data Package</a></li>
+        <li><a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile">Código fuente y documentación en GitHub</a></li>
+      </ul>
+    </section>
+    <section class="seo-section" aria-labelledby="relacionados-title">
+      <h2 id="relacionados-title">Más datos financieros de Chile</h2>
+      <ul class="seo-related-list"><li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/carteras-inversion-seguros-chile/">Carteras de seguros</a></li>
+<li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/fondos-inversion-datos-chile/">Fondos de inversión</a></li></ul>
+    </section>
+    <footer class="seo-footer">
+      <p>Proyecto independiente de consulta y distribución de datos públicos. No representa a la CMF ni a los organismos fuente. Las cifras y definiciones originales se deben verificar en sus publicaciones.</p>
+      <p><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/privacidad.html">Privacidad</a> · <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md">Licencia y atribución de datos</a></p>
+    </footer>
+  </main>
+</body>
+</html>

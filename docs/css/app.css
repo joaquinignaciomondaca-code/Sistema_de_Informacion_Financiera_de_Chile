@@ -6679,6 +6679,29 @@ body {
 
 .info-hero-capabilities i { width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted); }
 
+.seo-topic-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 5px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+.seo-topic-nav span { margin-right: 3px; font-weight: 600; }
+.seo-topic-nav a {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 4px 11px;
+  color: var(--accent-mint-text);
+  text-decoration: none;
+}
+.seo-topic-nav a:hover { border-color: var(--accent-mint); background: rgba(var(--accent-rgb), 0.08); }
+.seo-topic-nav a:focus-visible { outline: 2px solid var(--accent-mint); outline-offset: 2px; }
+
 .info-hero-aside {
   border-left: 1px solid rgba(var(--neutral-rgb), 0.2);
   padding-top: 8px;
