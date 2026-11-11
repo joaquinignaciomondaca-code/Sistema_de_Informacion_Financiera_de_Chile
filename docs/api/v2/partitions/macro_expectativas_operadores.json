@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_expectativas_operadores.parquet",
-   "bytes": 5253,
+   "bytes": 5255,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_expectativas_operadores.parquet",
    "periodo": "macro_expectativas_operadores",
-   "sha256": "aedfba570ffda8b711d4901650abccf30242f54355aa6f8e96bf9f1b63b27009"
+   "sha256": "25cf9645dbba21727aace9e2edb277ed3fa7126b4801f6a3d15d262356280598"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 5253,
-  "filas": 238
+  "bytes": 5255,
+  "filas": 239
  },
  "version": "2.3.0"
 }

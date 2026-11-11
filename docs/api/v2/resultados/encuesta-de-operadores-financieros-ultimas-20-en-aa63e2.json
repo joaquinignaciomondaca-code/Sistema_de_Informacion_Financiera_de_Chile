@@ -3,7 +3,7 @@
  "id": "encuesta-de-operadores-financieros-ultimas-20-en-aa63e2",
  "titulo": "Encuesta de Operadores Financieros: últimas 20 encuestas",
  "origen": "explorador",
- "data_release": "2026-11-10.7c61dc21269c",
+ "data_release": "2026-11-11.1681f879ece0",
  "generado": "2026-11-11",
  "max_filas": 500,
  "columnas": [
@@ -14,11 +14,6 @@
  "filas": 20,
  "truncado": false,
  "datos": [
-  [
-   "2025-08-18",
-   3.05,
-   4.25
-  ],
   [
    "2025-09-04",
    3.0,
@@ -112,6 +107,11 @@
   [
    "2026-10-22",
    3.7,
+   4.5
+  ],
+  [
+   "2026-11-11",
+   3.4,
    4.5
   ]
  ],
