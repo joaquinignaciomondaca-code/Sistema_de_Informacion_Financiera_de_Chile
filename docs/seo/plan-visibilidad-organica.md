@@ -19,6 +19,7 @@ La ruta de enlaces recomendada es SIF Pages ↔ repo SIF ↔ perfil; perfil ↔ 
 - SIF Pages ya tiene portada, tres páginas temáticas (seguros, fondos mutuos y fondos de inversión), sitemap, `robots.txt`, canonical, Open Graph, enlaces internos y marcado `Dataset`.
 - Search Console reconoció páginas temáticas en inspecciones en vivo; se aceptó una solicitud de rastreo para seguros. Eso solo pone la URL en cola; no garantiza indexación ni posicionamiento.
 - El informe de indexación puede retrasarse respecto de una inspección en vivo. No reenviar repetidamente la misma URL o sitemap: la repetición no acelera el rastreo.
+- La búsqueda pública exploratoria encuentra herramientas oficiales de CMF (BEST+, descargas Circular 1835 y portal de fondos) y otros proyectos que comunican Parquet/DuckDB. No aporta volúmenes de keywords ni sustituye Search Console; orienta a diferenciar SIF por detalle mensual, descargas y reproducibilidad.
 - El perfil ya enlaza SIF y tesis. La tesis tiene resumen, métricas y repo públicos y está registrada en el repositorio institucional USM.
 - No tenemos una exportación de consultas e impresiones de Search Console; las frases abajo son hipótesis de intención, no volúmenes ni posiciones observados.
 
@@ -28,8 +29,8 @@ Usar luego las consultas reales de Search Console para ajustar esta lista. Las f
 
 | Activo | Intención | Temas de búsqueda candidatos | Acción útil |
 |---|---|---|---|
-| Portada SIF | Encontrar y reutilizar datos | datos financieros de Chile; datos abiertos financieros Chile; datos CMF descargables; datos financieros Parquet Chile; consultar datos financieros con SQL | Explicar en texto visible cobertura, fuentes, consulta y descarga. |
-| Seguros | Analizar inversiones de aseguradoras | cartera de inversiones compañías de seguros Chile; cartera seguros CMF histórica; inversiones por instrumento | Documentar períodos, columnas, límites y ejemplos ejecutables. |
+| Portada SIF | Encontrar y reutilizar datos | catálogo de datos financieros Chile; datos CMF en Parquet; consultas SQL financieras Chile | Explicar cobertura, fuentes, API, Parquet y ejemplos. Las frases amplias siguen siendo hipótesis. |
+| Seguros | Analizar inversiones de aseguradoras con datos reutilizables | cartera mensual Circular 1835 por instrumento; inversiones aseguradoras CMF Parquet SQL; datos históricos de cartera seguros | Diferenciar el detalle mensual descargable de los agregados y visualizaciones de BEST+; enlazar fuente CMF y ejemplos ejecutables. |
 | Fondos mutuos | Explorar posiciones y EEFF | cartera fondos mutuos Chile CMF; datos históricos fondos mutuos; inversiones por emisor | Explicar unidades, moneda y alcance de cada serie. |
 | Fondos de inversión | Analizar cartera y balances | cartera fondos de inversión Chile CMF; datos fondos de inversión descargar; estados financieros | Declarar con precisión qué series son parciales y cuáles continuas. |
 | Repo SIF | Encontrar código reutilizable | GitHub datos financieros Chile; Parquet CMF; DuckDB finanzas Chile | Completar About, descripción, website y topics del repo. |
