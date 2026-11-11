@@ -38,6 +38,11 @@ IMAGEN = DOCS / "assets" / "og_sif_1200x630.png"
 PRIVACIDAD = DOCS / "privacidad.html"
 
 BASE = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile"
+CREATOR = {
+    "@type": "Person",
+    "name": "Joaquín Mondaca",
+    "url": "https://github.com/joaquinignaciomondaca-code",
+}
 INICIO = "<!-- SEO:INICIO -->"
 FIN = "<!-- SEO:FIN -->"
 
@@ -118,6 +123,7 @@ def json_ld_dataset(cat: dict, d: dict) -> str:
         "datePublished": cat.get("generado", ""),
         "dateModified": cat.get("generado", ""),
         "version": cat.get("data_release", ""),
+        "creator": CREATOR,
         "publisher": {
             "@type": "Organization",
             "name": "Sistema de Información Financiera de Chile",
@@ -139,10 +145,10 @@ def json_ld_dataset(cat: dict, d: dict) -> str:
                     f"{miles(d['filas'])} filas, {d['objetos']} objetos, "
                     f"{d['consultas']} consultas SQL precálculadas"
                 ),
+                "creator": CREATOR,
             }
         ],
         "isAccessibleForFree": True,
-        "license": "https://www.apache.org/licenses/LICENSE-2.0",
     }
     # Fuentes como "about" (categorías del dataset)
     if fuentes:
