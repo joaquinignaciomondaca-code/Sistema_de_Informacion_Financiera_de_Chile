@@ -241,6 +241,9 @@ def _pagina_prioridad(ruta_relativa: Path) -> tuple[str, str, str]:
     if ruta_relativa.name == "index.html" and ruta_relativa.parts[:1] == ("temas",):
         ruta = "/".join(ruta_relativa.parts[:-1])
         return f"{BASE}/{ruta}/", "0.8", "weekly"
+    if ruta_relativa.name == "index.html" and len(ruta_relativa.parts) > 1:
+        ruta = "/".join(ruta_relativa.parts[:-1])
+        return f"{BASE}/{ruta}/", "0.5", "monthly"
     # Páginas de detalle bajo subdirectorios (ej. docs/datos/.../index.html).
     return f"{BASE}/{ruta_relativa.as_posix()}", "0.5", "monthly"
 

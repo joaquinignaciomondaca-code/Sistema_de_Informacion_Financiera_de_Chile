@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cómo consultar inversiones de seguros en Chile con Python y DuckDB | SIF</title>
+  <meta name="description" content="Guía práctica para explorar la cartera de renta fija de aseguradoras chilenas publicada por la CMF con Python, DuckDB y el SDK de SIF.">
+  <link rel="canonical" href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/guias/consulta-cartera-seguros-python/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="Sistema de Información Financiera de Chile">
+  <meta property="og:title" content="Consultar carteras de seguros con Python y DuckDB">
+  <meta property="og:description" content="Ejemplo reproducible con el SDK SIF, Parquet y datos de renta fija publicados por la CMF.">
+  <meta property="og:url" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/guias/consulta-cartera-seguros-python/">
+  <link rel="stylesheet" href="../../css/seo-content.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Cómo consultar inversiones de seguros en Chile con Python y DuckDB",
+    "description": "Guía práctica para explorar la cartera de renta fija de aseguradoras chilenas publicada por la CMF con Python, DuckDB y el SDK de SIF.",
+    "inLanguage": "es-CL",
+    "datePublished": "2026-11-10",
+    "dateModified": "2026-11-10",
+    "author": {"@type": "Person", "name": "Joaquín Mondaca", "url": "https://github.com/joaquinignaciomondaca-code"},
+    "publisher": {"@type": "Organization", "name": "Sistema de Información Financiera de Chile"},
+    "mainEntityOfPage": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/guias/consulta-cartera-seguros-python/"
+  }
+  </script>
+</head>
+<body>
+  <main class="seo-page">
+    <nav class="seo-breadcrumbs" aria-label="Ruta de navegación"><a href="../../">SIF Chile</a> › <a href="../../temas/carteras-inversion-seguros-chile/">Carteras de seguros</a> › Guía Python</nav>
+    <header class="seo-hero">
+      <p class="seo-kicker">Tutorial · Python · DuckDB · datos públicos CMF</p>
+      <h1>Cómo consultar inversiones de compañías de seguros en Chile con Python y DuckDB</h1>
+      <p class="seo-lead">En este ejemplo usamos el SDK de SIF para encontrar la tabla de instrumentos de renta fija, revisar su esquema y sumar el valor contable reportado por mes y sector.</p>
+      <div class="seo-actions">
+        <a class="seo-button seo-button-primary" href="../../temas/carteras-inversion-seguros-chile/">Ver datos y consultas en el navegador</a>
+        <a class="seo-button" href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/tree/main/sdk/python">Ver SDK de Python</a>
+      </div>
+    </header>
+    <section class="seo-section">
+      <h2>1. Instalar el SDK</h2>
+      <p>Se requiere Python 3.10 o superior. El SDK se instala desde el repositorio; actualmente no se distribuye en PyPI.</p>
+      <pre><code>python -m pip install "sif-chile @ git+https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile@main#subdirectory=sdk/python"</code></pre>
+    </section>
+    <section class="seo-section">
+      <h2>2. Encontrar la tabla y revisar los campos</h2>
+      <pre><code>import sif_chile
+
+sif = sif_chile.connect()
+print(sif.buscar("renta fija seguros"))
+print(sif.esquema("seguros_renta_fija"))</code></pre>
+      <p>La tabla <code>seguros_renta_fija</code> contiene posiciones reportadas a la CMF. Su campo <code>periodo</code> representa el mes informado, <code>sector</code> distingue vida y generales, y <code>valor_final_m_clp</code> es el valor contable al cierre del mes expresado en miles de pesos chilenos.</p>
+    </section>
+    <section class="seo-section">
+      <h2>3. Sumar el valor contable por mes y sector</h2>
+      <pre><code>consulta = """
+SELECT
+    periodo,
+    sector,
+    SUM(valor_final_m_clp) AS valor_contable_miles_clp
+FROM seguros_renta_fija
+GROUP BY periodo, sector
+ORDER BY periodo, sector
+"""
+
+resultado = sif.sql(consulta)
+print(resultado.df().tail(12))</code></pre>
+      <p>La consulta agrupa las filas de cada periodo y sector. Es una agregación de los valores informados en la fuente: no mide rentabilidad ni constituye una valoración independiente. Antes de comparar periodos o compañías, revisa la cobertura, las definiciones y las unidades del esquema.</p>
+    </section>
+    <section class="seo-section">
+      <h2>Fuente, cobertura y atribución</h2>
+      <ul>
+        <li><a href="../../api/v2/catalog.json">Catálogo API</a>: cobertura y última actualización vigentes.</li>
+        <li><a href="../../api/v2/schema/seguros_renta_fija.json">Esquema de renta fija</a>: columnas, tipos y definiciones.</li>
+        <li><a href="../../api/v2/partitions/seguros_renta_fija.json">Manifiesto de archivos y hashes</a>.</li>
+        <li>Fuente: <a href="https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html">Comisión para el Mercado Financiero</a>; revisar sus condiciones de reproducción y citarla.</li>
+      </ul>
+      <p>SIF es un proyecto independiente y no representa a la CMF. Los datos y la cobertura pueden cambiar; consulta el catálogo antes de publicar resultados. Para otras carteras, empieza por la <a href="../../temas/carteras-inversion-seguros-chile/">página temática de seguros</a>.</p>
+    </section>
+    <footer class="seo-footer">
+      <p><a href="../../">Sistema de Información Financiera de Chile</a> · <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile">Código fuente en GitHub</a></p>
+    </footer>
+  </main>
+</body>
+</html>

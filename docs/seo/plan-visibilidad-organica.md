@@ -46,6 +46,8 @@ No llamar el SIF “oficial”, “certificado” ni atribuirle respaldo institu
 - Reforzados en el perfil enlaces descriptivos hacia la plataforma, repositorio y registro académico.
 - Añadido en el README de la tesis el enlace a su ficha USM, distinguiendo destino académico de destino del código.
 - Documentada la configuración del About y topics de GitHub, campos que no se modifican editando un archivo del repositorio.
+- Añadidos `CITATION.cff` al código de SIF y al repositorio de la tesis para ofrecer una cita descargable en GitHub.
+- Publicado un tutorial reproducible de Python y DuckDB enlazado desde la página temática de carteras de seguros.
 
 ### Próximos 7 días
 
@@ -59,7 +61,7 @@ No llamar el SIF “oficial”, “certificado” ni atribuirle respaldo institu
 ### Próximos 30 días
 
 - Usar consultas con impresiones para mejorar una página a la vez. Ajustar título y primer párrafo si no responden a la intención; revisar snippet si hay impresiones con CTR bajo; corregir rastreo solo ante un error real.
-- Crear y enlazar desde SIF una guía práctica para leer un Parquet con DuckDB/Python y citar su `data_release`. Evitar páginas genéricas o duplicadas del catálogo.
+- Extender la guía de Python/DuckDB con la versión vigente del `data_release` y ejemplos adicionales después de medir qué conjuntos atraen consultas. Evitar páginas genéricas o duplicadas del catálogo.
 - Compartir en LinkedIn una demostración concreta con consulta reproducible, procedencia, fecha de corte y enlace Pages; describir SIF como proyecto independiente. No comprar interacciones ni enviar mensajes masivos.
 - Presentar código de tesis junto a la ficha USM en espacios académicos o de pronóstico que acepten proyectos; acompañarlo de método y limitaciones, no copiar el mismo anuncio en foros sin contexto.
 - Revisar GitHub Insights/Traffic (vistas y clones, cuando estén disponibles) por separado de visitas/clics de Pages.

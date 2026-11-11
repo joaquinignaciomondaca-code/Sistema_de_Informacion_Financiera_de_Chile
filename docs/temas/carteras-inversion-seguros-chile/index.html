@@ -201,6 +201,10 @@
 <li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/#sql=SELECT%20pais%2C%20tipo_registro%2C%20count%28%2A%29%20AS%20instrumentos%2C%20SUM%28valor_final_m_clp%29%20AS%20valor_final_m_clp%20FROM%20seguros_extranjeros%20WHERE%20periodo%20%3D%20%272026-09%27%20GROUP%20BY%20pais%2C%20tipo_registro%20ORDER%20BY%20valor_final_m_clp%20DESC%20LIMIT%2010%3B">Inversiones en el extranjero por país, último mes (M$)<small>Abre la consulta SQL en SIF Chile.</small></a></li>
 <li><a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/#sql=SELECT%20ciudad%2C%20count%28%2A%29%20AS%20inmuebles%2C%20SUM%28valor_final_m_clp%29%20AS%20valor_final_m_clp%20FROM%20seguros_bienes_raices%20WHERE%20periodo%20%3D%20%272026-09%27%20GROUP%20BY%20ciudad%20ORDER%20BY%20valor_final_m_clp%20DESC%20LIMIT%2010%3B">Bienes raíces por ciudad, último mes (M$)<small>Abre la consulta SQL en SIF Chile.</small></a></li></ul>
     </section>
+    <section class="seo-section" aria-labelledby="python-guide-title">
+      <h2 id="python-guide-title">Consultar estos datos con Python y DuckDB</h2>
+      <p>También puedes encontrar la tabla de renta fija, revisar sus columnas y agrupar los valores reportados con el SDK de SIF. La <a href="../../guias/consulta-cartera-seguros-python/">guía paso a paso para consultar carteras de seguros con Python</a> incluye el código, las unidades, la fuente y los límites de interpretación.</p>
+    </section>
     <section class="seo-section" aria-labelledby="api-title">
       <h2 id="api-title">API y descargas</h2>
       <p>Los datos están disponibles como archivos estáticos y pueden utilizarse desde Python, DuckDB u otras herramientas compatibles con Parquet. El catálogo API describe los objetos y sus recursos; los manifiestos de cada conjunto enumeran los archivos y periodos.</p>

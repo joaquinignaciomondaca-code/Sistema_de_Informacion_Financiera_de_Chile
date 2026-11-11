@@ -11,7 +11,7 @@ Extrae, valida y publica archivos financieros y series que las entidades reporta
 
 **▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
-**Visibilidad y referencia:** [plan gratuito de visibilidad orgánica](docs/seo/plan-visibilidad-organica.md) · [perfil y proyectos del autor](https://github.com/joaquinignaciomondaca-code).
+**Visibilidad y referencia:** [plan gratuito de visibilidad orgánica](docs/seo/plan-visibilidad-organica.md) · [tutorial: consultar carteras de seguros con Python y DuckDB](docs/guias/consulta-cartera-seguros-python/index.html) · [cómo citar el software](CITATION.cff) · [perfil y proyectos del autor](https://github.com/joaquinignaciomondaca-code).
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![DuckDB-Wasm 1.28.0](https://img.shields.io/badge/DuckDB--Wasm-1.28.0-FFF000?logo=duckdb&logoColor=black)

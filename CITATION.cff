@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: >-
+  If you use the SIF software or documentation, please cite this repository.
+  The code license does not grant a uniform license for the third-party data;
+  see DATA_LICENSE.md and cite each original source as documented there.
+type: software
+title: "Sistema de Información Financiera de Chile (SIF)"
+authors:
+  - family-names: Mondaca
+    given-names: Joaquín
+url: "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile"
+abstract: >-
+  Software and documentation for a static catalog of public financial data
+  from Chile. The repository code is MIT licensed; data reuse conditions vary
+  by source and dataset and are documented separately.
