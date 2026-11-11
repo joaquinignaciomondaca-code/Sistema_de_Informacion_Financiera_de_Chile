@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es-CL">
+<html lang="es-CL" data-theme="dark-ide">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,12 @@
   <meta property="og:title" content="Consultar carteras de seguros con Python y DuckDB">
   <meta property="og:description" content="Ejemplo reproducible con el SDK SIF, Parquet y datos de renta fija publicados por la CMF.">
   <meta property="og:url" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/guias/consulta-cartera-seguros-python/">
-  <link rel="stylesheet" href="../../css/seo-content.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"></noscript>
+  <link rel="stylesheet" href="../../css/seo-content.css?v=20261110-paletas">
+  <script src="../../js/theme_switcher.js?v=fl-202609-30075-22389" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -31,7 +36,15 @@
 </head>
 <body>
   <main class="seo-page">
-    <nav class="seo-breadcrumbs" aria-label="Ruta de navegación"><a href="../../">SIF Chile</a> › <a href="../../temas/carteras-inversion-seguros-chile/">Carteras de seguros</a> › Guía Python</nav>
+    <div class="seo-topbar">
+      <nav class="seo-breadcrumbs" aria-label="Ruta de navegación"><a href="../../">SIF Chile</a> › <a href="../../temas/carteras-inversion-seguros-chile/">Carteras de seguros</a> › Guía Python</nav>
+      <div class="theme-dropdown-container seo-theme-switcher" id="theme-dropdown-container">
+        <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-label="Seleccionar paleta de colores" aria-controls="theme-dropdown-menu" aria-expanded="false" title="Seleccionar paleta de colores">
+          <span aria-hidden="true">◉</span><span class="theme-swatch-strip" id="theme-trigger-swatch"></span><span class="theme-dropdown-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="theme-dropdown-menu" id="theme-dropdown-menu" role="group" aria-label="Paletas de colores"></div>
+      </div>
+    </div>
     <header class="seo-hero">
       <p class="seo-kicker">Tutorial · Python · DuckDB · datos públicos CMF</p>
       <h1>Cómo consultar inversiones de compañías de seguros en Chile con Python y DuckDB</h1>
@@ -51,7 +64,8 @@
       <pre><code>import sif_chile
 
 sif = sif_chile.connect()
-print(sif.buscar("renta fija seguros"))
+coincidencias = sif.buscar("renta fija")
+print([tabla["id"] for tabla in coincidencias])
 print(sif.esquema("seguros_renta_fija"))</code></pre>
       <p>La tabla <code>seguros_renta_fija</code> contiene posiciones reportadas a la CMF. Su campo <code>periodo</code> representa el mes informado, <code>sector</code> distingue vida y generales, y <code>valor_final_m_clp</code> es el valor contable al cierre del mes expresado en miles de pesos chilenos.</p>
     </section>

@@ -1227,6 +1227,40 @@ def audit_vitrina(html):
         print("  [OK] metadatos sociales completos, robots.txt y sitemap.xml con las dos páginas")
 
 
+def audit_seo_guides():
+    """La guía SEO debe ser accesible desde la app y compartir sus seis paletas."""
+    print("\n--- 17. Tutorial externo, navegación y paletas compartidas ---")
+    inicio = read("docs/index.html")
+    guia = read("docs/guias/consulta-cartera-seguros-python/index.html")
+    landing = read("docs/temas/carteras-inversion-seguros-chile/index.html")
+    css = read("docs/css/seo-content.css")
+    ruta = "guias/consulta-cartera-seguros-python/"
+    if ruta not in inicio or "Tutorial Python de carteras de seguros" not in inicio:
+        fail("la portada no ofrece el acceso directo al tutorial Python")
+    else:
+        print("  [OK] acceso directo al tutorial desde la portada")
+    if ruta not in landing or "theme_switcher.js" not in landing:
+        fail("la página de carteras de seguros no enlaza la guía o no incluye el selector de paleta")
+    else:
+        print("  [OK] landing de seguros enlaza el tutorial desde su cabecera")
+    for nombre, pagina in (("tutorial", guia), ("landing temática", landing)):
+        if pagina.count('id="theme-dropdown-container"') != 1 or "theme_switcher.js" not in pagina:
+            fail(f"{nombre}: falta el selector de paleta compartido")
+        if "seo-content.css?v=20261110-paletas" not in pagina:
+            fail(f"{nombre}: no carga la hoja de estilos versionada")
+    if not errors:
+        print("  [OK] tutorial y landing cargan un único selector de paleta compartido")
+    for tema in ("dark-ide", "swissborg", "bloomberg", "nord", "midnight", "informe"):
+        if f'[data-theme="{tema}"]' not in css:
+            fail(f"la hoja de contenido no adapta los colores para la paleta {tema}")
+    if not errors:
+        print("  [OK] seis paletas están definidas para las páginas SEO")
+    if 'href="../../"' not in guia or 'href="../../temas/carteras-inversion-seguros-chile/"' not in guia:
+        fail("el tutorial no tiene rutas de regreso a la portada y a carteras de seguros")
+    else:
+        print("  [OK] tutorial ofrece navegación de regreso a SIF y a carteras de seguros")
+
+
 def main():
     html = read("docs/index.html")
     audit_tabs(html)
@@ -1250,6 +1284,7 @@ def main():
     audit_alcance_publicado(html)
     audit_estado_claves(html, read("docs/css/app.css"))
     audit_vitrina(html)
+    audit_seo_guides()
 
     print("\n" + "=" * 75)
     if errors:

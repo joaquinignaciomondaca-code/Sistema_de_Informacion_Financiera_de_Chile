@@ -72,6 +72,15 @@ def query_url(base: str, sql: str) -> str:
     return f"{base}/#sql={quote(sql, safe='')}"
 
 
+def render_theme_switcher() -> str:
+    return '''<div class="theme-dropdown-container seo-theme-switcher" id="theme-dropdown-container">
+      <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-label="Seleccionar paleta de colores" aria-controls="theme-dropdown-menu" aria-expanded="false" title="Seleccionar paleta de colores">
+        <span aria-hidden="true">◉</span><span class="theme-swatch-strip" id="theme-trigger-swatch"></span><span class="theme-dropdown-arrow" aria-hidden="true">▾</span>
+      </button>
+      <div class="theme-dropdown-menu" id="theme-dropdown-menu" role="group" aria-label="Paletas de colores"></div>
+    </div>'''
+
+
 def render_index_nav(base: str, pages: list[dict], guides: list[dict]) -> str:
     links = "\n".join(
         f'                  <a href="{esc(base)}/temas/{esc(p["slug"])}/">{esc(p["nav_label"])}</a>'
@@ -129,6 +138,10 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
         f'<section class="seo-section" aria-labelledby="guias-title">'
         f'<h2 id="guias-title">Guía práctica</h2><ul>{guide_links}</ul></section>\n'
         if guide_links else ""
+    )
+    guide_actions = "".join(
+        f'\n        <a class="seo-button" href="{esc(base)}/{esc(guide["path"]).lstrip("/")}">{esc(guide["label"])}</a>'
+        for guide in page.get("guias", [])
     )
     sections = []
     for section in page["secciones"]:
@@ -193,12 +206,17 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
   <meta property="og:image:alt" content="SIF Chile: datos financieros públicos organizados por mercado">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="{esc(base)}/assets/og_sif_1200x630.png">
-  <link rel="stylesheet" href="../../css/seo-content.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"></noscript>
+  <link rel="stylesheet" href="../../css/seo-content.css?v=20261110-paletas">
+  <script src="../../js/theme_switcher.js?v=fl-202609-30075-22389" defer></script>
   <script type="application/ld+json">{ld}</script>
 </head>
 <body>
   <main class="seo-page">
-    <nav class="seo-breadcrumbs" aria-label="Ruta de navegación"><a href="{esc(base)}/">SIF Chile</a> › Datos por mercado</nav>
+    <div class="seo-topbar"><nav class="seo-breadcrumbs" aria-label="Ruta de navegación"><a href="{esc(base)}/">SIF Chile</a> › Datos por mercado</nav>{render_theme_switcher()}</div>
     <header class="seo-hero">
       <p class="seo-kicker">Datos públicos · Chile · CMF</p>
       <h1>{esc(page["h1"])}</h1>
@@ -206,7 +224,7 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
       <p class="seo-meta">Coberturas declaradas: {periods_html}. Última actualización de estos conjuntos: {esc(newest or generated)}.</p>
       <div class="seo-actions">
         <a class="seo-button seo-button-primary" href="{esc(query_url(base, queries[0]["sql"]))}">Probar una consulta SQL</a>
-        <a class="seo-button" href="{esc(base)}/">Abrir el explorador completo</a>
+        <a class="seo-button" href="{esc(base)}/">Abrir el explorador completo</a>{guide_actions}
       </div>
     </header>
     <section class="seo-section" aria-labelledby="conjuntos-title">

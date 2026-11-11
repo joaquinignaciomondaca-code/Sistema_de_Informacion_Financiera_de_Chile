@@ -1,13 +1,40 @@
-:root {
+:root, [data-theme="dark-ide"] {
   color-scheme: dark;
-  --sif-bg: #111318;
-  --sif-panel: #191d25;
-  --sif-border: #303744;
-  --sif-text: #eef1f6;
-  --sif-muted: #bac2cf;
-  --sif-accent: #62d5c5;
-  font-family: system-ui, "Segoe UI", sans-serif;
+  --sif-bg: #121316; --sif-panel: #18191e; --sif-border: rgba(148,155,168,.24);
+  --sif-text: #e5e7eb; --sif-muted: #a5aab4; --sif-accent: #3b82f6; --sif-accent-contrast: #0d0e11;
+  --sif-hover: #60a5fa;
 }
+[data-theme="swissborg"] {
+  color-scheme: dark;
+  --sif-bg: #191e29; --sif-panel: #132d46; --sif-border: rgba(145,158,176,.38);
+  --sif-text: #fff; --sif-muted: #c0c7d2; --sif-accent: #01c38d; --sif-accent-contrast: #10251e;
+  --sif-hover: #02e2a4;
+}
+[data-theme="bloomberg"] {
+  color-scheme: dark;
+  --sif-bg: #0f0f10; --sif-panel: #1a1a1e; --sif-border: rgba(255,153,0,.35);
+  --sif-text: #fff; --sif-muted: #c0c0c5; --sif-accent: #ff9900; --sif-accent-contrast: #211600;
+  --sif-hover: #ffb340;
+}
+[data-theme="nord"] {
+  color-scheme: dark;
+  --sif-bg: #242933; --sif-panel: #2e3440; --sif-border: rgba(136,192,208,.36);
+  --sif-text: #eceff4; --sif-muted: #c5cedb; --sif-accent: #88c0d0; --sif-accent-contrast: #152126;
+  --sif-hover: #8fbcbb;
+}
+[data-theme="midnight"] {
+  color-scheme: dark;
+  --sif-bg: #0b1120; --sif-panel: #0f172a; --sif-border: rgba(56,189,248,.34);
+  --sif-text: #f8fafc; --sif-muted: #b0bacb; --sif-accent: #38bdf8; --sif-accent-contrast: #06121f;
+  --sif-hover: #7dd3fc;
+}
+[data-theme="informe"] {
+  color-scheme: light;
+  --sif-bg: #f5f6f8; --sif-panel: #fff; --sif-border: rgba(31,41,55,.2);
+  --sif-text: #1f2937; --sif-muted: #4b5563; --sif-accent: #0b6f54; --sif-accent-contrast: #fff;
+  --sif-hover: #08503c;
+}
+html { background: var(--sif-bg); font-family: "Schibsted Grotesk", "Inter", system-ui, "Segoe UI", sans-serif; }
 
 * { box-sizing: border-box; }
 
@@ -23,21 +50,35 @@ body {
 }
 
 a { color: var(--sif-accent); text-underline-offset: 3px; }
-a:hover { color: #a0f4e8; }
+a:hover { color: var(--sif-hover); }
 a:focus-visible { outline: 2px solid var(--sif-accent); outline-offset: 3px; }
 
 .seo-page { width: min(1080px, calc(100% - 36px)); margin: 0 auto; padding: 28px 0 72px; }
-.seo-breadcrumbs { margin-bottom: 46px; color: var(--sif-muted); font-size: 14px; }
+.seo-topbar { display:flex; justify-content:space-between; align-items:center; gap:16px; margin-bottom:46px; }
+.seo-breadcrumbs { margin:0; color: var(--sif-muted); font-size: 14px; }
 .seo-breadcrumbs a { color: var(--sif-muted); }
+.seo-theme-switcher { position:relative; display:inline-flex; align-items:center; }
+.seo-theme-switcher .theme-dropdown-btn { display:inline-flex; align-items:center; gap:7px; border:1px solid var(--sif-border); border-radius:8px; padding:6px 9px; background:var(--sif-panel); color:var(--sif-text); cursor:pointer; font:inherit; font-size:13px; }
+.seo-theme-switcher .theme-dropdown-btn:hover,.seo-theme-switcher.open .theme-dropdown-btn { border-color:var(--sif-accent); }
+.seo-theme-switcher .theme-swatch-strip { display:inline-flex; gap:2px; padding:2px; border-radius:4px; background:var(--sif-bg); }
+.seo-theme-switcher .swatch-block { display:block; width:10px; height:10px; border-radius:2px; }
+.seo-theme-switcher .theme-dropdown-arrow { color:var(--sif-muted); }
+.seo-theme-switcher .theme-dropdown-menu { display:none; position:absolute; z-index:5; right:0; top:calc(100% + 6px); min-width:210px; padding:6px; border:1px solid var(--sif-border); border-radius:9px; background:var(--sif-panel); box-shadow:0 10px 25px rgba(0,0,0,.35); }
+.seo-theme-switcher.open .theme-dropdown-menu { display:flex; flex-direction:column; gap:4px; }
+.seo-theme-switcher .theme-palette-item { display:flex; align-items:center; gap:8px; width:100%; border:1px solid transparent; border-radius:6px; padding:7px 8px; background:transparent; color:var(--sif-text); cursor:pointer; text-align:left; }
+.seo-theme-switcher .theme-palette-item:hover,.seo-theme-switcher .theme-palette-item.active { border-color:var(--sif-accent); background:color-mix(in srgb,var(--sif-accent) 14%,transparent); }
+.seo-theme-switcher .theme-item-indicator { width:7px; height:7px; flex:0 0 auto; border-radius:50%; background:transparent; }
+.seo-theme-switcher .theme-palette-item.active .theme-item-indicator { background:var(--sif-accent); }
 .seo-hero { max-width: 850px; margin-bottom: 40px; }
 .seo-kicker { color: var(--sif-accent); font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 h1 { max-width: 820px; margin: 10px 0 16px; font-size: 58px; line-height: 1.08; letter-spacing: -.035em; }
 .seo-lead { max-width: 760px; color: var(--sif-muted); font-size: 20px; line-height: 1.6; }
 .seo-meta { color: var(--sif-muted); font-size: 14px; }
 .seo-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.seo-page code, .seo-page pre { font-family: "JetBrains Mono", Consolas, "Courier New", monospace; }
 .seo-button { display: inline-flex; min-height: 44px; align-items: center; border: 1px solid var(--sif-border); border-radius: 8px; padding: 9px 15px; background: var(--sif-panel); font-weight: 700; text-decoration: none; }
-.seo-button-primary { border-color: var(--sif-accent); background: var(--sif-accent); color: #09201c; }
-.seo-button-primary:hover { color: #09201c; background: #a0f4e8; }
+.seo-button-primary { border-color: var(--sif-accent); background: var(--sif-accent); color: var(--sif-accent-contrast); }
+.seo-button-primary:hover { color: var(--sif-accent-contrast); background: var(--sif-hover); }
 .seo-section { margin-top: 44px; }
 h2 { margin: 0 0 14px; font-size: 31px; line-height: 1.2; }
 .seo-section p { max-width: 820px; color: var(--sif-muted); }
@@ -58,7 +99,8 @@ h2 { margin: 0 0 14px; font-size: 31px; line-height: 1.2; }
 
 @media (max-width: 640px) {
   .seo-page { width: min(100% - 28px, 1080px); padding-top: 20px; }
-  .seo-breadcrumbs { margin-bottom: 32px; }
+  .seo-topbar { align-items:flex-start; margin-bottom:32px; }
+  .seo-breadcrumbs { max-width:calc(100% - 100px); }
   h1 { font-size: 36px; }
   .seo-lead { font-size: 18px; }
   h2 { font-size: 24px; }
