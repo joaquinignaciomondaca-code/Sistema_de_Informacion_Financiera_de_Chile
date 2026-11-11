@@ -1,4 +1,10 @@
 {
+  "guias": [
+    {
+      "path": "guias/consulta-cartera-seguros-python/",
+      "label": "Tutorial: carteras de seguros con Python y DuckDB"
+    }
+  ],
   "paginas": [
     {
       "slug": "carteras-inversion-seguros-chile",
@@ -20,6 +26,12 @@
         "Inversiones en el extranjero por país, último mes (M$)",
         "Bienes raíces por ciudad, último mes (M$)"
       ],
+      "guias": [
+        {
+          "path": "guias/consulta-cartera-seguros-python/",
+          "label": "Consultar carteras de seguros en Chile con Python, DuckDB y el SDK de SIF"
+        }
+      ],
       "secciones": [
         {
           "titulo": "Qué puedes consultar",
@@ -32,6 +44,7 @@
           "titulo": "Cómo leer los montos",
           "parrafos": [
             "Las unidades y definiciones siguen el archivo de origen y se explican por conjunto. No se convierten automáticamente monedas ni se homogeneizan criterios contables entre formularios. Antes de comparar periodos o compañías, revisa el corte, el campo de valorización y las notas del esquema.",
+            "Para explorar indicadores agregados y visualizaciones del mercado asegurador, la CMF ofrece BEST+. Esta página de SIF se orienta a consultar y reutilizar el detalle mensual de carteras de la Circular 1835 con descargas y SQL. La CMF mantiene también las descargas oficiales; SIF organiza esos archivos en un catálogo analítico para comparar periodos y trabajar con Parquet.",
             "Este sitio es un proyecto independiente que organiza datos públicos; no es una publicación oficial de la CMF y no entrega recomendaciones de inversión."
           ]
         }

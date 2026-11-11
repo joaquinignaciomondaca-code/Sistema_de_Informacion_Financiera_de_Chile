@@ -72,16 +72,21 @@ def query_url(base: str, sql: str) -> str:
     return f"{base}/#sql={quote(sql, safe='')}"
 
 
-def render_index_nav(base: str, pages: list[dict]) -> str:
+def render_index_nav(base: str, pages: list[dict], guides: list[dict]) -> str:
     links = "\n".join(
         f'                  <a href="{esc(base)}/temas/{esc(p["slug"])}/">{esc(p["nav_label"])}</a>'
         for p in pages
+    )
+    guide_links = "\n".join(
+        f'                  <a href="{esc(base)}/{esc(g["path"]).lstrip("/")}">{esc(g["label"])}</a>'
+        for g in guides
     )
     return (
         f"{BEGIN}\n"
         '              <nav class="seo-topic-nav" aria-label="Guías de datos financieros por mercado">\n'
         '                <span>Guías de datos</span>\n'
         f"{links}\n"
+        f"{guide_links}\n"
         "              </nav>\n"
         f"{END}"
     )
@@ -115,6 +120,15 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
         f'<li><a href="{esc(query_url(base, q["sql"]))}">{esc(q["titulo"])}'
         '<small>Abre la consulta SQL en SIF Chile.</small></a></li>'
         for q in queries
+    )
+    guide_links = "\n".join(
+        f'<li><a href="{esc(base)}/{esc(guide["path"]).lstrip("/")}">{esc(guide["label"])}</a></li>'
+        for guide in page.get("guias", [])
+    )
+    guide_section = (
+        f'<section class="seo-section" aria-labelledby="guias-title">'
+        f'<h2 id="guias-title">Guía práctica</h2><ul>{guide_links}</ul></section>\n'
+        if guide_links else ""
     )
     sections = []
     for section in page["secciones"]:
@@ -218,7 +232,7 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
         <li><a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile">Código fuente y documentación en GitHub</a></li>
       </ul>
     </section>
-    <section class="seo-section" aria-labelledby="relacionados-title">
+{guide_section}    <section class="seo-section" aria-labelledby="relacionados-title">
       <h2 id="relacionados-title">Más datos financieros de Chile</h2>
       <ul class="seo-related-list">{related_links}</ul>
     </section>
@@ -270,7 +284,7 @@ def construir() -> dict[Path, str]:
         nav_pages.append(page)
 
     index = INDEX.read_text(encoding="utf-8")
-    outputs[INDEX] = replace_block(index, render_index_nav(base, nav_pages))
+    outputs[INDEX] = replace_block(index, render_index_nav(base, nav_pages, CONFIG_DATA.get("guias", [])))
     return outputs
 
 
