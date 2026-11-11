@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import os
+import posixpath
 import re
 import sys
 import urllib.error
@@ -35,8 +36,20 @@ def enviar_indexnow(key: str, urls: list[str], host: str) -> dict:
     # En un sitio de proyecto de GitHub Pages, el sitemap y el archivo de
     # verificación viven bajo /<repositorio>/. Conserva ese prefijo; usar la
     # raíz de github.io hace que IndexNow no encuentre la clave y responda 403.
-    primera_url = urlparse(urls[0])
-    prefijo_sitio = primera_url.path.rsplit("/", 1)[0].rstrip("/")
+    parsed_urls = [urlparse(url) for url in urls]
+    origenes = {(url.scheme, url.netloc) for url in parsed_urls}
+    if len(origenes) != 1 or parsed_urls[0].netloc != host:
+        return {
+            "status": None,
+            "body": "El sitemap contiene URLs de más de un origen; no se envían.",
+            "error": True,
+        }
+
+    # No uses el directorio de la primera URL: el sitemap puede empezar por una
+    # guía anidada. En GitHub Pages de proyecto, el prefijo común es
+    # /<repositorio>, donde está publicado el archivo de verificación.
+    prefijo_sitio = posixpath.commonpath([url.path for url in parsed_urls]).rstrip("/")
+    primera_url = parsed_urls[0]
     key_location = f"{primera_url.scheme}://{host}{prefijo_sitio}/{key}.txt"
     payload = {
         "host": host,

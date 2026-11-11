@@ -58,8 +58,9 @@ PATRONES = [
     ("asignación de clave", re.compile(
         r"(?P<clave>[A-Za-z_]*[A-Za-z])[ \t]*[:=][ \t]*(?P<q>[\"'])(?P<val>[^\"'\n]{8,})(?P=q)")),
     ("credencial embebida en URL", re.compile(r"https?://[^\s\"'/]+:(?P<val>[^@\s\"']{6,})@")),
+    # Evita detectar `sk-` dentro de palabras normales, como `ask-google` en URLs.
     ("formato de token conocido", re.compile(
-        r"(?P<val>(?:ghp_|gho_|sk-|AIza|xox[baprs]-)[A-Za-z0-9_\-]{16,})")),
+        r"(?<![A-Za-z0-9_])(?P<val>(?:ghp_|gho_|sk-|AIza|xox[baprs]-)[A-Za-z0-9_\-]{16,})")),
     ("clave privada PEM", re.compile(r"-----BEGIN [A-Z ]*PRIVATE KEY-----")),
 ]
 
