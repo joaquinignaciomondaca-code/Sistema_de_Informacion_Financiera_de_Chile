@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_metales_preciosos.parquet",
-   "bytes": 47057,
+   "bytes": 47066,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_metales_preciosos.parquet",
    "periodo": "macro_metales_preciosos",
-   "sha256": "15b55d2c008e387b4f11737f1db6fc5ed0037967a36d851c230bb4974bc2b329"
+   "sha256": "febc8f9fea27874061e335615d826b73a55cd2e77c6bfdbe648a0f7fe81f6e3e"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 47057,
-  "filas": 3203
+  "bytes": 47066,
+  "filas": 3204
  },
  "version": "2.3.0"
 }

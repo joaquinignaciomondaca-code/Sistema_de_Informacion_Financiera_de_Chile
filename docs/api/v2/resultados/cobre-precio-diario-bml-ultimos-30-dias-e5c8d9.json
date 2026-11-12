@@ -3,7 +3,7 @@
  "id": "cobre-precio-diario-bml-ultimos-30-dias-e5c8d9",
  "titulo": "Cobre: precio diario BML, últimos 30 días",
  "origen": "explorador",
- "data_release": "2026-11-11.1681f879ece0",
+ "data_release": "2026-11-12.81ec1e65d6ae",
  "generado": "2026-11-12",
  "max_filas": 500,
  "columnas": [
@@ -13,10 +13,6 @@
  "filas": 30,
  "truncado": false,
  "datos": [
-  [
-   "2026-09-30",
-   6.5475
-  ],
   [
    "2026-10-01",
    6.5657
@@ -132,6 +128,10 @@
   [
    "2026-11-11",
    6.383
+  ],
+  [
+   "2026-11-12",
+   6.255
   ]
  ],
  "sql": "SELECT fecha, cobre_refinado_usd_por_libra FROM macro_cobre WHERE cobre_refinado_usd_por_libra IS NOT NULL ORDER BY fecha DESC LIMIT 30;",
