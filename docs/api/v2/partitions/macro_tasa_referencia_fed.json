@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_tasa_referencia_fed.parquet",
-   "bytes": 12253,
+   "bytes": 12262,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tasa_referencia_fed.parquet",
    "periodo": "macro_tasa_referencia_fed",
-   "sha256": "5c34ea43311715a848efe99fbe868bd2eee4c188adb9f1df667ff4a41b26fa43"
+   "sha256": "dc41632bca2711c8c37bb94eb379d006f30374586ca2120685864cd3a3ceac76"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 12253,
-  "filas": 3338
+  "bytes": 12262,
+  "filas": 3343
  },
  "version": "2.3.0"
 }

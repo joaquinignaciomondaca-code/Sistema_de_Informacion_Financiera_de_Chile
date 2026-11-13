@@ -3,7 +3,7 @@
  "id": "oro-y-plata-ultimos-30-dias-7e379f",
  "titulo": "Oro y plata: últimos 30 días",
  "origen": "explorador",
- "data_release": "2026-11-12.81ec1e65d6ae",
+ "data_release": "2026-11-13.f688b63e692c",
  "generado": "2026-11-13",
  "max_filas": 500,
  "columnas": [
@@ -15,12 +15,6 @@
  "filas": 30,
  "truncado": false,
  "datos": [
-  [
-   "2026-10-01",
-   4151.6183,
-   60.1662,
-   69.0
-  ],
   [
    "2026-10-02",
    4173.995,
@@ -194,6 +188,12 @@
    3999.1533,
    52.0842,
    76.78
+  ],
+  [
+   "2026-11-13",
+   3874.2917,
+   50.0561,
+   77.4
   ]
  ],
  "sql": "SELECT fecha, oro_usd_por_onza_troy, plata_usd_por_onza_troy, round(oro_usd_por_onza_troy / plata_usd_por_onza_troy, 2) AS relacion_oro_plata FROM macro_metales_preciosos ORDER BY fecha DESC LIMIT 30;",

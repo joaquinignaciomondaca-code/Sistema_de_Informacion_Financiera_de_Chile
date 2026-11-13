@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_cobre.parquet",
-   "bytes": 33299,
+   "bytes": 33307,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_cobre.parquet",
    "periodo": "macro_cobre",
-   "sha256": "c211de55509f216481efb000722e9f565204f42bf5d6fecb72e4a8c1c2830996"
+   "sha256": "cedd213781463522aebaeb6cedbe7e989855feed895bd36ed03a97e571bfc024"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 33299,
-  "filas": 3276
+  "bytes": 33307,
+  "filas": 3277
  },
  "version": "2.3.0"
 }
