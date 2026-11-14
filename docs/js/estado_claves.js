@@ -1,9 +1,9 @@
 // GENERADO por scripts/build_estado_claves.py — no editar a mano.
 // Fuente: docs/api/claves.csv, medido sobre todas las filas publicadas.
-// data_release: 2026-11-13.f688b63e692c
+// data_release: 2026-11-14.3f43f41482fc
 window.ESTADO_CLAVES = {
  "generado": "2026-11-14",
- "data_release": "2026-11-13.f688b63e692c",
+ "data_release": "2026-11-14.3f43f41482fc",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,
@@ -569,8 +569,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_curva_bonos_pesos": {
    "estado": "ok",
-   "filas": 3188,
-   "distintas": 3188,
+   "filas": 3189,
+   "distintas": 3189,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -578,12 +578,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.188 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.189 filas."
   },
   "macro_curva_bonos_uf": {
    "estado": "ok",
-   "filas": 3190,
-   "distintas": 3190,
+   "filas": 3191,
+   "distintas": 3191,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -591,7 +591,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.190 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.191 filas."
   },
   "macro_deuda_publica_pct_pib": {
    "estado": "ok",
@@ -686,8 +686,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_inflacion_implicita": {
    "estado": "ok",
-   "filas": 3094,
-   "distintas": 3094,
+   "filas": 3095,
+   "distintas": 3095,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -695,7 +695,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.094 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.095 filas."
   },
   "macro_inflacion_ipc": {
    "estado": "ok",
@@ -777,8 +777,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_swaps_camara": {
    "estado": "ok",
-   "filas": 3219,
-   "distintas": 3219,
+   "filas": 3220,
+   "distintas": 3220,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -786,7 +786,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.219 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.220 filas."
   },
   "macro_tasa_referencia_fed": {
    "estado": "ok",
@@ -842,8 +842,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_uf": {
    "estado": "ok",
-   "filas": 4700,
-   "distintas": 4700,
+   "filas": 4701,
+   "distintas": 4701,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -851,7 +851,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 4.700 filas."
+   "texto": "Clave verificada: fecha — única sobre 4.701 filas."
   },
   "macro_utm": {
    "estado": "ok",

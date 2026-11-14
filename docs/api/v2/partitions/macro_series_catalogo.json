@@ -6,15 +6,15 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_series_catalogo.parquet",
-   "bytes": 10886,
+   "bytes": 10894,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_series_catalogo.parquet",
    "periodo": "macro_series_catalogo",
-   "sha256": "13e4900d3f038894bdd0b0380355b88e5f091f3e91c155ba00d24ba58e0de321"
+   "sha256": "1aa7a100fbbcba26112f6a3a7a93b5beaa6e928abfd793f8ec04dbc39d9cf11f"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 10886,
+  "bytes": 10894,
   "filas": 51
  },
  "version": "2.3.0"

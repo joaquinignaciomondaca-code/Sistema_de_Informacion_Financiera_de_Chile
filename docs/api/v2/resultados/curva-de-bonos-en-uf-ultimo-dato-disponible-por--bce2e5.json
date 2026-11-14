@@ -3,7 +3,7 @@
  "id": "curva-de-bonos-en-uf-ultimo-dato-disponible-por--bce2e5",
  "titulo": "Curva de bonos en UF: último dato disponible por plazo",
  "origen": "explorador",
- "data_release": "2026-11-13.f688b63e692c",
+ "data_release": "2026-11-14.3f43f41482fc",
  "generado": "2026-11-14",
  "max_filas": 500,
  "columnas": [
@@ -18,15 +18,6 @@
  "filas": 20,
  "truncado": false,
  "datos": [
-  [
-   "2026-10-15",
-   null,
-   1.69,
-   2.31,
-   2.7,
-   null,
-   2.75
-  ],
   [
    "2026-10-16",
    null,
@@ -195,6 +186,15 @@
    1.74,
    2.41,
    null,
+   null,
+   null
+  ],
+  [
+   "2026-11-12",
+   null,
+   1.76,
+   2.44,
+   2.68,
    null,
    null
   ]

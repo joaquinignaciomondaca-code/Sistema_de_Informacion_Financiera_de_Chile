@@ -4627,18 +4627,18 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_tasas_corto_plazo.parquet",
-     "bytes": 13698
+     "bytes": 13697
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_tasas_corto_plazo.completo.csv",
-    "bytes": 87443,
+    "bytes": 87446,
     "filas": 3206
    },
    "json": {
     "ruta": "outputs/macro/macro_tasas_corto_plazo.completo.json",
-    "bytes": 259230
+    "bytes": 259229
    },
    "nota": null,
    "filas": 3206,
@@ -4646,7 +4646,7 @@
     "archivos": [
      {
       "ruta": "outputs/macro/macro_tasas_corto_plazo.parquet",
-      "bytes": 13698
+      "bytes": 13697
      }
     ],
     "where": "",
@@ -4657,90 +4657,90 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_swaps_camara.parquet",
-     "bytes": 79476
+     "bytes": 79505
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_swaps_camara.completo.csv",
-    "bytes": 299265,
-    "filas": 3219
+    "bytes": 299353,
+    "filas": 3220
    },
    "json": {
     "ruta": "outputs/macro/macro_swaps_camara.completo.json",
-    "bytes": 878757
+    "bytes": 879029
    },
    "nota": null,
-   "filas": 3219,
+   "filas": 3220,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_swaps_camara.parquet",
-      "bytes": 79476
+      "bytes": 79505
      }
     ],
     "where": "",
-    "filas": 3219
+    "filas": 3220
    }
   },
   "macro_curva_bonos_pesos": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
-     "bytes": 61599
+     "bytes": 61600
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.csv",
-    "bytes": 151408,
-    "filas": 3188
+    "bytes": 151438,
+    "filas": 3189
    },
    "json": {
     "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.json",
-    "bytes": 581959
+    "bytes": 582126
    },
    "nota": null,
-   "filas": 3188,
+   "filas": 3189,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
-      "bytes": 61599
+      "bytes": 61600
      }
     ],
     "where": "",
-    "filas": 3188
+    "filas": 3189
    }
   },
   "macro_curva_bonos_uf": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
-     "bytes": 94307
+     "bytes": 94333
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_curva_bonos_uf.completo.csv",
-    "bytes": 215188,
-    "filas": 3190
+    "bytes": 215225,
+    "filas": 3191
    },
    "json": {
     "ruta": "outputs/macro/macro_curva_bonos_uf.completo.json",
-    "bytes": 952946
+    "bytes": 953219
    },
    "nota": null,
-   "filas": 3190,
+   "filas": 3191,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
-      "bytes": 94307
+      "bytes": 94333
      }
     ],
     "where": "",
-    "filas": 3190
+    "filas": 3191
    }
   },
   "macro_inflacion_implicita": {
@@ -4753,15 +4753,15 @@
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_inflacion_implicita.completo.csv",
-    "bytes": 93552,
-    "filas": 3094
+    "bytes": 93581,
+    "filas": 3095
    },
    "json": {
     "ruta": "outputs/macro/macro_inflacion_implicita.completo.json",
-    "bytes": 378469
+    "bytes": 378589
    },
    "nota": null,
-   "filas": 3094,
+   "filas": 3095,
    "firma": {
     "archivos": [
      {
@@ -4770,7 +4770,7 @@
      }
     ],
     "where": "",
-    "filas": 3094
+    "filas": 3095
    }
   },
   "macro_dolar_observado": {
@@ -4897,30 +4897,30 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_uf.parquet",
-     "bytes": 35541
+     "bytes": 35560
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_uf.completo.csv",
-    "bytes": 131154,
-    "filas": 4700
+    "bytes": 131181,
+    "filas": 4701
    },
    "json": {
     "ruta": "outputs/macro/macro_uf.completo.json",
-    "bytes": 314427
+    "bytes": 314493
    },
    "nota": null,
-   "filas": 4700,
+   "filas": 4701,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_uf.parquet",
-      "bytes": 35541
+      "bytes": 35560
      }
     ],
     "where": "",
-    "filas": 4700
+    "filas": 4701
    }
   },
   "macro_utm": {
@@ -5317,7 +5317,7 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_series_catalogo.parquet",
-     "bytes": 10886
+     "bytes": 10894
     }
    ],
    "where": "",
@@ -5336,7 +5336,7 @@
     "archivos": [
      {
       "ruta": "outputs/macro/macro_series_catalogo.parquet",
-      "bytes": 10886
+      "bytes": 10894
      }
     ],
     "where": "",
@@ -6984,7 +6984,7 @@
    }
   }
  },
- "generado": "2026-11-14T15:14:59+00:00",
+ "generado": "2026-11-14T16:34:21+00:00",
  "parametros": {
   "csv_max_mb": 10,
   "json_max_mb": 5,
