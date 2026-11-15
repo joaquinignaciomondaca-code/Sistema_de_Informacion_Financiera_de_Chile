@@ -4897,30 +4897,30 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_uf.parquet",
-     "bytes": 35560
+     "bytes": 35565
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_uf.completo.csv",
-    "bytes": 131181,
-    "filas": 4701
+    "bytes": 131209,
+    "filas": 4702
    },
    "json": {
     "ruta": "outputs/macro/macro_uf.completo.json",
-    "bytes": 314493
+    "bytes": 314560
    },
    "nota": null,
-   "filas": 4701,
+   "filas": 4702,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_uf.parquet",
-      "bytes": 35560
+      "bytes": 35565
      }
     ],
     "where": "",
-    "filas": 4701
+    "filas": 4702
    }
   },
   "macro_utm": {
@@ -6984,7 +6984,7 @@
    }
   }
  },
- "generado": "2026-11-15T09:40:39+00:00",
+ "generado": "2026-11-15T17:00:12+00:00",
  "parametros": {
   "csv_max_mb": 10,
   "json_max_mb": 5,
