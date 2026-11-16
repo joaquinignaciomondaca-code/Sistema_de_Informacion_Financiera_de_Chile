@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
-   "bytes": 42617,
+   "bytes": 42627,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tipo_cambio_multilateral.parquet",
    "periodo": "macro_tipo_cambio_multilateral",
-   "sha256": "67579a883d02d0bd3bd1724cfe0f42feb871dc25f830d813b11b5d6d4a2ff168"
+   "sha256": "993164d9e9d5ebe88a41e3a64ff7924f3d0ad5382152734013b101ac0caf4326"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 42617,
-  "filas": 3205
+  "bytes": 42627,
+  "filas": 3206
  },
  "version": "2.3.0"
 }
