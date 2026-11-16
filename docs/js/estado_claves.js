@@ -2,7 +2,7 @@
 // Fuente: docs/api/claves.csv, medido sobre todas las filas publicadas.
 // data_release: 2026-11-15.71a03817475b
 window.ESTADO_CLAVES = {
- "generado": "2026-11-15",
+ "generado": "2026-11-16",
  "data_release": "2026-11-15.71a03817475b",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
