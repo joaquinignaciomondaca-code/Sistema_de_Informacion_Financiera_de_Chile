@@ -1,6 +1,8 @@
 {
   "tabla": "prestamos",
-  "files": [],
+  "files": [
+    "outputs/seguros/prestamos/_vacio.parquet"
+  ],
   "total_records": 0,
   "periodos": [
     "2024-12",
@@ -24,7 +26,8 @@
     "2026-06",
     "2026-07",
     "2026-08",
-    "2026-09"
+    "2026-09",
+    "2026-10"
   ],
-  "updated_at": "2026-10-21T08:55:51+00:00"
+  "updated_at": "2026-11-17T04:25:10+00:00"
 }
