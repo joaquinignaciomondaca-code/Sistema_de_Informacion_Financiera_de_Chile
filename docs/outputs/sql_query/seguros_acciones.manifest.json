@@ -4,7 +4,7 @@
   "description": "Copia compacta SQL de acciones de aseguradoras; no es un archivo de descarga.",
   "purpose": "SQL-only; no forma parte del catálogo de descargas",
   "source_manifest": "outputs/seguros/acciones/manifest.json",
-  "source_updated_at": "2026-10-21T17:58:48+00:00",
+  "source_updated_at": "2026-11-17T04:25:10+00:00",
   "source_files": [
     {
       "path": "outputs/seguros/acciones/2016.parquet",
@@ -58,14 +58,14 @@
     },
     {
       "path": "outputs/seguros/acciones/2026.parquet",
-      "records": 8308,
-      "sha256": "55094c6669c52a251c23ba9d2d9acda1346ff8176f75270978ac72510b847418"
+      "records": 9095,
+      "sha256": "7af21953809b6259e2c88b791b379ae5a46b6cf60f8fb46067eeef99717a28c1"
     }
   ],
   "file": "outputs/sql_query/seguros_acciones.parquet",
-  "records": 109019,
-  "bytes": 2834967,
-  "sha256": "9562c2920b8bc812bd4313ca73143ec5a2101d805eac08cfa260ab451debbdd8",
+  "records": 109806,
+  "bytes": 2846990,
+  "sha256": "85b959700f09f796ec781cb7f38de919016ed1bdd28d0f90cd7a87793fef78db",
   "schema": [
     {
       "name": "periodo",
