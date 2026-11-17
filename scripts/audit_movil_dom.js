@@ -180,21 +180,26 @@ async function correr() {
   check("el explorador fuera de pantalla no recibe foco (inert)",
     sidebar.getAttribute("aria-hidden") === "true");
 
-  // Aviso de teléfono: aparece, se cierra y el descarte queda guardado.
+  // Nota de pantalla angosta: aparece sin tapar nada, se oculta y no toca el foco.
   const aviso = document.getElementById("aviso-movil");
   const cerrarAviso = document.getElementById("aviso-movil-cerrar");
-  check("el aviso de computador aparece en un teléfono", aviso && aviso.hidden === false);
+  check("la nota de pantalla angosta aparece en un teléfono", aviso && aviso.hidden === false);
+  check("la nota no se apodera del foco", document.activeElement === document.body ||
+    !aviso.contains(document.activeElement));
   if (aviso && cerrarAviso) {
-    cerrarAviso.focus(); // La activación accesible debe devolver el foco al contenido.
+    // El foco está en otra parte de la página: al ocultar la nota debe quedarse ahí.
+    const buscador = document.getElementById("sidebar-search");
+    if (buscador) buscador.focus();
+    const antes = document.activeElement;
     cerrarAviso.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
     await esperar(20);
-    check("el aviso se cierra con su botón", aviso.hidden === true);
+    check("la nota se oculta con su botón", aviso.hidden === true);
     check("el descarte se recuerda en el navegador",
       window.localStorage.getItem("sif-aviso-movil-cerrado") === "1");
-    check("al cerrarlo el foco no queda en el vacío",
-      document.activeElement === document.getElementById("main-content"));
+    check("ocultarla no roba el foco de donde estaba",
+      document.activeElement === antes);
   } else {
-    check("el aviso se cierra con su botón", false, "falta el aviso o su botón");
+    check("la nota se oculta con su botón", false, "falta la nota o su botón");
   }
 
   const fallos = resultados.filter((r) => !r.ok);

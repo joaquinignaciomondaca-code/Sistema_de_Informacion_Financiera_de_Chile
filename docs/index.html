@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
-  <title>Sistema de Información Financiera de Chile — Inversiones institucionales y mercados</title>
+  <title>Datos financieros de Chile · SIF</title>
   <meta name="google-site-verification" content="mJglT38EE60Ss-7EJMfx1gO1YRjY4ZaYfxsJH1WHPmo" />
 
 <!-- SEO:INICIO -->
@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Sistema de Información Financiera de Chile">
   <meta property="og:locale" content="es_CL">
-  <meta property="og:title" content="Sistema de Información Financiera de Chile — Inversiones institucionales y mercados">
+  <meta property="og:title" content="Datos financieros de Chile · SIF">
   <meta property="og:description" content="Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL.">
   <meta property="og:url" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/">
   <meta property="og:image" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png">
@@ -27,7 +27,7 @@
   <meta name="sif:og-image-sha256" content="5041c9eb1922d5bb860f8d5c2b3befb8e5e032b35dec479a059ec84b8d925d4d">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Sistema de Información Financiera de Chile — Inversiones institucionales y mercados">
+  <meta name="twitter:title" content="Datos financieros de Chile · SIF">
   <meta name="twitter:description" content="Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL.">
   <meta name="twitter:image" content="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/assets/og_sif_1200x630.png">
   <meta name="twitter:image:alt" content="SIF — Sistema de Información Financiera de Chile">
@@ -38,7 +38,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Dataset",
-  "name": "Sistema de Información Financiera de Chile — Inversiones institucionales y mercados",
+  "name": "Datos financieros de Chile · SIF",
   "description": "Datos financieros públicos de Chile —bancos, seguros, fondos, cooperativas, fintech y macro—: más de 19 millones de filas en Parquet y SQL.",
   "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/",
   "datePublished": "2026-11-17",
@@ -124,7 +124,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-202609-30075-22389">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261117-0408-diseno-sin-hallazgos">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -201,7 +201,7 @@
   <!-- Header Superior -->
   <header>
     <div class="brand">
-      <button type="button" class="sidebar-toggle-btn" id="toggle-sidebar" title="Ocultar / Mostrar barra lateral">
+      <button type="button" class="sidebar-toggle-btn" id="toggle-sidebar" aria-label="Explorador de industrias y tablas" aria-controls="sidebar" aria-expanded="true" title="Mostrar u ocultar el explorador de industrias y tablas">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 7.75zm0 5a.75.75 0 011.75-1.5h12.5a.75.75 0 010 1.5H1.75a.75.75 0 01-.75-.75z"/></svg>
       </button>
       <!-- Logotipo SIF recortado al símbolo de nodos y las siglas (viewBox
@@ -237,6 +237,19 @@
       </div>
     </div>
   </header>
+
+  <!-- Nota para pantallas angostas: no bloquea nada y no se abre sobre el
+       contenido. Es una franja del flujo, antes del layout: el sitio es
+       responsive, así que aquí sólo se dice qué conviene saber al trabajar
+       desde el teléfono. Queda antes del contenido en el orden del documento
+       para que el lector de pantalla la anuncie al empezar, y no dentro de
+       `.app-layout` porque ese contenedor es `overflow: hidden`. Se descarta y
+       no vuelve en este navegador. -->
+  <aside class="aviso-movil" id="aviso-movil"
+         aria-labelledby="aviso-movil-titulo" hidden>
+    <p class="aviso-movil-texto" id="aviso-movil-titulo">Pantalla angosta: todo el sitio funciona. El explorador y el mapa se manejan mejor en horizontal o en un computador.</p>
+    <button type="button" class="aviso-movil-cerrar" id="aviso-movil-cerrar" aria-label="Ocultar esta nota">Entendido</button>
+  </aside>
 
   <!-- Layout Principal con Barra Lateral y Paneles Divididos -->
   <div class="app-layout">
@@ -293,7 +306,7 @@
             </button>
           </div>
           <div class="panel-header-right">
-            <span class="context-chip" id="erd-breadcrumb" title="Ubicación actual dentro del explorador">Seguros &rsaquo; Circular 1835</span>
+            <span class="context-chip" id="erd-breadcrumb" title="Ubicación actual dentro del explorador" hidden></span>
             
           </div>
         </div>
@@ -334,42 +347,34 @@
           <div class="info-scroll">
             <section class="info-hero info-hero-premium" aria-labelledby="home-title">
               <div class="info-hero-copy">
+                <p class="info-hero-eyebrow">Datos públicos · Chile · 2001–2026</p>
                 <h1 id="home-title" class="info-hero-title">El sistema financiero chileno,<br>abierto en datos.</h1>
                 <p class="info-lead">Carteras, estados financieros y series de mercado de fuentes oficiales, reunidos para explorar, consultar y descargar.</p>
                 <div class="info-hero-actions">
                   <a class="info-hero-btn info-hero-btn-primary" href="#catalogo-principal">Explorar por sector <span aria-hidden="true">↘</span></a>
                   <button type="button" class="info-hero-btn info-hero-btn-secondary" data-portada="descargas">Ver descargas <span aria-hidden="true">→</span></button>
-                  <a class="info-hero-btn info-hero-btn-secondary" href="guias/consulta-cartera-seguros-python/">Tutorial Python de carteras de seguros <span aria-hidden="true">↗</span></a>
-                  <button type="button" class="info-core-btn" data-portada="mapa">Entender relaciones entre tablas</button>
                 </div>
-                <p class="info-hero-capabilities"><span>Parquet, CSV y JSON</span><i aria-hidden="true"></i><span>SQL en tu navegador</span></p>
+                <p class="info-hero-paths"><span class="info-hero-paths-label">Para analizar</span>
+                  <a href="guias/consulta-cartera-seguros-python/">Tutorial Python de carteras de seguros <span aria-hidden="true">↗</span></a><i aria-hidden="true"></i>
+                  <button type="button" class="info-hero-link" data-portada="mapa">Entender relaciones entre tablas</button>
+                </p>
               </div>
-              <div class="info-hero-aside" role="group" aria-label="Alcance destacado del catálogo">
-                <div class="info-hero-aside-head"><span>Alcance del catálogo</span><span class="info-hero-source">Fuentes oficiales</span></div>
+              <aside class="info-hero-aside" role="group" aria-label="Procedencia y alcance del catálogo">
+                <div class="info-hero-aside-head"><span>Procedencia</span><span class="info-hero-source">3 organismos · republicación sin alterar</span></div>
+                <ul class="info-hero-fuentes">
+                  <li><b>CMF</b><span>Comisión para el Mercado Financiero</span></li>
+                  <li><b>BCCh</b><span>Banco Central de Chile</span></li>
+                  <li><b>SPensiones</b><span>Superintendencia de Pensiones</span></li>
+                </ul>
                 <div class="info-hero-stat-grid">
                   <div class="info-hero-stat"><span>Elementos del catálogo</span><b data-alcance="visible.conjuntos">74</b></div>
                   <div class="info-hero-stat"><span>Filas publicadas</span><b data-alcance="visible.filas">más de 19 millones</b></div>
+                  <div class="info-hero-stat"><span>Cobertura declarada por tabla</span><b data-alcance="visible.periodo">2001–2026</b></div>
                 </div>
-                <div class="info-hero-network" aria-hidden="true">
-                  <svg viewBox="0 0 400 100" role="presentation" focusable="false">
-                    <path d="M65 50H165M235 50h100M165 50l35-28 35 28-35 28-35-28Z" />
-                    <circle cx="65" cy="50" r="7"/><circle cx="165" cy="50" r="5"/><circle cx="200" cy="22" r="5"/>
-                    <circle cx="235" cy="50" r="5"/><circle cx="200" cy="78" r="5"/><circle cx="335" cy="50" r="7"/>
-                  </svg>
-                  <div class="info-hero-network-labels"><span>Fuentes</span><b>SIF</b><span>Consulta</span></div>
-                </div>
-              </div>
+                <p class="info-hero-aside-foot">Proyecto independiente. Sin respaldo de la CMF, del Banco Central ni de la Superintendencia de Pensiones. <a href="privacidad.html">Privacidad y límites</a></p>
+              </aside>
             </section>
 
-            <!-- SEO-TEMAS:INICIO -->
-              <nav class="seo-topic-nav" aria-label="Guías de datos financieros por mercado">
-                <span>Guías de datos</span>
-                  <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/carteras-inversion-seguros-chile/">Carteras de seguros</a>
-                  <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/fondos-mutuos-datos-chile/">Fondos mutuos</a>
-                  <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/fondos-inversion-datos-chile/">Fondos de inversión</a>
-                  <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/guias/consulta-cartera-seguros-python/">Tutorial: carteras de seguros con Python y DuckDB</a>
-              </nav>
-<!-- SEO-TEMAS:FIN -->
             <section class="info-block info-primary-block" id="catalogo-principal" aria-labelledby="catalogo-titulo">
               <div class="info-block-heading">
                 <div>
@@ -399,6 +404,16 @@
                 </article>
               </div>
             </section>
+
+            <!-- SEO-TEMAS:INICIO -->
+              <nav class="seo-topic-nav" aria-label="Guías de datos financieros por mercado">
+                <span class="seo-topic-nav-label">Guías de datos por mercado</span>
+                  <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/carteras-inversion-seguros-chile/">Carteras de seguros</a>
+                  <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/fondos-mutuos-datos-chile/">Fondos mutuos</a>
+                  <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/temas/fondos-inversion-datos-chile/">Fondos de inversión</a>
+                  <a href="https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/guias/consulta-cartera-seguros-python/">Tutorial: carteras de seguros con Python y DuckDB</a>
+              </nav>
+<!-- SEO-TEMAS:FIN -->
 
             <section class="info-block info-secondary-block" aria-labelledby="otros-datos-titulo">
               <div class="info-block-heading info-block-heading-compact">
@@ -836,50 +851,34 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
   </main> <!-- Cierre de main-container -->
 </div> <!-- Cierre de app-layout -->
 
-  <!-- Aviso para teléfonos: tarjeta flotante que se cierra y no vuelve en este
-       navegador. Vive fuera de `.app-layout` a propósito: es `position: fixed`
-       y ningún contenedor con `overflow: hidden` debe recortarla. El CSS la
-       oculta también por encima de 900 px, así que en escritorio no existe. -->
-  <aside class="aviso-movil" id="aviso-movil"
-         aria-labelledby="aviso-movil-titulo" aria-describedby="aviso-movil-texto" hidden>
-    <div class="aviso-movil-cabecera">
-      <strong id="aviso-movil-titulo">Este sitio está pensado para un computador.</strong>
-      <button type="button" class="aviso-movil-aspa" id="aviso-movil-aspa" aria-label="Cerrar el aviso">
-        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 3l10 10M13 3L3 13" /></svg>
-      </button>
-    </div>
-    <p class="aviso-movil-texto" id="aviso-movil-texto">El explorador, las consultas SQL y el mapa relacional necesitan una pantalla más grande. En el teléfono puedes leer y descargar, pero la experiencia completa se ve en un PC.</p>
-    <button type="button" class="aviso-movil-cerrar" id="aviso-movil-cerrar">Entendido</button>
-  </aside>
-
   <!-- Scripts de la Aplicación.
        La etiqueta ?v= de los 23 activos locales se sube con
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/alcance.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/chart_renderer.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/erd_graph.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/sql_guard.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/duckdb_client.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/chat_terminal.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/sidebar.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/ux_shell.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/creditos.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/theme_switcher.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/estado_claves.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/data_dictionary.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/table_context.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/data_viewer.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/download_utils.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/download_catalog.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/downloads_panel.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/portada.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/calidad_datos.js?v=fl-202609-30075-22389" defer></script>
-  <script src="js/como_usar.js?v=fl-202609-30075-22389" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/alcance.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/sidebar.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/creditos.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/table_context.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/download_utils.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/portada.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
+  <script src="js/como_usar.js?v=fl-20261117-0408-diseno-sin-hallazgos" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -983,6 +982,24 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
         // para no perderlos.
         if (window.SIFCreditos) window.SIFCreditos.pintar();
         if (window.SIFTableContext) window.SIFTableContext.apply(target);
+        const nav = window.SidebarNav;
+        // La miga del panel sólo describe una vista de trabajo: en la portada y
+        // en la Guía se oculta en vez de mostrar la selección de otra pantalla.
+        if (nav && typeof nav.mostrarMiga === "function") nav.mostrarMiga();
+        // En escritorio la portada arranca con el explorador plegado, para leer
+        // primero la información, y se recupera al entrar a una vista de trabajo.
+        // Esto sólo vale mientras el usuario no lo haya abierto o cerrado a mano:
+        // si eligió, su preferencia manda. En celular manda el cajón.
+        if (nav && !nav.preferencia && !nav.esMovil() &&
+            Object.prototype.hasOwnProperty.call(TAB_REGISTRY, target)) {
+          const trabajo = target === "erd" || target === "dict" || target === "data" ||
+            target === "sql" || target === "downloads";
+          if (target === "info" && !nav.sidebar.classList.contains("collapsed")) {
+            nav.cerrarCajon();
+          } else if (trabajo && nav.sidebar.classList.contains("collapsed")) {
+            nav.abrirCajon();
+          }
+        }
         // No devolver foco a un panel que acaba de ocultarse al navegar.
         if (saleDelContenido) document.getElementById(TAB_REGISTRY[target].button).focus();
         if (window.MFCUI && window.MFCUI.rememberTab) window.MFCUI.rememberTab(target);

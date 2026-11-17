@@ -1174,7 +1174,9 @@ class SidebarController {
     this.selectedTableId = "seguros_lista_entidades";
     this.activeSector = "seguros";
     window.MFC_ACTIVE_SECTOR = this.activeSector;
-    // El explorador se muestra colapsado al cargar: el usuario decide qué abrir.
+    // Preferencia manual del explorador: null = nadie lo tocó todavía (manda el
+    // criterio de la vista activa); "abierto"/"cerrado" = lo eligió el usuario.
+    this.preferencia = null;
     // Los identificadores son group.id, sector/circular id y "part_<tabla>" para particiones.
     this.expandedNodes = new Set();
 
@@ -1195,28 +1197,59 @@ class SidebarController {
     if (this.toggleBtn) this.toggleBtn.setAttribute("aria-expanded", String(abierto));
     // Fuera de pantalla el árbol no debe recibir el foco del teclado: `inert`
     // lo saca del recorrido sin ocultarlo del lector de pantalla cuando está
-    // abierto. Se aplica sólo en celular; en escritorio la barra es visible.
-    const inerte = this.esMovil() && !abierto;
+    // abierto. En escritorio también aplica desde que la portada arranca con el
+    // explorador plegado: el botón de la cabecera sigue siendo el control
+    // accesible que lo abre.
+    const inerte = !abierto;
     this.sidebar.setAttribute("aria-hidden", String(inerte));
-    if ("inert" in this.sidebar) this.sidebar.inert = inerte;
+    // Se escribe el atributo, no la propiedad: así funciona también donde la
+    // propiedad no existe y el estado queda visible en el propio HTML.
+    if (typeof this.sidebar.toggleAttribute === "function") {
+      this.sidebar.toggleAttribute("inert", inerte);
+    } else if ("inert" in this.sidebar) {
+      this.sidebar.inert = inerte;
+    }
+  }
+
+  // Abrir o cerrar el cajón no debe construir el mapa relacional: plegar el
+  // explorador al entrar a la portada dispararía un canvas de 84 nodos que
+  // nadie pidió ver. Sólo se redimensiona si ya estaba construido.
+  ajustarMapa() {
+    setTimeout(() => {
+      if (window.erdInstance && typeof window.erdInstance.resize === "function") {
+        window.erdInstance.resize();
+      }
+    }, 300);
+  }
+
+  /* Pestaña visible ahora mismo, leída del propio tablist: el explorador puede
+   * cambiar de selección antes de que switchMainTab se ejecute. */
+  vistaActual() {
+    const activo = document.querySelector(".panel-tab-btn.active");
+    if (!activo || !activo.id) return "info";
+    return activo.id.replace(/^tab-btn-/, "");
+  }
+
+  /* La miga del panel dice dónde está parado el explorador, pero sólo tiene
+   * sentido dentro de una vista de trabajo. En la portada y en la Guía se
+   * oculta: describiría una pantalla que el visitante no está mirando. */
+  mostrarMiga() {
+    if (!this.breadcrumbEl) return;
+    const vista = this.vistaActual();
+    const aplica = vista !== "info" && vista !== "guia";
+    this.breadcrumbEl.hidden = !(aplica && this.breadcrumbEl.textContent.trim());
   }
 
   abrirCajon() {
     this.sidebar.classList.remove("collapsed");
     this.sincronizarCajon();
-    setTimeout(() => {
-      const erd = mapaERD();
-      if (erd) erd.resize();
-    }, 300);
+    this.ajustarMapa();
   }
 
   cerrarCajon() {
     this.sidebar.classList.add("collapsed");
     this.sincronizarCajon();
-    setTimeout(() => {
-      const erd = mapaERD();
-      if (erd) erd.resize();
-    }, 300);
+    this.ajustarMapa();
   }
 
   initEvents() {
@@ -1225,8 +1258,13 @@ class SidebarController {
 
     if (this.toggleBtn) {
       this.toggleBtn.addEventListener("click", () => {
-        if (this.sidebar.classList.contains("collapsed")) this.abrirCajon();
-        else this.cerrarCajon();
+        if (this.sidebar.classList.contains("collapsed")) {
+          this.preferencia = "abierto";
+          this.abrirCajon();
+        } else {
+          this.preferencia = "cerrado";
+          this.cerrarCajon();
+        }
       });
     }
 
@@ -1244,8 +1282,15 @@ class SidebarController {
 
     if (this.movil) {
       const alCambiar = () => {
-        if (this.esMovil()) this.sidebar.classList.add("collapsed");
-        else this.sidebar.classList.remove("collapsed");
+        // Al pasar a pantalla ancha se recuerda lo que el usuario eligió: si
+        // cerró el explorador, seguirá cerrado; la primera vez se abre.
+        if (this.esMovil()) {
+          this.sidebar.classList.add("collapsed");
+        } else if (this.preferencia === "abierto") {
+          this.sidebar.classList.remove("collapsed");
+        } else if (this.preferencia === "cerrado") {
+          this.sidebar.classList.add("collapsed");
+        }
         this.sincronizarCajon();
       };
       if (this.movil.addEventListener) this.movil.addEventListener("change", alCambiar);
@@ -1284,8 +1329,9 @@ class SidebarController {
       const newWidth = Math.min(Math.max(startWidth + (e.clientX - startX), 220), 550);
       sidebar.style.width = `${newWidth}px`;
       sidebar.style.minWidth = `${newWidth}px`;
-      const erd = mapaERD();
-      if (erd) erd.resize();
+      // El plegado usa este mismo valor para salir del todo de pantalla.
+      sidebar.style.setProperty("--sif-sidebar-w", `${newWidth}px`);
+      if (window.erdInstance) window.erdInstance.resize();
     });
 
     document.addEventListener("mouseup", () => {
@@ -1294,8 +1340,7 @@ class SidebarController {
         resizer.classList.remove("resizing");
         document.body.style.cursor = "";
         document.body.style.userSelect = "";
-        const erd = mapaERD();
-        if (erd) erd.resize();
+        if (window.erdInstance) window.erdInstance.resize();
       }
     });
   }
@@ -1615,6 +1660,7 @@ class SidebarController {
         const erdSec = mapaERD();
         if (erdSec) erdSec.focusSector(sec.sector);
         if (this.breadcrumbEl) this.breadcrumbEl.textContent = this.describeLocation(sec.sector, "");
+        this.mostrarMiga();
         const nodo = this.treeContainer ? this.treeContainer.querySelector(`[data-node-id="${sec.id}"]`) : null;
         if (nodo) {
           if (typeof nodo.scrollIntoView === "function") nodo.scrollIntoView({ block: "nearest", behavior: "smooth" });
@@ -1709,6 +1755,7 @@ class SidebarController {
         this.setActiveSector("todos", "all-industries");
         document.querySelectorAll(".tree-row").forEach((r) => r.classList.remove("selected"));
         if (this.breadcrumbEl) this.breadcrumbEl.textContent = "Vista principal";
+        this.mostrarMiga();
         const erdTodos = mapaERD();
         if (erdTodos) erdTodos.focusSector("todos");
         if (window.ChatTerminal) {
@@ -1887,6 +1934,7 @@ class SidebarController {
 
     if (this.breadcrumbEl) {
       this.breadcrumbEl.textContent = `${this.prefijoNivel(sector)}${targetSectorName} \u203a ${targetCirc.label}`;
+      this.mostrarMiga();
     }
 
     const erdCircular = mapaERD();
@@ -1925,6 +1973,7 @@ class SidebarController {
     if (this.breadcrumbEl) {
       this.breadcrumbEl.textContent = this.describeLocation(sector, tableName);
       this.breadcrumbEl.title = `Ubicación actual: ${this.breadcrumbEl.textContent}`;
+      this.mostrarMiga();
     }
 
     // Enfocar y centrar la tabla en el Canvas ERD

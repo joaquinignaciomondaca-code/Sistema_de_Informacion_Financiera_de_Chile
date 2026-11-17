@@ -262,24 +262,23 @@
     }
   }
 
-  /* Aviso de teléfono: el sitio se pensó para un computador. Es una tarjeta
-   * flotante que se muestra sólo por debajo de 900 px —la misma consulta que usa
-   * el CSS— y sólo si la persona no la cerró antes. El descarte se guarda en el
-   * navegador; si el almacenamiento está bloqueado, el aviso vuelve, que es el
-   * lado seguro.
+  /* Nota de pantalla angosta: el sitio es responsive y aquí no se bloquea
+   * nada. Sólo se informa, una vez, dónde rinden mejor el explorador y el mapa.
    *
-   * Se cierra por tres vías —«Entendido», el aspa y la tecla Escape— porque una
-   * tarjeta flotante que tapa la esquina sin una salida clara es peor que no
-   * tenerla. Mientras está visible publica su alto en `--sif-aviso-alto` para
-   * que los avisos breves no queden debajo. */
+   * Es una franja en el flujo, no un diálogo: no atrapa el foco, no se abre
+   * encima del contenido y no publica su alto para nada. Se oculta con su
+   * botón y el descarte se recuerda.
+   *
+   * Al vivir en el flujo respeta por sí misma el texto ampliado: crece y se
+   * parte en líneas en vez de tapar nada, así que no hace falta adivinar el
+   * tamaño de letra desde aquí. */
   const CLAVE_AVISO_MOVIL = "sif-aviso-movil-cerrado";
 
   function initAvisoMovil() {
     const aviso = document.getElementById("aviso-movil");
     if (!aviso) return;
-    const movil = window.matchMedia ? window.matchMedia("(max-width: 600px)") : null;
+    const angosta = window.matchMedia ? window.matchMedia("(max-width: 600px)") : null;
     const boton = document.getElementById("aviso-movil-cerrar");
-    const aspa = document.getElementById("aviso-movil-aspa");
     let cerrado = false;
     try {
       cerrado = window.localStorage.getItem(CLAVE_AVISO_MOVIL) === "1";
@@ -287,21 +286,8 @@
       cerrado = false;
     }
 
-    // Mide la tarjeta para que el resto de elementos flotantes se aparten.
-    const medir = () => {
-      if (aviso.hidden) {
-        document.body.classList.remove("sif-aviso-movil");
-        document.body.style.removeProperty("--sif-aviso-alto");
-        return;
-      }
-      document.body.classList.add("sif-aviso-movil");
-      const alto = Math.ceil(aviso.getBoundingClientRect().height || 0);
-      if (alto) document.body.style.setProperty("--sif-aviso-alto", `${alto}px`);
-    };
-
     const sincronizar = () => {
-      aviso.hidden = cerrado || !(movil && movil.matches);
-      medir();
+      aviso.hidden = cerrado || !(angosta && angosta.matches);
     };
 
     const cerrar = () => {
@@ -312,9 +298,11 @@
         /* almacenamiento bloqueado: se cierra igual en esta visita */
       }
       const activo = document.activeElement;
-      const teniaFoco = aviso.contains(activo) || !activo || activo === document.body;
+      const teniaFoco = aviso.contains(activo);
       sincronizar();
-      // El botón desaparece con el aviso: el foco no debe quedar en el vacío.
+      // El botón desaparece con la nota: el foco no debe quedar en el vacío.
+      // Sólo se mueve si estaba dentro; si el foco estaba en otra parte, se
+      // respeta lo que la persona estaba usando.
       if (teniaFoco) {
         const principal = document.getElementById("main-content");
         if (principal) principal.focus();
@@ -322,27 +310,8 @@
     };
 
     if (boton) boton.addEventListener("click", cerrar);
-    if (aspa) aspa.addEventListener("click", cerrar);
 
-    // Escape cierra la tarjeta sólo si el foco está dentro de ella. Un Escape
-    // suelto pertenece a lo que el usuario esté usando —el explorador, un
-    // modal—: cerrar el aviso por un Escape ajeno sería quitarlo sin querer.
-    document.addEventListener("keydown", (evento) => {
-      if (aviso.hidden || evento.key !== "Escape") return;
-      if (!aviso.contains(document.activeElement)) return;
-      evento.preventDefault();
-      cerrar();
-    });
-
-    if (movil && movil.addEventListener) movil.addEventListener("change", sincronizar);
-    window.addEventListener("resize", medir);
-    if (window.ResizeObserver) {
-      try {
-        new ResizeObserver(medir).observe(aviso);
-      } catch (error) {
-        /* sin observador: la medición inicial y el resize bastan */
-      }
-    }
+    if (angosta && angosta.addEventListener) angosta.addEventListener("change", sincronizar);
     sincronizar();
   }
 
