@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import re
 import sys
 from pathlib import Path
 from urllib.parse import quote
@@ -72,6 +73,22 @@ def query_url(base: str, sql: str) -> str:
     return f"{base}/#sql={quote(sql, safe='')}"
 
 
+# La etiqueta de versión de los activos locales la fija `subir_etiqueta.py` en
+# docs/index.html. Las landings la leen de ahí en vez de llevar una copia fija:
+# si no, al subir la etiqueta quedaban pidiendo un theme_switcher.js viejo.
+ETIQUETA = re.compile(r'(?:src|href)="(?:css|js)/[^"?]+\?v=([^"]+)"')
+
+
+def etiqueta_activos() -> str:
+    encontradas = ETIQUETA.findall(INDEX.read_text(encoding="utf-8"))
+    if not encontradas:
+        raise SystemExit("index.html no declara la etiqueta ?v= de los activos locales")
+    unicas = set(encontradas)
+    if len(unicas) > 1:
+        raise SystemExit("index.html mezcla etiquetas: " + ", ".join(sorted(unicas)))
+    return encontradas[0]
+
+
 def render_theme_switcher() -> str:
     return '''<div class="theme-dropdown-container seo-theme-switcher" id="theme-dropdown-container">
       <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-label="Seleccionar paleta de colores" aria-controls="theme-dropdown-menu" aria-expanded="false" title="Seleccionar paleta de colores">
@@ -93,7 +110,7 @@ def render_index_nav(base: str, pages: list[dict], guides: list[dict]) -> str:
     return (
         f"{BEGIN}\n"
         '              <nav class="seo-topic-nav" aria-label="Guías de datos financieros por mercado">\n'
-        '                <span>Guías de datos</span>\n'
+        '                <span class="seo-topic-nav-label">Guías de datos por mercado</span>\n'
         f"{links}\n"
         f"{guide_links}\n"
         "              </nav>\n"
@@ -187,6 +204,7 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
     }
     ld = json.dumps(json_ld, ensure_ascii=False, indent=2).replace("</", "<\\/")
     periods_html = " · ".join(esc(p) for p in date_ranges)
+    etiqueta = etiqueta_activos()
     return f'''<!doctype html>
 <html lang="es-CL">
 <head>
@@ -211,7 +229,7 @@ def render_page(base: str, page: dict, objects: list[dict], queries: list[dict],
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap"></noscript>
   <link rel="stylesheet" href="../../css/seo-content.css?v=20261110-paletas">
-  <script src="../../js/theme_switcher.js?v=fl-202609-30075-22389" defer></script>
+  <script src="../../js/theme_switcher.js?v={etiqueta}" defer></script>
   <script type="application/ld+json">{ld}</script>
 </head>
 <body>

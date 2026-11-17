@@ -46,7 +46,7 @@ CREATOR = {
 INICIO = "<!-- SEO:INICIO -->"
 FIN = "<!-- SEO:FIN -->"
 
-TITULO = "Sistema de Información Financiera de Chile — Inversiones institucionales y mercados"
+TITULO = "Datos financieros de Chile · SIF"
 
 
 def miles(n: int) -> str:

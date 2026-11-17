@@ -148,6 +148,7 @@ def comprobar(css_texto: str, html_texto: str, erd_texto: str,
               sidebar_texto: str, shell_texto: str) -> tuple[list[str], list[str]]:
     fallos: list[str] = []
     avisos: list[str] = []
+    texto_css = css_texto
     lista = list(reglas(css_texto))
 
     # 1 · viewport
@@ -244,50 +245,57 @@ def comprobar(css_texto: str, html_texto: str, erd_texto: str,
     if "if (this.esMovil()) this.cerrarCajon();" not in sidebar_texto:
         fallos.append("12 cajón: elegir una tabla no lo cierra")
 
-    # 13 · aviso de teléfono
+    # 13 · nota de pantalla angosta
+    # El sitio es responsive y esta nota NO debe volver a ser un bloqueo: nada
+    # de tarjeta flotante tapando la esquina, ni `role="dialog"`, ni mensaje de
+    # "esto es para un computador". Es una franja del flujo, descartable y con
+    # el texto que dice que todo funciona.
     if 'id="aviso-movil"' not in html_texto:
-        fallos.append("13 aviso: falta el aviso que recomienda usar un computador")
+        fallos.append("13 nota: falta la nota de pantalla angosta")
     elif 'id="aviso-movil-cerrar"' not in html_texto:
-        fallos.append("13 aviso: no se puede cerrar")
+        fallos.append("13 nota: no se puede ocultar")
     aviso_tag = re.search(r'<aside\b(?=[^>]*\bid="aviso-movil")[^>]*>', html_texto, re.S)
     if not aviso_tag or re.search(r'\brole=|\baria-modal=', aviso_tag.group(0)):
-        fallos.append("13 aviso: usa aside complementario; no lo declara diálogo/modal")
-    elif not all(nombre in aviso_tag.group(0) for nombre in ('aria-labelledby=', 'aria-describedby=')):
-        fallos.append("13 aviso: la región complementaria debe tener nombre y descripción")
+        fallos.append("13 nota: usa aside complementario; no se declara diálogo")
+    elif 'aria-labelledby=' not in aviso_tag.group(0):
+        fallos.append("13 nota: la región complementaria debe tener nombre accesible")
+    if re.search(r'pensado para un computador|sólo para computador|solo para computador',
+                 html_texto, re.I):
+        fallos.append("13 nota: el texto vuelve a decir que el sitio es para un computador")
+    if "todo el sitio funciona" not in html_texto:
+        fallos.append("13 nota: no aclara que el sitio completo funciona en el teléfono")
     if "aviso-movil" not in shell_texto or "initAvisoMovil" not in shell_texto:
-        fallos.append("13 aviso: el JS no lo muestra ni recuerda el descarte")
+        fallos.append("13 nota: el JS no la muestra ni recuerda el descarte")
     if "sif-aviso-movil-cerrado" not in shell_texto:
-        fallos.append("13 aviso: el descarte no se guarda en el navegador")
+        fallos.append("13 nota: el descarte no se guarda en el navegador")
     # El valor base es el de fuera de todo media query, no el último del archivo.
     oculto_base = None
     for cond, sel, prop, v in lista:
         if sel == ".aviso-movil" and prop == "display" and not cond:
             oculto_base = v
     if oculto_base != "none":
-        fallos.append("13 aviso: se muestra también en escritorio; el estilo base debe ocultarlo")
+        fallos.append("13 nota: se muestra también en escritorio; el estilo base debe ocultarla")
     visible = [v for cond, sel, p, v in lista
                if sel == ".aviso-movil" and p == "display" and cumple(cond, 900)]
     if "flex" not in visible:
-        fallos.append("13 aviso: no aparece en pantalla pequeña")
-    # Es una tarjeta flotante, no un bloque del flujo: si vuelve a `static`
-    # empuja el contenido y deja de leerse como algo que se puede cerrar.
+        fallos.append("13 nota: no aparece en pantalla pequeña")
+    # En el flujo, no flotando: una franja fija taparía contenido y, con teclado,
+    # dejaría el foco fuera de la vista. Si vuelve `fixed`, vuelve el bloqueo.
     posicion = [v for cond, sel, p, v in lista
                 if sel == ".aviso-movil" and p == "position" and not cond]
-    if posicion != ["fixed"]:
-        fallos.append("13 aviso: no flota; debe ser position: fixed")
-    if not any(sel == ".aviso-movil" and p == "bottom" and "safe-area-inset-bottom" in v
-               for cond, sel, p, v in lista):
-        fallos.append("13 aviso: no respeta el área segura del teléfono")
-    if 'id="aviso-movil-aspa"' not in html_texto:
-        fallos.append("13 aviso: no tiene aspa de cierre")
-    # Se mira dentro de la función, no en todo el archivo: `ux_shell.js` usa
-    # Escape también para otras cosas y la comprobación debe hablar del aviso.
+    if posicion:
+        fallos.append(f"13 nota: vuelve a flotar sobre el contenido (position: {posicion[0]})")
+    if any(sel == ".aviso-movil" and p == "z-index" for cond, sel, p, v in lista):
+        fallos.append("13 nota: no debe apilarse sobre la interfaz")
+    # El cuerpo del aviso no puede publicar alto ni meter foco a la fuerza.
+    if "sif-aviso-alto" in texto_css:
+        fallos.append("13 nota: sigue publicando alto para apartar avisos flotantes")
     inicio_aviso = shell_texto.find("function initAvisoMovil")
     cuerpo_aviso = shell_texto[inicio_aviso:inicio_aviso + 3000] if inicio_aviso != -1 else ""
-    if '"Escape"' not in cuerpo_aviso:
-        fallos.append("13 aviso: Escape no lo cierra")
-    if "contains(document.activeElement)" not in cuerpo_aviso:
-        fallos.append("13 aviso: Escape lo cierra aunque el foco esté fuera")
+    if "focus()" in cuerpo_aviso.replace("if (principal) principal.focus();", ""):
+        fallos.append("13 nota: mueve el foco sin que el usuario lo pida")
+    if "Escape" in cuerpo_aviso and "preventDefault" in cuerpo_aviso:
+        fallos.append("13 nota: secuestra Escape; es una nota, no un diálogo")
 
     # 14 · filas del árbol que crecen
     # Con `height: 28px` el distintivo de una carpeta bajaba a la segunda línea y
@@ -334,11 +342,12 @@ def autoprueba(textos: dict[str, str]) -> int:
         ("7 tabla", {"html": re.sub(r' data-label="[^"]*"', "", textos["html"])}),
         ("9 táctil", {"css": caso.replace("@media (pointer: coarse)", "@media (pointer: none)")}),
         ("10 mapa", {"erd": textos["erd"].replace('addEventListener("pointerdown"', 'addEventListener("mousedown"')}),
-        ("13 aviso", {"html": textos["html"].replace('id="aviso-movil-aspa"', 'id="aviso-movil-x"')}),
-        ("13 aviso", {"html": textos["html"].replace('id="aviso-movil"', 'id="aviso-movil" role="dialog" aria-modal="false"')}),
-        ("13 aviso", {"shell": textos["shell"].replace('if (!aviso.contains(document.activeElement)) return;', '')}),
-        ("13 aviso", {"css": caso.replace("  display: none;\n  position: fixed;\n  left: 12px;",
-                                          "  display: none;\n  position: static;\n  left: 12px;")}),
+        ("13 nota", {"html": textos["html"].replace('id="aviso-movil"', 'id="aviso-movil" role="dialog" aria-modal="false"')}),
+        ("13 nota", {"html": textos["html"].replace('id="aviso-movil-cerrar"', 'id="aviso-movil-x"')}),
+        ("13 nota", {"html": textos["html"].replace("Pantalla angosta: todo el sitio funciona.",
+                                                   "Este sitio está pensado para un computador.")}),
+        ("13 nota", {"css": caso.replace("  display: none;\n  align-items: baseline;",
+                                        "  display: none;\n  position: fixed;\n  align-items: baseline;")}),
         ("14 filas", {"css": caso.replace("  min-height: 28px;\n  padding-right: 10px;",
                                           "  height: 28px;\n  padding-right: 10px;")}),
     ]
