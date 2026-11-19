@@ -200,9 +200,27 @@ def rutas_sql_relativas(vista: dict) -> list[str]:
         if ruta.is_absolute() or ".." in ruta.parts:
             return []
         return [ruta.as_posix()] if (DOCS / ruta).is_file() else []
-    # Aquí sí se incluye el `_vacio.parquet`: la vista SQL de una tabla que aún no
-    # reporta tiene que existir y responder cero filas con su esquema.
+    # Tampoco aquí: la web debe seguir diciendo «no hay particiones publicadas» en una
+    # tabla que la CMF no entrega, no mostrar una tabla vacía. Registrarla como vista
+    # cambiaría ese mensaje por un resultado de 0 filas y `audit_duckdb_client.js`
+    # fija justo lo contrario. El esquema del archivo vacío se lee por
+    # `rutas_esquema_relativas`, que es lo que necesita `build_esquemas`.
+    return _rutas_de_manifiesto(vista, incluir_vacio=False)
+
+
+def rutas_esquema_relativas(vista: dict) -> list[str]:
+    """Parquet para describir el esquema, incluido el `_vacio.parquet`.
+
+    Es el único camino que incluye el archivo vacío: sin él, las cuatro tablas de
+    la Circular 1835 que la CMF no entrega quedarían sin columnas publicadas. No se
+    usa para descargas ni para la vista SQL, que sí deben tratarlas como vacías.
+    """
     return _rutas_de_manifiesto(vista, incluir_vacio=True)
+
+
+def ficheros_de_esquema(vista: dict) -> list[str]:
+    """Rutas locales de los Parquet que describen el esquema del objeto."""
+    return [str(DOCS / rel) for rel in rutas_esquema_relativas(vista)]
 
 
 def ficheros_sql_de(vista: dict) -> list[str]:

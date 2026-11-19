@@ -1,7 +1,240 @@
 {
  "adaptacion": false,
  "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
- "columnas": [],
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_prestamo",
+   "rol": "Métrica",
+   "significado": "200800002 Se considerará como un nuevo préstamo otorgado todo préstamo producto de una renegociación, debiendo informar todas las nuevas condiciones del préstamo descritas en este anexo asignándole un nuevo código.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_prestamo",
+   "rol": "Atributo",
+   "significado": "Debe expresarse en formato AAAA-MM-DD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_vencimiento",
+   "rol": "Atributo",
+   "significado": "Fecha de vencimiento de la última cuota del préstamo. Debe expresarse en formato AAAA-MM-DD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_deudor",
+   "rol": "Atributo",
+   "significado": "Los códigos permitidos son: N: Persona Natural 170 J: Persona Jurídica Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_prestamo",
+   "rol": "Atributo",
+   "significado": "Deberá informarse qué tipo de préstamo está realizando la compañía, de acuerdo a los siguientes códigos: 01: Crédito de consumo 02: Crédito complementario 03: Crédito a asegurados de riesgo de crédito 04: Créditos comerciales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prestamo_representativo",
+   "rol": "Atributo",
+   "significado": "R: Representativo N: No representativo Debe informarse en letra mayúscula. 173.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "origen_prestamo",
+   "rol": "Atributo",
+   "significado": "N: Operación nueva R: Renegociación de préstamo A: Préstamo adquirido Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_reajuste",
+   "rol": "Atributo",
+   "significado": "Debe informarse la moneda o unidad de reajuste en que se pactó el préstamo. Debe informarse de acuerdo a la codificación definida en SEIL, codificación CMF, Unidades Monetarias. De no existir se deberá consultar a esta Comisión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto",
+   "rol": "Métrica",
+   "significado": "En el caso de préstamos adquiridos en el mes informado corresponde al valor par del préstamo, esto es el valor insoluto del crédito adquirido más los intereses devengados y no pagados.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_pesos",
+   "rol": "Métrica",
+   "significado": "de Reajuste correspondiente al día de cierre de la información y Debe informarse el valor de la cuota, en la unidad de reajuste que se pactó el préstamo, que se cobrará por el préstamo de acuerdo a la tasa efectiva, moneda, reajustabilidad, plazo y período de pago de las cuotas.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuota",
+   "rol": "Métrica",
+   "significado": "En el caso de préstamos a tasa variable deberá estimarse el valor de esta cuota a partir de la tasa base vigente en el momento de otorgamiento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo_pago_cuota",
+   "rol": "Métrica",
+   "significado": "(TRIMESTRAL). 06: las cuotas se pagarán cada 6 meses (SEMESTRAL). 12: las cuotas se pagarán 1 vez al año (ANUAL). 15: amortización cero cupón.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "plazo_prestamo",
+   "rol": "Métrica",
+   "significado": "Debe informar el plazo del préstamo como el número de meses en que este se pactó.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_tasa",
+   "rol": "Atributo",
+   "significado": "Deberá informar el tipo de tasa pactada en el préstamo. Los códigos permitidos son: F: Tasa Fija V: Tasa Variable Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_fija_pactada",
+   "rol": "Métrica",
+   "significado": "Deberá informar la tasa efectiva mensual cobrada por el préstamo correspondiente al plazo de vencimiento de las cuotas.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_fija_efectiva",
+   "rol": "Métrica",
+   "significado": "Esta se debe informar de acuerdo a lo establecido en la Norma Deberá informar la tasa variable base o de referencia pactada para el préstamo, correspondiente al plazo de vencimiento de las cuotas. La tasa base o de referencia deberá informarse de acuerdo a la.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_variable_base",
+   "rol": "Métrica",
+   "significado": "codificación definida en SEIL, codificación CMF, Tasas Variables Base. De no existir deberá solicitar anticipadamente el código a esta Comisión. En el caso de tasa fija deberá informarse en cero.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "spread_tasa_variable",
+   "rol": "Métrica",
+   "significado": "Deberá informarse en términos de puntos base. En el caso de Corresponde al valor que tiene el préstamo a la fecha de cierre del mes a que se refiere la información, según lo establecido en la Circular de Valorización de Inversiones vigente. Este monto se.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_insoluto_deuda_um",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor insoluto de la deuda más los intereses devengados y no pagados., expresado en la unidad de reajustabilidad del instrumento a la fecha de cierre del mes a que se refiere la información. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_insoluto_deuda_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor insoluto de la deuda más los intereses devengados y no pagados, a la fecha de cierre del mes a que se refiere la información. 178. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_b_12_m_clp",
+   "rol": "Métrica",
+   "significado": "deberá expresar en miles de pesos (M$). Se deberá informar el monto de la provisión según lo señalado en el N°9 de la NCG N°208. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_provision_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde indicar si el deterioro del préstamo se determinó según lo señalado en el N°9 de la Norma de Carácter General N°208. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad",
+   "rol": "Métrica",
+   "significado": "1: Menos de 30 días 2: 30 días o más, pero menos de 60 días 3: 60 días o más, pero menos de 90 días 4: 90 días o más, pero menos de 180 días 5: 180 días o más, pero menos de un año 6: Un año o más, pero menos de dos años 7: Dos años o más, pero menos de tres años 8: Tres años o más, pero menos de 4.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuotas_impagas_um",
+   "rol": "Métrica",
+   "significado": "Corresponde a la sumatoria de las Cuotas vencidas e impagos a la fecha de cierre del mes a que se refiere la información, expresada en la unidad de reajustabilidad del préstamo. Si no existen cuotas impagas, se debe informar con ceros. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuotas_impagas_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor en miles de pesos (M$) del total de cuotas vencidas e impagos. Si no existen cuotas impagas, se debe informar con ceros. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  }
+ ],
  "contrato": "sif-api/esquema",
  "estado": "vacio",
  "foraneas": [],

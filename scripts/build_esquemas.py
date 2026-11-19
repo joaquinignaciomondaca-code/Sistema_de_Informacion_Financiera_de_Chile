@@ -138,7 +138,9 @@ def construir() -> dict:
 
     for vista in vistas:
         nombre = vista["name"]
-        ficheros = [Path(p) for p in ac.ficheros_de(vista)]
+        # El esquema incluye el `_vacio.parquet`: las cuatro tablas de la Circular 1835
+        # que la CMF no entrega publican un archivo sin filas con sus columnas.
+        ficheros = [Path(p) for p in ac.ficheros_de_esquema(vista)]
         info = recon.get(nombre, {})
         tabla = manifiesto.get(info.get("manifest_id") or "", {})
         entrada: dict = {

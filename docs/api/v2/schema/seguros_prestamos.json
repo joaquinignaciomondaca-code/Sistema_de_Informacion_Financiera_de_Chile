@@ -1,7 +1,608 @@
 {
  "adaptacion": false,
  "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
- "columnas": [],
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_prestamo",
+   "rol": "Métrica",
+   "significado": "200800002 Se considerará como un nuevo préstamo otorgado todo préstamo producto de una renegociación, debiendo informar todas las nuevas condiciones del préstamo descritas en este anexo asignándole un nuevo código.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_prestamo",
+   "rol": "Atributo",
+   "significado": "Debe expresarse en formato AAAA-MM-DD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_vencimiento",
+   "rol": "Atributo",
+   "significado": "Fecha de vencimiento de la última cuota del préstamo. Debe expresarse en formato AAAA-MM-DD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_deudor",
+   "rol": "Atributo",
+   "significado": "Los códigos permitidos son: N: Persona Natural 170 J: Persona Jurídica Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_actividad_economica",
+   "rol": "Métrica",
+   "significado": "Para el caso de préstamos a personas jurídicas deberá informarse la codificación designada por el Servicio Impuestos Internos para la actividad económica principal del deudor. En el caso de préstamos a personas naturales deberá informarse con ceros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prestamos_trabajadores",
+   "rol": "Atributo",
+   "significado": "Corresponde al tipo de deudor en relación con el crédito que se informa en el registro, según se trate de: Código Calidad del deudor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clase_deudor",
+   "rol": "Métrica",
+   "significado": "1 Deudor directo 2 Deudor indirecto La calidad de deudor directo o indirecto corresponderá a lo indicado en el Capítulo 12-3 de la Recopilación Actualizada de Normas de la CMF.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_deudor",
+   "rol": "Identificador",
+   "significado": "Se conserva la columna del registro, pero su valor se suprime para deudores personas naturales, para reducir el riesgo de identificación en la descarga masiva.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ver_deudor",
+   "rol": "Atributo",
+   "significado": "Se suprime junto con el RUT del deudor cuando este es persona natural.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social_deudor",
+   "rol": "Atributo",
+   "significado": "Se suprime junto con los nombres del deudor cuando este es persona natural.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_deudor",
+   "rol": "Atributo",
+   "significado": "Se suprime para deudores personas naturales; los campos se mantienen en el esquema.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "primer_apellido_deudor",
+   "rol": "Atributo",
+   "significado": "Se suprime para deudores personas naturales; los campos se mantienen en el esquema.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "segundo_apellido_deudor",
+   "rol": "Atributo",
+   "significado": "Se suprime para deudores personas naturales; los campos se mantienen en el esquema.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pensionado",
+   "rol": "Atributo",
+   "significado": "S: Si N: NO Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descuento_pension",
+   "rol": "Atributo",
+   "significado": "N: NO Debe informarse solo si el Campo PENSIONADO presenta código = “S”. En caso contrario deberá informarse con espacios. 172 Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_pension",
+   "rol": "Métrica",
+   "significado": "Debe informarse solo si el Campo PENSIONADO presenta código = S. En caso contrario deberá informarse cero.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_prestamo",
+   "rol": "Atributo",
+   "significado": "Deberá informarse qué tipo de préstamo está realizando la compañía, de acuerdo a los siguientes códigos: 01: Crédito de consumo 02: Crédito complementario 03: Crédito a asegurados de riesgo de crédito 04: Créditos comerciales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_asegurado_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponderá informar el monto asegurado para el caso de asegurados de pólizas de seguros de crédito, si corresponde. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prestamo_representativo",
+   "rol": "Atributo",
+   "significado": "R: Representativo N: No representativo Debe informarse en letra mayúscula. 173.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "origen_prestamo",
+   "rol": "Atributo",
+   "significado": "N: Operación nueva R: Renegociación de préstamo A: Préstamo adquirido Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_originacion_o_renegociacion_anterior",
+   "rol": "Atributo",
+   "significado": "en caso contrario la fecha de otorgamiento del préstamo por parte del originador del mismo. Debe expresarse en formato AAAA-MM-DD. En el caso de campo ORIGEN_PRESTAMO = “N” deberá informarse con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_renegociado_mayor_orden",
+   "rol": "Métrica",
+   "significado": "Para renegociaciones de más de un préstamo, corresponde al código del crédito renegociado de mayor monto. En el caso de campo ORIGEN_PRESTAMO = “N” o “A” deberá informarse en cero.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_renegociado_segundo_orden",
+   "rol": "Métrica",
+   "significado": "En el caso de préstamos renegociados (campo.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_renegociado_tercer_orden",
+   "rol": "Métrica",
+   "significado": "Para renegociaciones de más de un préstamo, corresponde al código del crédito renegociado con el monto de tercer orden. En el caso de campo ORIGEN_PRESTAMO = “N” o “A” deberá informarse en cero.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_vendedora_prestamo",
+   "rol": "Identificador",
+   "significado": "Para préstamos adquiridos (campo ORIGEN_PRESTAMO = “A”) se deberá informar el dígito verificador del R.U.T. de la entidad vendedora del préstamo.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ver_vendedora_prestamo",
+   "rol": "Atributo",
+   "significado": "Para Operaciones nuevas y Renegociaciones (Campo ORIGEN_PRESTAMO = “N” o “R”) deberá informarse con espacio. Debe informarse en letra mayúscula en caso que corresponda al dígito verificador “K”. 175.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "categoria_riesgo_vendedor",
+   "rol": "Atributo",
+   "significado": "Deberá informarse de acuerdo a la codificación definida en SEIL, codificación S.V.S, Categoría de Riesgo de Entidad Vendedora del Préstamo. De no existir deberá solicitar anticipadamente el código a esta Comisión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "porcentaje_provision_vendedor",
+   "rol": "Métrica",
+   "significado": "Para préstamos adquiridos (campo ORIGEN_PRESTAMO = “A”) se deberá informar la categoría de riesgo en la cual la compañía informante clasificó el préstamo, según lo dispuesto en la NCG N°208. Deberá informarse de acuerdo a la codificación definida en SEIL.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "categoria_riesgo_adquirido",
+   "rol": "Métrica",
+   "significado": "codificación CMF, Categoría de Riesgo Préstamo Adquirido. De no existir deberá solicitar anticipadamente el código a esta Comisión. Para Operaciones nuevas y Renegociaciones (Campo ORIGEN_PRESTAMO = “N” o “R”) deberá informarse en cero. 176.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "porcentaje_provision_adquirido",
+   "rol": "Métrica",
+   "significado": "Para Operaciones nuevas y Renegociaciones (Campo ORIGEN_PRESTAMO = “N” o “R”) deberá informarse en cero.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "categoria_riesgo_otorgado",
+   "rol": "Atributo",
+   "significado": "Para préstamos otorgados (campo ORIGEN_PRESTAMO = “N” o CATEGORÍA_RIESGO_OT “R”), se deberá informar la categoría en la cual la compañía clasificó el préstamo, según lo dispuesto en la NCG N°208.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "porcentaje_provision_otorgado",
+   "rol": "Métrica",
+   "significado": "Para préstamos otorgados (campo ORIGEN_PRESTAMO = “N” o PORCENTAJE_PROVISIO “R”) se deberá informar el porcentaje de provisión que la compañía informante constituyó por el préstamo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "vendedora_relacionada",
+   "rol": "Atributo",
+   "significado": "N: No Relacionada Debe informarse en letra mayúscula. Para Operaciones nuevas y Renegociaciones (Campo ORIGEN_PRESTAMO = “N” o “R”) deberá informarse con espacio. 177.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_prestamo_adquirido",
+   "rol": "Atributo",
+   "significado": "institución financiera corresponderá al código interno de la operación. Para Operaciones nuevas y Renegociaciones (Campo ORIGEN_PRESTAMO = “N” o “R”) deberá informarse con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_reajuste",
+   "rol": "Atributo",
+   "significado": "Debe informarse la moneda o unidad de reajuste en que se pactó el préstamo. Debe informarse de acuerdo a la codificación definida en SEIL, codificación CMF, Unidades Monetarias. De no existir se deberá consultar a esta Comisión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuotas_impagas_um",
+   "rol": "Métrica",
+   "significado": "Corresponde a la sumatoria de las Cuotas vencidas e impagos a la fecha de cierre del mes a que se refiere la información, expresada en la unidad de reajustabilidad del préstamo. Si no existen cuotas impagas, se debe informar con ceros. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuotas_impagas_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor en miles de pesos (M$) del total de cuotas vencidas e impagos. Si no existen cuotas impagas, se debe informar con ceros. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_insoluto_deuda_um",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor insoluto de la deuda más los intereses devengados y no pagados., expresado en la unidad de reajustabilidad del instrumento a la fecha de cierre del mes a que se refiere la información. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_insoluto_deuda_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor insoluto de la deuda más los intereses devengados y no pagados, a la fecha de cierre del mes a que se refiere la información. 178. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto",
+   "rol": "Métrica",
+   "significado": "En el caso de préstamos adquiridos en el mes informado corresponde al valor par del préstamo, esto es el valor insoluto del crédito adquirido más los intereses devengados y no pagados.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_pesos",
+   "rol": "Métrica",
+   "significado": "de Reajuste correspondiente al día de cierre de la información y Debe informarse el valor de la cuota, en la unidad de reajuste que se pactó el préstamo, que se cobrará por el préstamo de acuerdo a la tasa efectiva, moneda, reajustabilidad, plazo y período de pago de las cuotas.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuota",
+   "rol": "Métrica",
+   "significado": "En el caso de préstamos a tasa variable deberá estimarse el valor de esta cuota a partir de la tasa base vigente en el momento de otorgamiento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo_pago_cuota",
+   "rol": "Métrica",
+   "significado": "(TRIMESTRAL). 06: las cuotas se pagarán cada 6 meses (SEMESTRAL). 12: las cuotas se pagarán 1 vez al año (ANUAL). 15: amortización cero cupón.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "garantias",
+   "rol": "Atributo",
+   "significado": "NG: No posee garantías. 179 GR: Garantía real GP: Garantía personal Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "plazo_prestamo",
+   "rol": "Métrica",
+   "significado": "Debe informar el plazo del préstamo como el número de meses en que este se pactó.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "plazo_gracia",
+   "rol": "Métrica",
+   "significado": "plazo de gracia se encuentra contenido dentro del plazo de otorgamiento del préstamo (Campo PLAZO_PRESTAMO).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_tasa",
+   "rol": "Atributo",
+   "significado": "Deberá informar el tipo de tasa pactada en el préstamo. Los códigos permitidos son: F: Tasa Fija V: Tasa Variable Debe informarse en letra mayúscula.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_fija_pactada",
+   "rol": "Métrica",
+   "significado": "Deberá informar la tasa efectiva mensual cobrada por el préstamo correspondiente al plazo de vencimiento de las cuotas.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_fija_efectiva",
+   "rol": "Métrica",
+   "significado": "Esta se debe informar de acuerdo a lo establecido en la Norma Deberá informar la tasa variable base o de referencia pactada para el préstamo, correspondiente al plazo de vencimiento de las cuotas. La tasa base o de referencia deberá informarse de acuerdo a la.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_variable_base",
+   "rol": "Métrica",
+   "significado": "codificación definida en SEIL, codificación CMF, Tasas Variables Base. De no existir deberá solicitar anticipadamente el código a esta Comisión. En el caso de tasa fija deberá informarse en cero.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "spread_tasa_variable",
+   "rol": "Métrica",
+   "significado": "Deberá informarse en términos de puntos base. En el caso de Corresponde al valor que tiene el préstamo a la fecha de cierre del mes a que se refiere la información, según lo establecido en la Circular de Valorización de Inversiones vigente. Este monto se.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_b_12_m_clp",
+   "rol": "Métrica",
+   "significado": "deberá expresar en miles de pesos (M$). Se deberá informar el monto de la provisión según lo señalado en el N°9 de la NCG N°208. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_provision_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde indicar si el deterioro del préstamo se determinó según lo señalado en el N°9 de la Norma de Carácter General N°208. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "modelo_deterioro",
+   "rol": "Atributo",
+   "significado": "Debe incluirse un código para indicar la situación en que se encuentra el importe informado en relación con el cumplimiento oportuno de su pago, de acuerdo con lo siguiente: Código: Tiempo transcurrido desde el vencimiento 0: Crédito al día.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad",
+   "rol": "Métrica",
+   "significado": "1: Menos de 30 días 2: 30 días o más, pero menos de 60 días 3: 60 días o más, pero menos de 90 días 4: 90 días o más, pero menos de 180 días 5: 180 días o más, pero menos de un año 6: Un año o más, pero menos de dos años 7: Dos años o más, pero menos de tres años 8: Tres años o más, pero menos de 4.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_tasa_mora",
+   "rol": "Métrica",
+   "significado": "2: Máxima convencional vigente al momento de otorgar el préstamo. 3: Máxima convencional vigente al momento de la mora. 181 4: No aplica.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_mora",
+   "rol": "Métrica",
+   "significado": "Deberá informarse la tasa que se cobrará para el período de mora. Deberá informarse solo si el valor del campo TIPO_TASA_MORA es “1”, de lo contrario debe informarse en cero.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "comision_prepago",
+   "rol": "Métrica",
+   "significado": "2: Un mes de interés. 3: Otra comisión. 4: No se cobra comisión de prepago.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "otro_prepago",
+   "rol": "Atributo",
+   "significado": "decir el campo COMISION_PREPAGO presenta código = 3, de lo contrario debe informarse con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "seg_desgravamen",
+   "rol": "Atributo",
+   "significado": "Debe informar si el préstamo cuenta con seguros de cargo del deudor. Desgravamen: se informará si el préstamo cuenta con seguro de desgravamen de cargo del deudor. S: SI N: NO.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "seg_invalidez",
+   "rol": "Atributo",
+   "significado": "Debe informar si el préstamo cuenta con seguros de cargo del deudor. Invalidez: se informará si el préstamo cuenta con seguro de invalidez de cargo del deudor. S: SI N: NO.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "seg_cesantia",
+   "rol": "Atributo",
+   "significado": "Debe informar si el préstamo cuenta con seguros de cargo del deudor. Cesantía: se informará si el préstamo cuenta con seguro de cesantía de cargo del deudor. S: SI N: NO.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "seg_incendio",
+   "rol": "Atributo",
+   "significado": "Debe informar si el préstamo cuenta con seguros de cargo del deudor. Incendio: se informará si el préstamo cuenta con seguro de incendio o adicionales de cargo del deudor. S: SI N: NO 182.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "seg_terremoto",
+   "rol": "Atributo",
+   "significado": "Debe informar si el préstamo cuenta con seguros de cargo del deudor. Terremoto o Riesgos de la Naturaleza: se informará si el préstamo cuenta con seguro de terremoto o de riesgos de la naturaleza o adicionales, de cargo del deudor. S: SI N: NO.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "seg_otro_seguro",
+   "rol": "Atributo",
+   "significado": "se informará si el préstamo cuenta con otros tipos de seguros distintos a los mencionados anteriormente, de cargo del deudor. S: SI N: NO.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseg_desgravamen",
+   "rol": "Identificador",
+   "significado": "Desgravamen: se informará el R.U.T. de la aseguradora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseg_invalidez",
+   "rol": "Identificador",
+   "significado": "Invalidez: se informará el R.U.T. de la aseguradora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseg_cesantia",
+   "rol": "Identificador",
+   "significado": "Cesantía: se informará el R.U.T. de la aseguradora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseg_incendio",
+   "rol": "Identificador",
+   "significado": "Incendio: se informará el R.U.T. de la aseguradora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseg_terremoto",
+   "rol": "Identificador",
+   "significado": "Terremoto y Riesgos de la naturaleza: se informará el R.U.T. de la aseguradora. 183.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseg_otro",
+   "rol": "Identificador",
+   "significado": "Otro seguro: se informará el R.U.T. de la aseguradora en que se contrató el seguro de mayor monto de los otros tipos de seguros distintos a los mencionados anteriormente de cargo del deudor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
  "contrato": "sif-api/esquema",
  "estado": "vacio",
  "foraneas": [],

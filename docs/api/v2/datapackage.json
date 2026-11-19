@@ -19241,7 +19241,7 @@
    "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",
    "total_alias": 19
   },
-  "objetos_sin_archivo": 4,
+  "objetos_sin_archivo": 0,
   "versionado": {
    "correccion": "una afirmación falsa del descriptor —por ejemplo una `primaryKey` que no se cumple— se retira en un parche: no cambia el dato, y quien la usaba para deduplicar debe agrupar por su cuenta",
    "mayor": "se rompe un cliente: quitar o renombrar recurso o columna, cambiar un tipo",

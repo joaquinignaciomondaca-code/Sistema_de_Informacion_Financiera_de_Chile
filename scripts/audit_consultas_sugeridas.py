@@ -92,6 +92,16 @@ def ficheros_de(vista: dict) -> list[str]:
     return V.ficheros_de(vista)
 
 
+def ficheros_de_esquema(vista: dict) -> list[str]:
+    """Rutas para describir el esquema, con el `_vacio.parquet` incluido.
+
+    A diferencia de `ficheros_de` (descargas) y `ficheros_sql_de` (la vista que
+    registra la web), esta sí incluye el archivo vacío: una tabla que la CMF no
+    entrega se publica como vacía en la web, pero su esquema tiene que constar.
+    """
+    return V.ficheros_de_esquema(vista)
+
+
 def ficheros_sql_de(vista: dict) -> list[str]:
     """Fuente que usa la web al registrar la vista SQL."""
     return V.ficheros_sql_de(vista)
