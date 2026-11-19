@@ -1,6 +1,6 @@
 {
  "contrato": "sif-api/resultado",
- "id": "b-14-garantias-por-posicion-y-tipo-m-8f4af5",
+ "id": "b-14-garantias-por-posicion-y-tipo-m-d330f4",
  "titulo": "B.14 Garantías por posición y tipo (M$)",
  "origen": "explorador",
  "data_release": "2026-11-18.8a3ef28aaaf5",
@@ -26,9 +26,9 @@
   [
    "2025-09",
    "vida",
-   "RG",
+   "CG",
    "MV",
-   233616024
+   207032549
   ],
   [
    "2025-10",
@@ -367,6 +367,6 @@
    392008063
   ]
  ],
- "sql": "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC LIMIT 50;",
+ "sql": "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC, sector, posicion_compania, tipo_garantia LIMIT 50;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }

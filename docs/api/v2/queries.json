@@ -176,9 +176,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "b-14-garantias-por-posicion-y-tipo-m-8f4af5",
+   "id": "b-14-garantias-por-posicion-y-tipo-m-d330f4",
    "origen": "explorador",
-   "sql": "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC LIMIT 50;",
+   "sql": "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC, sector, posicion_compania, tipo_garantia LIMIT 50;",
    "titulo": "B.14 Garantías por posición y tipo (M$)"
   },
   {

@@ -112,7 +112,7 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "seguros",
             chips: [
-              { label: "B.14 Garantías por posición y tipo (M$)", query: "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC LIMIT 50;" },
+              { label: "B.14 Garantías por posición y tipo (M$)", query: "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC, sector, posicion_compania, tipo_garantia LIMIT 50;" },
               { label: "Registros tipo 6 por periodo y archivo", query: "SELECT periodo, tipo_archivo, sector, COUNT(*) AS registros, MIN(largo_registro) AS largo_minimo, MAX(largo_registro) AS largo_maximo FROM seguros_registros_tipo6 GROUP BY periodo, tipo_archivo, sector ORDER BY periodo DESC, tipo_archivo, sector LIMIT 66;" }
             ],
             tables: [

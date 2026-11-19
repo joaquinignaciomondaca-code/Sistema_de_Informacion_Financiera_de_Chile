@@ -6,7 +6,7 @@
  "generado": "2026-11-19",
  "total": 159,
  "filas": 6266,
- "bytes": 824498,
+ "bytes": 824540,
  "truncadas": 2,
  "max_filas": 500,
  "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 159 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
@@ -232,7 +232,7 @@
    "url": "/api/v2/resultados/pactos-contrapartes-y-tasa-promedio-ultimo-mes-5e68eb.json"
   },
   {
-   "id": "b-14-garantias-por-posicion-y-tipo-m-8f4af5",
+   "id": "b-14-garantias-por-posicion-y-tipo-m-d330f4",
    "titulo": "B.14 Garantías por posición y tipo (M$)",
    "origen": "explorador",
    "filas": 50,
@@ -244,9 +244,9 @@
     "valor_m_clp"
    ],
    "truncado": false,
-   "bytes": 3991,
-   "sha256": "c1c316d705d973cccd4b4f3efe81da85b9c30bb717e30b19ddcf612437cf5733",
-   "url": "/api/v2/resultados/b-14-garantias-por-posicion-y-tipo-m-8f4af5.json"
+   "bytes": 4033,
+   "sha256": "d20a70e473de21df4a9a99ccbbe5834247aacf51db5e3e56cd8ee4270e16de7e",
+   "url": "/api/v2/resultados/b-14-garantias-por-posicion-y-tipo-m-d330f4.json"
   },
   {
    "id": "registros-tipo-6-por-periodo-y-archivo-143fa9",
