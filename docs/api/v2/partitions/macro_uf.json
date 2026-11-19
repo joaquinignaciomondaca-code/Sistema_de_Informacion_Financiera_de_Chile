@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_uf.parquet",
-   "bytes": 35592,
+   "bytes": 35596,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_uf.parquet",
    "periodo": "macro_uf",
-   "sha256": "ee8d532e23f92181e48cf75bb4d05aacd9a772e200f8862cf1c102c10d5d2066"
+   "sha256": "e08fd0ad5ef53215b0aa2ea3848ccc1cb251d9d19f44b71804b249aa9b95cffa"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 35592,
-  "filas": 4705
+  "bytes": 35596,
+  "filas": 4706
  },
  "version": "2.3.0"
 }

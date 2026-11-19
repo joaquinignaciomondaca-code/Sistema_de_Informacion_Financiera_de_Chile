@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_curva_bonos_pesos.parquet",
-   "bytes": 61602,
+   "bytes": 61601,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_curva_bonos_pesos.parquet",
    "periodo": "macro_curva_bonos_pesos",
-   "sha256": "66bf4e29cab66ceb245f516fe64570fa3fc862ee3d899813bd14a008c1adb595"
+   "sha256": "91bda7f9699458b07801f817a6e291a6247ef5f7f0209b4b307360301d355fca"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 61602,
-  "filas": 3190
+  "bytes": 61601,
+  "filas": 3191
  },
  "version": "2.3.0"
 }
