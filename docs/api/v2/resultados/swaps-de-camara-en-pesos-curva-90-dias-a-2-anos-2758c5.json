@@ -3,8 +3,8 @@
  "id": "swaps-de-camara-en-pesos-curva-90-dias-a-2-anos-2758c5",
  "titulo": "Swaps de cámara en pesos: curva 90 días a 2 años",
  "origen": "explorador",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-18.8a3ef28aaaf5",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "fecha",
@@ -17,22 +17,6 @@
  "filas": 30,
  "truncado": false,
  "datos": [
-  [
-   "2026-10-02",
-   4.55,
-   4.57751175508392,
-   4.71728948758443,
-   5.14727002651658,
-   0.953117577568796
-  ],
-  [
-   "2026-10-05",
-   4.55,
-   4.57751175508392,
-   4.72205962615657,
-   5.14727002651658,
-   1.04438000079947
-  ],
   [
    "2026-10-06",
    4.55,
@@ -256,6 +240,22 @@
    4.86982150142001,
    5.21321841512172,
    1.41958181530299
+  ],
+  [
+   "2026-11-16",
+   4.63,
+   4.70943072616681,
+   4.86029504390917,
+   5.22336437132978,
+   1.43986353679297
+  ],
+  [
+   "2026-11-17",
+   4.62,
+   4.69477733450674,
+   4.84123941379533,
+   5.19292654291506,
+   1.37901853901441
   ]
  ],
  "sql": "SELECT fecha, swap_camara_pesos_90_dias_pct, swap_camara_pesos_180_dias_pct, swap_camara_pesos_360_dias_pct, swap_camara_pesos_2_anos_pct, swap_camara_uf_1_ano_pct FROM macro_swaps_camara ORDER BY fecha DESC LIMIT 30;",

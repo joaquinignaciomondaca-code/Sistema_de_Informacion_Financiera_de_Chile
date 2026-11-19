@@ -76,16 +76,16 @@
   },
   {
    "archivo": "outputs/seguros/fondos_mutuos/2026.parquet",
-   "bytes": 179101,
+   "bytes": 195381,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2026.parquet",
    "periodo": "2026",
-   "sha256": "c680ff43e56ec7e4587613067db0b5cf6b9ac59d477825b4559798e249a619df"
+   "sha256": "a4da591a0d5099b07fb65176618a4d8be3d9279a7d67355c02ba96aab8b731a8"
   }
  ],
  "total": {
   "archivos": 11,
-  "bytes": 3058243,
-  "filas": 100472
+  "bytes": 3074523,
+  "filas": 101084
  },
  "version": "2.3.0"
 }

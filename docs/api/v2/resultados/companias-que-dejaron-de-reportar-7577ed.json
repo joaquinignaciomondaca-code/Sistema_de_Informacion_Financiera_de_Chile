@@ -3,8 +3,8 @@
  "id": "companias-que-dejaron-de-reportar-7577ed",
  "titulo": "Compañías que dejaron de reportar",
  "origen": "explorador",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-18.8a3ef28aaaf5",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "sector",
@@ -13,7 +13,7 @@
   "primer_periodo",
   "ultimo_periodo"
  ],
- "filas": 18,
+ "filas": 23,
  "truncado": false,
  "datos": [
   [
@@ -32,10 +32,24 @@
   ],
   [
    "generales",
+   "76598625",
+   "ASEGURADORA PORVENIR   S.A.",
+   "2016-11",
+   "2026-09"
+  ],
+  [
+   "generales",
    "76620816",
    "SEGCHILE SEGUROS GENERALES S.A.",
    "2017-01",
    "2021-09"
+  ],
+  [
+   "generales",
+   "76844788",
+   "SUAVAL COMPANIA DE SEGUROS DE GARANTIA Y CREDITOS S.A",
+   "2018-03",
+   "2026-09"
   ],
   [
    "generales",
@@ -109,6 +123,20 @@
   ],
   [
    "vida",
+   "96812960",
+   "PENTA VIDA",
+   "2016-11",
+   "2026-09"
+  ],
+  [
+   "vida",
+   "96837630",
+   "BNP PARIBAS CARDIF SEGUROS DE VIDA S.A",
+   "2016-11",
+   "2026-09"
+  ],
+  [
+   "vida",
    "96917990",
    "BANCHILE SEGUROS DE VIDA S.A.",
    "2016-11",
@@ -134,6 +162,13 @@
    "COMPA#IA DE SEGUROS DE VIDA HUELEN S.A.",
    "2016-11",
    "2022-12"
+  ],
+  [
+   "vida",
+   "99279000",
+   "EUROAMERICA SEGUROS DE VIDA S.A",
+   "2016-11",
+   "2026-09"
   ],
   [
    "vida",

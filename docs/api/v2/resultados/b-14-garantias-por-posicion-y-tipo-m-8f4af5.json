@@ -3,8 +3,8 @@
  "id": "b-14-garantias-por-posicion-y-tipo-m-8f4af5",
  "titulo": "B.14 Garantías por posición y tipo (M$)",
  "origen": "explorador",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-18.8a3ef28aaaf5",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "periodo",
@@ -17,39 +17,11 @@
  "truncado": false,
  "datos": [
   [
-   "2025-08",
-   "vida",
-   "CG",
-   "MI",
-   24349266
-  ],
-  [
-   "2025-08",
-   "vida",
-   "CG",
-   "MV",
-   220567881
-  ],
-  [
-   "2025-08",
-   "vida",
-   "RG",
-   "MV",
-   6149241927
-  ],
-  [
    "2025-09",
    "vida",
    "CG",
    "MI",
    28931523
-  ],
-  [
-   "2025-09",
-   "vida",
-   "CG",
-   "MV",
-   207032549
   ],
   [
    "2025-09",
@@ -365,6 +337,34 @@
    "RG",
    "MV",
    616301456
+  ],
+  [
+   "2026-10",
+   "generales",
+   "CG",
+   "MV",
+   1776861
+  ],
+  [
+   "2026-10",
+   "vida",
+   "CG",
+   "MI",
+   27478654
+  ],
+  [
+   "2026-10",
+   "vida",
+   "CG",
+   "MV",
+   151592049
+  ],
+  [
+   "2026-10",
+   "vida",
+   "RG",
+   "MV",
+   392008063
   ]
  ],
  "sql": "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC LIMIT 50;",

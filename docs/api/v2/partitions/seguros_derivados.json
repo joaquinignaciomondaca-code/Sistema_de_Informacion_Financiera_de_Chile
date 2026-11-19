@@ -76,16 +76,16 @@
   },
   {
    "archivo": "outputs/seguros/derivados/2026.parquet",
-   "bytes": 2086193,
+   "bytes": 2184949,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2026.parquet",
    "periodo": "2026",
-   "sha256": "1fed51676b0fb816dc254a28380b155e7e697d25fbd018349b13c8f34c89c1bf"
+   "sha256": "863dc6ff4b6d470471a95db17e7dd0324e59c1559fed567a407ae1ea11c9cfb5"
   }
  ],
  "total": {
   "archivos": 11,
-  "bytes": 13900098,
-  "filas": 373469
+  "bytes": 13998854,
+  "filas": 376201
  },
  "version": "2.3.0"
 }

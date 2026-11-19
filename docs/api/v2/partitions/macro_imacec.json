@@ -6,15 +6,15 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_imacec.parquet",
-   "bytes": 12346,
+   "bytes": 12349,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_imacec.parquet",
    "periodo": "macro_imacec",
-   "sha256": "0a1f0a40c93a13759d24495bbd4674f443670031ff636d57d9c1bf015877a100"
+   "sha256": "cf1ff83fb0205e87240d58948d802e73d6646cae4b00da5831fdcb596e2e3eeb"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 12346,
+  "bytes": 12349,
   "filas": 153
  },
  "version": "2.3.0"

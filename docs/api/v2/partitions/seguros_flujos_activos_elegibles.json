@@ -20,16 +20,16 @@
   },
   {
    "archivo": "outputs/seguros/flujos_activos_elegibles/2026.parquet",
-   "bytes": 64287,
+   "bytes": 68146,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/flujos_activos_elegibles/2026.parquet",
    "periodo": "2026",
-   "sha256": "e5d093903e661ead820e3d357cd785c209f518cd1f7c53bc78820eb655531b9a"
+   "sha256": "b5d99aed8dffd2e79088358f73cc6ab3e67416c09ad40ef9311ca8cf8468ee6c"
   }
  ],
  "total": {
   "archivos": 3,
-  "bytes": 176967,
-  "filas": 4369
+  "bytes": 180826,
+  "filas": 4518
  },
  "version": "2.3.0"
 }

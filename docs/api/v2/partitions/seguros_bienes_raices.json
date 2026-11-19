@@ -157,12 +157,19 @@
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-09.parquet",
    "periodo": "2026-09",
    "sha256": "0622029c36bbffaaba25802d33893e8a8da66e03c9bca0397b9139acbc18c066"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-10.parquet",
+   "bytes": 1098186,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-10.parquet",
+   "periodo": "2026-10",
+   "sha256": "52d52fe357d2bcddbb87a3a7334b48b58daf50938f3d2bae6d32aa2c9a51ee4d"
   }
  ],
  "total": {
-  "archivos": 22,
-  "bytes": 33571939,
-  "filas": 760152
+  "archivos": 23,
+  "bytes": 34670125,
+  "filas": 786342
  },
  "version": "2.3.0"
 }

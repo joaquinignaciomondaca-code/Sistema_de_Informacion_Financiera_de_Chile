@@ -76,16 +76,16 @@
   },
   {
    "archivo": "outputs/seguros/control_inversiones/2026.parquet",
-   "bytes": 141038,
+   "bytes": 154419,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2026.parquet",
    "periodo": "2026",
-   "sha256": "9cc961b37c2993054bc09701d18720b1380138cad52926af98f9747ba9dd089c"
+   "sha256": "8afb5118ed222487379ea2a024a79688cd3596432e0e765698b0f39651c26e34"
   }
  ],
  "total": {
   "archivos": 11,
-  "bytes": 1897106,
-  "filas": 111410
+  "bytes": 1910487,
+  "filas": 112233
  },
  "version": "2.3.0"
 }

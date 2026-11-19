@@ -3,8 +3,8 @@
  "id": "evolucion-de-la-inversion-en-acciones-por-sector-e3ef3e",
  "titulo": "Evolución de la inversión en acciones por sector (M$)",
  "origen": "explorador",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-18.8a3ef28aaaf5",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "periodo",
@@ -14,16 +14,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2025-10",
-   "generales",
-   140879646
-  ],
-  [
-   "2025-10",
-   "vida",
-   3473090932
-  ],
   [
    "2025-11",
    "generales",
@@ -133,6 +123,16 @@
    "2026-09",
    "vida",
    4017385583
+  ],
+  [
+   "2026-10",
+   "generales",
+   159012126
+  ],
+  [
+   "2026-10",
+   "vida",
+   2700006906
   ]
  ],
  "sql": "SELECT periodo, sector, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;",

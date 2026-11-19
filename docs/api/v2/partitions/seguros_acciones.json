@@ -76,16 +76,16 @@
   },
   {
    "archivo": "outputs/seguros/acciones/2026.parquet",
-   "bytes": 239918,
+   "bytes": 250342,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/acciones/2026.parquet",
    "periodo": "2026",
-   "sha256": "55094c6669c52a251c23ba9d2d9acda1346ff8176f75270978ac72510b847418"
+   "sha256": "7af21953809b6259e2c88b791b379ae5a46b6cf60f8fb46067eeef99717a28c1"
   }
  ],
  "total": {
   "archivos": 11,
-  "bytes": 2892559,
-  "filas": 109019
+  "bytes": 2902983,
+  "filas": 109806
  },
  "version": "2.3.0"
 }
