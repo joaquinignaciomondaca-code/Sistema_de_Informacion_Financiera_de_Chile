@@ -37,6 +37,7 @@ except Exception:  # pragma: no cover - entorno sin pyarrow
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from pipelines.api import fuentes as F  # noqa: E402
+from pipelines.api.vistas import ARCHIVO_VACIO  # noqa: E402
 DOCS = os.path.join(ROOT, "docs")
 DUCKDB_JS = os.path.join(DOCS, "js", "duckdb_client.js")
 VOCAB_JSON = os.path.join(DOCS, "vocabulario.json")
@@ -333,6 +334,12 @@ def build() -> dict:
 
         archivos = []
         for rel in files:
+            # El `_vacio.parquet` da esquema a una tabla que aún no reporta, pero no es
+            # una descarga: anunciarlo como archivo publicado convierte un objeto
+            # `vacio` en `publicado` con 0 filas y rompe la reconciliación con la API,
+            # que lo excluye por el mismo motivo (ver pipelines/api/vistas.py).
+            if os.path.basename(rel) == ARCHIVO_VACIO:
+                continue
             entrada = {"ruta": rel, "bytes": file_size(rel)}
             periodo = periodo_de_ruta(rel)
             if periodo:

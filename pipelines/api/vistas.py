@@ -110,8 +110,27 @@ def aliases_de(nombre: str, alias: dict[str, list[str]] | None = None) -> list[s
     return list((alias if alias is not None else alias_heredados()).get(nombre, []))
 
 
-def rutas_relativas(vista: dict) -> list[str]:
-    """Rutas de los Parquet del objeto, relativas a `docs/`."""
+#: Nombre del Parquet que un publicador deja cuando una tabla no tiene filas todavía
+#: (`seguros/scripts/actualizar_carteras.py`: préstamos y arriendos, que la CMF no
+#: entrega en los ZIP publicados). Lleva el esquema completo y cero filas para que la
+#: vista web exista y responda vacía.
+ARCHIVO_VACIO = "_vacio.parquet"
+
+
+def _rutas_de_manifiesto(vista: dict, incluir_vacio: bool) -> list[str]:
+    """Parquet del objeto según su manifiesto, con o sin el `_vacio.parquet`.
+
+    Los `_vacio.parquet` se excluyen a propósito. No son descargas: son el andamiaje
+    de esquema de una tabla que aún no reporta, y anunciarlos como partición publicada
+    cambia la semántica del catálogo. Hasta el 2026-11-19 este camino los devolvía, así
+    que al regenerar el contrato los cuatro objetos de préstamos y arriendos pasaban de
+    `vacio` a `publicado` **con 0 filas**: `reconciliacion.csv` perdía el motivo «la CMF
+    aún no entrega la tabla», `audit_pages_capacity` dejaba esos Parquet sin categoría,
+    los exportes `.completo.csv`/`.json` dejaban de generarse (con 0 filas no se
+    publican) y `test_fichas_candidatas` recibía una ficha con descarga de un archivo
+    que ninguna capa enlaza. El esquema sigue disponible por `rutas_sql_relativas`, que
+    es la que registra la vista SQL de esos objetos.
+    """
     if "file" in vista:
         ruta = DOCS / vista["file"]
         return [vista["file"]] if ruta.exists() else []
@@ -125,10 +144,21 @@ def rutas_relativas(vista: dict) -> list[str]:
         for archivo in datos.get("files", []):
             # el manifest puede traer rutas relativas a docs/ o a su carpeta
             rel = archivo if (DOCS / archivo).exists() else str(base / archivo)
-            if (DOCS / rel).exists():
-                fuera.append(Path(rel).as_posix())
+            if not (DOCS / rel).exists():
+                continue
+            if not incluir_vacio and Path(rel).name == ARCHIVO_VACIO:
+                continue
+            fuera.append(Path(rel).as_posix())
         return fuera
     return []
+
+
+def rutas_relativas(vista: dict) -> list[str]:
+    """Rutas de los Parquet **descargables** del objeto, relativas a `docs/`.
+
+    Ver `_rutas_de_manifiesto`: los `_vacio.parquet` no cuentan como descarga.
+    """
+    return _rutas_de_manifiesto(vista, incluir_vacio=False)
 
 
 def rutas_sql_relativas(vista: dict) -> list[str]:
@@ -170,7 +200,9 @@ def rutas_sql_relativas(vista: dict) -> list[str]:
         if ruta.is_absolute() or ".." in ruta.parts:
             return []
         return [ruta.as_posix()] if (DOCS / ruta).is_file() else []
-    return rutas_relativas(vista)
+    # Aquí sí se incluye el `_vacio.parquet`: la vista SQL de una tabla que aún no
+    # reporta tiene que existir y responder cero filas con su esquema.
+    return _rutas_de_manifiesto(vista, incluir_vacio=True)
 
 
 def ficheros_sql_de(vista: dict) -> list[str]:

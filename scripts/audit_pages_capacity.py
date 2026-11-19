@@ -66,8 +66,16 @@ def inventariar_parquet() -> tuple[dict[str, dict[str, int]], list[str]]:
         "api_v2_descargas": set(),
         "auxiliares_sql": set(),
         "manifiestos_separados": set(),
+        # `_vacio.parquet`: esquema sin filas de una tabla que la CMF aún no entrega
+        # (préstamos y arriendos de la Circular 1835). No es descarga ni vista SQL de
+        # datos, pero ocupa espacio publicado y tiene que estar inventariado. Sin esta
+        # categoría, cada regeneración del contrato dejaba cuatro Parquet huérfanos y
+        # la compuerta fallaba con «sin categoría explícita».
+        "esquemas_vacios": set(),
         "muestras_registros": set(MUESTRAS_CON_REFERENCIA),
     }
+    for ruta in sorted((DOCS / "outputs").rglob("_vacio.parquet")):
+        categorias["esquemas_vacios"].add(ruta.relative_to(DOCS).as_posix())
 
     for ruta in sorted((DOCS / "api" / "v2" / "partitions").glob("*.json")):
         try:
