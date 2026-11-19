@@ -160,7 +160,19 @@ def auditar_tabla_readme(
                 f"README.md: {etiqueta} declara {elementos} elementos/{filas} filas; "
                 f"el catálogo indica {esperado['elementos']}/{esperado['filas']}"
             )
+        # El corte se contrasta contra la serie que publica el propio catálogo: cuando el
+        # alcance del sector no trae `periodo`, `esperado["periodo"]` cae al de la API
+        # (`corte` de cada objeto). Antes se comparaba con las fechas escritas a mano en
+        # el README, así que un dato nuevo exigía reescribir la celda «Serie» a mano y
+        # `contrato_publicado` fallaba en bucle: el 2026-11-17 la cartera de seguros
+        # publicó 2026-10 y el README seguía diciendo 2026-09, con lo que la cadena no
+        # publicaba y `main` acumulaba 93 desalineaciones sin que nadie tocara el código.
+        # Ahora la celda se sincroniza igual que las cifras y esta compuerta solo
+        # confirma que lo escrito es lo que ya se publicó.
         periodo = esperado.get("periodo")
+        # La celda puede declarar varias series («Carteras … → …; EEFF … → …»). En ese
+        # caso basta con que el corte publicado aparezca en alguna: exigir una única
+        # fecha obligaría a borrar los matices del README para contentar a la compuerta.
         if clave != "macro" and periodo:
             for extremo in ("desde", "hasta"):
                 fecha = periodo.get(extremo)
@@ -804,11 +816,17 @@ def leer_artefactos() -> dict[str, Any]:
             i for i in elementos if not i.get("oculto") and i.get("clave") == clave
         ]
         conteo = cifras(items_sector)
+        # `periodo` faltaba aquí y era la causa de que la celda «Serie» del README
+        # nunca se pudiera sincronizar: `sincronizar_readme` lee por este camino, así
+        # que veía `None` y dejaba la celda congelada en el corte viejo. Desde el
+        # 2026-11-17 (cartera de seguros hasta 2026-10) eso frenaba toda la cadena
+        # del contrato y `main` acumulaba 93 desalineaciones sin tocar el código.
         por_sector[str(clave)] = {
             "etiqueta": info.get("corta") or info.get("etiqueta"),
             "elementos": conteo["elementos"],
             "filas": conteo["filas"],
             "bytes": conteo["bytes"],
+            "periodo": info.get("periodo"),
         }
     return {
         "fuentes": {
@@ -870,6 +888,21 @@ def sincronizar_readme(reporte: dict[str, Any]) -> list[str]:
                 rf"\g<1>{info['elementos']}\g<2>{fmt(info['filas'])}",
                 f"tabla sectorial · {nombre}",
             )
+            # Celda «Serie»: | Etiqueta | elementos | filas | desde → hasta | Fuente |
+            # Solo se reescribe cuando la celda declara exactamente un rango simple
+            # (`AAAA-MM → AAAA-MM`). Los sectores con varias series en la misma celda
+            # («Carteras … → …; EEFF … → …») se dejan intactos a propósito: ahí el rango
+            # no se puede derivar del alcance y reescribirlo borraría matices.
+            periodo = info.get("periodo")
+            if periodo and periodo.get("desde") and periodo.get("hasta"):
+                desde, hasta = periodo["desde"], periodo["hasta"]
+                cambiar(
+                    rf"(\|\s*{re.escape(nombre)}\s*\|\s*[\d.]+\s*\|\s*[\d.]+\s*\|\s*)"
+                    rf"(?:19|20)\d{{2}}-(?:0[1-9]|1[0-2])(\s*→\s*)"
+                    rf"(?:19|20)\d{{2}}-(?:0[1-9]|1[0-2])(\s*\|)",
+                    rf"\g<1>{desde}\g<2>{hasta}\g<3>",
+                    f"tabla sectorial · serie · {nombre}",
+                )
     descargas = reporte["fuentes"]["descargas"]
     principal, fuera, ocultos = (
         descargas["principal"],

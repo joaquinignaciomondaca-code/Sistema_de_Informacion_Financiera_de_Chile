@@ -8,11 +8,11 @@ import pytest
 from servidor.app import Limites, Motor, Ocupado, Timeout
 
 
-def test_consulta_real(motor):
+def test_consulta_real(motor, entidades_esperadas):
     r = motor.consultar("SELECT count(*) AS n FROM seguros_lista_entidades", 10)
     assert r["ok"] and r["class"] == "ok"
     assert r["columnas"] == ["n"]
-    assert r["datos"] == [[84]]
+    assert r["datos"] == [[entidades_esperadas]]
     assert r["data_release"]
 
 
