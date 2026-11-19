@@ -213,6 +213,10 @@ El **explorador jerárquico** organiza 15 sectores → carpetas temáticas → 9
 
 ### Verlo funcionando
 
+**Sin instalar nada:** [abrir el sistema publicado](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/) — el sitio completo corre en tu navegador, con SQL sobre los datos publicados.
+
+**En local**, para trabajar sobre el código o los datos:
+
 ```bash
 git clone https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile
 cd Sistema_de_Informacion_Financiera_de_Chile
