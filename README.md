@@ -5,7 +5,7 @@
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
-Extrae, valida y publica archivos financieros y series que las entidades reportan a la CMF, el Banco Central y la Superintendencia de Pensiones: **15 sectores, 90 objetos y más de 19 millones de filas** desde enero de 2001. El catálogo institucional de cajas de compensación conserva además un universo inicial construido a partir de listados de SUSESO y del Registro de Valores de la CMF, con altas posteriores desde los TXT IFRS de la CMF. No hay backend propio de consultas ni base de datos central: el sitio y los datos se sirven como archivos estáticos, y DuckDB-Wasm ejecuta SQL en el navegador.
+Extrae, valida y publica archivos financieros y series que las entidades reportan a la CMF, el Banco Central y la Superintendencia de Pensiones: **15 sectores, 90 objetos y más de 20 millones de filas** desde enero de 2001. El catálogo institucional de cajas de compensación conserva además un universo inicial construido a partir de listados de SUSESO y del Registro de Valores de la CMF, con altas posteriores desde los TXT IFRS de la CMF. No hay backend propio de consultas ni base de datos central: el sitio y los datos se sirven como archivos estáticos, y DuckDB-Wasm ejecuta SQL en el navegador.
 
 **En la web, el foco es la inversión institucional:** seguros, fondos mutuos y fondos de inversión (**40 elementos del núcleo**, más de 17 millones de filas, 2001 → 2026), con bancos, AGF y corredoras como instituciones y las series del Banco Central como contexto. El catálogo de descargas sitúa **74 elementos** en los niveles visibles (40 núcleo, 10 instituciones, 24 contexto); **15** quedan fuera del foco —archivo y registros— y **1** objeto sin filas se conserva oculto. Una variante de la lista de corredoras se cuenta como elemento, pero se presenta junto a la lista base. Todo sigue publicado y disponible en el catálogo de descargas; el criterio editorial se explica en el [alcance de la edición](archive/notas/recorte_visual_industrias_2026-10-20.md).
 
@@ -24,7 +24,7 @@ Extrae, valida y publica archivos financieros y series que las entidades reporta
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-09 |
 | Sectores del catálogo | **15**; fuentes directas: CMF, Banco Central y SPensiones. El padrón CCAF conserva procedencia histórica de SUSESO |
-| Objetos publicados | **90** (86 con archivo, 85 con filas) · más de 19 millones de filas · **≈488 MB** en 728 archivos referenciados por el catálogo |
+| Objetos publicados | **90** (86 con archivo, 85 con filas) · más de 20 millones de filas · **≈488 MB** en 728 archivos referenciados por el catálogo |
 | Consultas sugeridas listas para usar | **159** |
 | Actualización | **20 workflows** en GitHub Actions (18 con horario; 2 sin `schedule`) |
 | Verificación | Auditorías de datos, interfaz, privacidad, automatización y pruebas unitarias en CI |
@@ -327,7 +327,7 @@ flowchart LR
     end
 
     subgraph Publicado["Datos publicados · archivos estáticos"]
-        PQ["docs/outputs/sector/*.parquet · ≈488 MB, más de 19 M filas"]
+        PQ["docs/outputs/sector/*.parquet · ≈488 MB, más de 20 M filas"]
         MAN["data_manifest.json · 89 entradas ETL"]
         API["docs/api/v2/ · contrato estático y views.sql"]
     end

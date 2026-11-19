@@ -689,7 +689,8 @@ setTimeout(async () => {
   check("el alcance completo queda disponible en detalles plegados y sólo enumera lo publicado",
     alcanceDetalle.closest("details").open === false && lineasAlcance.length === 3 &&
     !/no incluye|no se publica|no publicó|no publica/i.test(textoAlcance) &&
-    /más de 19 millones/.test(document.querySelector("#info-alcance .info-scope-foot").textContent),
+    document.querySelector("#info-alcance .info-scope-foot").textContent
+      .includes(window.SIFAlcance.millones(window.DOWNLOAD_CATALOG.alcance.visible.filas)),
     textoAlcance.slice(0, 80));
 
   const archivoNav = document.querySelector("#sidebar-tree .tree-archive");
@@ -1118,11 +1119,22 @@ setTimeout(async () => {
   check("portada: la advertencia detallada de filas repetidas no desplaza la navegación",
     !infoPortada.querySelector(".info-calidad") && !/LO QUE LA FUENTE REPITE/.test(infoPortada.textContent));
   const sumar = document.getElementById("guia-como-sumar");
+  // Las cifras de repetición se miden en cada corte: no se fijan aquí, se
+  // contrastan con el mismo `ESTADO_CLAVES` que las pinta en la página. Un
+  // literal («230.288») daba por buena una cifra que el dato ya no respalda.
+  const clavesCalidad = window.ESTADO_CLAVES || { resumen: {}, objetos: {} };
+  const resumenCalidad = clavesCalidad.resumen || {};
+  const peorCalidad = Object.keys(clavesCalidad.objetos || {})
+    .map((id) => ({ id, sobrantes: Number(clavesCalidad.objetos[id].sobrantes) || 0 }))
+    .filter((o) => o.sobrantes > 0)
+    .sort((a, b) => b.sobrantes - a.sobrantes)[0] || null;
   check("calidad: la Guía conserva las cifras medidas y el ejemplo",
     Boolean(sumar.querySelector('[data-calidad="repetidas"]'))
-    && /230\.288/.test(sumar.textContent)
-    && /22 de 90/.test(sumar.textContent)
-    && /ffmm_cartera_nacional/.test(sumar.textContent));
+    && Boolean(resumenCalidad.filas_repetidas) && Boolean(peorCalidad)
+    && sumar.textContent.includes(window.SIFAlcance.numero(resumenCalidad.filas_repetidas))
+    && sumar.textContent.includes(`${resumenCalidad.con_repetidas} de ${resumenCalidad.objetos}`)
+    && sumar.textContent.includes(peorCalidad.id),
+    resumenCalidad.filas_repetidas ? `medido: ${resumenCalidad.filas_repetidas}` : "sin medición");
   check("calidad: la Guía mantiene la consulta y la nota de criterio reproducible",
     Boolean(sumar.querySelector("[data-calidad-sql]"))
     && /claves_duplicados/.test(sumar.querySelector('a[href*="claves_duplicados"]').getAttribute("href")));
