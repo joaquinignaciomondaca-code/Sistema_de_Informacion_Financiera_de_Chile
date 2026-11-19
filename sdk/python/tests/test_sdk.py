@@ -15,6 +15,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import pyarrow.parquet
+
 import sif_chile
 from sif_chile import guardia
 
@@ -87,7 +89,10 @@ class Datos(unittest.TestCase):
 
     def test_limite_no_cambia_el_resultado_solo_lo_corta(self):
         completo = self.sif.sql("SELECT count(*) FROM seguros_lista_entidades").fetchone()[0]
-        self.assertEqual(completo, 84)
+        # El conteo se toma del Parquet publicado: un alta de la CMF no es una regresión.
+        real = pyarrow.parquet.ParquetFile(
+            DOCS / "outputs" / "seguros" / "aseguradoras.parquet").metadata.num_rows
+        self.assertEqual(completo, real)
         self.assertEqual(len(self.sif.sql("SELECT * FROM seguros_lista_entidades", limite=3).fetchall()), 3)
 
     def test_descarga_verifica_el_hash(self):

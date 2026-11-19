@@ -11,6 +11,8 @@ import os
 import unittest
 from pathlib import Path
 
+import pyarrow.parquet
+
 from sif_chile import agente
 
 DOCS = Path(__file__).resolve().parents[3] / "docs"
@@ -72,7 +74,11 @@ class Agente(unittest.TestCase):
     def test_ejecutar_devuelve_columnas_y_filas(self):
         resultado = self.ejecutar("SELECT count(*) AS n FROM seguros_lista_entidades")
         self.assertEqual(resultado["columnas"], ["n"])
-        self.assertEqual(resultado["datos"], [[84]])
+        # La lista crece con cada alta de la CMF (85 desde el 2026-11-17): la prueba
+        # vigila que `ejecutar` devuelva el conteo del Parquet, no una constante.
+        real = pyarrow.parquet.ParquetFile(
+            DOCS / "outputs" / "seguros" / "aseguradoras.parquet").metadata.num_rows
+        self.assertEqual(resultado["datos"], [[real]])
         self.assertFalse(resultado["truncado"])
 
     def test_ejecutar_trunca_y_lo_dice(self):
