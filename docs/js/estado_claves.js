@@ -1,9 +1,9 @@
 // GENERADO por scripts/build_estado_claves.py — no editar a mano.
 // Fuente: docs/api/claves.csv, medido sobre todas las filas publicadas.
-// data_release: 2026-11-16.862539b4ee5f
+// data_release: 2026-11-19.c53b9ac5fb29
 window.ESTADO_CLAVES = {
- "generado": "2026-11-17",
- "data_release": "2026-11-16.862539b4ee5f",
+ "generado": "2026-11-19",
+ "data_release": "2026-11-19.c53b9ac5fb29",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,
@@ -13,7 +13,7 @@ window.ESTADO_CLAVES = {
   "sin_datos": 5,
   "sin_verificar": 0,
   "con_repetidas": 22,
-  "filas_repetidas": 230288
+  "filas_repetidas": 230434
  },
  "objetos": {
   "afp_lista_entidades": {
@@ -556,8 +556,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_cobre": {
    "estado": "ok",
-   "filas": 3278,
-   "distintas": 3278,
+   "filas": 3281,
+   "distintas": 3281,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -565,22 +565,9 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.278 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.281 filas."
   },
   "macro_curva_bonos_pesos": {
-   "estado": "ok",
-   "filas": 3189,
-   "distintas": 3189,
-   "sobrantes": 0,
-   "pct_repetidas": 0.0,
-   "columnas": [
-    "fecha"
-   ],
-   "declarada": true,
-   "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.189 filas."
-  },
-  "macro_curva_bonos_uf": {
    "estado": "ok",
    "filas": 3191,
    "distintas": 3191,
@@ -592,6 +579,19 @@ window.ESTADO_CLAVES = {
    "declarada": true,
    "tipo_clave": "identifica",
    "texto": "Clave verificada: fecha — única sobre 3.191 filas."
+  },
+  "macro_curva_bonos_uf": {
+   "estado": "ok",
+   "filas": 3194,
+   "distintas": 3194,
+   "sobrantes": 0,
+   "pct_repetidas": 0.0,
+   "columnas": [
+    "fecha"
+   ],
+   "declarada": true,
+   "tipo_clave": "identifica",
+   "texto": "Clave verificada: fecha — única sobre 3.194 filas."
   },
   "macro_deuda_publica_pct_pib": {
    "estado": "ok",
@@ -608,8 +608,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_dolar_observado": {
    "estado": "ok",
-   "filas": 3206,
-   "distintas": 3206,
+   "filas": 3209,
+   "distintas": 3209,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -617,12 +617,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.206 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.209 filas."
   },
   "macro_euro_observado": {
    "estado": "ok",
-   "filas": 3206,
-   "distintas": 3206,
+   "filas": 3209,
+   "distintas": 3209,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -630,7 +630,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.206 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.209 filas."
   },
   "macro_expectativas_inflacion": {
    "estado": "ok",
@@ -686,8 +686,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_inflacion_implicita": {
    "estado": "ok",
-   "filas": 3095,
-   "distintas": 3095,
+   "filas": 3097,
+   "distintas": 3097,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -695,7 +695,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.095 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.097 filas."
   },
   "macro_inflacion_ipc": {
    "estado": "ok",
@@ -725,8 +725,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_metales_preciosos": {
    "estado": "ok",
-   "filas": 3206,
-   "distintas": 3206,
+   "filas": 3209,
+   "distintas": 3209,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -734,12 +734,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.206 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.209 filas."
   },
   "macro_pib_trimestral": {
    "estado": "ok",
-   "filas": 50,
-   "distintas": 50,
+   "filas": 51,
+   "distintas": 51,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -747,7 +747,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 50 filas."
+   "texto": "Clave verificada: fecha — única sobre 51 filas."
   },
   "macro_reservas_internacionales": {
    "estado": "ok",
@@ -777,8 +777,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_swaps_camara": {
    "estado": "ok",
-   "filas": 3220,
-   "distintas": 3220,
+   "filas": 3223,
+   "distintas": 3223,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -786,12 +786,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.220 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.223 filas."
   },
   "macro_tasa_referencia_fed": {
    "estado": "ok",
-   "filas": 3343,
-   "distintas": 3343,
+   "filas": 3348,
+   "distintas": 3348,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -799,12 +799,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.343 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.348 filas."
   },
   "macro_tasas_corto_plazo": {
    "estado": "ok",
-   "filas": 3207,
-   "distintas": 3207,
+   "filas": 3210,
+   "distintas": 3210,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -812,12 +812,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.207 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.210 filas."
   },
   "macro_tipo_cambio_multilateral": {
    "estado": "ok",
-   "filas": 3206,
-   "distintas": 3206,
+   "filas": 3209,
+   "distintas": 3209,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -825,7 +825,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 3.206 filas."
+   "texto": "Clave verificada: fecha — única sobre 3.209 filas."
   },
   "macro_tipo_cambio_real": {
    "estado": "ok",
@@ -842,8 +842,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_uf": {
    "estado": "ok",
-   "filas": 4703,
-   "distintas": 4703,
+   "filas": 4706,
+   "distintas": 4706,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -851,7 +851,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 4.703 filas."
+   "texto": "Clave verificada: fecha — única sobre 4.706 filas."
   },
   "macro_utm": {
    "estado": "ok",
@@ -954,33 +954,33 @@ window.ESTADO_CLAVES = {
   },
   "seguros_acciones": {
    "estado": "sin_clave",
-   "filas": 109019,
-   "distintas": 109015,
+   "filas": 109806,
+   "distintas": 109802,
    "sobrantes": 4,
-   "pct_repetidas": 0.0037,
+   "pct_repetidas": 0.0036,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 4 filas idénticas (0,004 % de 109.019). No sumes sin agrupar."
+   "texto": "Sin clave: publica 4 filas idénticas (0,004 % de 109.806). No sumes sin agrupar."
   },
   "seguros_acciones_relevantes": {
    "estado": "sin_clave",
-   "filas": 109019,
-   "distintas": 109015,
+   "filas": 109806,
+   "distintas": 109802,
    "sobrantes": 4,
-   "pct_repetidas": 0.0037,
+   "pct_repetidas": 0.0036,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 4 filas idénticas (0,004 % de 109.019). No sumes sin agrupar."
+   "texto": "Sin clave: publica 4 filas idénticas (0,004 % de 109.806). No sumes sin agrupar."
   },
   "seguros_bienes_raices": {
    "estado": "sin_clave",
-   "filas": 760152,
-   "distintas": 760016,
-   "sobrantes": 136,
-   "pct_repetidas": 0.0179,
+   "filas": 786342,
+   "distintas": 786192,
+   "sobrantes": 150,
+   "pct_repetidas": 0.0191,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 136 filas idénticas (0,018 % de 760.152). No sumes sin agrupar."
+   "texto": "Sin clave: publica 150 filas idénticas (0,019 % de 786.342). No sumes sin agrupar."
   },
   "seguros_bienes_raices_arriendo_morosidad": {
    "estado": "sin_datos",
@@ -1004,75 +1004,75 @@ window.ESTADO_CLAVES = {
   },
   "seguros_bienes_raices_relevantes": {
    "estado": "sin_clave",
-   "filas": 760152,
-   "distintas": 760014,
-   "sobrantes": 138,
-   "pct_repetidas": 0.0182,
+   "filas": 786342,
+   "distintas": 786190,
+   "sobrantes": 152,
+   "pct_repetidas": 0.0193,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 138 filas idénticas (0,018 % de 760.152). No sumes sin agrupar."
+   "texto": "Sin clave: publica 152 filas idénticas (0,019 % de 786.342). No sumes sin agrupar."
   },
   "seguros_control_inversiones": {
    "estado": "sin_clave",
-   "filas": 111410,
-   "distintas": 111386,
+   "filas": 112233,
+   "distintas": 112209,
    "sobrantes": 24,
-   "pct_repetidas": 0.0215,
+   "pct_repetidas": 0.0214,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 24 filas idénticas (0,021 % de 111.410). No sumes sin agrupar."
+   "texto": "Sin clave: publica 24 filas idénticas (0,021 % de 112.233). No sumes sin agrupar."
   },
   "seguros_derivados": {
    "estado": "sin_clave",
-   "filas": 373469,
-   "distintas": 372698,
+   "filas": 376201,
+   "distintas": 375430,
    "sobrantes": 771,
-   "pct_repetidas": 0.2064,
+   "pct_repetidas": 0.2049,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 771 filas idénticas (0,2 % de 373.469). No sumes sin agrupar."
+   "texto": "Sin clave: publica 771 filas idénticas (0,2 % de 376.201). No sumes sin agrupar."
   },
   "seguros_derivados_relevantes": {
    "estado": "sin_clave",
-   "filas": 373469,
-   "distintas": 361540,
+   "filas": 376201,
+   "distintas": 364272,
    "sobrantes": 11929,
-   "pct_repetidas": 3.1941,
+   "pct_repetidas": 3.1709,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 11.929 filas idénticas (3,2 % de 373.469). No sumes sin agrupar."
+   "texto": "Sin clave: publica 11.929 filas idénticas (3,2 % de 376.201). No sumes sin agrupar."
   },
   "seguros_extranjeros": {
    "estado": "sin_clave",
-   "filas": 471942,
-   "distintas": 471329,
-   "sobrantes": 613,
-   "pct_repetidas": 0.1299,
+   "filas": 475353,
+   "distintas": 474739,
+   "sobrantes": 614,
+   "pct_repetidas": 0.1292,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 613 filas idénticas (0,1 % de 471.942). No sumes sin agrupar."
+   "texto": "Sin clave: publica 614 filas idénticas (0,1 % de 475.353). No sumes sin agrupar."
   },
   "seguros_extranjeros_relevantes": {
    "estado": "sin_clave",
-   "filas": 471670,
-   "distintas": 464268,
-   "sobrantes": 7402,
-   "pct_repetidas": 1.5693,
+   "filas": 475081,
+   "distintas": 467562,
+   "sobrantes": 7519,
+   "pct_repetidas": 1.5827,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 7.402 filas idénticas (1,6 % de 471.670). No sumes sin agrupar. En 2026, sumar `deterioro_m_clp` sin agrupar sobreestima 9,7 %.",
+   "texto": "Sin clave: publica 7.519 filas idénticas (1,6 % de 475.081). No sumes sin agrupar. En 2026, sumar `deterioro_m_clp` sin agrupar sobreestima 9,9 %.",
    "ejemplo": {
     "columna": "deterioro_m_clp",
-    "con_repetidas": 673491653,
-    "sin_repetidas": 613913920,
-    "pct": 9.7,
+    "con_repetidas": 741580979,
+    "sin_repetidas": 674638622,
+    "pct": 9.92,
     "periodo": "2026"
    }
   },
   "seguros_flujos_activos_elegibles": {
    "estado": "propuesta",
-   "filas": 4369,
-   "distintas": 4369,
+   "filas": 4518,
+   "distintas": 4518,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -1091,32 +1091,32 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "medidas",
-   "texto": "Clave propuesta: 12 columnas, única sobre 4.369 filas. No estaba declarada: se midió sobre los datos publicados. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "texto": "Clave propuesta: 12 columnas, única sobre 4.518 filas. No estaba declarada: se midió sobre los datos publicados. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
   },
   "seguros_fondos_mutuos": {
    "estado": "sin_clave",
-   "filas": 100472,
-   "distintas": 100466,
+   "filas": 101084,
+   "distintas": 101078,
    "sobrantes": 6,
-   "pct_repetidas": 0.006,
+   "pct_repetidas": 0.0059,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 6 filas idénticas (0,006 % de 100.472). No sumes sin agrupar."
+   "texto": "Sin clave: publica 6 filas idénticas (0,006 % de 101.084). No sumes sin agrupar."
   },
   "seguros_garantias_derivados": {
    "estado": "sin_clave",
-   "filas": 6518,
-   "distintas": 6515,
+   "filas": 6733,
+   "distintas": 6730,
    "sobrantes": 3,
-   "pct_repetidas": 0.046,
+   "pct_repetidas": 0.0446,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 3 filas idénticas (0,046 % de 6.518). No sumes sin agrupar."
+   "texto": "Sin clave: publica 3 filas idénticas (0,045 % de 6.733). No sumes sin agrupar."
   },
   "seguros_lista_entidades": {
    "estado": "ok",
-   "filas": 84,
-   "distintas": 84,
+   "filas": 85,
+   "distintas": 85,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -1125,27 +1125,27 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: sector + rut_aseguradora — única sobre 84 filas."
+   "texto": "Clave verificada: sector + rut_aseguradora — única sobre 85 filas."
   },
   "seguros_otras_inversiones": {
    "estado": "sin_clave",
-   "filas": 42494,
-   "distintas": 42218,
+   "filas": 44296,
+   "distintas": 44020,
    "sobrantes": 276,
-   "pct_repetidas": 0.6495,
+   "pct_repetidas": 0.6231,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 276 filas idénticas (0,6 % de 42.494). No sumes sin agrupar."
+   "texto": "Sin clave: publica 276 filas idénticas (0,6 % de 44.296). No sumes sin agrupar."
   },
   "seguros_pactos": {
    "estado": "sin_clave",
-   "filas": 11371,
-   "distintas": 11279,
+   "filas": 11556,
+   "distintas": 11464,
    "sobrantes": 92,
-   "pct_repetidas": 0.8091,
+   "pct_repetidas": 0.7961,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 92 filas idénticas (0,8 % de 11.371). No sumes sin agrupar."
+   "texto": "Sin clave: publica 92 filas idénticas (0,8 % de 11.556). No sumes sin agrupar."
   },
   "seguros_prestamos": {
    "estado": "sin_datos",
@@ -1169,8 +1169,8 @@ window.ESTADO_CLAVES = {
   },
   "seguros_registros_tipo6": {
    "estado": "propuesta",
-   "filas": 66,
-   "distintas": 66,
+   "filas": 67,
+   "distintas": 67,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -1178,12 +1178,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 1 columnas, única sobre 66 filas. No estaba declarada: se midió sobre los datos publicados."
+   "texto": "Clave propuesta: 1 columnas, única sobre 67 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "seguros_renta_fija": {
    "estado": "propuesta",
-   "filas": 2321911,
-   "distintas": 2321911,
+   "filas": 2411077,
+   "distintas": 2411077,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -1205,12 +1205,12 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "medidas",
-   "texto": "Clave propuesta: 15 columnas, única sobre 2.321.911 filas. No estaba declarada: se midió sobre los datos publicados. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "texto": "Clave propuesta: 15 columnas, única sobre 2.411.077 filas. No estaba declarada: se midió sobre los datos publicados. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
   },
   "seguros_renta_fija_relevante": {
    "estado": "propuesta",
-   "filas": 2321911,
-   "distintas": 2321911,
+   "filas": 2411077,
+   "distintas": 2411077,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -1230,22 +1230,22 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 13 columnas, única sobre 2.321.911 filas. No estaba declarada: se midió sobre los datos publicados."
+   "texto": "Clave propuesta: 13 columnas, única sobre 2.411.077 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "seguros_tablas_desarrollo": {
    "estado": "sin_clave",
-   "filas": 2193981,
-   "distintas": 2186937,
+   "filas": 2197117,
+   "distintas": 2190073,
    "sobrantes": 7044,
-   "pct_repetidas": 0.3211,
+   "pct_repetidas": 0.3206,
    "columnas": [],
    "declarada": false,
-   "texto": "Sin clave: publica 7.044 filas idénticas (0,3 % de 2.193.981). No sumes sin agrupar."
+   "texto": "Sin clave: publica 7.044 filas idénticas (0,3 % de 2.197.117). No sumes sin agrupar."
   },
   "seguros_tablas_descriptores": {
    "estado": "propuesta",
-   "filas": 9792,
-   "distintas": 9792,
+   "filas": 9832,
+   "distintas": 9832,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -1261,7 +1261,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 9 columnas, única sobre 9.792 filas. No estaba declarada: se midió sobre los datos publicados."
+   "texto": "Clave propuesta: 9 columnas, única sobre 9.832 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "sistemas_pago_lista_entidades": {
    "estado": "ok",

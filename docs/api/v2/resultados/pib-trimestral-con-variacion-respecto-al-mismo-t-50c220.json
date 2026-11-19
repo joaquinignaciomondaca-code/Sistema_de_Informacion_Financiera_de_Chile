@@ -3,8 +3,8 @@
  "id": "pib-trimestral-con-variacion-respecto-al-mismo-t-50c220",
  "titulo": "PIB trimestral con variación respecto al mismo trimestre del año anterior",
  "origen": "explorador",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-19.c53b9ac5fb29",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "periodo",
@@ -14,11 +14,6 @@
  "filas": 20,
  "truncado": false,
  "datos": [
-  [
-   "2021-07",
-   49073.008855048,
-   16.24
-  ],
   [
    "2021-10",
    54330.435499408,
@@ -106,13 +101,18 @@
   ],
   [
    "2026-01",
-   53040.1206256171,
-   -0.32
+   53011.940066919,
+   -0.38
   ],
   [
    "2026-04",
-   53210.5539973709,
-   -0.19
+   53323.9036042146,
+   0.03
+  ],
+  [
+   "2026-07",
+   51309.7521565613,
+   -1.09
   ]
  ],
  "sql": "SELECT periodo, pib_encadenado_miles_mm_clp, round((pib_encadenado_miles_mm_clp / lag(pib_encadenado_miles_mm_clp, 4) OVER (ORDER BY periodo) - 1) * 100, 2) AS pib_var_anual_pct FROM macro_pib_trimestral ORDER BY periodo DESC LIMIT 20;",

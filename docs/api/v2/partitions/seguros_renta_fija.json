@@ -157,12 +157,19 @@
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-09.parquet",
    "periodo": "2026-09",
    "sha256": "d0aea4fa655894069f2251e334883b049d7588268af4d1f3bf7ff6f868de36bd"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-10.parquet",
+   "bytes": 9314495,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-10.parquet",
+   "periodo": "2026-10",
+   "sha256": "6bd6c1cdba2f84524a463ab11cae8ecf5f97712e1496aafdb6d31a79b798d654"
   }
  ],
  "total": {
-  "archivos": 22,
-  "bytes": 231963882,
-  "filas": 2321911
+  "archivos": 23,
+  "bytes": 241278377,
+  "filas": 2411077
  },
  "version": "2.3.0"
 }

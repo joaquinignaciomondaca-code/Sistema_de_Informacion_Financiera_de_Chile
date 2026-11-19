@@ -663,10 +663,17 @@ class DuckDBClient {
         if (!latest) throw new Error(`No hay una partición para el último período de ${view.name}`);
         files = [latest.file];
       } else {
-        files = manifest.files;
-        if (!Array.isArray(files) || files.length === 0) {
+        // `_vacio.parquet` da esquema a una tabla que la fuente aún no entrega
+        // (préstamos y arriendos de la Circular 1835), pero no es una partición
+        // publicada. Si se cuenta como archivo, la vista se registra con 0 filas y
+        // el usuario ve una tabla vacía en vez del aviso «no hay particiones
+        // publicadas», que es lo que `audit_duckdb_client.js` exige y lo que la
+        // ficha del objeto declara.
+        files = (Array.isArray(manifest.files) ? manifest.files : [])
+          .filter((file) => typeof file !== "string" || !file.endsWith("/_vacio.parquet"));
+        if (files.length === 0) {
           const error = new Error(`No hay particiones publicadas para ${view.name}`);
-          if (Array.isArray(files) && files.length === 0 && manifest.total_records === 0) error.code = "NO_PUBLISHED_DATA";
+          if (manifest.total_records === 0) error.code = "NO_PUBLISHED_DATA";
           throw error;
         }
       }

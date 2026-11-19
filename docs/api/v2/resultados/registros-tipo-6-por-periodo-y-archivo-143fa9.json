@@ -3,8 +3,8 @@
  "id": "registros-tipo-6-por-periodo-y-archivo-143fa9",
  "titulo": "Registros tipo 6 por periodo y archivo",
  "origen": "explorador",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-19.c53b9ac5fb29",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "periodo",
@@ -14,7 +14,7 @@
   "largo_minimo",
   "largo_maximo"
  ],
- "filas": 44,
+ "filas": 45,
  "truncado": false,
  "datos": [
   [
@@ -366,6 +366,14 @@
    "B.14",
    "generales",
    2,
+   300,
+   300
+  ],
+  [
+   "2026-10",
+   "B.14",
+   "generales",
+   1,
    300,
    300
   ]

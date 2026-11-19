@@ -3,8 +3,8 @@
  "id": "acciones-en-seguros-4057a4",
  "titulo": "Acciones en seguros",
  "origen": "terminal",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-19.c53b9ac5fb29",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "nemotecnico",
@@ -15,54 +15,54 @@
  "truncado": false,
  "datos": [
   [
-   "CFIADCSU-E",
-   4,
-   68525284
-  ],
-  [
    "CFIAINFA-E",
-   3,
-   80319010
+   2,
+   54650400
   ],
   [
-   "CFIAMRCI-E",
-   5,
-   73991751
+   "CFIAMRCP-E",
+   3,
+   54833030
   ],
   [
    "CFIARR",
-   14,
-   232537909
+   12,
+   183081479
   ],
   [
    "CFICLI3A-E",
-   4,
-   74015746
+   3,
+   61613781
   ],
   [
    "CFIFTIAA-E",
-   5,
-   129656948
+   3,
+   51214113
   ],
   [
-   "CFINFGLB-E",
+   "CFILCPII-E",
+   4,
+   51208447
+  ],
+  [
+   "CFINCIMENT",
    3,
-   80148281
+   55603734
   ],
   [
    "CFINRENTAS",
    8,
-   74192358
+   74249875
   ],
   [
    "CFIPIONERO",
-   5,
-   115049458
+   4,
+   109503708
   ],
   [
    "QUINENCO",
-   6,
-   149616757
+   5,
+   141054985
   ]
  ],
  "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",

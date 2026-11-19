@@ -1,5 +1,5 @@
 {
- "created": "2026-11-16T00:00:00",
+ "created": "2026-11-19T00:00:00",
  "description": "Datos financieros chilenos normalizados a Parquet desde fuentes públicas (CMF y Banco Central de Chile, entre otras), con esquema verificado y claves comprobadas sobre todas las filas publicadas.",
  "homepage": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile",
  "licenses": [
@@ -9246,10 +9246,10 @@
    "title": "fintech.rpsf_maestro"
   },
   {
-   "bytes": 33314,
+   "bytes": 33358,
    "description": "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes).",
    "format": "parquet",
-   "hash": "09c1f95722a56a38a0c874423858d7b00f8f756ab9c9516b21ac06d5ef3ac027",
+   "hash": "7b28f2f2959fefd355b25a2271cdb6a7090f34594a42ce66edcb83a5e9d9bfc9",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9300,11 +9300,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-11-16",
+    "corte": "2014-01-01 a 2026-11-19",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3278,
+    "filas": 3281,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_cobre",
@@ -9312,16 +9312,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 33314,
-      "filas": 3278,
+      "bytes": 33358,
+      "filas": 3281,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_cobre.parquet",
-      "sha256": "b19c3aa0d5068d628287bb8cb39db8fb241536775c0a191f1e7e52cbb03c1444"
+      "sha256": "712730b89ac2d34a3b0936d9cef179b89429d64d2534683c583cab6b571387c7"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_cobre",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9336,10 +9336,10 @@
    "title": "macro.cobre"
   },
   {
-   "bytes": 61600,
+   "bytes": 61601,
    "description": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años.",
    "format": "parquet",
-   "hash": "6fe7a3e3737cfceb0ee842e6ba7a31d9d2e0f2c65341fda45013837cc63b4ce8",
+   "hash": "3d9940934fc0bbc06fd7bff8d55411216f42114bda39c50d831d7c9228f52851",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9396,11 +9396,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-12",
+    "corte": "2014-01-02 a 2026-11-17",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3189,
+    "filas": 3191,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_curva_bonos_pesos",
@@ -9408,16 +9408,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 61600,
-      "filas": 3189,
+      "bytes": 61601,
+      "filas": 3191,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_curva_bonos_pesos.parquet",
-      "sha256": "7d50c7f828709bb348c79365ab36fa7a0c540509daac848d71119eb3aab18cb8"
+      "sha256": "91bda7f9699458b07801f817a6e291a6247ef5f7f0209b4b307360301d355fca"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_curva_bonos_pesos",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9432,10 +9432,10 @@
    "title": "macro.curva_bonos_pesos"
   },
   {
-   "bytes": 94333,
+   "bytes": 94366,
    "description": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años.",
    "format": "parquet",
-   "hash": "3f76c54e9a73016f93a4431a2430e92154645918e964840ef4686dc86261d68b",
+   "hash": "8f4e93b29b2bbe203a4d0ad70ef73feb36950e4f06cb40743d6d20f0958d3f91",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9510,11 +9510,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-12",
+    "corte": "2014-01-02 a 2026-11-17",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3191,
+    "filas": 3194,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_curva_bonos_uf",
@@ -9522,16 +9522,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 94333,
-      "filas": 3191,
+      "bytes": 94366,
+      "filas": 3194,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_curva_bonos_uf.parquet",
-      "sha256": "b51923291f55f99f5bfabb5e6d8c7f4de877506e43a38df37a5e7d481535d3c6"
+      "sha256": "a7915e8945d053c27ac972a0b4579762a0fc7ba6cb2acbf1d2595358e4b8b2f7"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_curva_bonos_uf",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9615,7 +9615,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_deuda_publica_pct_pib",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9630,10 +9630,10 @@
    "title": "macro.deuda_publica_pct_pib"
   },
   {
-   "bytes": 24791,
+   "bytes": 24824,
    "description": "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central.",
    "format": "parquet",
-   "hash": "b82389fe12b014edddf01e54fe33269888d49bf4a8defd62b9692ba2522abca5",
+   "hash": "44fcc0b7ffd114982efc967a280104e09fae44a7a4b888a40d868df31b2922e1",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9678,11 +9678,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-16",
+    "corte": "2014-01-02 a 2026-11-19",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3206,
+    "filas": 3209,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_dolar_observado",
@@ -9690,16 +9690,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 24791,
-      "filas": 3206,
+      "bytes": 24824,
+      "filas": 3209,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_dolar_observado.parquet",
-      "sha256": "7e5d5f10e575a3888319c52dd27cb6f97d8eb6e8a804d664a73ed1830b0ca2a4"
+      "sha256": "40300819feb4c6ccbeba82cb486d49eff49b70551e526099b5f8dd01bda1c871"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_dolar_observado",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9714,10 +9714,10 @@
    "title": "macro.dolar_observado"
   },
   {
-   "bytes": 24606,
+   "bytes": 24639,
    "description": "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central.",
    "format": "parquet",
-   "hash": "5b23ed4cef546b781ea088945c73424e09831f1de902b6ec8b831dd33edd97b3",
+   "hash": "75892b213a094a3460c5c07438484b98acd6fb6df55fed3493e8150939cf93a0",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9762,11 +9762,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-16",
+    "corte": "2014-01-02 a 2026-11-19",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3206,
+    "filas": 3209,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_euro_observado",
@@ -9774,16 +9774,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 24606,
-      "filas": 3206,
+      "bytes": 24639,
+      "filas": 3209,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_euro_observado.parquet",
-      "sha256": "237977f52a120010490b70b8b25932a9812ee85584f47e976fb62e1d7e2ffd30"
+      "sha256": "9f79e7ae9ab7631802d229ffffaf0c8d4ba8708110c9bfc2f4c57e074153c9c1"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_euro_observado",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9873,7 +9873,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_inflacion",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -9963,7 +9963,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_operadores",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10053,7 +10053,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_tpm",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10068,10 +10068,10 @@
    "title": "macro.expectativas_tpm"
   },
   {
-   "bytes": 12346,
+   "bytes": 12349,
    "description": "Imacec a costo de factores, series empalmadas del BCCh (índice 2018=100): total, no minero, minero, comercio y servicios.",
    "format": "parquet",
-   "hash": "8a1a13c23f0a55db946858112d6ea8e07a09a6c1ab2994c0e1c1351a7d16d5d7",
+   "hash": "e3fed44c646af598b4a93a356fb51d5823e2857d302977951f171eb25c691cad",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10152,16 +10152,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 12346,
+      "bytes": 12349,
       "filas": 153,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_imacec.parquet",
-      "sha256": "0a1f0a40c93a13759d24495bbd4674f443670031ff636d57d9c1bf015877a100"
+      "sha256": "cf1ff83fb0205e87240d58948d802e73d6646cae4b00da5831fdcb596e2e3eeb"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_imacec",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10176,10 +10176,10 @@
    "title": "macro.imacec"
   },
   {
-   "bytes": 36912,
+   "bytes": 36930,
    "description": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh.",
    "format": "parquet",
-   "hash": "3a273f6bcfd60a9d54de9b8258628a4e0bf88fcfac30c63fe5573271dda02765",
+   "hash": "68d9876e59384e0483fda6dd511b3ba0854bdf2207a0f9edd247103610395fd3",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10230,11 +10230,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-12",
+    "corte": "2014-01-02 a 2026-11-17",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3095,
+    "filas": 3097,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_inflacion_implicita",
@@ -10242,16 +10242,16 @@
     "nota_adaptacion": "Adaptación de elaboración propia sobre series del Banco Central de Chile; la adaptación es propiedad y responsabilidad exclusiva de este proyecto. El cálculo consiste en diferencia propia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo, calculada sobre las curvas que publica el Banco Central.",
     "particiones": [
      {
-      "bytes": 36912,
-      "filas": 3095,
+      "bytes": 36930,
+      "filas": 3097,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_inflacion_implicita.parquet",
-      "sha256": "a94ae40ee2b243cb8fc2e81068ec36344952383b22d37563033a7949b3a34acd"
+      "sha256": "9f9eedb22937eeab035d0cb76d4411827605e6010f2054fc48002c4491061a9d"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_inflacion_implicita",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10347,7 +10347,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_inflacion_ipc",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10449,7 +10449,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_mercado_laboral",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10464,10 +10464,10 @@
    "title": "macro.mercado_laboral"
   },
   {
-   "bytes": 47087,
+   "bytes": 47160,
    "description": "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central.",
    "format": "parquet",
-   "hash": "44ac7005b8be94388b981f27f883e259d4a770e2ff2a303b9cd9682f945465d0",
+   "hash": "c5c6323a83acda1146a8ed63c90bff48a58dcc113a2945d6a1e577c2634a3ecb",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10518,11 +10518,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-16",
+    "corte": "2014-01-02 a 2026-11-19",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3206,
+    "filas": 3209,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_metales_preciosos",
@@ -10530,16 +10530,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 47087,
-      "filas": 3206,
+      "bytes": 47160,
+      "filas": 3209,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_metales_preciosos.parquet",
-      "sha256": "b012be1709da1d596d38600c8a0d7ae21da34d8608d8ab06628bec7b3b12563e"
+      "sha256": "c7b4a848834f0429a9b37fecadad88babcd08fe8417dc98bd28d35388046d7a1"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_metales_preciosos",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10554,10 +10554,10 @@
    "title": "macro.metales_preciosos"
   },
   {
-   "bytes": 3112,
+   "bytes": 3125,
    "description": "Producto Interno Bruto (PIB) en volumen a precios del año anterior encadenado, referencia 2018: miles de millones de pesos encadenados.",
    "format": "parquet",
-   "hash": "778a2cfa4d4d8a128d7504e914ecc8ea8c8c829473cd4952c77311172f30f49b",
+   "hash": "049984cd28af0e06089dce432401078562e2c92d37245c7e593aafcc529ff409",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10602,11 +10602,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-04-01",
+    "corte": "2014-01-01 a 2026-07-01",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 50,
+    "filas": 51,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_pib_trimestral",
@@ -10614,16 +10614,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 3112,
-      "filas": 50,
+      "bytes": 3125,
+      "filas": 51,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_pib_trimestral.parquet",
-      "sha256": "838f6132618f21d855f046565bca2caf045f93e7d20098aabb58a17628366fcf"
+      "sha256": "605c576944a94c74d0cab54dac3e1cd74f36df2a70703ccdb21af69bcbbbd053"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_pib_trimestral",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10707,7 +10707,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_reservas_internacionales",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10722,10 +10722,10 @@
    "title": "macro.reservas_internacionales"
   },
   {
-   "bytes": 10890,
+   "bytes": 10888,
    "description": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
    "format": "parquet",
-   "hash": "f1a1c5ae7eac3ec6f43b4adb385dda08ca888693f5623f55a6b9b79032bd2b9a",
+   "hash": "002f380090c65cfbff3c74e4a96e0da2b18f9adea2feb2505b28ac1326a3591c",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10824,7 +10824,7 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-11-16",
+    "corte": "2014-01-01 a 2026-11-19",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": "2026-10-21",
@@ -10836,16 +10836,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 10890,
+      "bytes": 10888,
       "filas": 51,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_series_catalogo.parquet",
-      "sha256": "bde93419f655d3433886efe53c941021c86cd491763e870943273a208e57ca8e"
+      "sha256": "bd13a4a269ca5dcc202ca0c4aed6208445e0f96cd5e22f7ae1d511440689795b"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_series_catalogo",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10860,10 +10860,10 @@
    "title": "macro.series_catalogo"
   },
   {
-   "bytes": 79477,
+   "bytes": 79504,
    "description": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
    "format": "parquet",
-   "hash": "7bd53cb27eef0d968e237fde6796c8cc67eaebe5b89164c1167535c0a504764a",
+   "hash": "e31ffaa02ae4a73dc5bb15692e83a8f02a37bf04d50dbbec99a39c4fad9b08b4",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10932,11 +10932,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-13",
+    "corte": "2014-01-02 a 2026-11-18",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3220,
+    "filas": 3223,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_swaps_camara",
@@ -10944,16 +10944,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 79477,
-      "filas": 3220,
+      "bytes": 79504,
+      "filas": 3223,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_swaps_camara.parquet",
-      "sha256": "8cd3ce58fdd39bd515cf8c9258610abb0904088b8fc604dfef63a3bd7cd80689"
+      "sha256": "7a728ba3bc0bb71289fd5deecb73cef02683bd408e1400d2272a6e324df255d5"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_swaps_camara",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -10968,10 +10968,10 @@
    "title": "macro.swaps_camara"
   },
   {
-   "bytes": 12262,
+   "bytes": 12285,
    "description": "Tasa de interés de política monetaria de la Reserva Federal de los Estados Unidos (fed funds), en porcentaje.",
    "format": "parquet",
-   "hash": "aeb31e3f7cfd2c7d3692e54b547a6a255142cc15ee954680bbdb00533bc87e70",
+   "hash": "53b5dac8362797b1af1770db3ee06ca4d417e2093df62fcd8b7e05e0b3b7ba5a",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11016,11 +11016,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-11-10",
+    "corte": "2014-01-01 a 2026-11-17",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3343,
+    "filas": 3348,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_tasa_referencia_fed",
@@ -11028,16 +11028,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 12262,
-      "filas": 3343,
+      "bytes": 12285,
+      "filas": 3348,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tasa_referencia_fed.parquet",
-      "sha256": "dc41632bca2711c8c37bb94eb379d006f30374586ca2120685864cd3a3ceac76"
+      "sha256": "515b6157992f46985b83ff7adb1e0c22c83bc7e992395ae47515442179073156"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tasa_referencia_fed",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11052,10 +11052,10 @@
    "title": "macro.tasa_referencia_fed"
   },
   {
-   "bytes": 13698,
+   "bytes": 13713,
    "description": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje.",
    "format": "parquet",
-   "hash": "cfe8fb0891f13132746719a2595c6396a45c832fc09677c79e6d91119cb00240",
+   "hash": "676b547cb13f82978b06a911af2877d7e6fd83f957746d7f2a6f0a594f68b28a",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11106,11 +11106,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-16",
+    "corte": "2014-01-02 a 2026-11-19",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3207,
+    "filas": 3210,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_tasas_corto_plazo",
@@ -11118,16 +11118,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 13698,
-      "filas": 3207,
+      "bytes": 13713,
+      "filas": 3210,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tasas_corto_plazo.parquet",
-      "sha256": "307bfff275a67e1abc7e3b71835637005564aabd6999e24fa278c2a7c24ccf22"
+      "sha256": "e10e094df18dd2145220e931fbd3702a39dd3ed19b02a17f722a47218695c226"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tasas_corto_plazo",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11142,10 +11142,10 @@
    "title": "macro.tasas_corto_plazo"
   },
   {
-   "bytes": 42627,
+   "bytes": 42690,
    "description": "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X.",
    "format": "parquet",
-   "hash": "7e1e12de855c8870046124aaa17ffaf433b115c14296774c81992958ef64226f",
+   "hash": "cec6dc3a915e06c759a363341e0438703903895e870a20e44fc71145306cc777",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11202,11 +11202,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-11-16",
+    "corte": "2014-01-02 a 2026-11-19",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3206,
+    "filas": 3209,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_tipo_cambio_multilateral",
@@ -11214,16 +11214,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 42627,
-      "filas": 3206,
+      "bytes": 42690,
+      "filas": 3209,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tipo_cambio_multilateral.parquet",
-      "sha256": "993164d9e9d5ebe88a41e3a64ff7924f3d0ad5382152734013b101ac0caf4326"
+      "sha256": "d749fed2c71ad0ea0bf0bdfbd97f83cd1315d18291b15e2a7c3f3864fb5cf9db"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tipo_cambio_multilateral",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11313,7 +11313,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tipo_cambio_real",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11328,10 +11328,10 @@
    "title": "macro.tipo_cambio_real"
   },
   {
-   "bytes": 35576,
+   "bytes": 35596,
    "description": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
    "format": "parquet",
-   "hash": "d73858d582c1624f254c7488047a68ad72472aec56b5fa5efa5653e7c36ec3ed",
+   "hash": "7b106170d79d5a90850c23ea1cf9eced3f6600e429e3636ebf5490d79e4bb13f",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11376,11 +11376,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-11-16",
+    "corte": "2014-01-01 a 2026-11-19",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 4703,
+    "filas": 4706,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_uf",
@@ -11388,16 +11388,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 35576,
-      "filas": 4703,
+      "bytes": 35596,
+      "filas": 4706,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_uf.parquet",
-      "sha256": "8063516d109f866bcbf5f7966ed0a91d90ae6b8efc46fcc62326520ee3bca029"
+      "sha256": "e08fd0ad5ef53215b0aa2ea3848ccc1cb251d9d19f44b71804b249aa9b95cffa"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_uf",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -11481,7 +11481,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_utm",
-    "ultima_actualizacion": "2026-11-16",
+    "ultima_actualizacion": "2026-11-19",
     "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
@@ -12431,10 +12431,10 @@
    "title": "securitizadoras.resultados"
   },
   {
-   "bytes": 2892559,
+   "bytes": 2902983,
    "description": "Acciones de sociedades anónimas y cuotas de fondos de inversión nacionales.",
    "format": "parquet",
-   "hash": "d916825a3e2421699b34ec3c272a207f93266228f452ca8636aae578b9b6a98e",
+   "hash": "1a1a4abdb97ad04727d467ab16eda7f57db04063588d1b50d61cf811c1da745c",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -12804,11 +12804,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-21",
-    "filas": 109019,
+    "extracted_at": null,
+    "filas": 109806,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_acciones",
@@ -12876,17 +12876,17 @@
       "sha256": "34ee8cba1a51554605fc22a976a2330490a117f572b190542b8aebf56f12c71d"
      },
      {
-      "bytes": 239918,
-      "filas": 8308,
+      "bytes": 250342,
+      "filas": 9095,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/acciones/2026.parquet",
-      "sha256": "55094c6669c52a251c23ba9d2d9acda1346ff8176f75270978ac72510b847418"
+      "sha256": "7af21953809b6259e2c88b791b379ae5a46b6cf60f8fb46067eeef99717a28c1"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_acciones",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -12901,10 +12901,10 @@
    "title": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN"
   },
   {
-   "bytes": 2067139,
+   "bytes": 2077090,
    "description": "Vista analítica de B.2 con identificación del instrumento, unidades, valorización, deterioro y riesgo. La tabla completa conserva todos los campos.",
    "format": "parquet",
-   "hash": "ac2d95acdcfd2d5c1d7951bac7b848a9a039966c0b0cd1fc9fca33f2c93b21ac",
+   "hash": "8e3e1cdb611e3a677009583bcd7e8521ec904d0e799e06b1c4ad908a6fc733d6",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -13040,11 +13040,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": "seguros_acciones",
     "estado": "derivado",
     "extracted_at": null,
-    "filas": 109019,
+    "filas": 109806,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_acciones_relevantes",
@@ -13112,17 +13112,17 @@
       "sha256": "151974cc308cbe143c67edc42df63e3cf62573e87e640c006037ba406b1da6bb"
      },
      {
-      "bytes": 180069,
-      "filas": 8308,
+      "bytes": 190020,
+      "filas": 9095,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/acciones_relevantes/2026.parquet",
-      "sha256": "6cb530c93a1ec84a06614bff3fdd79961c8fd9b558724e3dfea3f9aa90d6ffd8"
+      "sha256": "084022e030cf31e2f62f51d8cebca8791045e1106a3aa80afbe01c8487be41d5"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_acciones_relevantes",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -13137,10 +13137,10 @@
    "title": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN"
   },
   {
-   "bytes": 33571939,
+   "bytes": 34670125,
    "description": "Bienes raíces por inmueble: arriendo, costo, depreciación, tasaciones y valor final. El rol y la dirección exacta se suprimen por privacidad y se reemplazan por property_id.",
    "format": "parquet",
-   "hash": "16a294780aec1f7e9a72e0573843460af7c7a63866aafcbc6d4c9133d0e9cbe7",
+   "hash": "eeef604f0236ca3f4b022f71e2ba3dc75819c0e12cc443a1f4c8ad256eb5abae",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -13171,7 +13171,8 @@
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-06.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-07.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-08.parquet",
-    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-09.parquet"
+    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-09.parquet",
+    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-10.parquet"
    ],
    "profile": "tabular-data-resource",
    "schema": {
@@ -13527,11 +13528,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-21",
-    "filas": 760152,
+    "extracted_at": null,
+    "filas": 786342,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_bienes_raices",
@@ -13669,13 +13670,19 @@
       "filas": 35833,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-09.parquet",
       "sha256": "0622029c36bbffaaba25802d33893e8a8da66e03c9bca0397b9139acbc18c066"
+     },
+     {
+      "bytes": 1098186,
+      "filas": 26190,
+      "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-10.parquet",
+      "sha256": "52d52fe357d2bcddbb87a3a7334b48b58daf50938f3d2bae6d32aa2c9a51ee4d"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_bienes_raices",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -13690,10 +13697,10 @@
    "title": "B.4 BIENES RAICES"
   },
   {
-   "bytes": 10008318,
+   "bytes": 10255573,
    "description": "Vista analítica de B.4 con ubicación geográfica general, superficie y valorización; no incluye rol ni dirección exacta.",
    "format": "parquet",
-   "hash": "77a90bc86fd9f29edcc362c20e44b0665338871afc68b66295697ab3d6a12a0d",
+   "hash": "64c7a75e5b17878d02e42bfe1596615343ad8cc204708302a67ad5085c4ba50f",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -13845,11 +13852,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": "seguros_bienes_raices",
     "estado": "derivado",
     "extracted_at": null,
-    "filas": 760152,
+    "filas": 786342,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_bienes_raices_relevantes",
@@ -13869,17 +13876,17 @@
       "sha256": "f000a9e2011f7e82c54dd7d8a5524f8fc474b44b97ddc8df95aa6eb8dad9bd09"
      },
      {
-      "bytes": 4128252,
-      "filas": 317017,
+      "bytes": 4375507,
+      "filas": 343207,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices_relevantes/2026.parquet",
-      "sha256": "d86055e924191191501f9154a9f5814b13251cca5b81f0f35a42c95b8d1126ae"
+      "sha256": "3c195b6ea0a3a3e586c32d2976c443205f78115fff81e6dc4d1c87e42ab6bc1b"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_bienes_raices_relevantes",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -13894,10 +13901,10 @@
    "title": "B.4 BIENES RAICES"
   },
   {
-   "bytes": 1897106,
+   "bytes": 1910487,
    "description": "Información de control que cada compañía envía con su cartera: totales por tipo de inversión (valor final, representativas y no representativas de reservas, etc.).",
    "format": "parquet",
-   "hash": "5694809f749e37a143d10bb38421f5d6ea3ef46eef796aa03f61ae8ed2556d69",
+   "hash": "06bb34355188ae9669bc165c5624f3533fd05178a53643f527ec1d6b0e4b981a",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -14021,11 +14028,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-21",
-    "filas": 111410,
+    "extracted_at": null,
+    "filas": 112233,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_control_inversiones",
@@ -14093,17 +14100,17 @@
       "sha256": "c950b16127effa4083a4f26d804514fee3e42cc29374232f0decb005200c9fce"
      },
      {
-      "bytes": 141038,
-      "filas": 7927,
+      "bytes": 154419,
+      "filas": 8750,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2026.parquet",
-      "sha256": "9cc961b37c2993054bc09701d18720b1380138cad52926af98f9747ba9dd089c"
+      "sha256": "8afb5118ed222487379ea2a024a79688cd3596432e0e765698b0f39651c26e34"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_control_inversiones",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -14118,10 +14125,10 @@
    "title": "B.8 INFORMACION DE CONTROL"
   },
   {
-   "bytes": 13900098,
+   "bytes": 13998854,
    "description": "Contratos de opciones, forwards, futuros y swaps (tipo_registro), con contraparte, nocional, valor razonable y efecto en resultados.",
    "format": "parquet",
-   "hash": "b6c51ea6e0e78569f1cbe2bef143a09c42717413a7b056c3a4ce0330a3c60efc",
+   "hash": "dddbb1f6013990126202e764b39134e29e5a04187cdc9e997f2c87667c96297e",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -14592,11 +14599,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-21",
-    "filas": 373469,
+    "extracted_at": null,
+    "filas": 376201,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_derivados",
@@ -14664,17 +14671,17 @@
       "sha256": "791e5b791bd2afe7b9a9e7b2392805d5e8456b214b9f1fb668dd96907b2f748d"
      },
      {
-      "bytes": 2086193,
-      "filas": 48847,
+      "bytes": 2184949,
+      "filas": 51579,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2026.parquet",
-      "sha256": "1fed51676b0fb816dc254a28380b155e7e697d25fbd018349b13c8f34c89c1bf"
+      "sha256": "863dc6ff4b6d470471a95db17e7dd0324e59c1559fed567a407ae1ea11c9cfb5"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_derivados",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -14689,10 +14696,10 @@
    "title": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS"
   },
   {
-   "bytes": 3185304,
+   "bytes": 3203431,
    "description": "Vista analítica de derivados con tipo, vencimiento, nocionales y valores razonables.",
    "format": "parquet",
-   "hash": "1c0e0d12310c753baacd3cb21bdf7dbd0f1b1441cb735fc8b988021da3d73eb8",
+   "hash": "0901898b20912fa67582218e4c4103fb66feef877c90af41244f93a6c852f958",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -14863,11 +14870,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": "seguros_derivados",
     "estado": "derivado",
     "extracted_at": null,
-    "filas": 373469,
+    "filas": 376201,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_derivados_relevantes",
@@ -14935,17 +14942,17 @@
       "sha256": "aee1e160cab92d033c6ff6af2fe60f7abf47b98b97d102f5ce2d2575c607a66f"
      },
      {
-      "bytes": 758631,
-      "filas": 48847,
+      "bytes": 776758,
+      "filas": 51579,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2026.parquet",
-      "sha256": "8e68748afe57c3413577811c0464ef3025ef7c8e482c3a9bb69612f095da67a0"
+      "sha256": "f349b8a8e310086fba61bdc57e8ab7dd683a062ebd5ac7a3e319de80ae2f5cfb"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_derivados_relevantes",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -14960,10 +14967,10 @@
    "title": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS"
   },
   {
-   "bytes": 12489001,
+   "bytes": 12534441,
    "description": "Inversiones en el extranjero: deuda (tipo_registro = 'deuda'), acciones y fondos (tipo_registro = 'acciones_y_fondos'), bienes raíces (tipo_registro = 'bienes_raices') y filiales (tipo_registro = 'filiales').",
    "format": "parquet",
-   "hash": "dcbae1a5fa5c30f68e5bfd3dab42f1f1f2df18b7e7ad02d6fdecd635bd118bff",
+   "hash": "2eaa74ed2663dcb6bc71dbda27080bc721fb5fb1cb51a99064ab3dc58b27512c",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -15669,11 +15676,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-20 (ultima_actualizacion del manifiesto)",
-    "filas": 471942,
+    "extracted_at": null,
+    "filas": 475353,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_extranjeros",
@@ -15741,17 +15748,17 @@
       "sha256": "7a10cbe0721344978d03bfc936576b3e5f08fdb734185420da6bc3cd0258fa0e"
      },
      {
-      "bytes": 1563494,
-      "filas": 52124,
+      "bytes": 1608934,
+      "filas": 55535,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2026.parquet",
-      "sha256": "f7f82b9ac76fa7fcca179fb6e023fbe0db35d8ed243d80814ca08d62b54ff7f7"
+      "sha256": "746ad4a3205ebab75f12bb7faa41e492c5f1641cd0f0e5864de706fbf523b0b6"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_extranjeros",
-    "ultima_actualizacion": "2026-10-20",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -15763,13 +15770,13 @@
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
-   "title": "seguros.extranjeros"
+   "title": "B.5 INVERSIONES EN EL EXTRANJERO"
   },
   {
-   "bytes": 3863555,
+   "bytes": 3893412,
    "description": "Vista analítica de B.5 con país, instrumento, moneda, vencimiento y valorización.",
    "format": "parquet",
-   "hash": "c66c4733317c05373a36a1089e6f367ec02c4e3867bce512160aa36e81e49cc4",
+   "hash": "32e28ce84f309aa295f50a545d838b3e542261b37cb3ddb0c9fc7a6a2adf4e5c",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -15923,11 +15930,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": "seguros_extranjeros",
     "estado": "derivado",
     "extracted_at": null,
-    "filas": 471670,
+    "filas": 475081,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_extranjeros_relevantes",
@@ -15995,17 +16002,17 @@
       "sha256": "0eaf04078a91b918dbe984b393c117f529616c77e1d0fa43e35d494d49f6c3a6"
      },
      {
-      "bytes": 759652,
-      "filas": 52124,
+      "bytes": 789509,
+      "filas": 55535,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2026.parquet",
-      "sha256": "7a34639ed7af5a5958fec36efb7ed1562d6ad71ade47a11356a3ead7fa9394e5"
+      "sha256": "367b17a29568f15473cd3cc7f0e3a4ef1ee57c459d5a8e35e22c918b3be815f4"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_extranjeros_relevantes",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -16020,10 +16027,10 @@
    "title": "B.5 INVERSIONES EN EL EXTRANJERO"
   },
   {
-   "bytes": 176967,
+   "bytes": 180826,
    "description": "Flujos de activos elegibles por tramo, para el cálculo del test de suficiencia de activos (circular aplicada y tipo de información).",
    "format": "parquet",
-   "hash": "03f073fddd567e9c9040c22709e9714b8988a114b3b7b9f0f4016c9fd720e509",
+   "hash": "8748ce85a6f210212b3f1eddda8eed909c2bb9b9332dad53fc075eaa6efe3d73",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -16165,11 +16172,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 4369,
+    "filas": 4518,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_flujos_activos_elegibles",
@@ -16189,16 +16196,16 @@
       "sha256": "db5795df90ac295722b7b0471b5892b856755b626f28972310b165547a7a419b"
      },
      {
-      "bytes": 64287,
-      "filas": 1658,
+      "bytes": 68146,
+      "filas": 1807,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/flujos_activos_elegibles/2026.parquet",
-      "sha256": "e5d093903e661ead820e3d357cd785c209f518cd1f7c53bc78820eb655531b9a"
+      "sha256": "b5d99aed8dffd2e79088358f73cc6ab3e67416c09ad40ef9311ca8cf8468ee6c"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_flujos_activos_elegibles",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -16213,10 +16220,10 @@
    "title": "B.11 FLUJOS DE ACTIVOS ELEGIBLES"
   },
   {
-   "bytes": 3058243,
-   "description": "Registra las cuotas de fondos mutuos nacionales mantenidas por compañías de seguros y reportadas mensualmente a la CMF bajo la Circular 1835. Cada posición identifica el fondo, su administradora, tipo de instrumento y valorización, con cobertura histórica desde 2016.",
+   "bytes": 3074523,
+   "description": "Cuotas de fondos mutuos nacionales.",
    "format": "parquet",
-   "hash": "51352035a5998f06bcd19cbd32a81d914c951c851aa240d160a29b0e4e99a31c",
+   "hash": "0f68301a9249c20af64436b563468571c3dff76ccfc269f81e669ab27f0aee74",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -16460,11 +16467,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-21",
-    "filas": 100472,
+    "extracted_at": null,
+    "filas": 101084,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_fondos_mutuos",
@@ -16532,17 +16539,17 @@
       "sha256": "1edbb3a62bd94df97e0ec2652647e4e00eaef8ca5741b2086cc55eb6678c452e"
      },
      {
-      "bytes": 179101,
-      "filas": 5580,
+      "bytes": 195381,
+      "filas": 6192,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2026.parquet",
-      "sha256": "c680ff43e56ec7e4587613067db0b5cf6b9ac59d477825b4559798e249a619df"
+      "sha256": "a4da591a0d5099b07fb65176618a4d8be3d9279a7d67355c02ba96aab8b731a8"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_fondos_mutuos",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -16557,10 +16564,10 @@
    "title": "B.3 CUOTAS DE FONDOS MUTUOS"
   },
   {
-   "bytes": 181636,
+   "bytes": 186284,
    "description": "Garantías en efectivo o instrumentos, recibidas u otorgadas, asociadas a derivados.",
    "format": "parquet",
-   "hash": "ec99ca420a8ff1ef68612fb5d4cf375b1e55e5dbb8f83e304ba1f8cdf2baa36e",
+   "hash": "f697410c92b26946c3002143ed40073375730e301fff22bb194eafd74077577f",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -16735,11 +16742,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 6518,
+    "filas": 6733,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_garantias_derivados",
@@ -16759,17 +16766,17 @@
       "sha256": "b253816eca046616801d815b6d02fe57d568337c8da5184423d74c5796fbe83c"
      },
      {
-      "bytes": 65354,
-      "filas": 2141,
+      "bytes": 70002,
+      "filas": 2356,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/garantias_derivados/2026.parquet",
-      "sha256": "ef64167081cb388972c0f73167f8b38ed3ec69e4e862d0fca1d2241ed43a6bbe"
+      "sha256": "9a58b24d8a72683dac682b4716461f2e1643a4f88e56ed3e86f4e540e7226051"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_garantias_derivados",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -16784,10 +16791,10 @@
    "title": "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS"
   },
   {
-   "bytes": 6746,
+   "bytes": 6774,
    "description": "Compañías de seguros de vida y generales que envían su cartera a la CMF, con el primer y el último mes informado. Sirve para detectar compañías nuevas y las que dejan de reportar.",
    "format": "parquet",
-   "hash": "4ca17b42ba707601a7362c45357ead599f2921f9e6c8890f8cede285a9b81ee8",
+   "hash": "17694ef483b826f32d88f19d5174de4a622d43c2024bea53ae07ac9a149ca204",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -16859,11 +16866,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-21",
-    "filas": 84,
+    "extracted_at": null,
+    "filas": 85,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_maestro",
@@ -16871,16 +16878,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 6746,
-      "filas": 84,
+      "bytes": 6774,
+      "filas": 85,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/aseguradoras.parquet",
-      "sha256": "5b18709671c65016a7cb2e3d7017e444d5d292d27e36b0066e543b2753bd29f3"
+      "sha256": "f1ff670ebe3341db702a8bd757f167bf6de99ed35e54af98fd79241fd6ac0227"
      }
     ],
     "puente": "alias",
     "sector": "seguros",
     "sql_view": "seguros_lista_entidades",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -16895,10 +16902,10 @@
    "title": "seguros.lista_entidades"
   },
   {
-   "bytes": 706186,
+   "bytes": 731961,
    "description": "Otras inversiones de la cartera: saldos en cuenta corriente y caja, inversiones mobiliarias, avances a tenedores de pólizas, préstamos y otras inversiones financieras que no caben en los archivos anteriores.",
    "format": "parquet",
-   "hash": "5e0190b0a19d614fa7c80a0501dba4ab789eaa99a9e1720a080b3064b66dfc1c",
+   "hash": "4a5b4ce3c75d982f57a8dd426ed1963367c47318ef83da735241f2e754305e97",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -17128,11 +17135,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 42494,
+    "filas": 44296,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_otras_inversiones",
@@ -17152,17 +17159,17 @@
       "sha256": "8584f0a18ca65241269aeba97da13b8a4adf986d6aec4f922a3674209b520d3c"
      },
      {
-      "bytes": 280254,
-      "filas": 17140,
+      "bytes": 306029,
+      "filas": 18942,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/otras_inversiones/2026.parquet",
-      "sha256": "37a4acfe20533d2743280c5e437954b7d038ea617c6b5943ac3c71f910cdcbe7"
+      "sha256": "e902ad9ef32316d15f8f1b58e90274b06b9f7c6e415e7436c8645a0bececa962"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_otras_inversiones",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -17177,10 +17184,10 @@
    "title": "B.6 OTRAS INVERSIONES"
   },
   {
-   "bytes": 628453,
+   "bytes": 635626,
    "description": "Compras y ventas con pacto (repos), con contraparte, tasa y activo objeto.",
    "format": "parquet",
-   "hash": "dafa26ce64fb4236b87ea138e6ca5581668d65540077af1a7a195f0a7f03c6f5",
+   "hash": "f5c510bbeca7f7c4ef02ce25f7dcbaef8f007d15b946f8bcea442ace998e9c01",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -17394,11 +17401,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2016-11 a 2026-09",
+    "corte": "2016-11 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-21",
-    "filas": 11371,
+    "extracted_at": null,
+    "filas": 11556,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_pactos",
@@ -17466,17 +17473,17 @@
       "sha256": "1755d72509fcb11443c16a5adfdb424bf31b23c96507315afe4086b67539e79d"
      },
      {
-      "bytes": 79081,
-      "filas": 1463,
+      "bytes": 86254,
+      "filas": 1648,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2026.parquet",
-      "sha256": "463c4a24074f4ee1ba7403818a6eeadffa780e6b7097e0d8b20d1b9fb2220890"
+      "sha256": "ad299860c816a88050bfc2153b47f28560c3fe804de41239ee26c0d1ffbd4bb3"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_pactos",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -17491,10 +17498,10 @@
    "title": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS"
   },
   {
-   "bytes": 21411,
+   "bytes": 21424,
    "description": "Líneas tipo 6 reportadas por la CMF en archivos B.11 (E) y B.14 (G). Se conserva íntegra cada línea, junto con período, sector, aseguradora y archivo de origen; los campos internos no se interpretan porque no están descritos en el anexo consultado.",
    "format": "parquet",
-   "hash": "820d9c406e73e650946116c4ea688061c75f13936d0e3fb9baac0eff3815fd17",
+   "hash": "33593cff20f1548ab4cd01e33fdc195d056fc2fcd5ec2d1d238be70958ae11be",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -17577,11 +17584,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 66,
+    "filas": 67,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_registros_tipo6",
@@ -17601,16 +17608,16 @@
       "sha256": "ac10eaf50935328af47764cab84dfe80c4f704488b276adbc5fc622782223c25"
      },
      {
-      "bytes": 7167,
-      "filas": 27,
+      "bytes": 7180,
+      "filas": 28,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/registros_tipo6/2026.parquet",
-      "sha256": "f566fab199a13396a578a13e38a80fdb7ffc75f0ab7a0210b0bf835353d85510"
+      "sha256": "0fa61445a5fdbc57286776e6b550b4c9843822de18a698946a32cd449435d1cf"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_registros_tipo6",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -17625,10 +17632,10 @@
    "title": "Registros tipo 6 de B.11 y B.14"
   },
   {
-   "bytes": 231963882,
+   "bytes": 241278377,
    "description": "Bonos, letras, depósitos y demás instrumentos de renta fija nacionales, uno por fila, con sus tasas, costo amortizado, valor razonable y valor final.",
    "format": "parquet",
-   "hash": "db66b9ddae920de644a6fd5e3c82ca5b5c21837159d3cc80e52eba9f4821af1f",
+   "hash": "85db57757841ed990cd3a8b998ec4a4b274f2005c5e46c22ce3bc3fc2116a4a1",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -17659,7 +17666,8 @@
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-06.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-07.parquet",
     "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-08.parquet",
-    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-09.parquet"
+    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-09.parquet",
+    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-10.parquet"
    ],
    "profile": "tabular-data-resource",
    "schema": {
@@ -18324,11 +18332,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-21",
-    "filas": 2321911,
+    "extracted_at": null,
+    "filas": 2411077,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_renta_fija",
@@ -18466,12 +18474,18 @@
       "filas": 105569,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-09.parquet",
       "sha256": "d0aea4fa655894069f2251e334883b049d7588268af4d1f3bf7ff6f868de36bd"
+     },
+     {
+      "bytes": 9314495,
+      "filas": 89166,
+      "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-10.parquet",
+      "sha256": "6bd6c1cdba2f84524a463ab11cae8ecf5f97712e1496aafdb6d31a79b798d654"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_renta_fija",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -18486,10 +18500,10 @@
    "title": "B.1 INSTRUMENTOS DE RENTA FIJA"
   },
   {
-   "bytes": 43814005,
+   "bytes": 44868711,
    "description": "Vista analítica de B.1 con identificación, vencimiento, magnitudes de costo y valor, riesgo y representatividad. La tabla completa conserva todos los campos.",
    "format": "parquet",
-   "hash": "7fce408390296aab68bd2e645c1e98809bb150854cc4646c99d863ebd401c5bb",
+   "hash": "b6691151aae972db5107e23a6bad89833a2041bbaede48be29139e27e416e675",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -18656,11 +18670,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": "seguros_renta_fija",
     "estado": "derivado",
     "extracted_at": null,
-    "filas": 2321911,
+    "filas": 2411077,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_renta_fija_relevante",
@@ -18680,16 +18694,16 @@
       "sha256": "59d7e84800fc88bd8f4349699dfb0232f27a3a96bbb8a8d196b46fa7d5aa6455"
      },
      {
-      "bytes": 17336453,
-      "filas": 955009,
+      "bytes": 18391159,
+      "filas": 1044175,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija_relevante/2026.parquet",
-      "sha256": "1920333d29c2c7574f281f4254e03cae7336e3f4693e3b3b21522196dc7ecf35"
+      "sha256": "5d15ea71bd31197b872c7c1936385dad6e1a7c0ca227941444f66293d0785b62"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_renta_fija_relevante",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -18704,10 +18718,10 @@
    "title": "B.1 INSTRUMENTOS DE RENTA FIJA"
   },
   {
-   "bytes": 14947138,
+   "bytes": 14971549,
    "description": "Desarrollo de los flujos de cada instrumento: cupón, fecha de vencimiento, interés, amortización y saldo insoluto.",
    "format": "parquet",
-   "hash": "77a958d1821e03da43cbae451dc11370262982daae7c3e0a2653ab23d1181a09",
+   "hash": "ca82812228201d1b783084170c86fc38480ba1893349d845fcafb4d1d4fddbd1",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -18799,11 +18813,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 2193981,
+    "filas": 2197117,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_tablas_desarrollo",
@@ -18823,17 +18837,17 @@
       "sha256": "5f02d1cf98058ba756553c567c07fda05db371ffa7ec1b1efefef35839a4fb47"
      },
      {
-      "bytes": 2184145,
-      "filas": 950557,
+      "bytes": 2208556,
+      "filas": 953693,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/tablas_desarrollo/2026.parquet",
-      "sha256": "d2948246b9f445ac53e9f97ad7c10d2c9138d72d7b43e8d69503379393a54659"
+      "sha256": "680292b3d54da80a5f7d101b847e952038556e0ab591e888a99872001702de56"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_tablas_desarrollo",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -18848,10 +18862,10 @@
    "title": "B.10 TABLAS DE DESARROLLO"
   },
   {
-   "bytes": 141189,
+   "bytes": 141527,
    "description": "Descriptores de los instrumentos de la cartera: emisor, tipo de instrumento, fechas y tasas de emisión y descuento, número de flujos y opciones de prepago.",
    "format": "parquet",
-   "hash": "c4cd1812b0cea23e3c4bead728d6369f5ba6c0932cafe94f70a05dfeeba3f1e2",
+   "hash": "bdb2ab2a0bd7a32e6bb7e352608ee7cd5422ca3cb0eabdd37710cf019d1599e6",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -19008,11 +19022,11 @@
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
-    "corte": "2024-12 a 2026-09",
+    "corte": "2024-12 a 2026-10",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 9792,
+    "filas": 9832,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "seguros_tablas_descriptores",
@@ -19032,16 +19046,16 @@
       "sha256": "0d7c0c48383843aacc50b6dd455a09964977d6b8bbdf1d168e9884d044e70056"
      },
      {
-      "bytes": 58967,
-      "filas": 4659,
+      "bytes": 59305,
+      "filas": 4699,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/tablas_descriptores/2026.parquet",
-      "sha256": "70ec57e96b73e0e1d949e89b590ee03df55b8da5b6c1dc69424cbe3702c183c3"
+      "sha256": "5428a33b5f107af86662896cd35fef4b75cc1a35317e977aece842576fa70b6c"
      }
     ],
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_tablas_descriptores",
-    "ultima_actualizacion": "2026-10-21",
+    "ultima_actualizacion": "2026-11-17",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -19219,15 +19233,15 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-11-16.862539b4ee5f",
+  "data_release": "2026-11-19.c53b9ac5fb29",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
-  "filas_unicas": 19928166,
+  "filas_unicas": 20179739,
   "identificador": {
    "aliases": "los nombres heredados se publican por recurso en sif.aliases y no son identificadores",
    "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",
    "total_alias": 19
   },
-  "objetos_sin_archivo": 4,
+  "objetos_sin_archivo": 0,
   "versionado": {
    "correccion": "una afirmación falsa del descriptor —por ejemplo una `primaryKey` que no se cumple— se retira en un parche: no cambia el dato, y quien la usaba para deduplicar debe agrupar por su cuenta",
    "mayor": "se rompe un cliente: quitar o renombrar recurso o columna, cambiar un tipo",

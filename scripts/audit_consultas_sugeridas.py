@@ -92,6 +92,16 @@ def ficheros_de(vista: dict) -> list[str]:
     return V.ficheros_de(vista)
 
 
+def ficheros_de_esquema(vista: dict) -> list[str]:
+    """Rutas para describir el esquema, con el `_vacio.parquet` incluido.
+
+    A diferencia de `ficheros_de` (descargas) y `ficheros_sql_de` (la vista que
+    registra la web), esta sí incluye el archivo vacío: una tabla que la CMF no
+    entrega se publica como vacía en la web, pero su esquema tiene que constar.
+    """
+    return V.ficheros_de_esquema(vista)
+
+
 def ficheros_sql_de(vista: dict) -> list[str]:
     """Fuente que usa la web al registrar la vista SQL."""
     return V.ficheros_sql_de(vista)
@@ -124,6 +134,22 @@ VACIAS_ESPERADAS: dict[str, str] = {
     "fi_bienes_raices":
         "Ningún fondo de inversión ha informado cartera de bienes raíces a la CMF "
         "(2020-03 → 2026-06); la fuente no trae datos, no el pipeline.",
+    # Las cuatro tablas de la Circular 1835 que la CMF no entrega en los ZIP
+    # publicados. Publican un `_vacio.parquet` con el esquema completo y cero filas
+    # para que la vista SQL exista y responda vacía (ver `seguros/tests/test_vacio_1835.py`).
+    # Faltaban aquí desde el 2026-11-19: mientras el contrato no se regeneraba, la
+    # lista no se contrastaba con nada y nadie notó el hueco. Al volver a publicar,
+    # la compuerta las vio como «vistas sin filas sin justificación».
+    "seguros_prestamos":
+        "La CMF no entrega la tabla B.12 (préstamos) en los ZIP de la Circular 1835; "
+        "se publica el esquema vacío para que la vista exista y responda 0 filas.",
+    "seguros_prestamos_relevantes":
+        "Vista de campos relevantes de B.12, vacía por la misma razón que su origen.",
+    "seguros_bienes_raices_arriendo_morosidad":
+        "La CMF no entrega la tabla B.13 (bienes raíces en arriendo y morosidad); "
+        "se publica el esquema vacío para que la vista exista y responda 0 filas.",
+    "seguros_bienes_raices_arriendo_morosidad_relevantes":
+        "Vista de campos relevantes de B.13, vacía por la misma razón que su origen.",
 }
 
 

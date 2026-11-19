@@ -1,7 +1,342 @@
 {
  "adaptacion": false,
  "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
- "columnas": [],
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "en SEIL, Codificación CMF, Instrumentos. Para el caso de bienes raíces o leasing, corresponde señalar el número bajo el cual se encuentra identificado el bien raíz en el Servicio de Impuestos Internos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rol",
+   "rol": "Identificador",
+   "significado": "No se publica: identificador tributario del inmueble; se reemplaza por property_id.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "comuna",
+   "rol": "Atributo",
+   "significado": "geográficamente el bien raíz, de acuerdo a listado de códigos establecidos en el módulo SEIL, codificación CMF, Comuna. Corresponde informar la razón social o el nombre del arrendatario o deudor, de la forma: primer apellido, segundo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_arrendatario_deudor",
+   "rol": "Atributo",
+   "significado": "Se suprime junto con el RUT cuando el arrendatario/deudor es persona natural; la columna se conserva.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_arrendatario_deudor",
+   "rol": "Identificador",
+   "significado": "Se suprime para personas naturales o cuando el RUT no permite determinar con seguridad una entidad; la columna se conserva.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_actividad_economica",
+   "rol": "Métrica",
+   "significado": "para la actividad económica principal del arrendatario. Para el caso de contratos de leasings, mutuos hipotecarios y bienes raíces no arrendados, se deberá informar con ceros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacion",
+   "rol": "Atributo",
+   "significado": "Se señalará de acuerdo a la siguiente codificación: RE : Relacionado NR : No Relacionado En caso de que el item o la unidad se encuentre vacante, se deberá informar NA.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_vencimiento_contrato",
+   "rol": "Fecha",
+   "significado": "arriendo, leasing o mutuo hipotecario en formato AAAAMMDD. Para contratos de leasing o mutuos hipotecarios se deberá informar el nemotécnico del instrumento de acuerdo a lo reportado en archivos B1 y B4.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_identificacion",
+   "rol": "Atributo",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "facturacion_mes_m_clp",
+   "rol": "Métrica",
+   "significado": "compañía cobró por el arriendo de bienes raíces o leasings en el mes a informar. En el caso de mutuos hipotecarios se deberá informar el dividendo correspondiente al mes reportado. Se deberá informar el monto recaudado en M$ durante el mes. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "recaudacion_mes_actual_m_clp",
+   "rol": "Métrica",
+   "significado": "FACTURACION_MES, para la unidad o contrato de leasing o mutuo hipotecario señalado. Se deberá informar el monto recaudado en M$ durante el mes. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "recaudacion_meses_anteriores_m_clp",
+   "rol": "Métrica",
+   "significado": "mes reportado, para la unidad o contrato de leasing o mutuo hipotecario señalado. Se deberá informar el monto total recaudado en M$ durante el mes reportado, para la unidad o contrato de leasing o mutuos. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "recaudacion_mes_total_m_clp",
+   "rol": "Métrica",
+   "significado": "hipotecario señalado. Corresponde a la suma de los campos RECAUDACION_MES_ACTUAL y RECAUDACION_MESES_ANTERIORES. Para el registro que se informa, corresponde al monto facturado en M$ que está pendiente de pago, pero que aún no se. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_sin_morosidad_m_clp",
+   "rol": "Métrica",
+   "significado": "Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_menor_a_30_dias_m_clp",
+   "rol": "Métrica",
+   "significado": "periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_entre_30_y_menor_a_60_dias_m_clp",
+   "rol": "Métrica",
+   "significado": "penales pactados para el periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_entre_60_y_menor_a_90_dias_m_clp",
+   "rol": "Métrica",
+   "significado": "penales pactados para el periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_entre_90_y_menor_a_180_dias_m_clp",
+   "rol": "Métrica",
+   "significado": "penales pactados para el periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_mayor_a_180_dias_y_menor_a_1_ano_m_clp",
+   "rol": "Métrica",
+   "significado": "penales pactados para el periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_mayor_a_1_ano_y_menor_a_2_anos_m_clp",
+   "rol": "Métrica",
+   "significado": "penales pactados para el periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_mayor_a_2_anos_y_menor_a_3_anos_m_clp",
+   "rol": "Métrica",
+   "significado": "penales pactados para el periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_mayor_a_3_anos_y_menor_a_4_anos_m_clp",
+   "rol": "Métrica",
+   "significado": "penales pactados para el periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_mayor_a_4_anos_m_clp",
+   "rol": "Métrica",
+   "significado": "periodo de mora transcurrido ni gastos de cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "morosidad_total_m_clp",
+   "rol": "Métrica",
+   "significado": "cobranza. En caso de que el monto se encuentre originalmente expresado en moneda extranjera o en unidades reajustables, las cifras se deben presentar reajustadas a la fecha de reporte. Corresponde a la suma de la morosidad informada en los campos anteriores por tramo. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "provision_incobrabilidad_m_clp",
+   "rol": "Métrica",
+   "significado": "Para MH y CLEAS corresponde a la provisión indicada en NCG 311 y NCG 316 (cuotas morosas), respectivamente. En este campo se debe informar para bienes raíces en arriendo o disponibles para el arriendo y corresponde señalar el tipo de bien raíz, de acuerdo a lo siguiente: - Oficina - Local. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_bien_raiz",
+   "rol": "Atributo",
+   "significado": "- Habitacional - Bodega - Otros Para el caso de contratos de mutuos hipotecarios y leasing se deberá informar con espacios. Corresponde indicar el número de arriendos, cuotas o.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "numero_cuotas_vencidas",
+   "rol": "Métrica",
+   "significado": "dividendos que se encuentren vencidos e impagos a la fecha de cierre de la información. 191 Se debe informar el tipo de reprogramación (si aplica), de acuerdo con la siguiente codificación, PDC: Postergación durante el contrato PFC: Postergación al final del contrato.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "caracteristica_de_reprogramacion",
+   "rol": "Atributo",
+   "significado": "RMP: Rebaja del monto a pagar (sin recuperación) producto de la morosidad. RCA: Renegociación de un instrumento anterior. N/A: Si el contrato no se encuentra afecto a reprogramaciones por morosidad Para los registros reprogramados se debe reportar el monto total.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_total_reprogramacion_m_clp",
+   "rol": "Métrica",
+   "significado": "en M$ de las reprogramaciones que aplican sobre las cuotas del mes que se informa. Para las unidades o ítem destinadas para arriendo, corresponde. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_m2_disponibles_arriendo",
+   "rol": "Métrica",
+   "significado": "de contratos de mutuos hipotecarios y leasing este campo se deberá informar con ceros. Para las unidades o ítem destinadas para arriendo, corresponde.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_m2_en_arriendo",
+   "rol": "Métrica",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_m2_no_arrendados",
+   "rol": "Métrica",
+   "significado": "mutuos hipotecarios y leasing este campo se deberá informar con ceros. Para las unidades o ítem destinadas para arriendo, se debe informar el tipo de contrato de arriendo, según la siguiente codificación: FI: contrato con canon de arriendo fijo el cual no depende de variables comerciales como.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_contrato",
+   "rol": "Atributo",
+   "significado": "VA: contrato con canon de arriendo variable, el cual depende de variables comerciales como ventas u otras. MX: contrato con canon de arriendo que considera condiciones fijas y variables. 192 En caso de contratos de mutuos hipotecarios y leasing este campo se deberá informar con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_m2_arriendo_uf",
+   "rol": "Métrica",
+   "significado": "últimos 12 meses del contrato de arriendo vigente. En caso que el plazo transcurrido del contrato vigente sea menor a 12 meses, se debe informar el valor promedio mensualizado utilizando los meses efectivamente arrendados. Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_m2_esperado",
+   "rol": "Métrica",
+   "significado": "unidad o ítem informado. En caso que el bien raíz se encuentre totalmente arrendado, se debe informar con ceros. Para mutuos hipotecarios y contratos de leasing, corresponde informar el capital insoluto e intereses devengados a la fecha a.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Devengado",
+   "nombre": "deuda_capital_intereses_devengados_um",
+   "rol": "Métrica",
+   "significado": "origen del instrumento. No se deben informar intereses penales por mora ni gastos de cobranza. Para los bienes en arriendo se debe informar con ceros. Para mutuos hipotecarios y contratos de leasing, corresponde informar el capital insoluto, reajustes e intereses devengados a. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Devengado",
+   "nombre": "deuda_capital_intereses_devengados_m_clp",
+   "rol": "Métrica",
+   "significado": "se deben informar intereses penales por mora ni gastos de cobranza. Para los bienes en arriendo se debe informar con ceros. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "property_id",
+   "rol": "Identificador",
+   "significado": "Seudónimo estable del inmueble, calculado desde rol y aseguradora antes de suprimir el rol; permite seguimiento entre meses sin revelar el identificador.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
  "contrato": "sif-api/esquema",
  "estado": "vacio",
  "foraneas": [],

@@ -180,11 +180,15 @@ def construir() -> dict:
     hashes: list[str] = []
     for nombre in sorted(objetos):
         info = objetos[nombre]
-        if not info["columnas"]:
-            continue  # los 4 vacíos se publican en el catálogo, sin archivo que describir
-
         datos = next(v for v in ac.vistas_semanticas() if v["name"] == nombre)
         ficheros = [Path(p) for p in ac.ficheros_de(datos)]
+        # El Data Package enumera lo descargable. Los cuatro objetos de la Circular
+        # 1835 que la CMF no entrega tienen esquema (columnas) pero ninguna partición
+        # publicada: se quedan en el catálogo, no entre los recursos. Antes el filtro
+        # miraba `columnas`, y al empezar a publicar su esquema desde el
+        # `_vacio.parquet` se colaron aquí como recursos sin archivo.
+        if not ficheros:
+            continue
         particiones = []
         for f in ficheros:
             h = sha256(f)

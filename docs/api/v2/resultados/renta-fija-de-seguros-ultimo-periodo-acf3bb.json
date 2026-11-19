@@ -3,8 +3,8 @@
  "id": "renta-fija-de-seguros-ultimo-periodo-acf3bb",
  "titulo": "Renta fija de seguros (último período)",
  "origen": "terminal",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-19.c53b9ac5fb29",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "sector",
@@ -18,62 +18,62 @@
   [
    "generales",
    "BB",
-   1222,
-   1153506066
+   1180,
+   1137928649
   ],
   [
    "vida",
    "BB",
-   1656,
-   2738739678
+   1455,
+   2557073073
   ],
   [
    "vida",
    "BE",
-   6581,
-   15855157414
+   5757,
+   14245861568
   ],
   [
    "vida",
    "BNEE",
-   1140,
-   3587280903
+   661,
+   2605456945
   ],
   [
    "vida",
    "BTU",
-   700,
-   1511255482
+   599,
+   1296712968
   ],
   [
    "vida",
    "BU",
-   1752,
-   4260902766
+   1613,
+   4095215153
   ],
   [
    "vida",
    "CLEAS",
-   12399,
-   6077559100
+   7114,
+   4782054341
   ],
   [
    "vida",
    "CS",
-   612,
-   1390720134
+   455,
+   1109721691
   ],
   [
    "vida",
    "MHA",
-   63544,
-   7769745874
+   55701,
+   6892987644
   ],
   [
    "vida",
    "MHB",
-   8361,
-   1115709959
+   8308,
+   1112777911
   ]
  ],
  "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija_ultimo_periodo) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;",

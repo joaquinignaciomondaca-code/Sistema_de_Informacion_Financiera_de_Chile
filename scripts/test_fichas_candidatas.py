@@ -247,13 +247,19 @@ def main() -> int:
             locales += 1
 
         if id_api == "ffmm_cartera_nacional":
-            if (parser.descargas != 57 or "2.960 filas exactamente duplicadas" not in documento
+            # Los conteos se derivan del descriptor de particiones publicado, no se fijan:
+            # la serie crece en cada publicación y un número duro se queda atrás el día
+            # que entra un período nuevo. Pasó el 2026-11-19: la cartera de seguros sumó
+            # 2026-10 (23 particiones en vez de 22) y la compuerta de diseño se puso roja
+            # sin que hubiera ningún defecto en la ficha. El caso `bancos_balance` ya lo
+            # hacía así; el resto de las fichas se alinean con ese criterio.
+            if (parser.descargas != cantidad_particiones or "2.960 filas exactamente duplicadas" not in documento
                     or "No declarada" not in documento):
-                raise SystemExit("La ficha FFMM debe listar sus 57 archivos, la observación QA y no inventar una clave primaria")
-        elif id_api == "seguros_renta_fija" and parser.descargas != 22:
-            raise SystemExit("La ficha de renta fija debe listar las 22 particiones")
-        elif id_api == "fi_cartera_nacional" and parser.descargas != 26:
-            raise SystemExit("La ficha FI debe listar sus 26 particiones")
+                raise SystemExit(f"La ficha FFMM debe listar sus {cantidad_particiones} archivos, la observación QA y no inventar una clave primaria")
+        elif id_api == "seguros_renta_fija" and parser.descargas != cantidad_particiones:
+            raise SystemExit(f"La ficha de renta fija debe listar las {cantidad_particiones} particiones")
+        elif id_api == "fi_cartera_nacional" and parser.descargas != cantidad_particiones:
+            raise SystemExit(f"La ficha FI debe listar sus {cantidad_particiones} particiones")
         elif id_api == "bancos_balance":
             # El conteo se deriva del manifiesto de particiones, no se fija: la
             # serie crece cada mes y un número duro se queda atrás el día que

@@ -81,10 +81,17 @@ const N_VISTAS = DECLARACIONES.filter((vista) => /\b(?:file|manifest):/.test(vis
 const N_MANIFIESTOS = DECLARACIONES.filter((vista) => /\bmanifest:/.test(vista)).length;
 const N_MANIFIESTOS_DIRECTOS = DECLARACIONES.filter((vista) => /\bmanifest:/.test(vista) && !/\bqueryFile:/.test(vista)).length;
 const VISTAS_SQL_COMPACTAS = DECLARACIONES.filter((vista) => /\bqueryFile:/.test(vista));
+// `_vacio.parquet` no es una partición publicada: da esquema a una tabla que la
+// fuente aún no entrega (préstamos y arriendos de la Circular 1835). El cliente
+// lo excluye al preparar la vista, así que aquí también se cuenta como vista sin
+// particiones. Antes solo se miraba `files.length`, el archivo vacío contaba como
+// partición y la prueba daba por publicadas cuatro vistas que no lo están.
+const particionesPublicadas = (manifest) => (manifest.files || [])
+  .filter((file) => typeof file !== "string" || !file.endsWith("/_vacio.parquet"));
 const VISTAS_SIN_PARTICIONES = [...fuente.matchAll(/\{\s*name:\s*"([a-z0-9_]+)"\s*,\s*manifest:\s*"([^"]+)"/g)]
   .filter(([, , manifest]) => {
     const ruta = path.join(DOCS, manifest);
-    return fs.existsSync(ruta) && !(JSON.parse(fs.readFileSync(ruta, "utf8")).files || []).length;
+    return fs.existsSync(ruta) && !particionesPublicadas(JSON.parse(fs.readFileSync(ruta, "utf8"))).length;
   })
   .map(([, name]) => name);
 const N_VISTAS_PUBLICADAS = N_VISTAS - VISTAS_SIN_PARTICIONES.length;

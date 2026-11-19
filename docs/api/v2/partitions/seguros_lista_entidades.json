@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/seguros/aseguradoras.parquet",
-   "bytes": 6746,
+   "bytes": 6774,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/aseguradoras.parquet",
    "periodo": "aseguradoras",
-   "sha256": "5b18709671c65016a7cb2e3d7017e444d5d292d27e36b0066e543b2753bd29f3"
+   "sha256": "f1ff670ebe3341db702a8bd757f167bf6de99ed35e54af98fd79241fd6ac0227"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 6746,
-  "filas": 84
+  "bytes": 6774,
+  "filas": 85
  },
  "version": "2.3.0"
 }

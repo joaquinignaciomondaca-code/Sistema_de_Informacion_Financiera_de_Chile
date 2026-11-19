@@ -5,7 +5,7 @@
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
-Extrae, valida y publica archivos financieros y series que las entidades reportan a la CMF, el Banco Central y la Superintendencia de Pensiones: **15 sectores, 90 objetos y más de 19 millones de filas** desde enero de 2001. El catálogo institucional de cajas de compensación conserva además un universo inicial construido a partir de listados de SUSESO y del Registro de Valores de la CMF, con altas posteriores desde los TXT IFRS de la CMF. No hay backend propio de consultas ni base de datos central: el sitio y los datos se sirven como archivos estáticos, y DuckDB-Wasm ejecuta SQL en el navegador.
+Extrae, valida y publica archivos financieros y series que las entidades reportan a la CMF, el Banco Central y la Superintendencia de Pensiones: **15 sectores, 90 objetos y más de 20 millones de filas** desde enero de 2001. El catálogo institucional de cajas de compensación conserva además un universo inicial construido a partir de listados de SUSESO y del Registro de Valores de la CMF, con altas posteriores desde los TXT IFRS de la CMF. No hay backend propio de consultas ni base de datos central: el sitio y los datos se sirven como archivos estáticos, y DuckDB-Wasm ejecuta SQL en el navegador.
 
 **En la web, el foco es la inversión institucional:** seguros, fondos mutuos y fondos de inversión (**40 elementos del núcleo**, más de 17 millones de filas, 2001 → 2026), con bancos, AGF y corredoras como instituciones y las series del Banco Central como contexto. El catálogo de descargas sitúa **74 elementos** en los niveles visibles (40 núcleo, 10 instituciones, 24 contexto); **15** quedan fuera del foco —archivo y registros— y **1** objeto sin filas se conserva oculto. Una variante de la lista de corredoras se cuenta como elemento, pero se presenta junto a la lista base. Todo sigue publicado y disponible en el catálogo de descargas; el criterio editorial se explica en el [alcance de la edición](archive/notas/recorte_visual_industrias_2026-10-20.md).
 
@@ -24,7 +24,7 @@ Extrae, valida y publica archivos financieros y series que las entidades reporta
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-09 |
 | Sectores del catálogo | **15**; fuentes directas: CMF, Banco Central y SPensiones. El padrón CCAF conserva procedencia histórica de SUSESO |
-| Objetos publicados | **90** (86 con archivo, 85 con filas) · más de 19 millones de filas · **≈488 MB** en 728 archivos referenciados por el catálogo |
+| Objetos publicados | **90** (86 con archivo, 85 con filas) · más de 20 millones de filas · **≈488 MB** en 728 archivos referenciados por el catálogo |
 | Consultas sugeridas listas para usar | **159** |
 | Actualización | **20 workflows** en GitHub Actions (18 con horario; 2 sin `schedule`) |
 | Verificación | Auditorías de datos, interfaz, privacidad, automatización y pruebas unitarias en CI |
@@ -143,12 +143,12 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 
 | Sector | Elementos | Filas (suma por objeto) | Serie | Fuente |
 |---|---:|---:|---|---|
-| Seguros de Vida y Generales | 24 | 10.553.271 | 2016-11 → 2026-09 | CMF · Circular 1835 |
+| Seguros de Vida y Generales | 24 | 10.804.807 | 2016-11 → 2026-10 | CMF · Circular 1835 |
 | Fondos Mutuos | 7 | 3.616.378 | Carteras 2001-01 → 2026-09; EEFF 2010-12 → 2025-12 | CMF · Circulares 1333 y 1997 |
 | Fondos de Inversión | 9 | 3.300.526 | Carteras 2020-03 → 2026-06; pactos 2012-03 → 2026-06; EEFF 2022-03 → 2026-06 (16 cierres, backfill parcial) | CMF · LUF / Circular 1998 · XML FIEF |
 | Corredoras de Bolsa | 4 | 188.228 | 2010-12 → 2026-09 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | 24 | 41.672 | diaria / mensual / trimestral | BCCh |
+| Macroeconomía y Tasas | 24 | 41.709 | diaria / mensual / trimestral | BCCh |
 | Factoring y Leasing | 3 | 52.496 | 2009-03 → 2026-09 | CMF · IFRS |
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
@@ -158,9 +158,9 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **89** | **19.928.166** | **2001 → 2026** | |
+| **Total** | **89** | **20.179.739** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son dos vistas y dos conjuntos de archivos **filtrados por separado**: B1/B2 (735.837 filas) y R1 (1.262.183), sin solape; sus filas suman las 1.998.020 de la tabla de origen `bancos_cmf_lineas`. El total sectorial de 1.998.061 incluye además las 41 filas de `bancos_lista_entidades`. Por eso el manifiesto ETL cuenta una tabla fuente y la API/Descargas exponen dos objetos lógicos filtrados más el padrón, sin duplicar filas ni compartir el Parquet combinado. El catálogo API suma 90 objetos y 19.928.166 filas. Esta tabla enumera 89 elementos de Descargas porque excluye `fi_bienes_raices`, retenido con su archivo de esquema de 0 filas pero oculto de la navegación. De esos 89 elementos, 74 están en niveles principales (19.827.847 filas; 99,5 %) y 15 en archivo/registro (100.319; 0,5 %); una variante de corredoras se cuenta como elemento y se muestra junto a su lista base. Las filas son una suma por objeto y no un conteo de registros globalmente únicos: algunas vistas pueden solaparse. El detalle de unidades y la reconciliación por IDs, filas, bytes, particiones y rutas está en [`metricas_publicadas.json`](docs/metricas_publicadas.json).
+† En banca, *balance* y *resultados* son dos vistas y dos conjuntos de archivos **filtrados por separado**: B1/B2 (735.837 filas) y R1 (1.262.183), sin solape; sus filas suman las 1.998.020 de la tabla de origen `bancos_cmf_lineas`. El total sectorial de 1.998.061 incluye además las 41 filas de `bancos_lista_entidades`. Por eso el manifiesto ETL cuenta una tabla fuente y la API/Descargas exponen dos objetos lógicos filtrados más el padrón, sin duplicar filas ni compartir el Parquet combinado. El catálogo API suma 90 objetos y 20.179.739 filas. Esta tabla enumera 89 elementos de Descargas porque excluye `fi_bienes_raices`, retenido con su archivo de esquema de 0 filas pero oculto de la navegación. De esos 89 elementos, 74 están en niveles principales (20.079.420 filas; 99,5 %) y 15 en archivo/registro (100.319; 0,5 %); una variante de corredoras se cuenta como elemento y se muestra junto a su lista base. Las filas son una suma por objeto y no un conteo de registros globalmente únicos: algunas vistas pueden solaparse. El detalle de unidades y la reconciliación por IDs, filas, bytes, particiones y rutas está en [`metricas_publicadas.json`](docs/metricas_publicadas.json).
 
 ### Operaciones REPO (pactos): cobertura vigente
 
@@ -212,6 +212,10 @@ Aplicación estática de siete pestañas, sin framework y sin build:
 El **explorador jerárquico** organiza 15 sectores → carpetas temáticas → 90 objetos del catálogo. Hay 89 elementos de Descargas no ocultos (74 en niveles principales y 15 en archivo/registro); `fi_bienes_raices` conserva esquema y archivo vacío, pero no se muestra en la navegación. Una variante del registro de corredoras se presenta junto a su lista base. Las consultas sugeridas aparecen en cada carpeta, ordenadas por nivel. El nivel de cada sector es una bandera en `docs/vocabulario.json` (`alcance`): cambiarla y regenerar el catálogo revierte o ajusta el recorte sin tocar datos. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos. La preparación de datos remotos por pestaña está limitada y el control preventivo de tamaño del sitio está en [`archive/notas/capacidad_trafico.md`](archive/notas/capacidad_trafico.md).
 
 ### Verlo funcionando
+
+**Sin instalar nada:** [abrir el sistema publicado](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/) — el sitio completo corre en tu navegador, con SQL sobre los datos publicados.
+
+**En local**, para trabajar sobre el código o los datos:
 
 ```bash
 git clone https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile
@@ -323,7 +327,7 @@ flowchart LR
     end
 
     subgraph Publicado["Datos publicados · archivos estáticos"]
-        PQ["docs/outputs/sector/*.parquet · ≈488 MB, más de 19 M filas"]
+        PQ["docs/outputs/sector/*.parquet · ≈488 MB, más de 20 M filas"]
         MAN["data_manifest.json · 89 entradas ETL"]
         API["docs/api/v2/ · contrato estático y views.sql"]
     end

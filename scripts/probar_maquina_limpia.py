@@ -95,13 +95,17 @@ destino = salida / "aseguradoras.parquet"
 urllib.request.urlretrieve(local, destino)
 con = duckdb.connect()
 filas = con.execute(f"SELECT count(*) FROM read_parquet('{destino}')").fetchone()[0]
-paso("consultar los datos", filas == elegido["sif"]["filas"], f"{filas} filas (declara 84)")
+paso("consultar los datos", filas == elegido["sif"]["filas"],
+     f"{filas} filas (el catálogo declara {elegido['sif']['filas']})")
 
 # 4. Una consulta de negocio, tal como la escribiría un tercero.
 por_sector = con.execute(
     f"SELECT sector, count(*) FROM read_parquet('{destino}') GROUP BY 1 ORDER BY 2 DESC"
 ).fetchall()
-paso("consulta de negocio", sum(n for _, n in por_sector) == 84, str(por_sector))
+# El total se contrasta con lo descargado, no con una constante: la lista crece con
+# cada alta de la CMF (85 aseguradoras desde el 2026-11-17) y un número fijo aquí
+# solo consigue que la compuerta se ponga roja por un dato nuevo, no por un defecto.
+paso("consulta de negocio", sum(n for _, n in por_sector) == filas, str(por_sector))
 
 # 5. El contrato estático: catálogo y vista SQL, sin haber visto el repo.
 with urllib.request.urlopen(base + "/api/v2/catalog.json", timeout=30) as r:

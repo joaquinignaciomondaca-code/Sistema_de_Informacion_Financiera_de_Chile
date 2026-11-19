@@ -4,30 +4,30 @@
    "archivos": [
     {
      "ruta": "outputs/seguros/aseguradoras.parquet",
-     "bytes": 6746
+     "bytes": 6774
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/seguros/aseguradoras.completo.csv",
-    "bytes": 6487,
-    "filas": 84
+    "bytes": 6595,
+    "filas": 85
    },
    "json": {
     "ruta": "outputs/seguros/aseguradoras.completo.json",
-    "bytes": 17625
+    "bytes": 17869
    },
    "nota": null,
-   "filas": 84,
+   "filas": 85,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/seguros/aseguradoras.parquet",
-      "bytes": 6746
+      "bytes": 6774
      }
     ],
     "where": "",
-    "filas": 84
+    "filas": 85
    }
   },
   "seguros_renta_fija": {
@@ -119,13 +119,17 @@
     {
      "ruta": "outputs/seguros/renta_fija/2026-09.parquet",
      "bytes": 10621493
+    },
+    {
+     "ruta": "outputs/seguros/renta_fija/2026-10.parquet",
+     "bytes": 9314495
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": "Parquet por encima del tope de generación",
-   "filas": 2321911
+   "filas": 2411077
   },
   "seguros_acciones": {
    "archivos": [
@@ -171,14 +175,14 @@
     },
     {
      "ruta": "outputs/seguros/acciones/2026.parquet",
-     "bytes": 239918
+     "bytes": 250342
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 109019,
+   "filas": 109806,
    "firma": {
     "archivos": [
      {
@@ -223,11 +227,11 @@
      },
      {
       "ruta": "outputs/seguros/acciones/2026.parquet",
-      "bytes": 239918
+      "bytes": 250342
      }
     ],
     "where": "",
-    "filas": 109019
+    "filas": 109806
    }
   },
   "seguros_fondos_mutuos": {
@@ -274,14 +278,14 @@
     },
     {
      "ruta": "outputs/seguros/fondos_mutuos/2026.parquet",
-     "bytes": 179101
+     "bytes": 195381
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 100472,
+   "filas": 101084,
    "firma": {
     "archivos": [
      {
@@ -326,11 +330,11 @@
      },
      {
       "ruta": "outputs/seguros/fondos_mutuos/2026.parquet",
-      "bytes": 179101
+      "bytes": 195381
      }
     ],
     "where": "",
-    "filas": 100472
+    "filas": 101084
    }
   },
   "seguros_bienes_raices": {
@@ -422,13 +426,17 @@
     {
      "ruta": "outputs/seguros/bienes_raices/2026-09.parquet",
      "bytes": 1588246
+    },
+    {
+     "ruta": "outputs/seguros/bienes_raices/2026-10.parquet",
+     "bytes": 1098186
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 760152,
+   "filas": 786342,
    "firma": {
     "archivos": [
      {
@@ -518,10 +526,14 @@
      {
       "ruta": "outputs/seguros/bienes_raices/2026-09.parquet",
       "bytes": 1588246
+     },
+     {
+      "ruta": "outputs/seguros/bienes_raices/2026-10.parquet",
+      "bytes": 1098186
      }
     ],
     "where": "",
-    "filas": 760152
+    "filas": 786342
    }
   },
   "seguros_extranjeros": {
@@ -568,14 +580,14 @@
     },
     {
      "ruta": "outputs/seguros/extranjeros/2026.parquet",
-     "bytes": 1563494
+     "bytes": 1608934
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 471942,
+   "filas": 475353,
    "firma": {
     "archivos": [
      {
@@ -620,11 +632,11 @@
      },
      {
       "ruta": "outputs/seguros/extranjeros/2026.parquet",
-      "bytes": 1563494
+      "bytes": 1608934
      }
     ],
     "where": "",
-    "filas": 471942
+    "filas": 475353
    }
   },
   "seguros_derivados": {
@@ -671,14 +683,14 @@
     },
     {
      "ruta": "outputs/seguros/derivados/2026.parquet",
-     "bytes": 2086193
+     "bytes": 2184949
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 373469,
+   "filas": 376201,
    "firma": {
     "archivos": [
      {
@@ -723,11 +735,11 @@
      },
      {
       "ruta": "outputs/seguros/derivados/2026.parquet",
-      "bytes": 2086193
+      "bytes": 2184949
      }
     ],
     "where": "",
-    "filas": 373469
+    "filas": 376201
    }
   },
   "seguros_pactos": {
@@ -774,18 +786,18 @@
     },
     {
      "ruta": "outputs/seguros/pactos/2026.parquet",
-     "bytes": 79081
+     "bytes": 86254
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/seguros/pactos/pactos.completo.csv",
-    "bytes": 2703591,
-    "filas": 11371
+    "bytes": 2749389,
+    "filas": 11556
    },
    "json": null,
    "nota": null,
-   "filas": 11371,
+   "filas": 11556,
    "firma": {
     "archivos": [
      {
@@ -830,11 +842,11 @@
      },
      {
       "ruta": "outputs/seguros/pactos/2026.parquet",
-      "bytes": 79081
+      "bytes": 86254
      }
     ],
     "where": "",
-    "filas": 11371
+    "filas": 11556
    }
   },
   "seguros_control_inversiones": {
@@ -881,14 +893,14 @@
     },
     {
      "ruta": "outputs/seguros/control_inversiones/2026.parquet",
-     "bytes": 141038
+     "bytes": 154419
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 111410,
+   "filas": 112233,
    "firma": {
     "archivos": [
      {
@@ -933,11 +945,11 @@
      },
      {
       "ruta": "outputs/seguros/control_inversiones/2026.parquet",
-      "bytes": 141038
+      "bytes": 154419
      }
     ],
     "where": "",
-    "filas": 111410
+    "filas": 112233
    }
   },
   "seguros_otras_inversiones": {
@@ -952,14 +964,14 @@
     },
     {
      "ruta": "outputs/seguros/otras_inversiones/2026.parquet",
-     "bytes": 280254
+     "bytes": 306029
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 42494,
+   "filas": 44296,
    "firma": {
     "archivos": [
      {
@@ -972,11 +984,11 @@
      },
      {
       "ruta": "outputs/seguros/otras_inversiones/2026.parquet",
-      "bytes": 280254
+      "bytes": 306029
      }
     ],
     "where": "",
-    "filas": 42494
+    "filas": 44296
    }
   },
   "seguros_tablas_descriptores": {
@@ -991,21 +1003,21 @@
     },
     {
      "ruta": "outputs/seguros/tablas_descriptores/2026.parquet",
-     "bytes": 58967
+     "bytes": 59305
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/seguros/tablas_descriptores/tablas_descriptores.completo.csv",
-    "bytes": 1290968,
-    "filas": 9792
+    "bytes": 1296233,
+    "filas": 9832
    },
    "json": {
     "ruta": "outputs/seguros/tablas_descriptores/tablas_descriptores.completo.json",
-    "bytes": 4860174
+    "bytes": 4880095
    },
    "nota": null,
-   "filas": 9792,
+   "filas": 9832,
    "firma": {
     "archivos": [
      {
@@ -1018,11 +1030,11 @@
      },
      {
       "ruta": "outputs/seguros/tablas_descriptores/2026.parquet",
-      "bytes": 58967
+      "bytes": 59305
      }
     ],
     "where": "",
-    "filas": 9792
+    "filas": 9832
    }
   },
   "seguros_tablas_desarrollo": {
@@ -1037,14 +1049,14 @@
     },
     {
      "ruta": "outputs/seguros/tablas_desarrollo/2026.parquet",
-     "bytes": 2184145
+     "bytes": 2208556
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 2193981,
+   "filas": 2197117,
    "firma": {
     "archivos": [
      {
@@ -1057,11 +1069,11 @@
      },
      {
       "ruta": "outputs/seguros/tablas_desarrollo/2026.parquet",
-      "bytes": 2184145
+      "bytes": 2208556
      }
     ],
     "where": "",
-    "filas": 2193981
+    "filas": 2197117
    }
   },
   "seguros_flujos_activos_elegibles": {
@@ -1076,21 +1088,21 @@
     },
     {
      "ruta": "outputs/seguros/flujos_activos_elegibles/2026.parquet",
-     "bytes": 64287
+     "bytes": 68146
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/seguros/flujos_activos_elegibles/flujos_activos_elegibles.completo.csv",
-    "bytes": 636891,
-    "filas": 4369
+    "bytes": 659223,
+    "filas": 4518
    },
    "json": {
     "ruta": "outputs/seguros/flujos_activos_elegibles/flujos_activos_elegibles.completo.json",
-    "bytes": 1790091
+    "bytes": 1851759
    },
    "nota": null,
-   "filas": 4369,
+   "filas": 4518,
    "firma": {
     "archivos": [
      {
@@ -1103,26 +1115,38 @@
      },
      {
       "ruta": "outputs/seguros/flujos_activos_elegibles/2026.parquet",
-      "bytes": 64287
+      "bytes": 68146
      }
     ],
     "where": "",
-    "filas": 4369
+    "filas": 4518
    }
   },
   "seguros_prestamos": {
-   "archivos": [],
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/prestamos/_vacio.parquet",
+     "bytes": 13592
+    }
+   ],
    "where": "",
    "csv": null,
    "json": null,
-   "nota": "sin archivos publicados"
+   "nota": "sin filas publicados",
+   "filas": 0
   },
   "seguros_bienes_raices_arriendo_morosidad": {
-   "archivos": [],
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/bienes_raices_arriendo_morosidad/_vacio.parquet",
+     "bytes": 8864
+    }
+   ],
    "where": "",
    "csv": null,
    "json": null,
-   "nota": "sin archivos publicados"
+   "nota": "sin filas publicados",
+   "filas": 0
   },
   "seguros_garantias_derivados": {
    "archivos": [
@@ -1136,18 +1160,18 @@
     },
     {
      "ruta": "outputs/seguros/garantias_derivados/2026.parquet",
-     "bytes": 65354
+     "bytes": 70002
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/seguros/garantias_derivados/garantias_derivados.completo.csv",
-    "bytes": 1431929,
-    "filas": 6518
+    "bytes": 1478864,
+    "filas": 6733
    },
    "json": null,
    "nota": null,
-   "filas": 6518,
+   "filas": 6733,
    "firma": {
     "archivos": [
      {
@@ -1160,11 +1184,11 @@
      },
      {
       "ruta": "outputs/seguros/garantias_derivados/2026.parquet",
-      "bytes": 65354
+      "bytes": 70002
      }
     ],
     "where": "",
-    "filas": 6518
+    "filas": 6733
    }
   },
   "seguros_registros_tipo6": {
@@ -1179,21 +1203,21 @@
     },
     {
      "ruta": "outputs/seguros/registros_tipo6/2026.parquet",
-     "bytes": 7167
+     "bytes": 7180
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/seguros/registros_tipo6/registros_tipo6.completo.csv",
-    "bytes": 23332,
-    "filas": 66
+    "bytes": 23739,
+    "filas": 67
    },
    "json": {
     "ruta": "outputs/seguros/registros_tipo6/registros_tipo6.completo.json",
-    "bytes": 33833
+    "bytes": 34401
    },
    "nota": null,
-   "filas": 66,
+   "filas": 67,
    "firma": {
     "archivos": [
      {
@@ -1206,11 +1230,11 @@
      },
      {
       "ruta": "outputs/seguros/registros_tipo6/2026.parquet",
-      "bytes": 7167
+      "bytes": 7180
      }
     ],
     "where": "",
-    "filas": 66
+    "filas": 67
    }
   },
   "seguros_renta_fija_relevante": {
@@ -1225,14 +1249,14 @@
     },
     {
      "ruta": "outputs/seguros/renta_fija_relevante/2026.parquet",
-     "bytes": 17336453
+     "bytes": 18391159
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 2321911,
+   "filas": 2411077,
    "firma": {
     "archivos": [
      {
@@ -1245,11 +1269,11 @@
      },
      {
       "ruta": "outputs/seguros/renta_fija_relevante/2026.parquet",
-      "bytes": 17336453
+      "bytes": 18391159
      }
     ],
     "where": "",
-    "filas": 2321911
+    "filas": 2411077
    }
   },
   "seguros_acciones_relevantes": {
@@ -1296,14 +1320,14 @@
     },
     {
      "ruta": "outputs/seguros/acciones_relevantes/2026.parquet",
-     "bytes": 180069
+     "bytes": 190020
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 109019,
+   "filas": 109806,
    "firma": {
     "archivos": [
      {
@@ -1348,11 +1372,11 @@
      },
      {
       "ruta": "outputs/seguros/acciones_relevantes/2026.parquet",
-      "bytes": 180069
+      "bytes": 190020
      }
     ],
     "where": "",
-    "filas": 109019
+    "filas": 109806
    }
   },
   "seguros_bienes_raices_relevantes": {
@@ -1367,14 +1391,14 @@
     },
     {
      "ruta": "outputs/seguros/bienes_raices_relevantes/2026.parquet",
-     "bytes": 4128252
+     "bytes": 4375507
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 760152,
+   "filas": 786342,
    "firma": {
     "archivos": [
      {
@@ -1387,11 +1411,11 @@
      },
      {
       "ruta": "outputs/seguros/bienes_raices_relevantes/2026.parquet",
-      "bytes": 4128252
+      "bytes": 4375507
      }
     ],
     "where": "",
-    "filas": 760152
+    "filas": 786342
    }
   },
   "seguros_extranjeros_relevantes": {
@@ -1438,14 +1462,14 @@
     },
     {
      "ruta": "outputs/seguros/extranjeros_relevantes/2026.parquet",
-     "bytes": 759652
+     "bytes": 789509
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 471670,
+   "filas": 475081,
    "firma": {
     "archivos": [
      {
@@ -1490,11 +1514,11 @@
      },
      {
       "ruta": "outputs/seguros/extranjeros_relevantes/2026.parquet",
-      "bytes": 759652
+      "bytes": 789509
      }
     ],
     "where": "",
-    "filas": 471670
+    "filas": 475081
    }
   },
   "seguros_derivados_relevantes": {
@@ -1541,14 +1565,14 @@
     },
     {
      "ruta": "outputs/seguros/derivados_relevantes/2026.parquet",
-     "bytes": 758631
+     "bytes": 776758
     }
    ],
    "where": "",
    "csv": null,
    "json": null,
    "nota": null,
-   "filas": 373469,
+   "filas": 376201,
    "firma": {
     "archivos": [
      {
@@ -1593,26 +1617,38 @@
      },
      {
       "ruta": "outputs/seguros/derivados_relevantes/2026.parquet",
-      "bytes": 758631
+      "bytes": 776758
      }
     ],
     "where": "",
-    "filas": 373469
+    "filas": 376201
    }
   },
   "seguros_prestamos_relevantes": {
-   "archivos": [],
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/prestamos_relevantes/_vacio.parquet",
+     "bytes": 5163
+    }
+   ],
    "where": "",
    "csv": null,
    "json": null,
-   "nota": "sin archivos publicados"
+   "nota": "sin filas publicados",
+   "filas": 0
   },
   "seguros_bienes_raices_arriendo_morosidad_relevantes": {
-   "archivos": [],
+   "archivos": [
+    {
+     "ruta": "outputs/seguros/bienes_raices_arriendo_morosidad_relevantes/_vacio.parquet",
+     "bytes": 4657
+    }
+   ],
    "where": "",
    "csv": null,
    "json": null,
-   "nota": "sin archivos publicados"
+   "nota": "sin filas publicados",
+   "filas": 0
   },
   "fi_lista_entidades": {
    "archivos": [
@@ -4627,240 +4663,240 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_tasas_corto_plazo.parquet",
-     "bytes": 13698
+     "bytes": 13713
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_tasas_corto_plazo.completo.csv",
-    "bytes": 87470,
-    "filas": 3207
+    "bytes": 87551,
+    "filas": 3210
    },
    "json": {
     "ruta": "outputs/macro/macro_tasas_corto_plazo.completo.json",
-    "bytes": 259310
+    "bytes": 259550
    },
    "nota": null,
-   "filas": 3207,
+   "filas": 3210,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_tasas_corto_plazo.parquet",
-      "bytes": 13698
+      "bytes": 13713
      }
     ],
     "where": "",
-    "filas": 3207
+    "filas": 3210
    }
   },
   "macro_swaps_camara": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_swaps_camara.parquet",
-     "bytes": 79477
+     "bytes": 79504
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_swaps_camara.completo.csv",
-    "bytes": 299357,
-    "filas": 3220
+    "bytes": 299633,
+    "filas": 3223
    },
    "json": {
     "ruta": "outputs/macro/macro_swaps_camara.completo.json",
-    "bytes": 879029
+    "bytes": 879845
    },
    "nota": null,
-   "filas": 3220,
+   "filas": 3223,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_swaps_camara.parquet",
-      "bytes": 79477
+      "bytes": 79504
      }
     ],
     "where": "",
-    "filas": 3220
+    "filas": 3223
    }
   },
   "macro_curva_bonos_pesos": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
-     "bytes": 61600
+     "bytes": 61601
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.csv",
-    "bytes": 151438,
-    "filas": 3189
-   },
-   "json": {
-    "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.json",
-    "bytes": 582126
-   },
-   "nota": null,
-   "filas": 3189,
-   "firma": {
-    "archivos": [
-     {
-      "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
-      "bytes": 61600
-     }
-    ],
-    "where": "",
-    "filas": 3189
-   }
-  },
-  "macro_curva_bonos_uf": {
-   "archivos": [
-    {
-     "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
-     "bytes": 94333
-    }
-   ],
-   "where": "",
-   "csv": {
-    "ruta": "outputs/macro/macro_curva_bonos_uf.completo.csv",
-    "bytes": 215225,
+    "bytes": 151490,
     "filas": 3191
    },
    "json": {
-    "ruta": "outputs/macro/macro_curva_bonos_uf.completo.json",
-    "bytes": 953219
+    "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.json",
+    "bytes": 582460
    },
    "nota": null,
    "filas": 3191,
    "firma": {
     "archivos": [
      {
-      "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
-      "bytes": 94333
+      "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
+      "bytes": 61601
      }
     ],
     "where": "",
     "filas": 3191
    }
   },
+  "macro_curva_bonos_uf": {
+   "archivos": [
+    {
+     "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
+     "bytes": 94366
+    }
+   ],
+   "where": "",
+   "csv": {
+    "ruta": "outputs/macro/macro_curva_bonos_uf.completo.csv",
+    "bytes": 215335,
+    "filas": 3194
+   },
+   "json": {
+    "ruta": "outputs/macro/macro_curva_bonos_uf.completo.json",
+    "bytes": 954037
+   },
+   "nota": null,
+   "filas": 3194,
+   "firma": {
+    "archivos": [
+     {
+      "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
+      "bytes": 94366
+     }
+    ],
+    "where": "",
+    "filas": 3194
+   }
+  },
   "macro_inflacion_implicita": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_inflacion_implicita.parquet",
-     "bytes": 36912
+     "bytes": 36930
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_inflacion_implicita.completo.csv",
-    "bytes": 93581,
-    "filas": 3095
+    "bytes": 93631,
+    "filas": 3097
    },
    "json": {
     "ruta": "outputs/macro/macro_inflacion_implicita.completo.json",
-    "bytes": 378589
+    "bytes": 378829
    },
    "nota": null,
-   "filas": 3095,
+   "filas": 3097,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_inflacion_implicita.parquet",
-      "bytes": 36912
+      "bytes": 36930
      }
     ],
     "where": "",
-    "filas": 3095
+    "filas": 3097
    }
   },
   "macro_dolar_observado": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_dolar_observado.parquet",
-     "bytes": 24791
+     "bytes": 24824
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_dolar_observado.completo.csv",
-    "bytes": 83143,
-    "filas": 3206
+    "bytes": 83223,
+    "filas": 3209
    },
    "json": {
     "ruta": "outputs/macro/macro_dolar_observado.completo.json",
-    "bytes": 256225
+    "bytes": 256467
    },
    "nota": null,
-   "filas": 3206,
+   "filas": 3209,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_dolar_observado.parquet",
-      "bytes": 24791
+      "bytes": 24824
      }
     ],
     "where": "",
-    "filas": 3206
+    "filas": 3209
    }
   },
   "macro_euro_observado": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_euro_observado.parquet",
-     "bytes": 24606
+     "bytes": 24639
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_euro_observado.completo.csv",
-    "bytes": 83726,
-    "filas": 3206
+    "bytes": 83805,
+    "filas": 3209
    },
    "json": {
     "ruta": "outputs/macro/macro_euro_observado.completo.json",
-    "bytes": 253603
+    "bytes": 253841
    },
    "nota": null,
-   "filas": 3206,
+   "filas": 3209,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_euro_observado.parquet",
-      "bytes": 24606
+      "bytes": 24639
      }
     ],
     "where": "",
-    "filas": 3206
+    "filas": 3209
    }
   },
   "macro_tipo_cambio_multilateral": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
-     "bytes": 42627
+     "bytes": 42690
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_tipo_cambio_multilateral.completo.csv",
-    "bytes": 125436,
-    "filas": 3206
+    "bytes": 125554,
+    "filas": 3209
    },
    "json": {
     "ruta": "outputs/macro/macro_tipo_cambio_multilateral.completo.json",
-    "bytes": 644662
+    "bytes": 645266
    },
    "nota": null,
-   "filas": 3206,
+   "filas": 3209,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
-      "bytes": 42627
+      "bytes": 42690
      }
     ],
     "where": "",
-    "filas": 3206
+    "filas": 3209
    }
   },
   "macro_tipo_cambio_real": {
@@ -4897,30 +4933,30 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_uf.parquet",
-     "bytes": 35576
+     "bytes": 35596
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_uf.completo.csv",
-    "bytes": 131237,
-    "filas": 4703
+    "bytes": 131320,
+    "filas": 4706
    },
    "json": {
     "ruta": "outputs/macro/macro_uf.completo.json",
-    "bytes": 314627
+    "bytes": 314827
    },
    "nota": null,
-   "filas": 4703,
+   "filas": 4706,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_uf.parquet",
-      "bytes": 35576
+      "bytes": 35596
      }
     ],
     "where": "",
-    "filas": 4703
+    "filas": 4706
    }
   },
   "macro_utm": {
@@ -4987,18 +5023,18 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_imacec.parquet",
-     "bytes": 12346
+     "bytes": 12349
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_imacec.completo.csv",
-    "bytes": 15201,
+    "bytes": 15224,
     "filas": 153
    },
    "json": {
     "ruta": "outputs/macro/macro_imacec.completo.json",
-    "bytes": 38021
+    "bytes": 38044
    },
    "nota": null,
    "filas": 153,
@@ -5006,7 +5042,7 @@
     "archivos": [
      {
       "ruta": "outputs/macro/macro_imacec.parquet",
-      "bytes": 12346
+      "bytes": 12349
      }
     ],
     "where": "",
@@ -5017,30 +5053,30 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_pib_trimestral.parquet",
-     "bytes": 3112
+     "bytes": 3125
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_pib_trimestral.completo.csv",
-    "bytes": 1783,
-    "filas": 50
+    "bytes": 1818,
+    "filas": 51
    },
    "json": {
     "ruta": "outputs/macro/macro_pib_trimestral.completo.json",
-    "bytes": 4441
+    "bytes": 4530
    },
    "nota": null,
-   "filas": 50,
+   "filas": 51,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_pib_trimestral.parquet",
-      "bytes": 3112
+      "bytes": 3125
      }
     ],
     "where": "",
-    "filas": 50
+    "filas": 51
    }
   },
   "macro_mercado_laboral": {
@@ -5077,60 +5113,60 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_cobre.parquet",
-     "bytes": 33314
+     "bytes": 33358
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_cobre.completo.csv",
-    "bytes": 90286,
-    "filas": 3278
+    "bytes": 90367,
+    "filas": 3281
    },
    "json": {
     "ruta": "outputs/macro/macro_cobre.completo.json",
-    "bytes": 420953
+    "bytes": 421337
    },
    "nota": null,
-   "filas": 3278,
+   "filas": 3281,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_cobre.parquet",
-      "bytes": 33314
+      "bytes": 33358
      }
     ],
     "where": "",
-    "filas": 3278
+    "filas": 3281
    }
   },
   "macro_metales_preciosos": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_metales_preciosos.parquet",
-     "bytes": 47087
+     "bytes": 47160
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_metales_preciosos.completo.csv",
-    "bytes": 111110,
-    "filas": 3206
+    "bytes": 111219,
+    "filas": 3209
    },
    "json": {
     "ruta": "outputs/macro/macro_metales_preciosos.completo.json",
-    "bytes": 348294
+    "bytes": 348625
    },
    "nota": null,
-   "filas": 3206,
+   "filas": 3209,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_metales_preciosos.parquet",
-      "bytes": 47087
+      "bytes": 47160
      }
     ],
     "where": "",
-    "filas": 3206
+    "filas": 3209
    }
   },
   "macro_reservas_internacionales": {
@@ -5167,30 +5203,30 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_tasa_referencia_fed.parquet",
-     "bytes": 12262
+     "bytes": 12285
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_tasa_referencia_fed.completo.csv",
-    "bytes": 78816,
-    "filas": 3343
+    "bytes": 78931,
+    "filas": 3348
    },
    "json": {
     "ruta": "outputs/macro/macro_tasa_referencia_fed.completo.json",
-    "bytes": 229218
+    "bytes": 229558
    },
    "nota": null,
-   "filas": 3343,
+   "filas": 3348,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_tasa_referencia_fed.parquet",
-      "bytes": 12262
+      "bytes": 12285
      }
     ],
     "where": "",
-    "filas": 3343
+    "filas": 3348
    }
   },
   "macro_deuda_publica_pct_pib": {
@@ -5317,7 +5353,7 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_series_catalogo.parquet",
-     "bytes": 10890
+     "bytes": 10888
     }
    ],
    "where": "",
@@ -5336,7 +5372,7 @@
     "archivos": [
      {
       "ruta": "outputs/macro/macro_series_catalogo.parquet",
-      "bytes": 10890
+      "bytes": 10888
      }
     ],
     "where": "",
@@ -6984,7 +7020,7 @@
    }
   }
  },
- "generado": "2026-11-17T03:02:27+00:00",
+ "generado": "2026-11-19T19:48:27+00:00",
  "parametros": {
   "csv_max_mb": 10,
   "json_max_mb": 5,

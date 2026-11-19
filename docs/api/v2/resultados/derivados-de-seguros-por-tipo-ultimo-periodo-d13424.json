@@ -3,8 +3,8 @@
  "id": "derivados-de-seguros-por-tipo-ultimo-periodo-d13424",
  "titulo": "Derivados de seguros por tipo (último período)",
  "origen": "terminal",
- "data_release": "2026-11-16.862539b4ee5f",
- "generado": "2026-11-17",
+ "data_release": "2026-11-19.c53b9ac5fb29",
+ "generado": "2026-11-19",
  "max_filas": 500,
  "columnas": [
   "sector",
@@ -12,13 +12,13 @@
   "contratos",
   "valor_razonable_m_clp"
  ],
- "filas": 6,
+ "filas": 5,
  "truncado": false,
  "datos": [
   [
    "generales",
    "forward",
-   18,
+   15,
    null
   ],
   [
@@ -30,25 +30,19 @@
   [
    "vida",
    "forward",
-   1345,
-   null
-  ],
-  [
-   "vida",
-   "futuro",
-   4,
+   1046,
    null
   ],
   [
    "vida",
    "opcion",
    13,
-   -2100395
+   6562116
   ],
   [
    "vida",
    "swap",
-   4734,
+   1645,
    null
   ]
  ],
