@@ -21,8 +21,8 @@ Qué hace este script
 --------------------
 Reescribe **sólo los totales** en `PRIVACIDAD.md` y en su espejo
 `docs/privacidad.html`, leyendo los Parquet publicados. Los conteos que expresan
-el criterio de privacidad (36 personas naturales, 11 corredores, 317 nombres de
-tasadores y su reparto 233/263) **no** se tocan: si cambian, la compuerta
+el criterio de privacidad (36 personas naturales, 11 corredores, 318 nombres de
+tasadores y su reparto 233/264) **no** se tocan: si cambian, la compuerta
 `scripts/auditar_personas_publicadas.py` debe fallar para que alguien revise si
 el riesgo cambió. Así el aviso sigue siendo la declaración que se audita, no una
 copia del código, y el ruido de un alta ya no lo apaga.
