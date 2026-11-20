@@ -8,7 +8,7 @@
     "particiones_rutas_y_conteos_iguales_por_objeto": true
   },
   "contrato": "sif/metricas-publicadas",
-  "data_release": "2026-11-20.e287a7bdce2f",
+  "data_release": "2026-11-20.340d5e9ec804",
   "definiciones": {
     "alcance_principal": "Elementos en niveles visibles (núcleo, instituciones y contexto), según el alcance editorial de docs/vocabulario.json.",
     "auxiliares_sql": "Parquet compactos que DuckDB usa para algunas consultas; son copias de lectura, no objetos adicionales ni filas únicas de cobertura.",
@@ -29,13 +29,13 @@
     "api_v2": {
       "archivos_unicos": 734,
       "artefacto": "api/v2/catalog.json",
-      "bytes": 500229387,
+      "bytes": 500229514,
       "con_archivo": 86,
       "con_archivo_sin_filas": 1,
       "con_filas": 85,
       "consultas": 159,
-      "data_release": "2026-11-20.e287a7bdce2f",
-      "filas": 20179750,
+      "data_release": "2026-11-20.340d5e9ec804",
+      "filas": 20179752,
       "objetos": 90,
       "particiones": 734,
       "por_estado": {
@@ -55,13 +55,13 @@
     "descargas": {
       "archivos_unicos": 734,
       "artefacto": "js/download_catalog.js",
-      "bytes_total": 500229387,
+      "bytes_total": 500229514,
       "elementos": 90,
-      "filas_total": 20179750,
+      "filas_total": 20179752,
       "fuera_de_foco": {
-        "bytes": 1896935,
+        "bytes": 1897062,
         "elementos": 15,
-        "filas": 100319
+        "filas": 100321
       },
       "ocultos": {
         "bytes": 2589,
@@ -182,10 +182,10 @@
           }
         },
         "fintech": {
-          "bytes": 34554,
+          "bytes": 34681,
           "elementos": 1,
           "etiqueta": "Fintech y Finanzas Abiertas",
-          "filas": 269,
+          "filas": 271,
           "fuentes": [
             "CMF"
           ],
@@ -280,14 +280,14 @@
     },
     "inventario_etl": {
       "artefacto": "data_manifest.json",
-      "filas": 20179750,
+      "filas": 20179752,
       "tablas": 89
     }
   },
   "lecturas_duckdb": {
     "archivos_unicos": 738,
-    "bytes": 544436067,
-    "filas_almacenadas": 23877772,
+    "bytes": 544436194,
+    "filas_almacenadas": 23877774,
     "nota": "Suma archivos del contrato y copias compactas de consulta; contiene filas repetidas entre recursos y no representa cobertura única."
   },
   "puentes_reconciliacion": {

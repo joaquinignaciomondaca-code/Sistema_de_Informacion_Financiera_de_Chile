@@ -3,7 +3,7 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-11-20.e287a7bdce2f",
+ "data_release": "2026-11-20.340d5e9ec804",
  "generado": "2026-11-20",
  "objetos": [
   {
@@ -1105,13 +1105,13 @@
     "fintech_rpsf_maestro"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 34554,
+   "bytes": 34681,
    "corte": "Catálogo Oficial Vigente CMF",
    "deriva_de": null,
    "descripcion": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF y total de servicios autorizados.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/fintech_rpsf_lista_entidades.json",
    "estado": "publicado",
-   "filas": 269,
+   "filas": 271,
    "frescura": "Actualización Continua / Eventos Registrales CMF",
    "fuente": "CMF",
    "id": "fintech_rpsf_lista_entidades",
@@ -2692,12 +2692,12 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 500229387,
+  "bytes": 500229514,
   "con_datos": 86,
   "con_filas": 85,
   "consultas": 159,
   "derivados": 7,
-  "filas": 20179750,
+  "filas": 20179752,
   "objetos": 90,
   "vacios": 4
  },

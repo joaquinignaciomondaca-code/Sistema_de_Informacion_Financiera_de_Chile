@@ -1,9 +1,9 @@
 // GENERADO por scripts/build_estado_claves.py — no editar a mano.
 // Fuente: docs/api/claves.csv, medido sobre todas las filas publicadas.
-// data_release: 2026-11-20.e287a7bdce2f
+// data_release: 2026-11-20.340d5e9ec804
 window.ESTADO_CLAVES = {
  "generado": "2026-11-20",
- "data_release": "2026-11-20.e287a7bdce2f",
+ "data_release": "2026-11-20.340d5e9ec804",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,
@@ -543,8 +543,8 @@ window.ESTADO_CLAVES = {
   },
   "fintech_rpsf_lista_entidades": {
    "estado": "ok",
-   "filas": 269,
-   "distintas": 269,
+   "filas": 271,
+   "distintas": 271,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -552,7 +552,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: rut — única sobre 269 filas."
+   "texto": "Clave verificada: rut — única sobre 271 filas."
   },
   "macro_cobre": {
    "estado": "ok",

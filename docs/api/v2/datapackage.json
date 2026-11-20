@@ -9078,10 +9078,10 @@
    "title": "fi.resultados"
   },
   {
-   "bytes": 34554,
+   "bytes": 34681,
    "description": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF y total de servicios autorizados.",
    "format": "parquet",
-   "hash": "ecaa3096051e6d307aa1e45aef1307e8c1f7e8fb06e260c115bb1f48a4a851ab",
+   "hash": "0eab20dbca06e6d07f910550741504b1f8c9cd7e102ab3d84e1c1642483cf963",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -9214,7 +9214,7 @@
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": "2026-09-23",
-    "filas": 269,
+    "filas": 271,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "fintech_rpsf_maestro",
@@ -9222,10 +9222,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 34554,
-      "filas": 269,
+      "bytes": 34681,
+      "filas": 271,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fintech/fintech_rpsf_maestro.parquet",
-      "sha256": "3f99556fce7ed3a5aab298745feef0100c470448a93d1b5a1fe71a9c78f348ec"
+      "sha256": "1b08ad32d70ce640e55c9bd483f71d58f1ab35efabde5e277781ade91a02652d"
      }
     ],
     "puente": "alias",
@@ -19233,9 +19233,9 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-11-20.e287a7bdce2f",
+  "data_release": "2026-11-20.340d5e9ec804",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
-  "filas_unicas": 20179750,
+  "filas_unicas": 20179752,
   "identificador": {
    "aliases": "los nombres heredados se publican por recurso en sif.aliases y no son identificadores",
    "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",
