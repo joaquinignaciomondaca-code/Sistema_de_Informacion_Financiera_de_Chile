@@ -229,9 +229,29 @@
       "evento": "alta",
       "antes": null,
       "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-11-20",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "78131732-2",
+      "razon_social": "GERCESP SPA",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-11-20",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "94405000-0",
+      "razon_social": "JULIUS BAER (CHILE) SPA",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
     }
   ],
-  "ultima_revision_utc": "2026-11-10T19:55:52+00:00",
+  "ultima_revision_utc": "2026-11-20T20:39:06+00:00",
   "sectores_revisados": [
     "agf",
     "securitizadoras",
