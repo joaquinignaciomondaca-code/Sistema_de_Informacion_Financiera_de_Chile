@@ -847,7 +847,7 @@ const ERD_TABLES = [
     y: 820,
     w: 250,
     h: 98,
-    rows: "4.708 filas",
+    rows: "4.709 filas",
     file: "outputs/macro/macro_uf.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
