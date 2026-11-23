@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_tipo_cambio_real.parquet",
-   "bytes": 6441,
+   "bytes": 6458,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tipo_cambio_real.parquet",
    "periodo": "macro_tipo_cambio_real",
-   "sha256": "a53688545178652e14117ea211e828104aa3690879b353a609e6e2c1fdcbcca3"
+   "sha256": "07ce603e948f224bf6884a218da2a510f239ddf1bb4410d1a48df8fecb0ec6a4"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 6441,
-  "filas": 153
+  "bytes": 6458,
+  "filas": 154
  },
  "version": "2.3.0"
 }

@@ -3,7 +3,7 @@
  "id": "reservas-internacionales-ultimos-24-meses-d34a70",
  "titulo": "Reservas internacionales: últimos 24 meses",
  "origen": "explorador",
- "data_release": "2026-11-22.e9e73466f4e6",
+ "data_release": "2026-11-23.decb02baa372",
  "generado": "2026-11-23",
  "max_filas": 500,
  "columnas": [
@@ -107,7 +107,7 @@
   ],
   [
    "2026-10",
-   53638.816201
+   53669.079386
   ]
  ],
  "sql": "SELECT periodo, reservas_internacionales_millones_usd FROM macro_reservas_internacionales ORDER BY periodo DESC LIMIT 24;",
