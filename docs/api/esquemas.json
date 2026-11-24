@@ -4625,9 +4625,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-11-23",
+   "corte": "2014-01-01 a 2026-11-24",
    "estado": "publicado",
-   "filas": 3283,
+   "filas": 3284,
    "manifest_id": "macro_cobre",
    "nivel": "contexto",
    "nombre_visible": "macro.cobre",
@@ -4814,9 +4814,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-23",
+   "corte": "2014-01-02 a 2026-11-24",
    "estado": "publicado",
-   "filas": 3211,
+   "filas": 3212,
    "manifest_id": "macro_dolar_observado",
    "nivel": "contexto",
    "nombre_visible": "macro.dolar_observado",
@@ -4849,9 +4849,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-23",
+   "corte": "2014-01-02 a 2026-11-24",
    "estado": "publicado",
-   "filas": 3211,
+   "filas": 3212,
    "manifest_id": "macro_euro_observado",
    "nivel": "contexto",
    "nombre_visible": "macro.euro_observado",
@@ -5227,9 +5227,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-23",
+   "corte": "2014-01-02 a 2026-11-24",
    "estado": "publicado",
-   "filas": 3211,
+   "filas": 3212,
    "manifest_id": "macro_metales_preciosos",
    "nivel": "contexto",
    "nombre_visible": "macro.metales_preciosos",
@@ -5395,7 +5395,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2014-01-01 a 2026-11-23",
+   "corte": "2014-01-01 a 2026-11-24",
    "estado": "publicado",
    "filas": 51,
    "manifest_id": "macro_series_catalogo",
@@ -5493,9 +5493,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-11-17",
+   "corte": "2014-01-01 a 2026-11-24",
    "estado": "publicado",
-   "filas": 3348,
+   "filas": 3353,
    "manifest_id": "macro_tasa_referencia_fed",
    "nivel": "contexto",
    "nombre_visible": "macro.tasa_referencia_fed",
@@ -5535,9 +5535,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-23",
+   "corte": "2014-01-02 a 2026-11-24",
    "estado": "publicado",
-   "filas": 3212,
+   "filas": 3213,
    "manifest_id": "macro_tasas_corto_plazo",
    "nivel": "contexto",
    "nombre_visible": "macro.tasas_corto_plazo",
@@ -5584,9 +5584,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-11-23",
+   "corte": "2014-01-02 a 2026-11-24",
    "estado": "publicado",
-   "filas": 3211,
+   "filas": 3212,
    "manifest_id": "macro_tipo_cambio_multilateral",
    "nivel": "contexto",
    "nombre_visible": "macro.tipo_cambio_multilateral",
@@ -5661,9 +5661,9 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-11-23",
+   "corte": "2014-01-01 a 2026-11-24",
    "estado": "publicado",
-   "filas": 4710,
+   "filas": 4711,
    "manifest_id": "macro_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.uf",
@@ -12767,8 +12767,8 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 90,
-  "filas_por_objeto": 20179770,
-  "filas_unicas": 20179770,
+  "filas_por_objeto": 20179782,
+  "filas_unicas": 20179782,
   "objetos": 90,
   "sin_esquema": 0,
   "tablas_manifiesto": 89,

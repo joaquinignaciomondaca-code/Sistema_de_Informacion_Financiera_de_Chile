@@ -2,11 +2,11 @@
  "contrato": "sif-api/resultados",
  "version": "2.3.0",
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
- "data_release": "2026-11-23.decb02baa372",
+ "data_release": "2026-11-24.df38b41d730c",
  "generado": "2026-11-24",
  "total": 159,
  "filas": 6266,
- "bytes": 824545,
+ "bytes": 824550,
  "truncadas": 2,
  "max_filas": 500,
  "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 159 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
@@ -26,7 +26,7 @@
    ],
    "truncado": false,
    "bytes": 6885,
-   "sha256": "37ab8a7f4368a07eca4f3367bbf9db98db24a3d98568f5dea787aba26bebb9ee",
+   "sha256": "c33dc62b8b366d1f2d61ce9fdfa3fc937c751bf81d2f46bb116e5b02b00bd255",
    "url": "/api/v2/resultados/companias-que-reportan-en-el-ultimo-mes-7ece34.json"
   },
   {
@@ -43,7 +43,7 @@
    ],
    "truncado": false,
    "bytes": 3018,
-   "sha256": "810c822e4241662f3c0c7c19cbaa4e1f9e2be7c9c2d5a2bb256fe3c61ad9e9db",
+   "sha256": "51f7a5f294bfc368b8a2fb7595de17c17480e7961c8735f91af73d512c72919d",
    "url": "/api/v2/resultados/companias-que-dejaron-de-reportar-7577ed.json"
   },
   {
@@ -59,7 +59,7 @@
    ],
    "truncado": false,
    "bytes": 1565,
-   "sha256": "daa2cca80b5207bb97b03876dc05249eabcc89c587fd4724b16035771ec45836",
+   "sha256": "13049d04b432af24c20e882004e0071f20d59ae412c85afea323c8ad75485cff",
    "url": "/api/v2/resultados/companias-que-empezaron-a-reportar-mas-recientem-28d7e4.json"
   },
   {
@@ -75,7 +75,7 @@
    ],
    "truncado": false,
    "bytes": 1518,
-   "sha256": "da5569bc9e987cd4e5aa08b28ba8f2c6f087dfeab641a3175910f70654fe6fc4",
+   "sha256": "ded82672f7c506e6ae852cda4c95139cb57110cee4a0577f8416b5fff16ba7bf",
    "url": "/api/v2/resultados/renta-fija-por-tipo-de-instrumento-ultimo-mes-m-1373a7.json"
   },
   {
@@ -90,7 +90,7 @@
    ],
    "truncado": false,
    "bytes": 1166,
-   "sha256": "28a21a17b7444e26b88212dd521e42c7483f082982456c28a1e470f537ab40d4",
+   "sha256": "dd74ba196c104c6f13b646ba4eb7160ad2054b39750727d48eecc98d1942b93d",
    "url": "/api/v2/resultados/instrumentos-de-renta-fija-con-mas-inversion-ult-28a38b.json"
   },
   {
@@ -106,7 +106,7 @@
    ],
    "truncado": false,
    "bytes": 1315,
-   "sha256": "0a9b0ed2616a8ccdf32664ff21850a3ba4c1c6ab03c4218a07506790021dc881",
+   "sha256": "4459f59d88bb6030c6d48574b3bc0fd4cb4912ed3ac07bb6a58b35e8b3640418",
    "url": "/api/v2/resultados/acciones-con-mayor-inversion-ultimo-mes-m-3ccad2.json"
   },
   {
@@ -121,7 +121,7 @@
    ],
    "truncado": false,
    "bytes": 1827,
-   "sha256": "58434fc99e5aedb1c6bb97d95017714f0118b0e268bd7b3b041fadd9542d3c24",
+   "sha256": "2595e57a949d9cd717c34c4c28307cce1fdeb40d80aee0d96c06e5e75410ed48",
    "url": "/api/v2/resultados/evolucion-de-la-inversion-en-acciones-por-sector-e3ef3e.json"
   },
   {
@@ -136,7 +136,7 @@
    ],
    "truncado": false,
    "bytes": 1139,
-   "sha256": "b6a7535b356005727d109fa887f59c7fe46045793d961c2b92b9289d0ef96000",
+   "sha256": "3d1826cc1efbc454cb656e163cc8f109975bb6604b82e5a8ddf17986ec2ddec5",
    "url": "/api/v2/resultados/fondos-mutuos-por-administradora-ultimo-mes-m-09cbea.json"
   },
   {
@@ -151,7 +151,7 @@
    ],
    "truncado": false,
    "bytes": 1107,
-   "sha256": "6e52e352ca813894d802a5f2fdd915e9ebd225376c5dbb2958b46c79a6903737",
+   "sha256": "09ef33a0fe60df79e804a5bde5471680661ae56be1ce49dcc3e40eb3554accfb",
    "url": "/api/v2/resultados/bienes-raices-por-ciudad-ultimo-mes-m-f260c4.json"
   },
   {
@@ -166,7 +166,7 @@
    ],
    "truncado": false,
    "bytes": 1286,
-   "sha256": "e0442ad6ded9ab5d96c5800eada4de57571931c412b46affbb84c09575e50a08",
+   "sha256": "3ec653ccbcd15ec1c367dc595092a970f9d2c6c25c6a42fca5e0dcf0a9ac1025",
    "url": "/api/v2/resultados/otras-inversiones-por-tipo-de-instrumento-ultimo-383e40.json"
   },
   {
@@ -182,7 +182,7 @@
    ],
    "truncado": false,
    "bytes": 1265,
-   "sha256": "fbafdb5815755548a3655b9176c20abf263fc90339317e31764b1d441a3534a0",
+   "sha256": "0134fd849035fbb81bc4cd139f08d488cd5aaa253b51a0e08de46c388f148447",
    "url": "/api/v2/resultados/inversiones-en-el-extranjero-por-pais-ultimo-mes-8e4420.json"
   },
   {
@@ -198,7 +198,7 @@
    ],
    "truncado": false,
    "bytes": 992,
-   "sha256": "e3786c1f9914464c52135da663e90d1a2d53da821418d1457d94a4d8abdce6c3",
+   "sha256": "4d82dc32fd977fa352e38605f5ceca4c2e941d1910d14aac3b4daf017a6f8392",
    "url": "/api/v2/resultados/derivados-por-tipo-y-sector-ultimo-mes-b29724.json"
   },
   {
@@ -213,7 +213,7 @@
    ],
    "truncado": false,
    "bytes": 1172,
-   "sha256": "5910ad9b285600d8b5ab7350f3bd30b5bca60f9ad301a46b1d7fdef42584f8fa",
+   "sha256": "f4d75e5712f0eb59570352a45507092319e2d0c1e8b891b15fd9daf3597a83c1",
    "url": "/api/v2/resultados/principales-contrapartes-de-derivados-ultimo-mes-78a3a3.json"
   },
   {
@@ -228,7 +228,7 @@
    ],
    "truncado": false,
    "bytes": 1189,
-   "sha256": "006547421df1d5cfd7674b43f26608631833dd4d55967c38ef1dbd0a8151b030",
+   "sha256": "19947e66a2562b4dae993ba5fa7be5f3c5aa678cf8c1a955bb6a03da76fc99fb",
    "url": "/api/v2/resultados/pactos-contrapartes-y-tasa-promedio-ultimo-mes-5e68eb.json"
   },
   {
@@ -245,7 +245,7 @@
    ],
    "truncado": false,
    "bytes": 4033,
-   "sha256": "7e73f53ff385400fec31a4345cbd732494911d9ea44e98ec598dfefaae44e977",
+   "sha256": "dd057d4efc5c579c2af50d05fdb9537e4f758eff7266be6f4b727962e7714c95",
    "url": "/api/v2/resultados/b-14-garantias-por-posicion-y-tipo-m-d330f4.json"
   },
   {
@@ -263,7 +263,7 @@
    ],
    "truncado": false,
    "bytes": 3942,
-   "sha256": "12ac2ca79fdd23360a96daa5833c0bf8551697be0c6f7e7d45e9c01781ddad14",
+   "sha256": "1e31cc4160660d2febaa922e8e3cb4402a8c69b45710957db8adfafb01d0a23d",
    "url": "/api/v2/resultados/registros-tipo-6-por-periodo-y-archivo-143fa9.json"
   },
   {
@@ -279,7 +279,7 @@
    ],
    "truncado": false,
    "bytes": 28187,
-   "sha256": "df9c1dd6575b38a8d67f334d4d68bc95e2aa40e6dbad0f080b9a1bd5f28d3457",
+   "sha256": "8135418fec4ac444ada19d2f81d16065665b9d18aca0b91398d5b2fcde3ea71c",
    "url": "/api/v2/resultados/fondos-que-reportan-en-el-ultimo-mes-9f4a5f.json"
   },
   {
@@ -294,7 +294,7 @@
    ],
    "truncado": false,
    "bytes": 1714,
-   "sha256": "32151047236e59349744c6c02094a6620d6ff34484d0d178c8593c9f56f12a3c",
+   "sha256": "ce27ad41845f98f8b348f88c8a5a0737ebac19840ba9cd6b11febe52ef21e34b",
    "url": "/api/v2/resultados/fondos-nuevos-primer-reporte-mas-reciente-402efd.json"
   },
   {
@@ -310,7 +310,7 @@
    ],
    "truncado": false,
    "bytes": 1997,
-   "sha256": "a4e70879166aac2edf9fc8ef3f619dec588ffb46c31dc0aaf31967a61c9875db",
+   "sha256": "5b82c5c0a7d312feda3435e5108a4a8cede6f00636de51ad1481c702f0c66c1c",
    "url": "/api/v2/resultados/fondos-que-dejaron-de-reportar-289026.json"
   },
   {
@@ -326,7 +326,7 @@
    ],
    "truncado": false,
    "bytes": 1516,
-   "sha256": "2edd43be7704cbfd36a970aef44ae644da5384c16ccc0177bdf22c7b685e6df5",
+   "sha256": "dbc4fd4a4ba8e12fa771bbecf2a65e900cbcec8b707e0151652cf2a8a3a3dff3",
    "url": "/api/v2/resultados/cartera-nacional-por-tipo-de-instrumento-ultimo--baa247.json"
   },
   {
@@ -341,7 +341,7 @@
    ],
    "truncado": false,
    "bytes": 1162,
-   "sha256": "009d93738ec73d2c338f52dc8ac1700fa72187865666df5e7a1cdb602333a54c",
+   "sha256": "1d6a485d12f3dcb46597df2683246ff707e28171a0189eee45dbe44a51bd37f3",
    "url": "/api/v2/resultados/mayores-emisores-nacionales-ultimo-mes-4fa894.json"
   },
   {
@@ -356,7 +356,7 @@
    ],
    "truncado": false,
    "bytes": 807,
-   "sha256": "1ef4a9d0729f5f4e783fe5101b0ef672cc88787e91159a28f93cbb8dcdba4603",
+   "sha256": "b314c943d5ce158dce3bb304726f64c36ede4600f17bd6ae96108e86dcf15853",
    "url": "/api/v2/resultados/instrumentos-con-compromiso-o-en-garantia-ultimo-be7bf7.json"
   },
   {
@@ -371,7 +371,7 @@
    ],
    "truncado": false,
    "bytes": 1109,
-   "sha256": "1f91077d76dd18b78c6ba94da1921b8985bed116addf0536004942ea37a9ac7f",
+   "sha256": "e91e51a879e7af0e9c76aed95da340694f8c7bed50656e9bc074cf2974c974fd",
    "url": "/api/v2/resultados/cartera-extranjera-por-pais-emisor-ultimo-mes-ae95ac.json"
   },
   {
@@ -386,7 +386,7 @@
    ],
    "truncado": false,
    "bytes": 1531,
-   "sha256": "8b1253b5c325b5f98cd50950be3c6897f18555d8b417f8dfa787787b61cf735b",
+   "sha256": "0f54380464e1f0e0f0b5eb55197669219830eb059dbbed4a500f5fba10daa9dd",
    "url": "/api/v2/resultados/fondos-con-inversion-extranjera-por-mes-db54f6.json"
   },
   {
@@ -402,7 +402,7 @@
    ],
    "truncado": false,
    "bytes": 1499,
-   "sha256": "0e434307d9a5552fd2475b567b493731d68a6c75c287aa723f47d0ad57a9b8a3",
+   "sha256": "8b2b9a6e2af54ecc9f3a53a050c8b49cce11a58d5beda8a6cca3f4be3902cee6",
    "url": "/api/v2/resultados/forwards-y-futuros-por-activo-objeto-ultimo-mes-7cfde7.json"
   },
   {
@@ -417,7 +417,7 @@
    ],
    "truncado": false,
    "bytes": 1491,
-   "sha256": "92fa7cec7c226edb6192f006aa831747d8d0e226b91b0f18f8437aec697998e7",
+   "sha256": "3ee2bdaabef4944225c68335ee13085298b45611ae9d924e7756dd4033645fa5",
    "url": "/api/v2/resultados/contratos-vigentes-por-mes-9057ae.json"
   },
   {
@@ -438,7 +438,7 @@
    ],
    "truncado": false,
    "bytes": 3130,
-   "sha256": "ef803596744f62ab5b4deb94a2580ef3ff0606115bbdf800472e81a416050723",
+   "sha256": "47fd8517159606ca7a2f9582d848b6bf89de7ebcba6f5323166a58022d54af2e",
    "url": "/api/v2/resultados/opciones-del-ultimo-mes-845434.json"
   },
   {
@@ -454,7 +454,7 @@
    ],
    "truncado": false,
    "bytes": 2524,
-   "sha256": "9efd20e5d927ff3560a5aceed5b0c69c96420f70ee5e5a5144f04f05062442ef",
+   "sha256": "b22e92384a3e7a4d48aac91f5f3d110378aa6389a5af177be685983638e508e2",
    "url": "/api/v2/resultados/mayores-fondos-en-pesos-por-activo-neto-ultimo-c-ffcbd6.json"
   },
   {
@@ -469,7 +469,7 @@
    ],
    "truncado": false,
    "bytes": 1426,
-   "sha256": "a4e3342f43161ee246526e7bdd78e66eda2da5a775f3485279488bc010d32035",
+   "sha256": "d941e7f70d7b73178a471c130eb370d4d85b8e9ae75a7d8ec7141a1d8f45928d",
    "url": "/api/v2/resultados/activo-neto-de-la-industria-en-pesos-por-cierre--985084.json"
   },
   {
@@ -484,7 +484,7 @@
    ],
    "truncado": false,
    "bytes": 1375,
-   "sha256": "01bb8af07c133b5a6bbf6212c199d4fa2e78e406b6c95ee874548c6693ba4645",
+   "sha256": "bc90384a06b4043bfe2d66fe368b761e18c594938fea92b32f7856c8034eeca3",
    "url": "/api/v2/resultados/fondos-que-informan-en-dolares-por-cierre-miles--588076.json"
   },
   {
@@ -503,7 +503,7 @@
    ],
    "truncado": false,
    "bytes": 3239,
-   "sha256": "cfff39f4683c85dbf610c4fc9fed76ebe33e75c3f2d0167ccaca88d930daa128",
+   "sha256": "c2fc77593ee2501d1d1865a23d1e680edc55feddcf17775f00a30b99dcb03bb3",
    "url": "/api/v2/resultados/balance-completo-del-mayor-fondo-en-pesos-ultimo-147ae5.json"
   },
   {
@@ -518,7 +518,7 @@
    ],
    "truncado": false,
    "bytes": 2197,
-   "sha256": "6421f433fb2559bdd8441f0a2cd3716a75f07e73a13d63b80fc200be851dee79",
+   "sha256": "cc5ed19d8ff72323fc5e1830e2d3cba04bcd0c0809a43f9349f45ef5d15c7cd6",
    "url": "/api/v2/resultados/mayores-utilidades-del-ultimo-ejercicio-fondos-e-fde1b8.json"
   },
   {
@@ -533,7 +533,7 @@
    ],
    "truncado": false,
    "bytes": 1406,
-   "sha256": "111c3e4121d8a264f50284651394ecbbf5cec4d5ecdfd36677be3a8d41ed15d6",
+   "sha256": "46410282056586894ecd9544b3f696dc6c994abc446b58fe7843f1c3ed55c652",
    "url": "/api/v2/resultados/comision-de-administracion-cobrada-por-ejercicio-2c5670.json"
   },
   {
@@ -549,7 +549,7 @@
    ],
    "truncado": false,
    "bytes": 1508,
-   "sha256": "9ce22cb1c817424d01cb0caee8a930afb2591dbe6787cb8667a8c82e73896036",
+   "sha256": "0025ef80c9bc1d1edab7bcaf42c59fcdb385ab24715a115f047237ebb27d6eb4",
    "url": "/api/v2/resultados/fondos-con-perdida-en-cada-ejercicio-46d5f2.json"
   },
   {
@@ -568,7 +568,7 @@
    ],
    "truncado": false,
    "bytes": 4270,
-   "sha256": "2380be909de3e9ef5c8e7b185094e2b9bcee4618c6bc03a5eb923dbed3bf766f",
+   "sha256": "c1db550245d1e5bd8b786f028bc6f655c7fde5115e655010d4f6c382bf6cac68",
    "url": "/api/v2/resultados/estado-de-resultados-del-mayor-fondo-en-pesos-ul-11c66c.json"
   },
   {
@@ -585,7 +585,7 @@
    ],
    "truncado": true,
    "bytes": 75956,
-   "sha256": "81dbfaa5b4fcba29f610dfbdb71976f53df3b74ae7c0b91ff94be173e0d556be",
+   "sha256": "76136355d479833faa9f521956ea4b2892e295beb8156a0c2c0a963463ef0e9a",
    "url": "/api/v2/resultados/fondos-que-reportan-cartera-en-el-ultimo-trimest-43ddd6.json"
   },
   {
@@ -599,7 +599,7 @@
    ],
    "truncado": false,
    "bytes": 2062,
-   "sha256": "a6e14f94deac5adfed6e2ec875ca17988ca0f6809247abffeec7bd25cf993359",
+   "sha256": "4234064947ebf5d3b046163e4acf4d755856554bf722380eb0ecd9bb43e9a8aa",
    "url": "/api/v2/resultados/fondos-por-administradora-vigentes-5c1235.json"
   },
   {
@@ -613,7 +613,7 @@
    ],
    "truncado": false,
    "bytes": 654,
-   "sha256": "815ffad51a5e6c5ece96cd8e3b772ac03ae88d07e8cd3508332ac50e40479399",
+   "sha256": "a9f2420b8cbbf2ea10a96625180b55ff7de4c944d79569885ceeffab7cd884e8",
    "url": "/api/v2/resultados/fondos-por-moneda-funcional-0e965e.json"
   },
   {
@@ -629,7 +629,7 @@
    ],
    "truncado": false,
    "bytes": 2194,
-   "sha256": "7564ede09fccd927771a9992882e086419b748f56cf7d9788c29ac8e1315c9b4",
+   "sha256": "b06b8cbc165ca9a6f4ed055041cb8358cdbeae51cce824a2d9967c188e03dfc2",
    "url": "/api/v2/resultados/cartera-nacional-por-tipo-de-instrumento-ultimo--9f57f6.json"
   },
   {
@@ -644,7 +644,7 @@
    ],
    "truncado": false,
    "bytes": 1382,
-   "sha256": "9972c8fed5e1785afd79a66432618ed65b18cea4d48f60c89f2aee1059399cd7",
+   "sha256": "d975bcb4843b2d590b3aebe2c787f5c6ad497d9ccd87f0b6e04c274ca375bf89",
    "url": "/api/v2/resultados/mayores-emisores-nacionales-ultimo-trimestre-ed27b2.json"
   },
   {
@@ -659,7 +659,7 @@
    ],
    "truncado": false,
    "bytes": 1928,
-   "sha256": "4691e59ae5b0ee3e9ecb38ee85a681601f887ade31dc444bb09c7c1132826b3f",
+   "sha256": "5cb82904ec736d28afc5481f9082afb1d6a4f8e0c951454883b0927b0b8d1522",
    "url": "/api/v2/resultados/cartera-extranjera-por-pais-emisor-ultimo-trimes-9c339d.json"
   },
   {
@@ -674,7 +674,7 @@
    ],
    "truncado": false,
    "bytes": 1072,
-   "sha256": "6a0a4f24c9297054f05a582128e8e8133689065e2912741518605ca99cb26127",
+   "sha256": "f5aae11e34f8698ffff9b0399edad58deedd9164ca9592ba0c663fc4ae7dcb56",
    "url": "/api/v2/resultados/filiales-y-coligadas-metodo-de-la-participacion-24e071.json"
   },
   {
@@ -690,7 +690,7 @@
    ],
    "truncado": false,
    "bytes": 1471,
-   "sha256": "5a158619f52d8de8a8f8b39e3a04e9047bba9faebcf911a9dc2786dd99aa6bf1",
+   "sha256": "7b42863579cb7e233aa063fc661ab2cf7e8b2a5067a6f570c3b4b1cee548d427",
    "url": "/api/v2/resultados/forwards-y-futuros-por-activo-objeto-ultimo-trim-23a13d.json"
   },
   {
@@ -704,7 +704,7 @@
    ],
    "truncado": false,
    "bytes": 1125,
-   "sha256": "247209363c0665aad731ed0924111ae1294200a36bb30d807de7e34c166f9df3",
+   "sha256": "01aee18c5ac20b12f121d756d6fef4459fdd3dd5094de9cdca9e7ecfdd0d79e2",
    "url": "/api/v2/resultados/contrapartes-de-derivados-ultimo-trimestre-7d2cb1.json"
   },
   {
@@ -719,7 +719,7 @@
    ],
    "truncado": false,
    "bytes": 954,
-   "sha256": "f1e8d917a628bcb9041dbd90647ba421d8ef91acc77712155bdafa2b15f946fb",
+   "sha256": "95c763609fa911363a75c5e65a26938dcf944a3b9085a130539a39075e754c85",
    "url": "/api/v2/resultados/opciones-por-trimestre-bfae94.json"
   },
   {
@@ -735,7 +735,7 @@
    ],
    "truncado": false,
    "bytes": 1288,
-   "sha256": "7efc2fc534da0c87d94baf0a2ad0854608bb74760b5f4b3f52ff97141500ff8e",
+   "sha256": "54e713294451174a011623c17eca283128811d75f067d747960ecca933c5eb74",
    "url": "/api/v2/resultados/pactos-por-tipo-de-operacion-y-contraparte-ultim-ff7185.json"
   },
   {
@@ -750,7 +750,7 @@
    ],
    "truncado": false,
    "bytes": 2072,
-   "sha256": "5af87c5b6c40e6bdd15a09b16a7a33a011f824dbab047e94e22f98b7ff2bfeac",
+   "sha256": "e44fe6f86e8eaccbcc4468418ab19d7659ce931c0c80c4586f0e2036d69435b7",
    "url": "/api/v2/resultados/mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e.json"
   },
   {
@@ -768,7 +768,7 @@
    ],
    "truncado": false,
    "bytes": 6539,
-   "sha256": "f0f5e71b781a1cfcb95fc30a3d0875fdab552108e0eff84b14e33013286ed097",
+   "sha256": "3933682fc94a5d948702625bbc55b8d6ba606e47f9ad1f87127519e7f870d99d",
    "url": "/api/v2/resultados/balance-actual-del-mayor-fondo-en-pesos-ultimo-c-2ee7e1.json"
   },
   {
@@ -784,7 +784,7 @@
    ],
    "truncado": false,
    "bytes": 10080,
-   "sha256": "a4a3ea5274207150ab6aa2a29221dc0597216abf2b86fcbded76aac9f7bf2c36",
+   "sha256": "00aec8076bbe5e21e1f83bd8b0174001ca48ccd692b5e5b39df0dab277dbb2d4",
    "url": "/api/v2/resultados/cobertura-de-balances-por-cierre-y-contexto-a37a1b.json"
   },
   {
@@ -799,7 +799,7 @@
    ],
    "truncado": false,
    "bytes": 2132,
-   "sha256": "f9443a34857c9e13ebb1b011862ea80437b6d44a7dff053eaba55ed005d462a9",
+   "sha256": "21a63e4428d1b0a88d4e5441a8c543d8fd5932a21f1ada9a95872dfea2bd1ae3",
    "url": "/api/v2/resultados/mayores-resultados-acumulados-en-pesos-ultimo-ci-ec3f0d.json"
   },
   {
@@ -816,7 +816,7 @@
    ],
    "truncado": false,
    "bytes": 2705,
-   "sha256": "74d34f4281b900d507b7e5995d49ac6e1c63b9b5d8a890aafae437a3e5460546",
+   "sha256": "7a3e5e82a6ea797399a43494d58372010c4af00d7dfa73aecba018c89f0447c4",
    "url": "/api/v2/resultados/resultado-solo-del-trimestre-en-pesos-segun-xml--c46755.json"
   },
   {
@@ -832,7 +832,7 @@
    ],
    "truncado": false,
    "bytes": 3327,
-   "sha256": "5a1baa2c1fd48856bca65c163ccd8b0b22a01ba057e91b5771ca215fceb823ef",
+   "sha256": "b3f8d321a7b4c7b8fd99ace902bf4dca5b03721987100d36669ff4916d964031",
    "url": "/api/v2/resultados/comisiones-acumuladas-por-cierre-y-moneda-sin-me-805f8e.json"
   },
   {
@@ -849,7 +849,7 @@
    ],
    "truncado": false,
    "bytes": 10623,
-   "sha256": "8cdb3401adacdc9af4c422ea1538233841026eaea0c46dff08d75b6b7da75b1f",
+   "sha256": "86c476d400094ec3c2fdfe400c51f7d1a90b46cc818e92a7a586ba4869a4b1cc",
    "url": "/api/v2/resultados/catalogo-de-agf-vigentes-vs-canceladas-40705b.json"
   },
   {
@@ -865,7 +865,7 @@
    ],
    "truncado": false,
    "bytes": 4113,
-   "sha256": "41c522de80269efc1e3699751317ccf88cba5149016b04802caf491883e04f5e",
+   "sha256": "b8e765902d2fb54fcf813dc882a989703242ea6d473bbd9ac6231f7b1aa120b3",
    "url": "/api/v2/resultados/ranking-de-agf-por-fondos-de-inversion-administr-502179.json"
   },
   {
@@ -880,7 +880,7 @@
    ],
    "truncado": false,
    "bytes": 1495,
-   "sha256": "66ab22052b588b50eea8c645e56a0d97c07a9a3f3a23bb6f29b1aa5bcadd54cd",
+   "sha256": "2d70b7317922f7744e8f4bcf3fb463799c6a18eb016bdacc90feed042925be01",
    "url": "/api/v2/resultados/agf-por-grupo-financiero-controlador-229478.json"
   },
   {
@@ -899,7 +899,7 @@
    ],
    "truncado": false,
    "bytes": 8334,
-   "sha256": "9a6d2bfefb530944c208ca3dba7b4203bb50a4b19f2cba70f201894c3a23aac6",
+   "sha256": "45c7a5e2f8d9407bfce657d8edec21532ddbee93a1e4fe081465158f78756ece",
    "url": "/api/v2/resultados/activos-pasivos-y-patrimonio-por-agf-ultimo-trim-116d13.json"
   },
   {
@@ -914,7 +914,7 @@
    ],
    "truncado": false,
    "bytes": 3426,
-   "sha256": "522f22bef759253be6376a21a47c72de9aaa0a4f3c29e3a237fbccd11b8a2bc1",
+   "sha256": "36c053fd92bdf38bfd1d6fff22b21edd18d81258ed346e2342564b2c36a586b1",
    "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-266f13.json"
   },
   {
@@ -932,7 +932,7 @@
    ],
    "truncado": false,
    "bytes": 3311,
-   "sha256": "e1192036109ea0b6f20f1b0990ad0c180dbfcf8612a870283d86198e2f128ed4",
+   "sha256": "928294699b2b4d4a0859790744fe62785ab9ad883416934e85852458a6320aba",
    "url": "/api/v2/resultados/balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4.json"
   },
   {
@@ -949,7 +949,7 @@
    ],
    "truncado": false,
    "bytes": 6940,
-   "sha256": "7a696d2e0594ea734e44d54752efc30b33cf30d8352e24227359167af66f4070",
+   "sha256": "4f7e69e47742a37eb1495b4d77e6f6dbd929b994b73ff86267960cc537f11b25",
    "url": "/api/v2/resultados/ingresos-y-utilidad-por-agf-ejercicio-2025-mm-22d477.json"
   },
   {
@@ -965,7 +965,7 @@
    ],
    "truncado": false,
    "bytes": 917,
-   "sha256": "3e25f9725c3b909e3a8a9aeffabf003dc20eadd05a804d03db38b361c5312a29",
+   "sha256": "c77188fe7cf26c0eccd6dd1a2e8fcc285021148ce06ba973e98ed305079c0ddb",
    "url": "/api/v2/resultados/por-que-hay-que-filtrar-ganancia-perdida-aparece-8db310.json"
   },
   {
@@ -980,7 +980,7 @@
    ],
    "truncado": false,
    "bytes": 1393,
-   "sha256": "9849c273ac9c2be520dd298489330df7950a926e2df0e68e394112cc4bd01196",
+   "sha256": "c476595470ca60bd93f57cd40d890edbd73b6ad8e0ecab48a04f82e7d1a52cb8",
    "url": "/api/v2/resultados/utilidad-del-sector-por-ano-cierres-de-diciembre-d9fd92.json"
   },
   {
@@ -997,7 +997,7 @@
    ],
    "truncado": false,
    "bytes": 3227,
-   "sha256": "9bea0f3c367eae62ada2431080d9c2262f8c8242797a3834e8b6757aad672fbe",
+   "sha256": "3678e93ba855f899a1bb5ea8f98fd6eeb2a8ab5c00367e0c979be09bbf35a015",
    "url": "/api/v2/resultados/estado-de-resultados-completo-de-banchile-agf-ej-ef9a3d.json"
   },
   {
@@ -1012,7 +1012,7 @@
    ],
    "truncado": false,
    "bytes": 1254,
-   "sha256": "9baa2eb47675020a6acdca37c24cc511ec378a64b76ba92ddcf00fe163267ee2",
+   "sha256": "6581e7576b906466f7d11ed298e9cd607450903009711133049c206e7c136f3d",
    "url": "/api/v2/resultados/identificacion-de-administradoras-f2fee2.json"
   },
   {
@@ -1030,7 +1030,7 @@
    ],
    "truncado": false,
    "bytes": 3105,
-   "sha256": "fd90e7f0c1413ea32ad798c3945f23d0317ce798ca5370ba377ce63d3def6246",
+   "sha256": "b20ad8c1f33cf940d4934d4cd9772523d03d2ba3ede7649b88e5186cb2f08dc0",
    "url": "/api/v2/resultados/bancos-vigentes-con-rut-4da2ff.json"
   },
   {
@@ -1047,7 +1047,7 @@
    ],
    "truncado": false,
    "bytes": 2058,
-   "sha256": "724a0445ade4e744361b97c4d5caa5a7727c79700e8232bf80e8e8807f53f9c6",
+   "sha256": "db31e01840def09594f6b637745dd28e68363552e27b4043c93650d5eb0e8ff4",
    "url": "/api/v2/resultados/historial-de-bancos-fusionados-o-cerrados-17a709.json"
   },
   {
@@ -1063,7 +1063,7 @@
    ],
    "truncado": false,
    "bytes": 1255,
-   "sha256": "6d376fafe0de527858cf605d9866274707b8c5c7343d1bf1f772e429924d23f7",
+   "sha256": "31ac7c696f1560aba5a1d7c07ec0809c0faf53784c0593b22400422b30f77de2",
    "url": "/api/v2/resultados/agregados-sectoriales-de-la-cmf-65e87f.json"
   },
   {
@@ -1078,7 +1078,7 @@
    ],
    "truncado": false,
    "bytes": 1747,
-   "sha256": "fe1acf67f79071c8dd12a5f94ce32c9daa8540dd5cc21ebe75579ce2676b8701",
+   "sha256": "06cf1f08aa391f932e5989ed8fafe8ed9a66a8765a15b1820555429bd70baa63",
    "url": "/api/v2/resultados/total-de-activos-por-banco-ultimo-periodo-dd61ba.json"
   },
   {
@@ -1100,7 +1100,7 @@
    ],
    "truncado": false,
    "bytes": 26974,
-   "sha256": "22133c3138c0f75f6e6baf8f83dae68ee1e55430d5e9addf0654e046a2e9c5e0",
+   "sha256": "b0856923508aeaedf7a8c22da98332a20e762ca5658a2009f7b8128421f8c820",
    "url": "/api/v2/resultados/muestra-de-lineas-de-balance-b1-b2-142f86.json"
   },
   {
@@ -1117,7 +1117,7 @@
    ],
    "truncado": false,
    "bytes": 7232,
-   "sha256": "ed0d8fc08fd2640705130e3201d2211e081b713cf04dabcba25f99ce75f7e217",
+   "sha256": "b6c229872731c735206ae36dbaccff5bf2d17f9fcf86a4c91c34b982ad426f4e",
    "url": "/api/v2/resultados/cobertura-de-balance-por-periodo-y-modelo-764c5a.json"
   },
   {
@@ -1132,7 +1132,7 @@
    ],
    "truncado": false,
    "bytes": 1706,
-   "sha256": "52271eed390c27235cc33e4d0751db3170f45cf3e0763f8b572292d125503968",
+   "sha256": "8896945a127ce83d3430f1025b063c769743781a58a191e298ba3aa62415828f",
    "url": "/api/v2/resultados/utilidad-del-ejercicio-por-banco-ultimo-periodo-c1244e.json"
   },
   {
@@ -1153,7 +1153,7 @@
    ],
    "truncado": false,
    "bytes": 19270,
-   "sha256": "6f168665b6f85d320fd426ddb828ea0f198ed2ae48098ca1a4db70e9535af370",
+   "sha256": "877ce09172afcea4e0eda028d220ca1d47f9bd5a61f8799f22984a8cbc5a0dcb",
    "url": "/api/v2/resultados/muestra-de-lineas-de-resultados-r1-2a300a.json"
   },
   {
@@ -1169,7 +1169,7 @@
    ],
    "truncado": false,
    "bytes": 3417,
-   "sha256": "8a9d0d863c635032837f45b920493670a614fda66098f51eecf90d040b8ee4af",
+   "sha256": "6e1d2fabe569a8b67df2141e814a5de5273c341f101959eeeb0e8f84c7980a90",
    "url": "/api/v2/resultados/cobertura-de-resultados-por-periodo-c6e2de.json"
   },
   {
@@ -1185,7 +1185,7 @@
    ],
    "truncado": false,
    "bytes": 3579,
-   "sha256": "237e75ef2f086ca348f0e7cb604cd344d9396bfa4105c24ce3428ad08a8a7c18",
+   "sha256": "a04d127598c2b0798ada6b432ff45d95637d7f72d924ca85b9a31a76d5ee7f93",
    "url": "/api/v2/resultados/tpm-y-tasa-interbancaria-ultimos-60-dias-9bc7ba.json"
   },
   {
@@ -1201,7 +1201,7 @@
    ],
    "truncado": false,
    "bytes": 2043,
-   "sha256": "6bd2eed74822d7c665861a7d1852c62e460ba88dc3c636d24cb0c7bec4a5caf5",
+   "sha256": "524a3bc816ec3d09724ab030a7fa7e2ab0bf77f4c67e3be0eee0825db7e8f14c",
    "url": "/api/v2/resultados/curva-de-bonos-en-pesos-promedio-mensual-ultimos-5c9393.json"
   },
   {
@@ -1220,7 +1220,7 @@
    ],
    "truncado": false,
    "bytes": 2485,
-   "sha256": "bb8bc037c74db0bfb39fd9fabf50c9f38eead24916a8bf331f9e44076a6c1408",
+   "sha256": "553b4d0633802e0cabed7acb04cf9511ac7f1ffaa1aaf22d8a32a9627c202d84",
    "url": "/api/v2/resultados/curva-de-bonos-en-uf-ultimo-dato-disponible-por--bce2e5.json"
   },
   {
@@ -1235,7 +1235,7 @@
    ],
    "truncado": false,
    "bytes": 1734,
-   "sha256": "4114883cb92a800c3d6f83d97e2a253687bb6c29d7267969ea278d9e8c06dbe5",
+   "sha256": "d3c9acc9862d1d6ceb85767f9f56941d1ea80e325c5bdfcbe10f042db948efc0",
    "url": "/api/v2/resultados/inflacion-implicita-a-5-y-10-anos-promedio-mensu-f209af.json"
   },
   {
@@ -1253,7 +1253,7 @@
    ],
    "truncado": false,
    "bytes": 4359,
-   "sha256": "204bf345a51cccee89db0264c711770d77a2c30ded52e0af4e2f99475f363aea",
+   "sha256": "51cfb98a90c6a5c3b4b544b6ac63c6443d461c2a2fb52cd8c91b923fa5db19c3",
    "url": "/api/v2/resultados/swaps-de-camara-en-pesos-curva-90-dias-a-2-anos-2758c5.json"
   },
   {
@@ -1268,7 +1268,7 @@
    ],
    "truncado": false,
    "bytes": 1656,
-   "sha256": "f9952fc849355ce5ce518fedf6ffa863f72f2e814ffa9fec9044f0bb03b36000",
+   "sha256": "8fbcdb1b460eaadc0f56b10f47ce0b69f30038a981f36ee235e6ac1cf97e8698",
    "url": "/api/v2/resultados/tasa-de-la-fed-frente-a-la-tpm-de-chile-promedio-2698e8.json"
   },
   {
@@ -1281,8 +1281,8 @@
     "dolar_observado_clp_por_usd"
    ],
    "truncado": false,
-   "bytes": 1629,
-   "sha256": "34647486b0dfbd24bb907d12079aa40d1ebb43bbf49b1e29cdf7b71a83434494",
+   "bytes": 1630,
+   "sha256": "59862ecba68dc8e8c6270b770df4364801c16ca352d5709be917737b264d62b1",
    "url": "/api/v2/resultados/dolar-observado-ultimos-30-dias-habiles-8be1d9.json"
   },
   {
@@ -1298,8 +1298,8 @@
     "cierre_clp"
    ],
    "truncado": false,
-   "bytes": 2395,
-   "sha256": "a57c86d00ba7a7b919f3e0498f5404b6b4d546b7b3b0e10d53b1bb0301b1ab0c",
+   "bytes": 2396,
+   "sha256": "f813c8b7274a6a89b9de1f78480fd8451e040b8ac89ef3f524f70d3f85de73b6",
    "url": "/api/v2/resultados/dolar-observado-por-mes-promedio-minimo-maximo-y-d9a9c1.json"
   },
   {
@@ -1314,8 +1314,8 @@
     "euro_por_dolar"
    ],
    "truncado": false,
-   "bytes": 2533,
-   "sha256": "9ff5e67302debe8fba5d61cc8a10f0b23da8320fedaaed68498ab4eb3cb87be3",
+   "bytes": 2535,
+   "sha256": "9d4a79fc7ca1633bb60706d631df561e4868737228f2b3e667eb9604040186fd",
    "url": "/api/v2/resultados/dolar-y-euro-observados-en-la-misma-fecha-4b24d1.json"
   },
   {
@@ -1330,7 +1330,7 @@
    ],
    "truncado": false,
    "bytes": 2164,
-   "sha256": "e41e1e3b418d728def598274777eadeb1feea111425bbfcba260f724e69e9797",
+   "sha256": "6202cbad8fde4c7b04b363592cdf7fa161d2e5a8be9d8815af99a6eb2f504903",
    "url": "/api/v2/resultados/tipo-de-cambio-real-tcr-general-y-tcr-5-8698f8.json"
   },
   {
@@ -1345,7 +1345,7 @@
    ],
    "truncado": false,
    "bytes": 1798,
-   "sha256": "a9fa2d3e5ef4caa78c63199c6d66539a820157087fe0e5ea12806084f27a577d",
+   "sha256": "2c05615ad567fcefe669d3fc65e7827cb088cb562bbe10096b025bb54d80fcb3",
    "url": "/api/v2/resultados/uf-valor-de-cierre-de-cada-mes-y-variacion-mensu-73d97c.json"
   },
   {
@@ -1360,7 +1360,7 @@
    ],
    "truncado": false,
    "bytes": 1798,
-   "sha256": "af792daa9e62ba6bffa2f793b036801665885feda4a76f6e8fbdb6072998a989",
+   "sha256": "adca904edf3690b6482607ceef6bf8f0dfe0780d5519fee8707c1d5f5648cf1c",
    "url": "/api/v2/resultados/uf-y-utm-vigentes-ultimo-valor-de-cada-mes-249a2e.json"
   },
   {
@@ -1376,7 +1376,7 @@
    ],
    "truncado": false,
    "bytes": 2553,
-   "sha256": "dabe8b87912b7d2fa530b4b3d0de01e2e6d1e1f48f5c8de648b294ff93efc939",
+   "sha256": "773d2f30e2ac86eccc68987f26fb5b80192a8dc8a418d8ad0cd74438e96b1c5d",
    "url": "/api/v2/resultados/inflacion-ipc-indice-y-variaciones-mensual-y-anu-0eb407.json"
   },
   {
@@ -1393,7 +1393,7 @@
    ],
    "truncado": false,
    "bytes": 3008,
-   "sha256": "ef27628bf36df9ee395f3cbad3b34ae2650df3f06c9d09d8196fb36bbc9a68ee",
+   "sha256": "a86ab806283f93a3b803970d078e660506e5a19468e885f02181bb9da73a45e0",
    "url": "/api/v2/resultados/imacec-total-y-no-minero-con-variacion-anual-021cf9.json"
   },
   {
@@ -1409,7 +1409,7 @@
    ],
    "truncado": false,
    "bytes": 2620,
-   "sha256": "b723ed4108ae573674cbfb245fa238a99aa39370a463f3dde236aebc7ab115ef",
+   "sha256": "f2c76a72c8675df9101f7d013051bba58ca0985ec244710b98fb556db51747a6",
    "url": "/api/v2/resultados/imacec-por-sector-comercio-y-servicios-93197c.json"
   },
   {
@@ -1424,7 +1424,7 @@
    ],
    "truncado": false,
    "bytes": 1770,
-   "sha256": "16432fae1db9ce331b19e61d8e47fc3620ccc1fcaf18fc9f4ea902bd99a80d8e",
+   "sha256": "af94a59ae9b42439de7ec05b9b9542680e12bf76dffd2d9f34e7e488be1c53e5",
    "url": "/api/v2/resultados/pib-trimestral-con-variacion-respecto-al-mismo-t-50c220.json"
   },
   {
@@ -1441,7 +1441,7 @@
    ],
    "truncado": false,
    "bytes": 3197,
-   "sha256": "34a04cdba60c5b25f9cb2644b4d95da7b1c6a5f59d99a3548885ff67be57d288",
+   "sha256": "1af224119722f62bdd101b347173d9a6da7b9b9a02b1761642eff022f62f22bb",
    "url": "/api/v2/resultados/desocupacion-ocupados-y-fuerza-de-trabajo-ultimo-14474f.json"
   },
   {
@@ -1456,7 +1456,7 @@
    ],
    "truncado": false,
    "bytes": 1921,
-   "sha256": "708a67bf7c30b2e5cf3372e8095a9986734725df6bc7283c302b0aa8d4527f5c",
+   "sha256": "96feaa1697f6fa4d842a695ca2d1269cb44b1e63fbb3b18df871de67f3c5b596",
    "url": "/api/v2/resultados/participacion-de-asalariados-sobre-ocupados-46b8e7.json"
   },
   {
@@ -1470,7 +1470,7 @@
    ],
    "truncado": false,
    "bytes": 1662,
-   "sha256": "aee488735704f8f388f74a22540f81c79ed2731db86ca583d7b44ef20dc0e572",
+   "sha256": "3ac89a0f4c36a7e59a2fd3a4eb5e4793b0004da6cdf55acfcbbc49401d04722e",
    "url": "/api/v2/resultados/cobre-precio-diario-bml-ultimos-30-dias-e5c8d9.json"
   },
   {
@@ -1485,8 +1485,8 @@
     "referencia_var_anual_pct"
    ],
    "truncado": false,
-   "bytes": 2480,
-   "sha256": "8d9e41bdf713ba810d8f531ea25f67b550791199ed92b423676965a7d0a6b8c6",
+   "bytes": 2481,
+   "sha256": "f8205ce5afa8d8cbb0e8aa5b41dd0a9703ea76fad866493fd13dbdd6d7422d32",
    "url": "/api/v2/resultados/cobre-promedio-mensual-y-referencia-bcch-con-var-3d0bbf.json"
   },
   {
@@ -1502,7 +1502,7 @@
    ],
    "truncado": false,
    "bytes": 2479,
-   "sha256": "25ef2b0953acb3d62a9a06d98cc1d0cb0fca99aaecdbd800a4d124319335fdd3",
+   "sha256": "b9b0ee9deb0865d606edb766d4221da3bb77a5e3047df156ebde43464364a603",
    "url": "/api/v2/resultados/oro-y-plata-ultimos-30-dias-7e379f.json"
   },
   {
@@ -1516,7 +1516,7 @@
    ],
    "truncado": false,
    "bytes": 1519,
-   "sha256": "cb201e970860c5a6ef007a04ade79680b649c836a67a59ce10303354efad46c9",
+   "sha256": "c4b2e469224425fc350e8d7d8a210ce867ea2ac47dabee97d42d6488d08c4b38",
    "url": "/api/v2/resultados/reservas-internacionales-ultimos-24-meses-d34a70.json"
   },
   {
@@ -1530,7 +1530,7 @@
    ],
    "truncado": false,
    "bytes": 1421,
-   "sha256": "fa23e11b43c8e54ff574f2067575663fc55b9edebf25f3d0d8f8966ec7f68d74",
+   "sha256": "b71a6f0e9d4bcb7bbadfe946cbcc6a0119bdfafa96012bc7693b63910117f964",
    "url": "/api/v2/resultados/deuda-publica-sobre-pib-serie-trimestral-7454d5.json"
   },
   {
@@ -1547,7 +1547,7 @@
    ],
    "truncado": false,
    "bytes": 2551,
-   "sha256": "5129ef545828a1467c28c4f679fcbcf816cf3a6a6cf06f75674300074fef9632",
+   "sha256": "852ac84076f521db58f939980395441c348dd3e5e0ad7d1d18d13dd924557938",
    "url": "/api/v2/resultados/inflacion-anual-efectiva-frente-a-la-esperada-ee-c07925.json"
   },
   {
@@ -1563,7 +1563,7 @@
    ],
    "truncado": false,
    "bytes": 1970,
-   "sha256": "962d99d51d307c4facd65e8a7a4a6ee60c4db64cd8c75609ceb8659b8bb23c83",
+   "sha256": "9b47e29af46fc15b7d1b1c613111d00c028bf94754d6dfe2433a846772120ce5",
    "url": "/api/v2/resultados/tpm-efectiva-frente-a-la-esperada-por-la-eee-f1cccc.json"
   },
   {
@@ -1578,7 +1578,7 @@
    ],
    "truncado": false,
    "bytes": 1487,
-   "sha256": "a534af69ef51879668e387b00c446efde1028af029cf2479e4792d1c237b5af0",
+   "sha256": "3e086bed1e238ae6ec1f99dd19bca3a31537bbbf1f5b78c2dbf7efab94b79701",
    "url": "/api/v2/resultados/encuesta-de-operadores-financieros-ultimas-20-en-aa63e2.json"
   },
   {
@@ -1598,7 +1598,7 @@
    ],
    "truncado": false,
    "bytes": 7838,
-   "sha256": "77f80fd284e695dfefe05d9f54928bbce2066aac7756ec31f318630ba5bb372a",
+   "sha256": "00a252d1f4691185d75be06d8cb971a27f4743e47c951c36cb3f4e9f3bd29753",
    "url": "/api/v2/resultados/catalogo-series-frecuencia-unidad-y-ultima-fecha-4573aa.json"
   },
   {
@@ -1615,7 +1615,7 @@
    ],
    "truncado": false,
    "bytes": 1531,
-   "sha256": "62499c4fb04204dc2062d19235129b466ee5a1c3f94d9fe1e272768c32661198",
+   "sha256": "566067ee878ba93346ae16facd0464df64e50bbc4dea4af56426b7084a2a87d0",
    "url": "/api/v2/resultados/estado-de-la-ultima-consulta-al-bcch-por-grupo-b5c6d8.json"
   },
   {
@@ -1634,7 +1634,7 @@
    ],
    "truncado": false,
    "bytes": 5622,
-   "sha256": "1233a15bad101bf3563482a4c442fc51cc194d2e5704574d88fea31d5e5743a0",
+   "sha256": "b105d7c210a74fa5071a545e9886d7712a710bf34ee553787ba609a7a5466d1f",
    "url": "/api/v2/resultados/lista-por-segmento-y-licencia-catalogo-local-53671b.json"
   },
   {
@@ -1650,7 +1650,7 @@
    ],
    "truncado": false,
    "bytes": 1231,
-   "sha256": "a04036a8e244dfe95c729390d930f6b72dd65338c55373bae10489bb11470402",
+   "sha256": "6edfef7501f71711e47fd3d3919f0d7ef74711cd0a7cebb2ae1cc0dda56e098d",
    "url": "/api/v2/resultados/estado-consignado-en-la-lista-e19e45.json"
   },
   {
@@ -1665,7 +1665,7 @@
    ],
    "truncado": false,
    "bytes": 1436,
-   "sha256": "03e855cd5a02669df8066e7f6fb6c8fdc24992c5c2ebe52fd0bada66974a8b22",
+   "sha256": "d646ab1f92823570c1e008852b0b465e60d91455395ca327feca12d0e9506760",
    "url": "/api/v2/resultados/tipos-de-licencia-consignados-939dc6.json"
   },
   {
@@ -1682,7 +1682,7 @@
    ],
    "truncado": false,
    "bytes": 893,
-   "sha256": "2a1f1e68398e82da14be81a9c0206dab452ebe3e6facfb2633145752df1b51cc",
+   "sha256": "a982c7fb4a60e8cd4b1334e16e94eb63b2d7b2600189e8286aeabd2c7b4ffe6f",
    "url": "/api/v2/resultados/segmentacion-por-linea-de-negocio-18540d.json"
   },
   {
@@ -1707,7 +1707,7 @@
    ],
    "truncado": false,
    "bytes": 112110,
-   "sha256": "a02a1cd3b1970dd32b198c393513345678161d4f30e7a2d77d0370a317c10d76",
+   "sha256": "2d9600fc472033249d488ca01195f3258df323e76a789f5604533d3a026b7aec",
    "url": "/api/v2/resultados/cuentas-de-balance-cmf-primeros-500-42bcb3.json"
   },
   {
@@ -1732,7 +1732,7 @@
    ],
    "truncado": false,
    "bytes": 109222,
-   "sha256": "86db2411a452a87316499078175e27b7c325f13a27cad3c2ceaee744fca13270",
+   "sha256": "e9a071d2b15e6ded5469f53615e0d5176d5b4a10f500dbe65e41552bd57486d9",
    "url": "/api/v2/resultados/cuentas-de-resultados-cmf-primeros-500-55ce02.json"
   },
   {
@@ -1750,7 +1750,7 @@
    ],
    "truncado": true,
    "bytes": 52103,
-   "sha256": "d9fad210e5416afbdee24566eda6a24dc94ddfbe94c0e0d6248c8ff43379dd12",
+   "sha256": "31c281320fc2b378683ffc8ef2fd590dc63f56a35088190ea80a7dc0d257130b",
    "url": "/api/v2/resultados/utilidad-del-periodo-1-fila-por-estado-a1faed.json"
   },
   {
@@ -1766,7 +1766,7 @@
    ],
    "truncado": false,
    "bytes": 961,
-   "sha256": "e5e2d8a81ae87af187852a0b473afe67f04ccfe3ea5b1ff0358c2a4463f72320",
+   "sha256": "bbf3cbe210f9d7adeb92b124311dd8c08d22c6cdbb3f96c44aaaeba23acc5f64",
    "url": "/api/v2/resultados/donde-se-repite-ganancia-perdida-9a8785.json"
   },
   {
@@ -1783,7 +1783,7 @@
    ],
    "truncado": false,
    "bytes": 3602,
-   "sha256": "a2dc9a74d8c2325c6a9bc39a93041e7d5c47a0ce17431d461b0879bbf6b25716",
+   "sha256": "8c063e3d86d426859dca6ce7bfe496f9bd9b73e565e6a80073e6da43caa1857c",
    "url": "/api/v2/resultados/catalogo-de-corredoras-vigentes-a8dbef.json"
   },
   {
@@ -1798,7 +1798,7 @@
    ],
    "truncado": false,
    "bytes": 1786,
-   "sha256": "28bd25a0617b862f4844cfe24d2891d5509e359a8ca1121ce0c72238cff8ae7f",
+   "sha256": "0ec8f4388297e4acd465f0a394832e0a2bf2fddb1e01556ed73f789f6cfc08b5",
    "url": "/api/v2/resultados/distribucion-por-conglomerado-6d2d35.json"
   },
   {
@@ -1815,7 +1815,7 @@
    ],
    "truncado": false,
    "bytes": 18028,
-   "sha256": "183b701944dc2d4536cf21e58358276075808d832e2c10d11189999f3033cbb4",
+   "sha256": "0b17ad9aac0748a5bc7eab1a06ce06817a3967afa53983e5a98db7a8c3d4b996",
    "url": "/api/v2/resultados/catalogo-de-corredoras-por-grupo-financiero-826952.json"
   },
   {
@@ -1831,7 +1831,7 @@
    ],
    "truncado": false,
    "bytes": 4317,
-   "sha256": "daec5e8baac89c5c46e86b4f5902819c2a9418e54b67ea249faf8dd95076b406",
+   "sha256": "a38412373077804262f5dbe8234f9d6fca2667901ecc7d348b950d5cc08dc01a",
    "url": "/api/v2/resultados/distribucion-de-corredoras-por-conglomerado-af4fec.json"
   },
   {
@@ -1849,7 +1849,7 @@
    ],
    "truncado": false,
    "bytes": 5092,
-   "sha256": "beba343b8091f0059a57f8136e69dd94585a953423265d28854503a33246c83e",
+   "sha256": "804f8f75c2595b5687483339004f9434ebf4d6650cf808b9281e132a03cfd4f3",
    "url": "/api/v2/resultados/activos-pasivos-y-patrimonio-por-intermediario-u-7d28ba.json"
   },
   {
@@ -1864,7 +1864,7 @@
    ],
    "truncado": false,
    "bytes": 3483,
-   "sha256": "b04e362bbc3190de14a47db70eefb7e2f03734aa0223952513f8f0511e58da75",
+   "sha256": "60abadbf25ea50a68ce392e57fa0c3598a9403675200679e9ff8b37841fa8e13",
    "url": "/api/v2/resultados/evolucion-de-los-corredores-de-bolsa-activos-tot-2dea8f.json"
   },
   {
@@ -1882,7 +1882,7 @@
    ],
    "truncado": false,
    "bytes": 4895,
-   "sha256": "552927a505286adac180814a5c0833e116ece00513eed2b47b5a92ed6e23132d",
+   "sha256": "7e0860d4dffefeff07bfdf4561bc878e2e600fd74d50ca4951c89b4abb572584",
    "url": "/api/v2/resultados/balance-completo-de-banchile-corredores-ultimo-t-31f63c.json"
   },
   {
@@ -1897,7 +1897,7 @@
    ],
    "truncado": false,
    "bytes": 3574,
-   "sha256": "b8966301edbac03ce3711064d3a49e15e9633bd47f750e77ae2cb4e16b6fb557",
+   "sha256": "9717b5a1d29f042d3972913a0ef10290b6e0965cdf1574177b71ecbc92f10d43",
    "url": "/api/v2/resultados/resultado-del-ejercicio-por-intermediario-2025-m-50a3b4.json"
   },
   {
@@ -1915,7 +1915,7 @@
    ],
    "truncado": false,
    "bytes": 5345,
-   "sha256": "82f9334aa9c5d058a6fa9cccbd3dda455fdbab68d3de33e2c959fc338eb2cb4c",
+   "sha256": "8df45e4f903ed7aa6671947148a48e9652f455cc1f08a58be805a92cf06dd472",
    "url": "/api/v2/resultados/estructura-de-resultados-de-banchile-corredores--51bf0d.json"
   },
   {
@@ -1931,7 +1931,7 @@
    ],
    "truncado": false,
    "bytes": 4931,
-   "sha256": "5452f11b55163d88f29487e4ebdf5c1dc29b5a973193b5ac16e28c2237632f06",
+   "sha256": "2a7a3a08d940015e538cac3dcaf996d6bf318e6118256e748a0edc4fe6d52b37",
    "url": "/api/v2/resultados/catalogo-de-cuentas-fecu-de-resultados-472c9e.json"
   },
   {
@@ -1947,7 +1947,7 @@
    ],
    "truncado": false,
    "bytes": 2135,
-   "sha256": "5abcf37bfabadfdd51faa3593cd0e790e4a9a5b4214558f9ec761c2a2d8c9226",
+   "sha256": "36a86b76d9c0ecc1c0b09ee3915393c6e093d8d6f10ab7ddd5d2ccae12a18e1c",
    "url": "/api/v2/resultados/catalogo-de-securitizadoras-vigentes-vs-historic-96787b.json"
   },
   {
@@ -1963,7 +1963,7 @@
    ],
    "truncado": false,
    "bytes": 1903,
-   "sha256": "ddf1d7e4874138528cd37cd1958fce942df5bde0f10d919250cc43e61a9ab388",
+   "sha256": "2a4d472a4a64ca1f863f6c270547a1005629cb1d9947b1c7eb74c4bd8419250c",
    "url": "/api/v2/resultados/securitizadoras-con-emisiones-activas-cmf-52c2e1.json"
   },
   {
@@ -1982,7 +1982,7 @@
    ],
    "truncado": false,
    "bytes": 2012,
-   "sha256": "d4dfcc9ee2122f171418168e08cb582fa2e9001c6764609796099ff2970fab0d",
+   "sha256": "442b529129d83a357c86f5d36b0085f88218483446dccee733ffcaff1e624f48",
    "url": "/api/v2/resultados/activos-pasivos-y-patrimonio-por-securitizadora--3cfaa0.json"
   },
   {
@@ -1997,7 +1997,7 @@
    ],
    "truncado": false,
    "bytes": 3374,
-   "sha256": "8d91e3ac5f4c42ccc80d8a188a86c634b57a7a34bf47e6e8300a1a4da502e097",
+   "sha256": "9dc9f07e5b184c2aa15be8cf108fe87f717519e86b8260b18b491ff5b79079df",
    "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-c0d06c.json"
   },
   {
@@ -2015,7 +2015,7 @@
    ],
    "truncado": false,
    "bytes": 3345,
-   "sha256": "e91754885f73fd4f0647d7af030a1b685543c282088a9fe142c6ea61be961fb5",
+   "sha256": "0098aad5cb2678bf5b7563c2199c99a3fa4ff2ee6011b24381ea74f1495f2d56",
    "url": "/api/v2/resultados/balance-completo-de-bci-securitizadora-ultimo-tr-f1004f.json"
   },
   {
@@ -2032,7 +2032,7 @@
    ],
    "truncado": false,
    "bytes": 1714,
-   "sha256": "70250ccad84281da307d89f6a06b29a7e5f6fb1a374612b2dd93388eed6fcdcf",
+   "sha256": "2e0dc604c5aa1a000632328e42a9737d9180eb046e5e564af206a56d4bbf348c",
    "url": "/api/v2/resultados/ingresos-y-utilidad-por-securitizadora-ejercicio-6670ee.json"
   },
   {
@@ -2048,7 +2048,7 @@
    ],
    "truncado": false,
    "bytes": 923,
-   "sha256": "a2d0f54b846feae1f35d1db2d0bbdc8c88d058c4e4aab4408ae71dc9fb0092c5",
+   "sha256": "1a9c0e8ed97d0722e6cb300b246e3ad4a571617b347a999b39170d9cd167ddb4",
    "url": "/api/v2/resultados/por-que-hay-que-filtrar-ganancia-perdida-aparece-5f46a7.json"
   },
   {
@@ -2063,7 +2063,7 @@
    ],
    "truncado": false,
    "bytes": 1370,
-   "sha256": "f433b9dcc38608569b43d1a6c72c0ee326c4f173b611d310de87f44d6612581a",
+   "sha256": "2965e5c1a0f1a2d3bd32aafc65879a1aca11fb9ca67e386e74c25adc72953326",
    "url": "/api/v2/resultados/utilidad-del-sector-por-ano-cierres-de-diciembre-aca385.json"
   },
   {
@@ -2080,7 +2080,7 @@
    ],
    "truncado": false,
    "bytes": 2470,
-   "sha256": "ef514a7e8814a031cab7268a7f0102a7c9960190537adfd7bb26a793d65cd914",
+   "sha256": "27c3f6f369810238f6bd0375ff8b5a41f2cb66dfb242c597ce5aa7b1591fdfa8",
    "url": "/api/v2/resultados/estado-de-resultados-completo-de-bci-securitizad-204842.json"
   },
   {
@@ -2095,7 +2095,7 @@
    ],
    "truncado": false,
    "bytes": 1377,
-   "sha256": "f253161d5ae12fc320f14177d90d6a922bc608edd7f3e1b089dece1ec8c8ccf1",
+   "sha256": "c6f73b6aa5ea49933b18e4b5cf295ff045434a63a96fc878d332a649cfe541c8",
    "url": "/api/v2/resultados/lineas-por-clase-de-colateral-00d0bd.json"
   },
   {
@@ -2114,7 +2114,7 @@
    ],
    "truncado": false,
    "bytes": 4335,
-   "sha256": "a7588527f4d785a5549fe1ccf10f680dde7d0d07f5546581beed3d3ec6bab6e2",
+   "sha256": "caca443046808c71b4d71c22ff2e619811b282a8207e0035b52697582ba263d4",
    "url": "/api/v2/resultados/inscripciones-por-moneda-y-monto-7560ff.json"
   },
   {
@@ -2129,7 +2129,7 @@
    ],
    "truncado": false,
    "bytes": 1633,
-   "sha256": "8a22916c5f2508a8335b1d048e49a73de184851b88db70d348b42689e2a70c87",
+   "sha256": "bcc87a0237bc9dd552aa1f9b5f7d8f958b1a7b941dbf98937846a0db92b881b6",
    "url": "/api/v2/resultados/cobertura-por-ano-20102013-sin-datos-396a2f.json"
   },
   {
@@ -2146,7 +2146,7 @@
    ],
    "truncado": false,
    "bytes": 3552,
-   "sha256": "113427ca32df054080819182b827d0f4b8ddfff3cc2175e223e5bbbe0b4342a0",
+   "sha256": "fe1681640e5495514776bc7703ea15cc96e8288bb851ec6f62f04ec1e6e4192e",
    "url": "/api/v2/resultados/totales-por-patrimonio-diciembre-2025-717933.json"
   },
   {
@@ -2163,7 +2163,7 @@
    ],
    "truncado": false,
    "bytes": 1962,
-   "sha256": "1183249abdc3e7c53d4ddfc538b79d5658213ab1e6b0cdada743c04cbba25caf",
+   "sha256": "da3a93accb1f73d79af6d44578db8a531ff5fddbaa3ac01c73d135a3b00dc79d",
    "url": "/api/v2/resultados/agregado-del-sector-por-cierre-9af0b2.json"
   },
   {
@@ -2180,7 +2180,7 @@
    ],
    "truncado": false,
    "bytes": 1818,
-   "sha256": "14681305a40834b3875034eb33e22ca304771765721847eb53ba3ead0269fc91",
+   "sha256": "d4d9cb6b0b11cffc1fd4a336315cbdc12516330fc118708aefde53f8c10a5afc",
    "url": "/api/v2/resultados/por-securitizadora-diciembre-2025-dc0352.json"
   },
   {
@@ -2196,7 +2196,7 @@
    ],
    "truncado": false,
    "bytes": 4419,
-   "sha256": "45ed9d9591e363af8904c57761f8ad6d111e8ae07778b346650453bbd7d8e563",
+   "sha256": "861b98b900d9f9af367dff05f6fe689ab6946adbd43cbfde311fe4abf9132e87",
    "url": "/api/v2/resultados/balance-completo-de-un-patrimonio-ca49f0.json"
   },
   {
@@ -2212,7 +2212,7 @@
    ],
    "truncado": false,
    "bytes": 5893,
-   "sha256": "2bb2337fc1c356812a4ed249f40b039c18d715b573bc6a739305063918a6d570",
+   "sha256": "e1d9a4ec10c8ca4dc377df323ea07531277c2fe584b2dd23e24463ab53ade73d",
    "url": "/api/v2/resultados/pasivos-de-diciembre-2025-por-cuenta-b5848b.json"
   },
   {
@@ -2228,7 +2228,7 @@
    ],
    "truncado": false,
    "bytes": 3744,
-   "sha256": "c6ddceadb03d5e98f84ac0c043e625a60bc837817b68b41a805ae0885c63cf76",
+   "sha256": "72ced652133996eea2eea335ec90d36b6d4af360f84f5341f782baa6c305251c",
    "url": "/api/v2/resultados/cuentas-mas-frecuentes-por-rubro-747b5d.json"
   },
   {
@@ -2246,7 +2246,7 @@
    ],
    "truncado": false,
    "bytes": 1755,
-   "sha256": "20feb22bd269952d64b7d9be35a4feb6fc5f9d368d7de8158ebf073a07a78c40",
+   "sha256": "7c8c9eaf4c01064070560b86c8f7016db802fb1af24fc3d9c153770577f521ac",
    "url": "/api/v2/resultados/directorio-de-cooperativas-fiscalizadas-8c031f.json"
   },
   {
@@ -2261,7 +2261,7 @@
    ],
    "truncado": false,
    "bytes": 832,
-   "sha256": "505d6264bc21035eee398929f2b3f75b1b534e6da286fabe9124f91d7ffd3ca8",
+   "sha256": "ddec1022a3b2e5ad91b9aa1c5836142fc21253133a0d2e465073064a1655a94a",
    "url": "/api/v2/resultados/distribucion-regional-de-cooperativas-7bea03.json"
   },
   {
@@ -2279,7 +2279,7 @@
    ],
    "truncado": false,
    "bytes": 1496,
-   "sha256": "1614cb6c2ed8f2753927ee10085c51643267ae7ecf08c495586db694eaf58d06",
+   "sha256": "42739952e467ef7b265fcdbabd93198bb98a278dc5aefae87fad837d28ed5e44",
    "url": "/api/v2/resultados/catalogo-ccaf-vigentes-vs-absorbidas-a4c741.json"
   },
   {
@@ -2296,7 +2296,7 @@
    ],
    "truncado": false,
    "bytes": 1410,
-   "sha256": "7988efefa50ceeac532b309276a8fe34d781fd9a12cb0a99af31598ccbbce7ba",
+   "sha256": "7b22adc7575dcc27535d6f9a3c30c2c5b1864a7b7b24c9a23a56808432a67b70",
    "url": "/api/v2/resultados/ccaf-emisoras-de-bonos-publicos-cmf-cf538c.json"
   },
   {
@@ -2313,7 +2313,7 @@
    ],
    "truncado": false,
    "bytes": 1056,
-   "sha256": "de6ca36bc919d7561e61a615f87b1444d67bf9dfc1d1fec88121bb9da2955216",
+   "sha256": "9aef881a4554e3f77db6b7115c754822c36dcba6fae17cd2f3b23ebdb1692320",
    "url": "/api/v2/resultados/ccaf-supervisadas-exclusivamente-por-suseso-881802.json"
   },
   {
@@ -2332,7 +2332,7 @@
    ],
    "truncado": false,
    "bytes": 1576,
-   "sha256": "ad83f16b4062842ac436408bc31b73edda5b454c9ae6796f7cc5dff0060c5c41",
+   "sha256": "72a1deba873f9be6af706277d611c16afd8aa0078615a78c17c2b43ef3cd9695",
    "url": "/api/v2/resultados/activos-pasivos-y-patrimonio-por-ccaf-ultimo-tri-bca2ef.json"
   },
   {
@@ -2347,7 +2347,7 @@
    ],
    "truncado": false,
    "bytes": 3430,
-   "sha256": "74eec9abc4030280ee42f8a0fc8a49cf6fd923f37f48f85a9788a5e2c3f5559d",
+   "sha256": "39814670276d02eb47d0b42a989b4d57ee2a833d1c1439587f4b5286b8c2f036",
    "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-6b53fd.json"
   },
   {
@@ -2365,7 +2365,7 @@
    ],
    "truncado": false,
    "bytes": 5631,
-   "sha256": "c064b7ce7494e89a29ad4a93b3b374668a81cf1b1c51e7d65405f4e2e9351a90",
+   "sha256": "051abe81963f4e758c29978c1faf467886690152db574d6dfaede1bc7e41e80b",
    "url": "/api/v2/resultados/balance-completo-de-ccaf-los-andes-ultimo-trimes-8b33d5.json"
   },
   {
@@ -2382,7 +2382,7 @@
    ],
    "truncado": false,
    "bytes": 1384,
-   "sha256": "b05d2c0d8fc627370b58656d2a160b81f11ba97ed8c3d1bdddfd5c9857fc94d5",
+   "sha256": "9ba7d1aa232bce2598026c4cf3050392011b01363946ebc8dc9b8885d8dbba1d",
    "url": "/api/v2/resultados/ingresos-y-utilidad-por-ccaf-ejercicio-2025-mm-f6bd8a.json"
   },
   {
@@ -2398,7 +2398,7 @@
    ],
    "truncado": false,
    "bytes": 838,
-   "sha256": "cca10c961759ee7fa2aacde1a2ef0621d648cf9815abc2bd5e02aa3b1dd6457e",
+   "sha256": "fa210f9bd34b786c725c63906e5ade1f37c96dff725fc6d19716c3eba3203b87",
    "url": "/api/v2/resultados/por-que-hay-que-filtrar-ganancia-perdida-aparece-d1555d.json"
   },
   {
@@ -2413,7 +2413,7 @@
    ],
    "truncado": false,
    "bytes": 1366,
-   "sha256": "4ff0698c686904f6cfa328284ef8db2ef3f628928d5ad4f6e7e751b9ab62928d",
+   "sha256": "8e8a2036d5c91a76445d35fee590b606a54fef13f25b7835d5780e778c11fe2e",
    "url": "/api/v2/resultados/utilidad-del-sector-por-ano-cierres-de-diciembre-fdb371.json"
   },
   {
@@ -2430,7 +2430,7 @@
    ],
    "truncado": false,
    "bytes": 3429,
-   "sha256": "cd7a02d6db035eacb3ed8469734bff3adecf3632b1182c432a8d2f43e8c18bd1",
+   "sha256": "2cb67ebcb7695815c185be25343b10439571046f6303d72963aa77a417ce3c9e",
    "url": "/api/v2/resultados/estado-de-resultados-completo-de-ccaf-los-andes--b8a726.json"
   },
   {
@@ -2446,7 +2446,7 @@
    ],
    "truncado": false,
    "bytes": 2858,
-   "sha256": "68b276231630d1dc7c330c548c6e76bcc321b9d7d71c20f836d1d00a6c99d524",
+   "sha256": "768ad331f0abb4db6c7839e53ccef87780a6207991a5c0650a9553d4cfa2e73a",
    "url": "/api/v2/resultados/directorio-de-infraestructuras-0aae44.json"
   },
   {
@@ -2461,7 +2461,7 @@
    ],
    "truncado": false,
    "bytes": 1222,
-   "sha256": "b42ae446010e4c4e803c14918f5211e1284998f51ecef09916b761abf13c7093",
+   "sha256": "c9845b95b92088f834ad149a6785467664e6dc3dfa16ac51bee2c974cf5cdf97",
    "url": "/api/v2/resultados/camaras-y-contrapartes-centrales-cb2f0d.json"
   },
   {
@@ -2477,7 +2477,7 @@
    ],
    "truncado": false,
    "bytes": 2002,
-   "sha256": "c3bf112e3ee249c215d3e35a286c734d582adb826cb0ade79306f0a7ab55438a",
+   "sha256": "41ae5aa0905c0feec6af861c01cfb99e6c043f6c1e8049f168d1237806ccb451",
    "url": "/api/v2/resultados/prestadores-vigentes-9a9994.json"
   },
   {
@@ -2491,7 +2491,7 @@
    ],
    "truncado": false,
    "bytes": 688,
-   "sha256": "7bc0517fcae281e7622c9fd47251401017cba405b679ac22c937d5daae4a73a9",
+   "sha256": "b3de305b1747ab1f71977c86f03b7be47e4819bca125d11017ee613f17112be4",
    "url": "/api/v2/resultados/distribucion-regional-28aee1.json"
   },
   {
@@ -2506,7 +2506,7 @@
    ],
    "truncado": false,
    "bytes": 1111,
-   "sha256": "8d69e26eb60553ca41dae0be52858c8f1ce69d98d97b0f532cbbeb67a52d53dd",
+   "sha256": "fcbc1b0f880a67156f0726f2669d32ead943cc16f81c00feb801976e517e6ed0",
    "url": "/api/v2/resultados/acciones-en-seguros-4057a4.json"
   },
   {
@@ -2522,7 +2522,7 @@
    ],
    "truncado": false,
    "bytes": 1492,
-   "sha256": "598010be67aa7e9cb5fde7788de6dd20d320ff0741199845de12ff00963786af",
+   "sha256": "9fb5438460f4ab403fc09ec74c6c553a478453a746512af3b7c3bff3f549058f",
    "url": "/api/v2/resultados/fondos-mutuos-cartera-nacional-por-tipo-baa247.json"
   },
   {
@@ -2538,7 +2538,7 @@
    ],
    "truncado": false,
    "bytes": 1297,
-   "sha256": "678e38abbdee862658328ec2f712346598f3079324277d7bb4b3efeab99fbc6e",
+   "sha256": "b58bcd40c9390200eaae9a3d8d123738ba0d998c57ed1d81ad04f054545c6250",
    "url": "/api/v2/resultados/renta-fija-de-seguros-ultimo-periodo-acf3bb.json"
   },
   {
@@ -2554,7 +2554,7 @@
    ],
    "truncado": false,
    "bytes": 1025,
-   "sha256": "6431ec3482f0e630120d412d136f6cadcf3b2be694d598c35017f83b834332fe",
+   "sha256": "ad488764edae17969ac058936e9e6606b3dbb1c649438e57a5c8d6f8938744de",
    "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-ultimo-periodo-d13424.json"
   },
   {
@@ -2569,7 +2569,7 @@
    ],
    "truncado": false,
    "bytes": 1188,
-   "sha256": "3a039cf161cf60407b410064c44bbcfb7d3dc50e57f5230744d8371f47673217",
+   "sha256": "9dab4b146b8e84db2f08bd232cb527edf03d843064601a460d7c79c9590b3f8a",
    "url": "/api/v2/resultados/cartera-extranjera-ffmm-por-pais-ultimo-periodo-59d7b8.json"
   },
   {
@@ -2585,7 +2585,7 @@
    ],
    "truncado": false,
    "bytes": 1572,
-   "sha256": "c4a95005cf99a7f326a0a89e5c49885c5f65864fcf4f5a2f9e2d3c658b67259a",
+   "sha256": "f5adaa8f82fd1ba9e008d518e0e9f526e1764a9be6de1f851fb4f72f678bde3b",
    "url": "/api/v2/resultados/fondos-de-inversion-cartera-nacional-por-tipo-ul-8e14eb.json"
   },
   {
@@ -2602,7 +2602,7 @@
    ],
    "truncado": false,
    "bytes": 6852,
-   "sha256": "afd3cf5ecdd8610ecbd9aa7197460892cc056aca341721d77ce1df99ded95dd1",
+   "sha256": "03d6daeb4c9819de0c233e4cb66856bc53193913e8eb6088314b64927f3821b2",
    "url": "/api/v2/resultados/aseguradoras-que-reportan-7ece34.json"
   }
  ]

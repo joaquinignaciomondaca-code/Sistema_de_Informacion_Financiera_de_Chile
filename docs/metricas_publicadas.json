@@ -8,7 +8,7 @@
     "particiones_rutas_y_conteos_iguales_por_objeto": true
   },
   "contrato": "sif/metricas-publicadas",
-  "data_release": "2026-11-23.decb02baa372",
+  "data_release": "2026-11-24.df38b41d730c",
   "definiciones": {
     "alcance_principal": "Elementos en niveles visibles (núcleo, instituciones y contexto), según el alcance editorial de docs/vocabulario.json.",
     "auxiliares_sql": "Parquet compactos que DuckDB usa para algunas consultas; son copias de lectura, no objetos adicionales ni filas únicas de cobertura.",
@@ -29,13 +29,13 @@
     "api_v2": {
       "archivos_unicos": 734,
       "artefacto": "api/v2/catalog.json",
-      "bytes": 500229708,
+      "bytes": 500229738,
       "con_archivo": 86,
       "con_archivo_sin_filas": 1,
       "con_filas": 85,
       "consultas": 159,
-      "data_release": "2026-11-23.decb02baa372",
-      "filas": 20179770,
+      "data_release": "2026-11-24.df38b41d730c",
+      "filas": 20179782,
       "objetos": 90,
       "particiones": 734,
       "por_estado": {
@@ -55,9 +55,9 @@
     "descargas": {
       "archivos_unicos": 734,
       "artefacto": "js/download_catalog.js",
-      "bytes_total": 500229708,
+      "bytes_total": 500229738,
       "elementos": 90,
-      "filas_total": 20179770,
+      "filas_total": 20179782,
       "fuera_de_foco": {
         "bytes": 1897062,
         "elementos": 15,
@@ -193,10 +193,10 @@
           "periodo": null
         },
         "macro": {
-          "bytes": 582710,
+          "bytes": 582740,
           "elementos": 24,
           "etiqueta": "Macroeconomía y Tasas",
-          "filas": 41738,
+          "filas": 41750,
           "fuentes": [
             "BCCh"
           ],
@@ -272,22 +272,22 @@
         }
       },
       "principal": {
-        "bytes": 498330057,
+        "bytes": 498330087,
         "elementos": 74,
-        "filas": 20079449
+        "filas": 20079461
       },
       "variantes": 1
     },
     "inventario_etl": {
       "artefacto": "data_manifest.json",
-      "filas": 20179770,
+      "filas": 20179782,
       "tablas": 89
     }
   },
   "lecturas_duckdb": {
     "archivos_unicos": 738,
-    "bytes": 544436388,
-    "filas_almacenadas": 23877792,
+    "bytes": 544436418,
+    "filas_almacenadas": 23877804,
     "nota": "Suma archivos del contrato y copias compactas de consulta; contiene filas repetidas entre recursos y no representa cobertura única."
   },
   "puentes_reconciliacion": {
