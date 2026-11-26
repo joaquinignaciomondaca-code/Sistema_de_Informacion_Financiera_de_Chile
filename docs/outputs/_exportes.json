@@ -4663,240 +4663,240 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_tasas_corto_plazo.parquet",
-     "bytes": 13718
+     "bytes": 13720
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_tasas_corto_plazo.completo.csv",
-    "bytes": 87659,
-    "filas": 3214
+    "bytes": 87686,
+    "filas": 3215
    },
    "json": {
     "ruta": "outputs/macro/macro_tasas_corto_plazo.completo.json",
-    "bytes": 259870
+    "bytes": 259950
    },
    "nota": null,
-   "filas": 3214,
+   "filas": 3215,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_tasas_corto_plazo.parquet",
-      "bytes": 13718
+      "bytes": 13720
      }
     ],
     "where": "",
-    "filas": 3214
+    "filas": 3215
    }
   },
   "macro_swaps_camara": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_swaps_camara.parquet",
-     "bytes": 79564
+     "bytes": 79565
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_swaps_camara.completo.csv",
-    "bytes": 299997,
-    "filas": 3227
+    "bytes": 300086,
+    "filas": 3228
    },
    "json": {
     "ruta": "outputs/macro/macro_swaps_camara.completo.json",
-    "bytes": 880929
+    "bytes": 881198
    },
    "nota": null,
-   "filas": 3227,
+   "filas": 3228,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_swaps_camara.parquet",
-      "bytes": 79564
+      "bytes": 79565
      }
     ],
     "where": "",
-    "filas": 3227
+    "filas": 3228
    }
   },
   "macro_curva_bonos_pesos": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
-     "bytes": 61633
+     "bytes": 61570
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.csv",
-    "bytes": 151615,
-    "filas": 3195
+    "bytes": 151648,
+    "filas": 3196
    },
    "json": {
     "ruta": "outputs/macro/macro_curva_bonos_pesos.completo.json",
-    "bytes": 583125
+    "bytes": 583291
    },
    "nota": null,
-   "filas": 3195,
+   "filas": 3196,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_curva_bonos_pesos.parquet",
-      "bytes": 61633
+      "bytes": 61570
      }
     ],
     "where": "",
-    "filas": 3195
+    "filas": 3196
    }
   },
   "macro_curva_bonos_uf": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
-     "bytes": 94387
+     "bytes": 94397
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_curva_bonos_uf.completo.csv",
-    "bytes": 215483,
-    "filas": 3198
+    "bytes": 215518,
+    "filas": 3199
    },
    "json": {
     "ruta": "outputs/macro/macro_curva_bonos_uf.completo.json",
-    "bytes": 955125
+    "bytes": 955396
    },
    "nota": null,
-   "filas": 3198,
+   "filas": 3199,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_curva_bonos_uf.parquet",
-      "bytes": 94387
+      "bytes": 94397
      }
     ],
     "where": "",
-    "filas": 3198
+    "filas": 3199
    }
   },
   "macro_inflacion_implicita": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_inflacion_implicita.parquet",
-     "bytes": 36960
+     "bytes": 36963
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_inflacion_implicita.completo.csv",
-    "bytes": 93740,
-    "filas": 3101
+    "bytes": 93769,
+    "filas": 3102
    },
    "json": {
     "ruta": "outputs/macro/macro_inflacion_implicita.completo.json",
-    "bytes": 379306
+    "bytes": 379426
    },
    "nota": null,
-   "filas": 3101,
+   "filas": 3102,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_inflacion_implicita.parquet",
-      "bytes": 36960
+      "bytes": 36963
      }
     ],
     "where": "",
-    "filas": 3101
+    "filas": 3102
    }
   },
   "macro_dolar_observado": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_dolar_observado.parquet",
-     "bytes": 24837
+     "bytes": 24842
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_dolar_observado.completo.csv",
-    "bytes": 83331,
-    "filas": 3213
+    "bytes": 83358,
+    "filas": 3214
    },
    "json": {
     "ruta": "outputs/macro/macro_dolar_observado.completo.json",
-    "bytes": 256791
+    "bytes": 256872
    },
    "nota": null,
-   "filas": 3213,
+   "filas": 3214,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_dolar_observado.parquet",
-      "bytes": 24837
+      "bytes": 24842
      }
     ],
     "where": "",
-    "filas": 3213
+    "filas": 3214
    }
   },
   "macro_euro_observado": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_euro_observado.parquet",
-     "bytes": 24650
+     "bytes": 24655
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_euro_observado.completo.csv",
-    "bytes": 83913,
-    "filas": 3213
+    "bytes": 83940,
+    "filas": 3214
    },
    "json": {
     "ruta": "outputs/macro/macro_euro_observado.completo.json",
-    "bytes": 254161
+    "bytes": 254241
    },
    "nota": null,
-   "filas": 3213,
+   "filas": 3214,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_euro_observado.parquet",
-      "bytes": 24650
+      "bytes": 24655
      }
     ],
     "where": "",
-    "filas": 3213
+    "filas": 3214
    }
   },
   "macro_tipo_cambio_multilateral": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
-     "bytes": 42715
+     "bytes": 42725
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_tipo_cambio_multilateral.completo.csv",
-    "bytes": 125711,
-    "filas": 3213
+    "bytes": 125750,
+    "filas": 3214
    },
    "json": {
     "ruta": "outputs/macro/macro_tipo_cambio_multilateral.completo.json",
-    "bytes": 646071
+    "bytes": 646272
    },
    "nota": null,
-   "filas": 3213,
+   "filas": 3214,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
-      "bytes": 42715
+      "bytes": 42725
      }
     ],
     "where": "",
-    "filas": 3213
+    "filas": 3214
    }
   },
   "macro_tipo_cambio_real": {
@@ -4933,30 +4933,30 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_uf.parquet",
-     "bytes": 35639
+     "bytes": 35658
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_uf.completo.csv",
-    "bytes": 131488,
-    "filas": 4712
+    "bytes": 131516,
+    "filas": 4713
    },
    "json": {
     "ruta": "outputs/macro/macro_uf.completo.json",
-    "bytes": 315229
+    "bytes": 315296
    },
    "nota": null,
-   "filas": 4712,
+   "filas": 4713,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_uf.parquet",
-      "bytes": 35639
+      "bytes": 35658
      }
     ],
     "where": "",
-    "filas": 4712
+    "filas": 4713
    }
   },
   "macro_utm": {
@@ -5113,60 +5113,60 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_cobre.parquet",
-     "bytes": 33389
+     "bytes": 33396
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_cobre.completo.csv",
-    "bytes": 90475,
-    "filas": 3285
+    "bytes": 90502,
+    "filas": 3286
    },
    "json": {
     "ruta": "outputs/macro/macro_cobre.completo.json",
-    "bytes": 421849
+    "bytes": 421977
    },
    "nota": null,
-   "filas": 3285,
+   "filas": 3286,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_cobre.parquet",
-      "bytes": 33389
+      "bytes": 33396
      }
     ],
     "where": "",
-    "filas": 3285
+    "filas": 3286
    }
   },
   "macro_metales_preciosos": {
    "archivos": [
     {
      "ruta": "outputs/macro/macro_metales_preciosos.parquet",
-     "bytes": 47214
+     "bytes": 47227
     }
    ],
    "where": "",
    "csv": {
     "ruta": "outputs/macro/macro_metales_preciosos.completo.csv",
-    "bytes": 111363,
-    "filas": 3213
+    "bytes": 111400,
+    "filas": 3214
    },
    "json": {
     "ruta": "outputs/macro/macro_metales_preciosos.completo.json",
-    "bytes": 349065
+    "bytes": 349176
    },
    "nota": null,
-   "filas": 3213,
+   "filas": 3214,
    "firma": {
     "archivos": [
      {
       "ruta": "outputs/macro/macro_metales_preciosos.parquet",
-      "bytes": 47214
+      "bytes": 47227
      }
     ],
     "where": "",
-    "filas": 3213
+    "filas": 3214
    }
   },
   "macro_reservas_internacionales": {
@@ -5353,7 +5353,7 @@
    "archivos": [
     {
      "ruta": "outputs/macro/macro_series_catalogo.parquet",
-     "bytes": 10895
+     "bytes": 10892
     }
    ],
    "where": "",
@@ -5372,7 +5372,7 @@
     "archivos": [
      {
       "ruta": "outputs/macro/macro_series_catalogo.parquet",
-      "bytes": 10895
+      "bytes": 10892
      }
     ],
     "where": "",
@@ -7020,7 +7020,7 @@
    }
   }
  },
- "generado": "2026-11-26T11:09:19+00:00",
+ "generado": "2026-11-26T19:33:37+00:00",
  "parametros": {
   "csv_max_mb": 10,
   "json_max_mb": 5,
