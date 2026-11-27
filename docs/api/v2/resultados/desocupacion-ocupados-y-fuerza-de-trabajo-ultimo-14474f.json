@@ -3,7 +3,7 @@
  "id": "desocupacion-ocupados-y-fuerza-de-trabajo-ultimo-14474f",
  "titulo": "Desocupación, ocupados y fuerza de trabajo: últimos 24 meses",
  "origen": "explorador",
- "data_release": "2026-11-26.18ff24ea446b",
+ "data_release": "2026-11-27.e1af93af28c7",
  "generado": "2026-11-27",
  "max_filas": 500,
  "columnas": [
@@ -16,13 +16,6 @@
  "filas": 24,
  "truncado": false,
  "datos": [
-  [
-   "2024-10",
-   8.5800798734878,
-   9248.9842984067,
-   6819.9053448256,
-   10117.033886714
-  ],
   [
    "2024-11",
    8.2176493561929,
@@ -183,6 +176,13 @@
    9274.74206873605,
    6763.89002923276,
    10282.7183724804
+  ],
+  [
+   "2026-10",
+   9.97653277521332,
+   9350.99653845987,
+   6807.63442737595,
+   10387.28770034
   ]
  ],
  "sql": "SELECT periodo, desocupacion_pct, ocupados_miles_personas, asalariados_miles_personas, fuerza_trabajo_miles_personas FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;",
